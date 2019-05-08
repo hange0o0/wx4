@@ -86,8 +86,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             //this.monsterMV.scaleY = 1.2
         }
 
-        this.hp = this.getVO().hp
-        this.maxHp = this.getVO().hp
+        this.hp = this.data.hp
+        this.maxHp = this.hp
 
 
         this.barGroup.visible = false;
@@ -134,7 +134,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public addHp(v){
         if(this.isDie)
             return;
+        if(-v > this.hp)
+            v = -this.hp;
         this.hp += v;
+        PKCode_wx3.getInstance().enemyHp += v;
         this.renewHp();
         if(this.hp <= 0)
             this.die();

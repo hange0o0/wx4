@@ -1,11 +1,14 @@
 class GunListItem extends game.BaseItem{
 
-    private bg: eui.Rect;
-    private headMC: eui.Image;
-    private indexText: eui.Label;
-    private nickText: eui.Label;
-    private iconMC: eui.Image;
-    private valueText: eui.Label;
+    private bg: eui.Image;
+    private mc: eui.Image;
+    private nameText: eui.Label;
+    private atkText: eui.Label;
+    private desText: eui.Label;
+    private lockText: eui.Label;
+    private costText: eui.Label;
+    private btn: eui.Button;
+
 
 
     public constructor() {
@@ -15,19 +18,27 @@ class GunListItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.addBtnEvent(this.btn,()=>{
+
+        })
     }
 
     public dataChanged():void {
-        let color = this.data.index%2 == 0 ? 0xA8671C:0xb47c39;
-        this.bg.fillColor = color
-
-        this.indexText.textColor = this.data.index < 4 ? 0xffffff : 0xcccccc;
-        this.indexText.text = this.data.index;
-        this.nickText.text = this.data.nick
-        this.headMC.source = this.data.head
-        this.iconMC.source = this.data.type == 'coin'?'icon_coin_png':'icon_force2_png'
-        this.valueText.text = this.data.type == 'coin'?NumberUtil.addNumSeparator(this.data.value,2):'第' +this.data.value + '关'
+        this.bg.source = this.data.getBGRect(1)
+        this.mc.source = this.data.getThumb()
+        this.nameText.text = this.data.name
+        this.atkText.text = '攻击：' + this.data.atk + '   攻速：' + this.data.speed + '/秒'
+        this.desText.text = this.data.getDes();
+        this.currentState = 'unlock'
+        //this.currentState = 'levelUp'
+        //this.currentState = 'max'
+        //this.currentState = 'lock'
     }
 
+
+    //hp
+    //speed*2
+    //cost*2
+    //atk
 
 }

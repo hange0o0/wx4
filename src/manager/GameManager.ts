@@ -14,6 +14,7 @@ class GameManager {
     public changeUserTime = 0
     public changeUserID = 0
 
+    public isActive = true;
     public onShowFun
     public shareFailTime = 0;
 	public constructor() {
@@ -154,7 +155,7 @@ class GameManager {
             //DayGameManager.getInstance().passDay();
             //GuessManager.getInstance().passDay();
 
-            UserManager.getInstance().testPassDay();
+            //UserManager.getInstance().testPassDay();
             EM.dispatch(GameEvent.client.pass_day);
         }
 
@@ -287,7 +288,9 @@ if(window["wx"])
             return;
         UM.upDateUserData();
         SoundManager.getInstance().stopBgSound();
-        GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
+        GameManager.getInstance().isActive = false;
+        //GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
+        EM.dispatch(egret.Event.DEACTIVATE)
         console.log('hide')
         //GameUI.getInstance().cleanTouch();
     });
@@ -296,28 +299,30 @@ if(window["wx"])
         if(!GameManager.stage)
             return;
         SoundManager.getInstance().playSound('bg');
-        GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
+        //GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
+        EM.dispatch(egret.Event.ACTIVATE)
         GameManager.getInstance().onShowFun && GameManager.getInstance().onShowFun();
         GameManager.getInstance().onShowFun = null;
+        GameManager.getInstance().isActive = true;
         //GameUI.getInstance().cleanTouch();
         console.log('show')
 
 
-        if(GameManager.getInstance().changeUserTime)
-        {
-            console.log(TM.now() - GameManager.getInstance().changeUserTime)
-            if(TM.now() - GameManager.getInstance().changeUserTime > 30) //停留超过30秒
-            {
-                UM.coinObj.shareNum ++;
-                UM.needUpUser = true;
-                var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
-                arr.unshift(GameManager.getInstance().changeUserID)
-                if(arr.length > 5)
-                    arr.length = 5;
-                if(UM.coinObj.shareNum <= 3)
-                    MyWindow.ShowTips('体验完成，可领取奖励！')
-            }
-        }
+        //if(GameManager.getInstance().changeUserTime)
+        //{
+        //    console.log(TM.now() - GameManager.getInstance().changeUserTime)
+        //    if(TM.now() - GameManager.getInstance().changeUserTime > 30) //停留超过30秒
+        //    {
+        //        UM.coinObj.shareNum ++;
+        //        UM.needUpUser = true;
+        //        var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+        //        arr.unshift(GameManager.getInstance().changeUserID)
+        //        if(arr.length > 5)
+        //            arr.length = 5;
+        //        if(UM.coinObj.shareNum <= 3)
+        //            MyWindow.ShowTips('体验完成，可领取奖励！')
+        //    }
+        //}
         GameManager.getInstance().changeUserTime = 0;
     });
     //wx.exitMiniProgram(function(res){

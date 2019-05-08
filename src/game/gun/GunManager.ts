@@ -5,5 +5,11 @@ class GunManager extends egret.EventDispatcher {
         return this._instance;
     }
 
+    public maxGunNum = 9
 
+    public getGunByPos(index){
+        //if(index%2 == 0)
+        //    return 0
+        return 1;
+    }
 }

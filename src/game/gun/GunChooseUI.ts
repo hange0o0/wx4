@@ -6,10 +6,11 @@ class GunChooseUI extends game.BaseWindow{
         return this._instance;
     }
 
-    private closeBtn: eui.Image;
-    private bitmap: egret.Bitmap;
-    private isdisplay = false;
+    private scroller: eui.Scroller;
+    private list: eui.List;
 
+
+    private index;
     public constructor() {
         super();
         this.skinName = "GunChooseUISkin";
@@ -17,7 +18,14 @@ class GunChooseUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.setTitle('更换武器')
+        this.scroller.viewport = this.list;
+        this.list.itemRenderer = GunChooseItem
+    }
+
+    public show(v?){
+        this.index = v;
+        super.show()
     }
 
     public onShow(){
@@ -26,7 +34,7 @@ class GunChooseUI extends game.BaseWindow{
 
 
     public renew(){
-
+        this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(GunVO.data))
     }
 
     public hide(){

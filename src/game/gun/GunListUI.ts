@@ -6,9 +6,9 @@ class GunListUI extends game.BaseWindow{
         return this._instance;
     }
 
-    private closeBtn: eui.Image;
-    private bitmap: egret.Bitmap;
-    private isdisplay = false;
+    private scroller: eui.Scroller;
+    private list: eui.List;
+
 
     public constructor() {
         super();
@@ -17,16 +17,17 @@ class GunListUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.setTitle('我的飞刀')
+        this.scroller.viewport = this.list;
+        this.list.itemRenderer = GunListItem
     }
 
     public onShow(){
         this.renew();
     }
 
-
     public renew(){
-
+        this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(GunVO.data))
     }
 
     public hide(){

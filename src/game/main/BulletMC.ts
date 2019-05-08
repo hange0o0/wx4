@@ -62,7 +62,7 @@ class BulletMC extends game.BaseItem{
                 continue;
             if(item.y < this.y)
                 continue;
-            if(item.y > this.y + item.getVO().height*0.7)
+            if(item.y > this.y + item.getVO().height*1)
                 continue;
             if(Math.abs(item.x -this.x)>item.getVO().width/3)
                 continue;
@@ -72,18 +72,17 @@ class BulletMC extends game.BaseItem{
             {
                 this.hitMonster[item.id] = true
             }
-            this.hp -= item.getVO().def;
-            if(this.hp <= 0)
-            {
+            //this.hp -= item.getVO().def;
+            //if(this.hp <= 0)
+            //{
                 this.playDie();
                 return;
-            }
+            //}
         }
     }
 
     public playDie(){
         this.isDie = 1;
-        console.log('die');
         egret.Tween.get(this).to({
             y:this.y - 50 + Math.random()*20,
             x:this.x - 30 - Math.random()*30,

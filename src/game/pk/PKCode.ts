@@ -8,10 +8,17 @@ class PKCode_wx3 {
 
     public myHp = 1000;
     public myHpMax = 1000;
+    public wudiTime = 1000;
     public actionStep = 0;
     public monsterList = [];
     public wallArr = [];
     public autoList = [];
+    public enemyHp = 0//
+    public enemyHpMax = 0//
+
+    public getWudiCD(){
+        return Math.max(0,this.wudiTime - TM.nowMS())
+    }
 
     public getItemByID(id):PKMonsterItem_wx3{
         for(var i=0;i<this.monsterList.length;i++)
@@ -44,10 +51,22 @@ class PKCode_wx3 {
         return  mv;
     }
 
+    public resetHP(){
+        this.myHp = this.myHpMax = 500;
+    }
 
-    public initData(list?){
-        list =  '4|50,5|50,6|50,48|50,46|50';
 
+    public initData(){
+        var level = UM.level;
+        var list = PlayManager.getInstance().getLevelMonster(level)
+        var height = Math.min(300 + level*10,960)
+        var startY = (GameManager.uiHeight - height)/2 + 30
+        var hpRate = 1 + (level - 1)*0.2;
+
+        this.resetHP();
+
+        PKMonsterAction_wx3.getInstance().init();
+        PKBulletManager_wx3.getInstance().freeAll();
         while(this.wallArr.length)
         {
             PKMonsterItem_wx3.freeItem(this.wallArr.pop())
@@ -57,22 +76,30 @@ class PKCode_wx3 {
             PKMonsterItem_wx3.freeItem(this.monsterList.pop())
         }
 
+        this.enemyHp = 0;
         this.autoList = list.split(',');
         for(var i=0;i<this.autoList.length;i++)
         {
             var temp = this.autoList[i].split('|')
+            var mid = parseInt(temp[0]);
+            var hp = Math.floor(MonsterVO.getObject(mid).hp * hpRate)
             this.autoList[i] = {
-                mid:parseInt(temp[0]),
+                mid:mid,
+                hp:hp,
                 step:parseInt(temp[1]),
+                y:parseInt(temp[2])/100*height + startY
             }
+            this.enemyHp += hp;
         }
+        this.enemyHpMax = this.enemyHp;
+
         var wallDec = 70;
         var len = Math.ceil(GameManager.uiHeight/wallDec)
         for(var i=0;i<len;i++)
         {
             var wall = PKMonsterItem_wx3.createItem();
             wall.data = {mid:99};
-            PKingUI.getInstance().addChild(wall);
+            PKingUI.getInstance().con.addChild(wall);
             wall.y =i*wallDec+80
             wall.x =150
             this.wallArr.push(wall);
@@ -102,7 +129,7 @@ class PKCode_wx3 {
              var monster = PKMonsterItem_wx3.createItem();
              monster.data = oo;
              PKingUI.getInstance().addMonster(monster)
-             monster.y = 200 + Math.random()*(GameManager.uiHeight-300);
+             monster.y = oo.y
              monster.x = 680
              this.monsterList.push(monster);
 
@@ -140,6 +167,8 @@ class PKCode_wx3 {
 
     //怪出手
     public monsterAction(){
+        if(this.myHp <= 0)
+            return;
         for(var i=0;i<this.monsterList.length;i++)
         {
             var target:PKMonsterItem_wx3 = this.monsterList[i]
@@ -168,7 +197,7 @@ class PKCode_wx3 {
                     return;
                 var step = this.getStepByTime(target.getVO().atkrage*5);
                 if(target.mid == 1)
-                    step = 10
+                    step = 10;
                 AtkMVCtrl_wx3.getInstance().mAtkMV(target.mid,target,step);//飞行动画
 
                 PKMonsterAction_wx3.getInstance().addList({  //攻击生效
@@ -176,7 +205,10 @@ class PKCode_wx3 {
                     id:id,
                     target:target,
                     fun:()=>{
-                        this.myHp -= target.getAtk()
+                        if(!this.getWudiCD())
+                            this.myHp -= target.getAtk()
+                        if(this.myHp > 0)
+                            target.target.atk();
                         //console.log(this.myHp)
                         EM.dispatch(GameEvent.client.HP_CHANGE)
                     }
@@ -197,6 +229,8 @@ class PKCode_wx3 {
 
     //怪移动
     public monsterMove(){
+        if(this.myHp <= 0)
+            return;
         for(var i=0;i<this.monsterList.length;i++)
         {
             var target:PKMonsterItem_wx3 = this.monsterList[i]

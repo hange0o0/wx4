@@ -6,7 +6,6 @@ class RankUI extends game.BaseWindow{
         return this._instance;
     }
 
-    private closeBtn: eui.Image;
     private bitmap: egret.Bitmap;
     private isdisplay = false;
 
@@ -17,7 +16,7 @@ class RankUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.setTitle('好友排名')
     }
 
 
@@ -40,8 +39,8 @@ class RankUI extends game.BaseWindow{
 
     private poseData(){
 
-        var key = 'chapter'
-        var value = UM.chapterLevel
+        var key = 'level'
+        var value = UM.level
         let param:any = {
             me: UM.gameid,
             command: 'open',

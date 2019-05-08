@@ -378,8 +378,9 @@ module game {
         public setTitle(title,h?){
             var bg:any = this.getChildAt(0)
             bg.setTitle(title);
-            if(h)
-                bg.setBottomHeight(h);
+            bg.relateMC = this;
+            //if(h)
+            //    bg.setBottomHeight(h);
         }
     }
     

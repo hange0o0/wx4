@@ -11,6 +11,7 @@ class GunVO {
 
     public id: number;
     public type: number;
+    public name: string;
     public atk: number;
     public hp: number;
     public speed: number;
@@ -24,5 +25,28 @@ class GunVO {
 
     public reInit(){
 
+    }
+
+    public getThumb(){
+        return 'thum_'+this.id+'_png'
+    }
+
+    public getUrl(){
+        return 'knife_'+this.id+'_png'
+    }
+
+    public getLevel(){
+        return 1;
+    }
+
+    public getDes(lv?){
+        return ''
+    }
+
+    public getBGRound(lv){
+        return 'role_'+lv+'_png'
+    }
+    public getBGRect(lv){
+        return 'role_rect_'+lv+'_png'
     }
 }

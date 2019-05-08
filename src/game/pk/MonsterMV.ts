@@ -69,6 +69,10 @@ class MonsterMV extends eui.Group {
 
     public run(){
         this.state = MonsterMV.STAT_RUN
+        if(this.vo.id == 99)
+        {
+            this.speed = 100
+        }
         //this.state = MonsterMV.STAT_STAND
         this.reset();
     }
@@ -87,6 +91,10 @@ class MonsterMV extends eui.Group {
 
     public atk(){
         this.state = MonsterMV.STAT_ATK
+        if(this.vo.id == 99)
+        {
+            this.speed = 100
+        }
         this.reset();
     }
 
@@ -128,8 +136,8 @@ class MonsterMV extends eui.Group {
         {
             var frameStep = Math.round(this.frameTotal/this.vo.mcnum);
         }
-        if(this.state == MonsterMV.STAT_ATK && this.vo.id == 99)
-            frameStep = 1;
+        //if(this.state == MonsterMV.STAT_ATK && this.vo.id == 99)
+        //    frameStep = 1;
         var x = Math.floor(this.index/frameStep)*w
         var y = (this.state - 1)*h
         this.mc.scrollRect = new egret.Rectangle(x,y,w,h)
@@ -148,11 +156,18 @@ class MonsterMV extends eui.Group {
         {
             case MonsterMV.STAT_RUN:
                 if(this.vo.id == 99)
+                {
+                    this.speed = 0
                     this.stand();
+                }
                 break;
             case MonsterMV.STAT_STAND:
                 break;
             case MonsterMV.STAT_ATK:
+                if(this.vo.id == 99)
+                {
+                    this.speed = 0
+                }
                 this.stand();
                 break;
             case MonsterMV.STAT_DIE:

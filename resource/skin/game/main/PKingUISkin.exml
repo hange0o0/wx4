@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="PKingUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x000000"/>
-	<e:Image source="bg_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
-	<e:Group id="monsterGroup" width="640" verticalCenter="0" x="0">
-		<e:layout>
-		<e:VerticalLayout/>
-		</e:layout>
+	<e:Image id="bg1" left="0" top="0" bottom="0" fillMode="repeat" right="0" locked="true"/>
+	<e:Image id="bg2" top="0" bottom="0" fillMode="repeat" width="640" x="150" locked="true"/>
+	<e:Group id="con" left="0" right="0" top="0" bottom="0" locked="true">
+		<e:Group id="monsterGroup" width="640" verticalCenter="0" x="0" y="480" scaleX="1" scaleY="1">
+			<e:layout>
+			<e:VerticalLayout/>
+			</e:layout>
+		</e:Group>
+		<e:Group id="gunGroup" width="100" height="1000" x="0" y="0" scaleX="1" scaleY="1">
+			<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x70450b" visible="false"/>
+		</e:Group>
 	</e:Group>
-	<e:Group id="gunGroup" width="100" height="1000" x="0" y="0">
-		<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x70450b" visible="false"/>
+	<e:Group id="barGroup" y="0" horizontalCenter="0">
+		<e:Image source="black_bg_alpha_png" x="0" y="0" width="600" height="40"/>
+		<e:Image id="bar" source="hp_bar_jpg" x="5" y="5" width="590" height="30"/>
+		<e:Label id="hpText" text="Label" horizontalCenter="0" verticalCenter="0" size="22" stroke="2"/>
 	</e:Group>
+	<e:Label id="tipsText" text="无敌时间：00：22：22" y="60" strokeColor="0xffff00" stroke="1" textColor="0xfffae8" size="24" textAlign="center" x="196" horizontalCenter="0"/>
+	<e:Group id="rateCon" x="20" bottom="0">
+		<e:Rect width="600" height="10" fillColor="0x000000" x="0" y="40"/>
+		<e:Rect id="rateBar" width="300" height="10" fillColor="0xFDCF1F" x="0" y="40"/>
+		<e:Group id="rateMC" x="0" y="0" width="100" anchorOffsetX="50">
+		<e:Image source="arrow3_png" y="20" horizontalCenter="0"/>
+		<e:Label id="rateText" text="20%" y="0" size="18" textColor="0xfdcf1f" stroke="1" horizontalCenter="0"/>
+		</e:Group>
+	</e:Group>
+	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0" visible="false"/>
 </e:Skin>
