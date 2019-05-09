@@ -16,13 +16,35 @@ class GunChooseItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.addBtnEvent(this,()=>{
+            var pos = GunManager.getInstance().getPosByGun(this.data.id)
+            if(pos == GunChooseUI.getInstance().index)
+                GunManager.getInstance().removeGun(this.data.id)
+            else
+                GunManager.getInstance().addGun(this.data.id,GunChooseUI.getInstance().index)
+            GunChooseUI.getInstance().hide();
+        })
+
+        MyTool.addLongTouch(this,()=>{
+           GunListUI.getInstance().show(this.data.id)
+        },this)
     }
 
     public dataChanged():void {
-        this.usingGroup.visible = false;
+        var pos = GunManager.getInstance().getPosByGun(this.data.id)
+        if(pos)
+        {
+            this.usingGroup.visible = true;
+            this.usingText.text = '位置' + pos;
+        }
+        else
+        {
+            this.usingGroup.visible = false;
+        }
+
         this.mc.source = this.data.getThumb()
         this.levelText.text = this.data.name
-        this.bg.source = this.data.getBGRect(1)
+        this.bg.source = this.data.getBGRound()
     }
 
 

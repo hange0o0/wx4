@@ -32,6 +32,7 @@ class GunItem extends game.BaseItem{
     public step = 0;
     public tw;
     public timer;
+    public maxStep;
 
     public constructor() {
         super();
@@ -57,18 +58,21 @@ class GunItem extends game.BaseItem{
 
     public dataChanged():void {
         clearTimeout(this.timer)
+        var lv = GunManager.getInstance().getGunLevel(this.data) || 1
+        var vo = GunVO.getObject(this.data);
         this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
-        this.roleBG.source = 'role_bg_'+this.data.lv+'_png'
-        this.role.source = 'role_'+this.data.lv+'_png'
-        this.roundMC.source = 'knife_'+this.data.id+'_png'
-        this.shootMC.source = 'knife_'+this.data.id+'_png'
+        this.roleBG.source = 'role_bg_'+lv+'_png'
+        this.role.source = 'role_'+lv+'_png'
+        this.roundMC.source = 'knife_'+this.data+'_png'
+        this.shootMC.source = 'knife_'+this.data+'_png'
         this.step = 0;
+        this.maxStep = Math.floor(vo.speed*60) - 10;
     }
 
     public move(){
         this.step ++;
-        this.mcGroup.rotation += 30 - this.data.maxStep/5
-        if(this.step >= this.data.maxStep)
+        this.mcGroup.rotation += 30 - this.maxStep/5
+        if(this.step >= this.maxStep)
         {
             this.step = -10;
             this.shootMC.visible = false
@@ -78,9 +82,13 @@ class GunItem extends game.BaseItem{
         {
             this.shootMC.visible = true
 
-            this.shootMC.horizontalCenter = -80*(this.step)/this.data.maxStep + 20
+            this.shootMC.horizontalCenter = -80*(this.step)/this.maxStep + 20
         }
+    }
 
+    public move2(){
+        this.mcGroup.rotation += 10
+        this.shootMC.visible = false;
     }
 
     public remove():void {

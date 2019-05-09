@@ -52,7 +52,7 @@ class PKCode_wx3 {
     }
 
     public resetHP(){
-        this.myHp = this.myHpMax = 500;
+        this.myHp = this.myHpMax = 500+BuffManager.getInstance().getHpAdd();
     }
 
 

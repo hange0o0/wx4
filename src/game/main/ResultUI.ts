@@ -6,6 +6,7 @@ class ResultUI extends game.BaseUI{
         return this._instance;
     }
 
+    private bg: eui.Image;
     private awardBtn: eui.Button;
     private shareBtn: eui.Button;
     private coinText: eui.Label;
@@ -14,6 +15,7 @@ class ResultUI extends game.BaseUI{
     private barMC: eui.Rect;
     private rateText: eui.Label;
     private titleText: eui.Label;
+
 
 
     public addCoin = 0;
@@ -26,12 +28,12 @@ class ResultUI extends game.BaseUI{
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.awardBtn,()=>{
-            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin,2),0xFFFF00),2000)
+            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin,2),0xFFFF00),1000)
             this.close();
         })
         this.addBtnEvent(this.shareBtn,()=>{
             UM.addCoin(this.addCoin*2);
-            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin*3,2),0xFFFF00),2000)
+            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin*3,2),0xFFFF00),1000)
             this.close();
         })
     }
@@ -50,7 +52,7 @@ class ResultUI extends game.BaseUI{
         var PD = PKCode_wx3.getInstance();
         var rate = PD.enemyHp / PD.enemyHpMax;
         var coin = (PD.enemyHpMax - PD.enemyHp)/500
-        var add = 0;
+        var add = BuffManager.getInstance().getCoinAdd();
         if(rate == 0)
         {
              this.titleText.text = '大胜！'
@@ -68,11 +70,13 @@ class ResultUI extends game.BaseUI{
         coin *= (1+add/100);
         coin = this.addCoin = Math.ceil(coin);
         UM.addCoin(coin);
-        this.coinText.text = 'x' + NumberUtil.addNumSeparator(coin);
+        this.coinText.text = '金币 +' + NumberUtil.addNumSeparator(coin);
         if(add)
             this.coinAddText.text = '好友助力加成 +'+add+'%'
         else
             this.coinAddText.text = '没有好友助力加成'
+
+        //this.bg.source = UM.getBG();
     }
 
     public hide(){

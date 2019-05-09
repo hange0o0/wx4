@@ -1,13 +1,10 @@
 class GunListItem extends game.BaseItem{
 
-    private bg: eui.Image;
     private mc: eui.Image;
-    private nameText: eui.Label;
-    private atkText: eui.Label;
-    private desText: eui.Label;
+    private levelText: eui.Label;
+    private lockGroup: eui.Group;
     private lockText: eui.Label;
-    private costText: eui.Label;
-    private btn: eui.Button;
+
 
 
 
@@ -18,18 +15,39 @@ class GunListItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.btn,()=>{
+        this.touchChildren = false
 
-        })
     }
 
     public dataChanged():void {
-        this.bg.source = this.data.getBGRect(1)
+        var GM = GunManager.getInstance();
+        var lv = GM.getGunLevel(this.data.id);
         this.mc.source = this.data.getThumb()
-        this.nameText.text = this.data.name
-        this.atkText.text = '攻击：' + this.data.atk + '   攻速：' + this.data.speed + '/秒'
-        this.desText.text = this.data.getDes();
-        this.currentState = 'unlock'
+        this.touchEnabled = true
+        this.lockGroup.visible = false
+        if(!lv)
+        {
+            if(this.data.open <= UM.level)
+            {
+                this.levelText.text = '可解锁'
+            }
+            else
+            {
+                this.touchEnabled = false
+                this.levelText.text = ''
+                this.lockGroup.visible = true
+                this.lockText.text = '第'+this.data.open+'关'
+            }
+        }
+        else if(lv == GM.maxGunLevel)
+        {
+            this.levelText.text = 'MAX'
+        }
+        else
+        {
+            this.levelText.text = 'LV.' + lv;
+        }
+
         //this.currentState = 'levelUp'
         //this.currentState = 'max'
         //this.currentState = 'lock'

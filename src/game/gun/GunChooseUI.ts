@@ -10,7 +10,7 @@ class GunChooseUI extends game.BaseWindow{
     private list: eui.List;
 
 
-    private index;
+    public index;
     public constructor() {
         super();
         this.skinName = "GunChooseUISkin";
@@ -18,7 +18,7 @@ class GunChooseUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.setTitle('更换武器')
+
         this.scroller.viewport = this.list;
         this.list.itemRenderer = GunChooseItem
     }
@@ -30,11 +30,23 @@ class GunChooseUI extends game.BaseWindow{
 
     public onShow(){
         this.renew();
+        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
+    }
+
+    public renewList(){
+        MyTool.renewList(this.list);
     }
 
 
     public renew(){
-        this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(GunVO.data))
+        this.setTitle('更换'+this.index+'号位武器')
+        var arr = GunManager.getInstance().getMyGunList();
+        for(var s in arr)
+        {
+            arr[s].temp = arr[s].getLevel();
+        }
+        ArrayUtil.sortByField(arr,['temp','open'],[1,1]);
+        this.list.dataProvider = new eui.ArrayCollection(arr)
     }
 
     public hide(){

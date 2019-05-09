@@ -35,6 +35,8 @@ class PKingUI extends game.BaseUI {
     private touchID
 
     private stoping = true
+    private begining = true
+    private isFinish = true
     private isDie = false
     //private showWudi = false
     private isReborn = false
@@ -79,7 +81,7 @@ class PKingUI extends game.BaseUI {
         this.con.addChild(mc);
         mc.x = 50
         mc.y = item.y + this.gunGroup.y;
-        mc.data = GunVO.getObject(1);
+        mc.data = GunVO.getObject(item.data);
     }
 
     public removeBullet(mc:BulletMC){
@@ -100,29 +102,35 @@ class PKingUI extends game.BaseUI {
     public onShow(){
         this.isDie = false
         this.isReborn = false
+        this.isFinish = false
         this.stoping = true
+        this.begining = true
         this.blackBG.visible = true
         this.blackBG.alpha = 1
-        egret.Tween.get(this.blackBG).wait(100).to({alpha:0},400).call(()=>{
+        egret.Tween.get(this.blackBG).to({alpha:0},300).call(()=>{
             this.blackBG.visible = false
         })
         this.createMap();
 
-        this.gunGroup.x = -100;
-        egret.Tween.get(this.gunGroup).wait(500).to({x:50},200).to({x:0},200).wait(100).call(()=>{
+        this.gunGroup.x = 0;
+        egret.Tween.get(this.gunGroup).to({x:280},500).to({x:196},100).to({x:0},400).wait(100).call(()=>{
             this.stoping = false
+            this.begining = false
         })
 
+        this.bg1.x = 0;
+        egret.Tween.get(this.bg1).to({x:150-640},1000)
         this.bg2.x = 640;
-        egret.Tween.get(this.bg2).wait(500).to({x:130},400).to({x:150},200)
+        egret.Tween.get(this.bg2).to({x:150},1000)
 
         var wall = PKCode_wx3.getInstance().wallArr;
         var middleIndex = wall.length/2;
         for(var i=0;i<wall.length;i++)
         {
             var wallItem = wall[i];
-            wallItem.visible = false;
-            this.wallMV(wallItem,300 +(middleIndex - Math.abs(middleIndex - i))*50)
+            wallItem.stand();
+            //wallItem.visible = false;
+            this.wallMV(wallItem)
         }
 
         this.tipsText.text = ''
@@ -130,15 +138,16 @@ class PKingUI extends game.BaseUI {
         this.renewBar()
         egret.Tween.get(this.barGroup).wait(1000).to({y:10},200)
 
+        this.rateCon.bottom = -100;
+        egret.Tween.get(this.rateCon).wait(1000).to({bottom:0},200)
+
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.HP_CHANGE,this.renewBar)
     }
 
-    private wallMV(wallItem,cd){
-        egret.Tween.get(wallItem).wait(cd).call(()=>{
-            wallItem.visible = true;
-            wallItem.run();
-        })
+    private wallMV(wallItem){
+        wallItem.x = 640;
+        egret.Tween.get(wallItem).to({x:150},1000)
     }
 
     private renewBar(){
@@ -204,9 +213,32 @@ class PKingUI extends game.BaseUI {
     }
 
     private onE(){
+        if(this.begining)
+        {
+            for(var i=0;i<this.gunArr.length;i++)
+            {
+                this.gunArr[i].move2();
+            }
+        }
         if(this.stoping)
             return;
+
         var PD = PKCode_wx3.getInstance();
+        PD.onStep();
+
+        var cd = PD.getWudiCD();
+        if(cd)
+        {
+            this.tipsText.text = '无敌时间：' + (cd/1000).toFixed(1)  + '秒';
+        }
+        else
+        {
+            this.tipsText.text = '';
+        }
+
+        if(this.isFinish)
+            return;
+
         for(var i=0;i<this.bulletArr.length;i++)
         {
             var bullet = this.bulletArr[i];
@@ -224,17 +256,6 @@ class PKingUI extends game.BaseUI {
         {
             this.gunArr[i].move();
         }
-        PD.onStep();
-
-        var cd = PD.getWudiCD();
-        if(cd)
-        {
-            this.tipsText.text = '无敌时间：' + (cd/1000).toFixed(1)  + '秒';
-        }
-        else
-        {
-            this.tipsText.text = '';
-        }
 
 
         var rate = PD.enemyHp / PD.enemyHpMax;
@@ -244,12 +265,16 @@ class PKingUI extends game.BaseUI {
 
         if(rate == 0)
         {
-            this.stoping = true;
+            this.isFinish = true;
             while(this.bulletArr.length)
             {
                 BulletMC.freeItem(this.bulletArr.pop())
             }
-            ResultUI.getInstance().show()
+            setTimeout(()=>{
+                this.stoping = true;
+                ResultUI.getInstance().show()
+            },1000)
+
         }
     }
 
@@ -269,12 +294,17 @@ class PKingUI extends game.BaseUI {
         var num = UM.gunPosNum;
         for(var i=0;i<num;i++)
         {
-            var gun = GunItem.createItem();
-            gun.data = {id:i+1,maxStep:10+i*5,lv:Math.ceil(Math.random()*8)};
-            gun.y = (i+0.5)*80;
-            gun.x = 50;
-            this.gunArr.push(gun);
-            this.gunGroup.addChild(gun);
+            var gunid = GunManager.getInstance().getGunByPos(i+1);
+            if(gunid)
+            {
+                var gun = GunItem.createItem();
+                gun.data = gunid
+                gun.y = (i+0.5)*80;
+                gun.x = 50;
+                this.gunArr.push(gun);
+                this.gunGroup.addChild(gun);
+            }
+
         }
         this.gunGroup.y = (GameManager.uiHeight - num*80)/2
 

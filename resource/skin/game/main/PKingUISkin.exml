@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="PKingUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="bg1" left="0" top="0" bottom="0" fillMode="repeat" right="0" locked="true"/>
-	<e:Image id="bg2" top="0" bottom="0" fillMode="repeat" width="640" x="150" locked="true"/>
+	<e:Image id="bg1" top="0" bottom="0" fillMode="repeat" width="640" x="0"/>
+	<e:Image id="bg2" top="0" bottom="0" fillMode="repeat" width="640" x="0"/>
 	<e:Group id="con" left="0" right="0" top="0" bottom="0" locked="true">
 		<e:Group id="monsterGroup" width="640" verticalCenter="0" x="0" y="480" scaleX="1" scaleY="1">
 			<e:layout>
@@ -15,7 +15,7 @@
 	<e:Group id="barGroup" y="0" horizontalCenter="0">
 		<e:Image source="black_bg_alpha_png" x="0" y="0" width="600" height="40"/>
 		<e:Image id="bar" source="hp_bar_jpg" x="5" y="5" width="590" height="30"/>
-		<e:Label id="hpText" text="Label" horizontalCenter="0" verticalCenter="0" size="22" stroke="2"/>
+		<e:Label id="hpText" text="Label" horizontalCenter="0" verticalCenter="1" size="22" stroke="2"/>
 	</e:Group>
 	<e:Label id="tipsText" text="无敌时间：00：22：22" y="60" strokeColor="0xffff00" stroke="1" textColor="0xfffae8" size="24" textAlign="center" x="196" horizontalCenter="0"/>
 	<e:Group id="rateCon" x="20" bottom="0">

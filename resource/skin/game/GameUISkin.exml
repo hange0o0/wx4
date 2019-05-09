@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Image id="bg" left="0" top="0" bottom="0" fillMode="repeat" right="0"/>
+	<e:Image id="bg" left="0" fillMode="repeat" right="0" height="960" y="0"/>
 	<e:Group top="100" bottom="320" left="0" right="0">
 		<e:Group id="gunCon" horizontalCenter="0" verticalCenter="0" width="540"/>
 	</e:Group>
@@ -31,8 +31,8 @@
 			<e:Label text="好友助力" textColor="0xFDFDFD" horizontalCenter="0" bold="true" size="24" bottom="0"/>
 		</e:Group>
 		<e:layout>
-			<e:HorizontalLayout gap="80" verticalAlign="bottom"/>
+			<e:HorizontalLayout gap="80" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0" visible="false"/>
+	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
 			</e:Skin>

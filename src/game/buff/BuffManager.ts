@@ -6,15 +6,15 @@ class BuffManager {
         return this._instance;
     }
 
-    public buffAtk = 50
+    public buffHp = 50
     public buffWork = 10
 
     public getUserNum(){
         return Math.min(100,UM.shareUser.length)
     }
 
-    public getForceAdd(){
-        return this.getUserNum()*this.buffAtk
+    public getHpAdd(){
+        return this.getUserNum()*this.buffHp
     }
 
     public getCoinAdd(){

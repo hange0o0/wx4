@@ -13,7 +13,7 @@ class GunVO {
     public type: number;
     public name: string;
     public atk: number;
-    public hp: number;
+    public open: number;
     public speed: number;
     public v1: number;
     public v2: number;
@@ -24,7 +24,7 @@ class GunVO {
     }
 
     public reInit(){
-
+         this.speed/=1000
     }
 
     public getThumb(){
@@ -36,17 +36,53 @@ class GunVO {
     }
 
     public getLevel(){
-        return 1;
+        return GunManager.getInstance().getGunLevel(this.id);
     }
 
     public getDes(lv?){
-        return ''
+        lv = lv || this.getLevel() || 1
+        switch(this.type)
+        {
+            case 1://散射
+                break;
+            case 2://穿透
+                break;
+            case 3://杀敌爆炸
+                break;
+            case 4://杀敌吸血
+                break;
+            case 5://杀敌攻击成长
+                break;
+            case 6://全体加攻
+                break;
+            case 7://减速
+                break;
+            case 8://晕 机率
+                break;
+            case 9://机率 暴击
+                break;
+            case 10://增加金币收益
+                break;
+            case 11://增加城墙血量
+                break;
+            case 12://推后
+                break;
+            case 13://追踪
+                break;
+            case 14://命中后分裂
+                break;
+            case 15://命中吸血
+                break;
+        }
+        return '无'
     }
 
-    public getBGRound(lv){
+    public getBGRound(lv?){
+        lv = lv || this.getLevel() || 1
         return 'role_'+lv+'_png'
     }
-    public getBGRect(lv){
+    public getBGRect(lv?){
+        lv = lv || this.getLevel() || 1
         return 'role_rect_'+lv+'_png'
     }
 }

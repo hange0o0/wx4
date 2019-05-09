@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GunListItemSkin" width="580" height="140" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="unlock,levelUp,max,lock" >
-	<e:Image source="item_png" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0" locked="true"/>
-	<e:Image id="bg" source="black_bg_png" width="120" height="120" x="10" y="10"/>
-	<e:Image id="mc" source="black_bg_png" width="120" height="120" x="10" y="10"/>
-	<e:Label id="nameText" text="Label" y="15" size="26" x="150" bold="true"/>
-	<e:Label id="atkText" text="攻击：1234   攻速：0.5秒" y="50" size="22" x="150" width="290" lineSpacing="6" anchorOffsetX="0" textColor="0xfcd79f"/>
-	<e:Label id="desText" text="LabelLabelLabelLabelbelLabelLabel" y="80" size="22" x="150" width="280" lineSpacing="6" textColor="0xD6D6D6" anchorOffsetX="0"/>
-	<e:Group includeIn="lock" width="150" right="0" verticalCenter="0">
-		<e:Image source="lock_icon_png" includeIn="lock" y="0" scaleX="1.8" scaleY="1.8" horizontalCenter="0"/>
-		<e:Label id="lockText" text="关卡15解锁" includeIn="lock" y="60" textColor="0x969696" size="22" horizontalCenter="0"/>
-	</e:Group>
-	<e:Group y="20" includeIn="unlock,levelUp" width="150" right="0">
-		<e:Image source="coin_mc_png" x="0" y="0" scaleX="0.8" scaleY="0.8"/>
-		<e:Label id="costText" text="12345" x="35" size="24" y="2" textColor="0xf9df7c"/>
+<e:Skin class="GunListItemSkin" width="100" height="130" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="up,upAndSelected" >
+	<e:Image source="item_png" includeIn="upAndSelected" scale9Grid="18,20,13,11" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="mc" source="black_bg_png" width="100" height="100" x="0" y="0"/>
+	<e:Label id="levelText" text="Label" size="20" bold="false" bottom="8" horizontalCenter="0"/>
+	<e:Group id="lockGroup" horizontalCenter="0" bottom="8">
+		<e:Image source="lock_icon_png" y="0" scaleX="0.8" scaleY="0.8" horizontalCenter="0"/>
+		<e:Label id="lockText" text="15关"  y="60" textColor="0x969696" size="20" horizontalCenter="0"/>
 		<e:layout>
-			<e:HorizontalLayout gap="2" verticalAlign="middle" horizontalAlign="center"/>
+			<e:HorizontalLayout verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Button id="btn" label="升级" skinName="Btn1Skin" width="120" bottom="20" includeIn="unlock,levelUp" label.unlock="解锁" skinName.levelUp="Btn2Skin" right="15"/>
-	<e:Label text="MAX" bold="true" right="40" verticalCenter="0" includeIn="max"/>
 </e:Skin>

@@ -46,7 +46,9 @@ class GameUI extends game.BaseUI {
             this.startMV();
         })
         this.addBtnEvent(this.soundBtn,()=>{
-
+            SoundManager.getInstance().soundPlaying = !SoundManager.getInstance().soundPlaying
+            SoundManager.getInstance().bgPlaying = !SoundManager.getInstance().bgPlaying
+            this.renewSound();
         })
         this.addBtnEvent(this.rankBtn,()=>{
             RankUI.getInstance().show();
@@ -65,9 +67,31 @@ class GameUI extends game.BaseUI {
             this.gunArr.push(item);
             this.gunCon.addChild(item);
         }
+
+        MyTool.addLongTouch(this.coinText,()=>{
+            if(egret.getTimer() - DebugUI.getInstance().debugTimer < 3000)
+            {
+                MyWindow.ShowTips('你作弊！')
+                DebugUI.getInstance().debugOpen = true
+            }
+        },this)
+
+        MyTool.addLongTouch(this.soundBtn,()=>{
+            if(DEBUG)
+            {
+                DebugUI.getInstance().show();
+                return;
+            }
+            if(DebugUI.getInstance().debugOpen && !SoundManager.getInstance().soundPlaying)
+            {
+                DebugUI.getInstance().show();
+            }
+        },this)
     }
 
-
+    private renewSound(){
+        this.soundBtn.source = SoundManager.getInstance().bgPlaying?'sound_btn1_png':'sound_btn2_png'
+    }
 
     public show(){
         super.show()
@@ -84,23 +108,35 @@ class GameUI extends game.BaseUI {
             UM.level = parseInt(_get['level']);
 
 
+        this.bg.height = GameManager.uiHeight + 250;
+        this.bg.y = 0;
         GameTool.getInstance().preLoadMV();
+        this.renewSound();
         this.renew();
         this.renewCoin();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renew)
     }
 
     private onE(){
         if(!this.visible)
             return;
+        for(var i=0;i<this.gunArr.length;i++) {
+            var item = this.gunArr[i];
+            item.onE();
+        }
         if(!this.startBtn.visible)
             return;
         //this.gunCon.rotation += 0.1;
-        //for(var i=0;i<this.gunArr.length;i++) {
-        //    var item = this.gunArr[i];
-        //    item.rotation = -this.gunCon.rotation
-        //}
+        for(var i=0;i<this.gunArr.length;i++) {
+            var item = this.gunArr[i];
+            item.rotation = -this.gunCon.rotation
+        }
+
+        this.bg.y += 2;
+        if(this.bg.y > 0)
+            this.bg.y -= 200;
     }
 
     public onVisibleChange(){
@@ -141,6 +177,7 @@ class GameUI extends game.BaseUI {
                 var xy = this.getPos(i+1,pos)
                 item.y = xy.y
                 item.x = xy.x
+                item.dataChanged();
             }
             else
             {

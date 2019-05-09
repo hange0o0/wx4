@@ -31,6 +31,7 @@ class UserManager {
     public coin: number = 999;
     public level: number = 1;
     public gunLevel: any = {};
+    public gunPos: any = {};
     public gunPosNum = 3;
 
 
@@ -44,15 +45,15 @@ class UserManager {
     public initDataTime
 
     public fill(data:any):void{
-        //var localData = SharedObjectManager.getInstance().getMyValue('localSave')
-        //if(localData && localData.saveTime && localData.saveTime - data.saveTime > 10) //本地的数据更新
-        //{
-        //    //console.log('overwrite')
-        //    for(var s in localData)
-        //    {
-        //        data[s] = localData[s];
-        //    }
-        //}
+        var localData = SharedObjectManager.getInstance().getMyValue('localSave')
+        if(localData && localData.saveTime && localData.saveTime - data.saveTime > 10) //本地的数据更新
+        {
+            //console.log('overwrite')
+            for(var s in localData)
+            {
+                data[s] = localData[s];
+            }
+        }
         var saveTime = data.saveTime;
 
         this.dbid = data._id;
@@ -61,6 +62,7 @@ class UserManager {
         this.shareUser = data.shareUser;
         this.level = data.level || 1;
         this.gunLevel = data.gunLevel || {};
+        this.gunPos = data.gunPos || {};
         this.gunPosNum = _get['pos'] || data.gunPosNum || 3;
 
         DM.addTime = SharedObjectManager.getInstance().getMyValue('addTime') || 0;
@@ -224,8 +226,10 @@ class UserManager {
     private orginUserData(){
          return {
              loginTime:TM.now(),   //$
-             coin:10000,   //$
+             coin:500,   //$
              level:1,   //$
+             gunPos:{1:1,2:2,3:3},   //$
+             gunLevel:{},   //$
              guideFinish:true,
              saveTime:0,
              shareUser:[],
@@ -236,10 +240,15 @@ class UserManager {
         return {
             loginTime:UM.loginTime,
             coin:UM.coin,
+            level:UM.level,
+            gunLevel:UM.gunLevel,
+            gunPos:UM.gunPos,
+            gunPosNum:UM.gunPosNum,
             //guideFinish:UM.guideFinish,
             saveTime:TM.now(),
         };
     }
+
 
     public upDateUserData(){
         if(!this.needUpUser)
@@ -282,6 +291,15 @@ class UserManager {
         var add = Math.ceil(lv/15)
         var index = (lv * add)%15 || 1;
         return 'bg_'+index+'_jpg'
+    }
+
+    public checkCoin(v){
+        if(this.coin < v)
+        {
+            MyWindow.ShowTips('金币不足！')
+            return false
+        }
+        return true
     }
 
 }

@@ -18,9 +18,9 @@ class BulletMC extends game.BaseItem{
 
     private mc: eui.Image;
 
-    public speed = 8;
+    public speed = 20;
     public hitMonster = {};//已攻击的怪物
-    public hp = 0
+    //public hp = 0
     public isDie = 0
     public constructor() {
         super();
@@ -41,9 +41,9 @@ class BulletMC extends game.BaseItem{
         this.isDie = 0;
         this.mc.source = 'knife_'+this.data.id+'_png'
         this.rotation = 90;
-        this.speed = this.data.speed
+        //this.speed = this.data.speed
         this.hitMonster = {};
-        this.hp = this.data.hp
+        //this.hp = this.data.hp
     }
 
     public move(){
@@ -58,6 +58,8 @@ class BulletMC extends game.BaseItem{
         for(var i=0;i<monsterArr.length;i++)
         {
             var item = monsterArr[i];
+            if(item.isDie)
+                continue;
             if(this.hitMonster[item.id]) //打过
                 continue;
             if(item.y < this.y)
@@ -67,7 +69,7 @@ class BulletMC extends game.BaseItem{
             if(Math.abs(item.x -this.x)>item.getVO().width/3)
                 continue;
 
-            item.addHp(-this.data.atk);
+            item.addHp(-GunManager.getInstance().getGunAtk(this.data.id));
             if(this.data.type != 100)
             {
                 this.hitMonster[item.id] = true
