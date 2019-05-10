@@ -31,9 +31,11 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public stop = 0
     public isDie = 0
     public mid = 0
-    public yunCount = 0
 
     public target
+    public yunStep = 0;
+    public slowStep = 0;
+    public speedDec = 0;
 
 
     public monsterMV:PKMonsterMV_wx3 = new PKMonsterMV_wx3();
@@ -44,8 +46,6 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.monsterMV.addEventListener('mv_die',this.onDieFinish,this)
     }
 
-    private wx3_fun_asdfasdfasdf(){}
-    private wx3_fun_ast34(){}
     public childrenCreated() {
         super.childrenCreated();
 
@@ -68,9 +68,53 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         return MonsterVO.getObject(this.mid);
     }
 
+    public setSlow(speedDec,cd){
+        var step = Math.ceil(cd*1000*(60/1000))
+        this.slowStep = Math.max(this.slowStep,step)
+        this.speedDec = Math.max(this.speedDec,speedDec)
+        this.monsterMV.speed = - this.speedDec
+        this.alpha = 0.8;
+    }
+
+    public setYun(cd){
+        var step = Math.ceil(cd*1000*(60/1000))
+        if(!this.yunStep)//表现晕
+        {
+
+        }
+        this.yunStep = step;
+    }
+
+    public onE(){
+        if(this.yunStep)
+        {
+            this.yunStep --;
+            if(this.yunStep == 0)
+            {
+
+            }
+        }
+        if(this.slowStep)
+        {
+            this.slowStep --;
+            if(this.slowStep == 0)
+            {
+                this.speedDec = 0;
+                this.monsterMV.speed = 0;
+                this.alpha = 1;
+            }
+        }
+    }
+
+    public getSpeedRate(){
+        return 1 + this.speedDec/100
+    }
+
     public dataChanged(){
         this.isDie = 0;
-        this.yunCount = 0;
+        this.yunStep = 0;
+        this.slowStep = 0;
+        this.speedDec = 0;
         this.mid = this.data.mid;
         this.monsterMV.load(this.mid)
         this.monsterMV.stand();
@@ -101,7 +145,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public run(){
         if(this.monsterMV.state != MonsterMV.STAT_RUN )
             this.monsterMV.run();
-        this.x -= this.speed/20;
+        this.x -= (this.speed/20)/this.getSpeedRate();
     }
 
     public stand(){
@@ -116,7 +160,6 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.barGroup.visible = true;
         var tw = egret.Tween.get(this.barGroup);
         tw.to({alpha:0},300)
-
     }
 
     public atk(){

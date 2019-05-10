@@ -8,6 +8,8 @@ class PKCode_wx3 {
 
     public myHp = 1000;
     public myHpMax = 1000;
+    public hpAdd = 0;
+    public coinAdd = 0;
     public wudiTime = 1000;
     public actionStep = 0;
     public monsterList = [];
@@ -16,9 +18,16 @@ class PKCode_wx3 {
     public enemyHp = 0//
     public enemyHpMax = 0//
 
+    public atkList = {}
+
     public getWudiCD(){
         return Math.max(0,this.wudiTime - TM.nowMS())
     }
+
+    public getBulletAtk(bid){
+        return this.atkList[bid].base + this.atkList[bid].add
+    }
+
 
     public getItemByID(id):PKMonsterItem_wx3{
         for(var i=0;i<this.monsterList.length;i++)
@@ -52,7 +61,21 @@ class PKCode_wx3 {
     }
 
     public resetHP(){
-        this.myHp = this.myHpMax = 500+BuffManager.getInstance().getHpAdd();
+        this.myHp = this.myHpMax = 500+BuffManager.getInstance().getHpAdd() + this.hpAdd;
+    }
+
+    //对一定范围内的敌人造成伤害
+    public hitEnemyAround(x,y,range,hurt){
+        for(var i=0;i<this.monsterList.length;i++)
+        {
+            var item = this.monsterList[i];
+            if(item.isDie)
+                continue;
+            if(Math.abs(item.x - x) <= range &&  Math.abs(item.y - y) <= range)
+            {
+                item.addHp(-hurt);
+            }
+        }
     }
 
 
@@ -62,6 +85,44 @@ class PKCode_wx3 {
         var height = Math.min(300 + level*10,960)
         var startY = (GameManager.uiHeight - height)/2 + 30
         var hpRate = 1 + (level - 1)*0.2;
+
+        this.atkList = {};
+        var addAtk = 0;
+        this.hpAdd = 0
+        this.coinAdd = 0
+        for(var s in UM.gunPos)
+        {
+            var gunid = UM.gunPos[s];
+            if(gunid)
+            {
+                var vo = GunVO.getObject(gunid);
+                this.atkList[gunid] = {
+                    base:GunManager.getInstance().getGunAtk(gunid),
+                    add:0,
+                }
+                if(vo.type == 6)
+                {
+                    addAtk += vo.getLevelValue(vo.v1,vo.v3)
+                }
+                if(vo.type == 10)
+                {
+                   this.coinAdd = vo.getLevelValue(vo.v1,vo.v3)
+                }
+                if(vo.type == 11)
+                {
+                    this.hpAdd = vo.getLevelValue(vo.v1,vo.v3)
+                }
+            }
+        }
+        if(addAtk)
+        {
+            for(var s in this.atkList)
+            {
+                this.atkList[s].add += this.atkList[s].base*(1+addAtk/100);
+            }
+        }
+
+
 
         this.resetHP();
 
@@ -176,6 +237,10 @@ class PKCode_wx3 {
                 continue;
             if(target.stop)
                 continue;
+            if(target.yunStep)
+                continue;
+
+            target.onE();
             if(target.x < target.getVO().getAtkDis() + 200)//普攻
             {
                   this.targetAtk(target);
@@ -189,7 +254,7 @@ class PKCode_wx3 {
         //前摇结束
         var id = target.id;
         PKMonsterAction_wx3.getInstance().addList({
-            step:this.getStepByTime(target.getVO().mv_atk),
+            step:Math.floor(this.getStepByTime(target.getVO().mv_atk)*target.getSpeedRate()),
             id:id,
             target:target,
             fun:()=>{
@@ -198,6 +263,7 @@ class PKCode_wx3 {
                 var step = this.getStepByTime(target.getVO().atkrage*5);
                 if(target.mid == 1)
                     step = 10;
+                step = Math.floor(step*target.getSpeedRate());
                 AtkMVCtrl_wx3.getInstance().mAtkMV(target.mid,target,step);//飞行动画
 
                 PKMonsterAction_wx3.getInstance().addList({  //攻击生效
@@ -206,11 +272,11 @@ class PKCode_wx3 {
                     target:target,
                     fun:()=>{
                         if(!this.getWudiCD())
-                            this.myHp -= target.getAtk()
+                            this.addHp(-target.getAtk())
                         if(this.myHp > 0)
                             target.target.atk();
                         //console.log(this.myHp)
-                        EM.dispatch(GameEvent.client.HP_CHANGE)
+
                     }
                 })
             }
@@ -218,13 +284,23 @@ class PKCode_wx3 {
 
         //僵直结束
         PKMonsterAction_wx3.getInstance().addList({
-            step:this.getStepByTime(target.getVO().atkcd),
+            step:Math.floor(this.getStepByTime(target.getVO().atkcd)*target.getSpeedRate()),
             id:id,
             target:target,
             fun:()=>{
                 target.stop=0;
             }
         })
+    }
+
+    public addHp(v){
+        this.myHp += v
+        if(this.myHp > this.myHpMax)
+            this.myHp = this.myHpMax
+        EM.dispatch(GameEvent.client.HP_CHANGE)
+    }
+    public addAtk(id,v){
+        this.atkList[id].add += v;
     }
 
     //怪移动
@@ -237,6 +313,8 @@ class PKCode_wx3 {
             if(target.isDie)
                 continue;
             if(target.stop)
+                continue;
+            if(target.yunStep)
                 continue;
             target.run();
         }

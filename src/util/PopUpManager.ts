@@ -149,11 +149,24 @@ class PopUpManager {
 
     public static testVisible(){
         var setVisible = false;
+        var testAD = false
         for(var i=GameManager.container.numChildren-1 ;i>=0;i--)
         {
             var ui = GameManager.container.getChildAt(i);
             if(ui instanceof game.BaseUI)
             {
+                if(!testAD)
+                {
+                    testAD = true;
+                    if(ui.isShowAD)
+                    {
+                        GameManager.getInstance().showBanner(ui.adBottom);
+                    }
+                    else
+                    {
+                        GameManager.getInstance().hideBanner();
+                    }
+                }
                 var lastVisible = ui.visible;
                 if(!setVisible)
                 {

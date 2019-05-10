@@ -45,6 +45,12 @@ class GunChooseItem extends game.BaseItem{
         this.mc.source = this.data.getThumb()
         this.levelText.text = this.data.name
         this.bg.source = this.data.getBGRound()
+        if(DEBUG)
+        {
+            this.levelText.text += this.data.id
+        }
+
+        this.data.getTitle();
     }
 
 

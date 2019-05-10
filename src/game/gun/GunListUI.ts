@@ -90,14 +90,15 @@ class GunListUI extends game.BaseWindow{
         var vo:GunVO = this.data;
         var lv = GM.getGunLevel(vo.id);
         this.setTitle(vo.name)
-        this.levelText.text =   'LV.'+lv+''
+
+
         this.gunItem.data = vo.id;
-        this.setHtml(this.desText,'技能：' + this.data.getDes());
+        this.setHtml(this.desText,this.data.getTitle() + '：' + this.data.getDes());
 
         if(!lv || lv == GM.maxGunLevel)
             this.setHtml(this.atkText, '攻击:' + GM.getGunAtk(this.data.id) + '\n攻速:' + this.data.speed + '/秒')
         else
-            this.setHtml(this.atkText, '攻击:' + GM.getGunAtk(this.data.id) + this.createHtml(' -> '+GM.getGunAtk(this.data.id,lv+1),0xFFFF00)+'\n攻速:' + this.data.speed + '/秒')
+            this.setHtml(this.atkText, '攻击:' + GM.getGunAtk(this.data.id) + this.createHtml('  ('+GM.getGunAtk(this.data.id,lv+1) + ')',0x00FF00)+'\n攻速:' + this.data.speed + '/秒')
         this.costText.text = NumberUtil.addNumSeparator(GM.getGunCost(this.data.id))
         if(!lv)
         {
@@ -105,14 +106,17 @@ class GunListUI extends game.BaseWindow{
             this.btn.skinName = 'Btn1Skin'
             this.upGroup.visible = true
             this.maxMC.text = ''
+            this.levelText.text =  '';
         }
         else if(lv == GM.maxGunLevel)
         {
+            this.levelText.text =   'LV.'+lv+''
             this.upGroup.visible = false
             this.maxMC.text = '已满级'
         }
         else
         {
+            this.levelText.text =   'LV.'+lv+''
             this.btn.label = '升级'
             this.btn.skinName = 'Btn2Skin'
             this.upGroup.visible = true

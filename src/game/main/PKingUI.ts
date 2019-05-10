@@ -31,6 +31,7 @@ class PKingUI extends game.BaseUI {
     public bulletArr = [];
     public gunArr = [];
     public speed = 5
+    public txtPool = []
 
     private touchID
 
@@ -76,18 +77,88 @@ class PKingUI extends game.BaseUI {
     public shoot(item:GunItem){
         if(this.isDie)
             return
+        var vo = GunVO.getObject(item.data)
+        var num = 1;
+        if(vo.type == 1)//散射
+            num = vo.v1;
+        var rota = 20;
+        var total = (num - 1)*rota;
+        var start = -total/2
+        for(var i=0;i<num;i++)
+        {
+            this.createBullet(item.data,50,item.y + this.gunGroup.y,start + i*rota,item)
+        }
+    }
+
+    public createBullet(id,x,y,rota,item?){
         var mc = BulletMC.createItem();
         this.bulletArr.push(mc);
         this.con.addChild(mc);
-        mc.x = 50
-        mc.y = item.y + this.gunGroup.y;
-        mc.data = GunVO.getObject(item.data);
+        mc.x = x
+        mc.y = y
+        var double = 1;
+        var vo = GunVO.getObject(id)
+        if(vo.type == 9)//有$1%的机率造成@2倍伤害';
+        {
+            if(Math.random() < vo.getLevelValue(vo.v1,vo.v3)/100)
+            {
+                double = vo.v2
+                if(item)
+                {
+                    this.playDoubleHit(item,MyTool.toFixed(double,2))
+                }
+            }
+        }
+        mc.data = {
+            id:id,
+            rota:rota,
+            double:double
+        };
+        return mc
     }
 
     public removeBullet(mc:BulletMC){
         var index = this.bulletArr.indexOf(mc);
         this.bulletArr.splice(index,1);
         BulletMC.freeItem(mc);
+    }
+
+    public playDoubleHit(item:GunItem,value){
+        var txt = this.createTxt();
+        txt.textColor = 0xFF0000;
+        txt.text = '!' + value;
+        txt.x = item.x;
+        txt.y = item.y;
+        this.con.addChildAt(txt,item.parent.getChildIndex(item) + 1)
+
+        var tw = egret.Tween.get(txt);
+        tw.to({y:txt.y - 20},300).wait(200).call(function(){
+            this.freeTxt(txt);
+        },this)
+    }
+
+    private createTxt():eui.Label{
+        var item:eui.Label = this.txtPool.pop();
+        if(!item)
+        {
+            item = new eui.Label();
+            item.size = 20;
+            item.stroke = 2;
+            item.width = 160;
+            item.textAlign="center"
+            item.anchorOffsetX = 80;
+        }
+        item.strokeColor = 0x000000
+        item.alpha = 1;
+        return item;
+    }
+
+    private freeTxt(item){
+        if(!item)
+            return;
+        egret.Tween.removeTweens(item)
+        MyTool.removeMC(item);
+        this.txtPool.push(item);
     }
 
 
