@@ -74,7 +74,7 @@ class GunItem extends game.BaseItem{
         this.mcGroup.rotation += 30 - this.maxStep/5
         if(this.step >= this.maxStep)
         {
-            this.step = -10;
+            this.step = -10;  //-10
             this.shootMC.visible = false
             PKingUI.getInstance().shoot(this);
         }

@@ -38,6 +38,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public speedDec = 0;
 
 
+    public stateMV =  new MonsterAtkMV();
+
     public monsterMV:PKMonsterMV_wx3 = new PKMonsterMV_wx3();
 
     public constructor() {
@@ -54,6 +56,12 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.monsterMV.y = 300;
         this.anchorOffsetX = 50;
         this.anchorOffsetY = 300;
+
+
+        this.stateMV.x =  50 -  154/4
+
+        this.stateMV.load('effect2_png',0,154,39,2)
+        this.stateMV.stop()
     }
 
     public getAtk(){
@@ -73,16 +81,18 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.slowStep = Math.max(this.slowStep,step)
         this.speedDec = Math.max(this.speedDec,speedDec)
         this.monsterMV.speed = - this.speedDec
-        this.alpha = 0.8;
+        this.monsterMV.alpha = 0.8;
     }
 
     public setYun(cd){
         var step = Math.ceil(cd*1000*(60/1000))
         if(!this.yunStep)//表现晕
         {
-
+            this.addChild(this.stateMV)
+            this.stateMV.y = 300 - this.getVO().height - 35;
+            this.stateMV.play()
         }
-        this.yunStep = step;
+        this.yunStep = Math.max(step,this.yunStep);
     }
 
     public onE(){
@@ -91,9 +101,11 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             this.yunStep --;
             if(this.yunStep == 0)
             {
-
+                this.stateMV.stop()
+                MyTool.removeMC(this.stateMV)
             }
         }
+
         if(this.slowStep)
         {
             this.slowStep --;
@@ -101,7 +113,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             {
                 this.speedDec = 0;
                 this.monsterMV.speed = 0;
-                this.alpha = 1;
+                this.monsterMV.alpha = 1;
             }
         }
     }
@@ -118,7 +130,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.mid = this.data.mid;
         this.monsterMV.load(this.mid)
         this.monsterMV.stand();
-        this.alpha = 1;
+        this.monsterMV.alpha = 1;
         if(this.data.mid == 99)
         {
             this.monsterMV.scaleX = -1
@@ -139,6 +151,9 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.barGroup.y = 300 - this.getVO().height - 20;
         this.renewHp();
 
+        this.stateMV.stop()
+        MyTool.removeMC(this.stateMV)
+
     }
 
 
@@ -146,6 +161,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         if(this.monsterMV.state != MonsterMV.STAT_RUN )
             this.monsterMV.run();
         this.x -= (this.speed/20)/this.getSpeedRate();
+        if(isNaN(this.x))
+            console.log('???')
     }
 
     public stand(){
@@ -184,6 +201,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.renewHp();
         if(this.hp <= 0)
             this.die();
+    }
+
+    public setDie(){
+        this.addHp(-this.hp)
     }
 
     public remove(){

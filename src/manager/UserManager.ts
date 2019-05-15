@@ -33,6 +33,7 @@ class UserManager {
     public gunLevel: any = {};
     public gunPos: any = {};
     public gunPosNum = 3;
+    public helpUser = null;
 
 
     public shareUser = [];//buff玩家的数据   openid:{head,nick,time}
@@ -44,6 +45,9 @@ class UserManager {
     public offlineTime
     public initDataTime
 
+
+
+    public haveGetUser = false
     public fill(data:any):void{
         var localData = SharedObjectManager.getInstance().getMyValue('localSave')
         if(localData && localData.saveTime && localData.saveTime - data.saveTime > 10) //本地的数据更新
@@ -60,6 +64,7 @@ class UserManager {
         this.loginTime = data.loginTime || TM.now();
         this.coin = data.coin || 0;
         this.shareUser = data.shareUser;
+        this.helpUser = data.helpUser;
         this.level = data.level || 1;
         this.gunLevel = data.gunLevel || {};
         this.gunPos = data.gunPos || {};
@@ -70,15 +75,31 @@ class UserManager {
 
         this.initDataTime = TM.now()
 
+        if(this.isFirst)
+        {
+            var wx = window['wx'];
+            if(wx)
+            {
+                var query = wx.getLaunchOptionsSync().query;
+                if(query.type == '1')
+                {
+                    this.helpUser = query.from
+                }
+            }
+        }
+
+        this.testAddInvite();
         this.localSave();
     }
 
     public renewInfo(userInfo){
         if(!userInfo)
             return;
+        this.haveGetUser = true;
         this.nick = userInfo.nickName
         this.head = userInfo.avatarUrl
         this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
+        this.testAddInvite();
     }
     public addCoin(v,stopSave?){
         if(!v)
@@ -179,26 +200,23 @@ class UserManager {
         })
     }
 
-    public testAddInvite(){
-        //console.log('testAddInvite')
-        if(!this.isFirst)
-            return;
-        var wx = window['wx'];
-        if(!wx)
-            return;
-        var query = wx.getLaunchOptionsSync().query;
-        //console.log(query)
-        if(query.type == '1')
+    private testAddInvite(){
+        if(this.helpUser && this.haveGetUser)
         {
+            var wx = window['wx'];
+            if(!wx)
+                return;
             wx.cloud.callFunction({      //取玩家openID,
                 name: 'onShareIn',
                 data:{
-                    other:query.from,
+                    other:this.helpUser,
                     nick:UM.nick,
                     head:UM.head,
                 },
                 complete: (res) => {
-                     console.log(res)
+                    console.log(res)
+                    this.helpUser = null;
+                    this.needUpUser = true;
                 }
             })
         }
@@ -241,6 +259,7 @@ class UserManager {
             loginTime:UM.loginTime,
             coin:UM.coin,
             level:UM.level,
+            helpUser:UM.helpUser,
             gunLevel:UM.gunLevel,
             gunPos:UM.gunPos,
             gunPosNum:UM.gunPosNum,

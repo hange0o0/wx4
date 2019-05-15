@@ -45,6 +45,17 @@ class PKCode_wx3 {
         }
     }
 
+    public randomEnemy(){
+        var arr = []
+        for(var i=0;i<this.monsterList.length;i++)
+        {
+            var item = this.monsterList[i];
+            if(!item.isDie)
+                arr.push(item)
+        }
+        return ArrayUtil.randomOne(arr);
+    }
+
     public playAniOn(a,mvID){
         var atker = this.getItemByID(a)
         if(!atker)
@@ -102,15 +113,15 @@ class PKCode_wx3 {
                 }
                 if(vo.type == 6)
                 {
-                    addAtk += vo.getLevelValue(vo.v1,vo.v3)
+                    addAtk += vo.getLevelValue(1)
                 }
                 if(vo.type == 10)
                 {
-                   this.coinAdd = vo.getLevelValue(vo.v1,vo.v3)
+                   this.coinAdd = vo.getLevelValue(1)
                 }
                 if(vo.type == 11)
                 {
-                    this.hpAdd = vo.getLevelValue(vo.v1,vo.v3)
+                    this.hpAdd = vo.getLevelValue(1)
                 }
             }
         }
@@ -235,12 +246,14 @@ class PKCode_wx3 {
             var target:PKMonsterItem_wx3 = this.monsterList[i]
             if(target.isDie)
                 continue;
+            target.onE();
+
             if(target.stop)
                 continue;
             if(target.yunStep)
                 continue;
 
-            target.onE();
+
             if(target.x < target.getVO().getAtkDis() + 200)//普攻
             {
                   this.targetAtk(target);
@@ -271,6 +284,8 @@ class PKCode_wx3 {
                     id:id,
                     target:target,
                     fun:()=>{
+                        if([61,62,63,70,76].indexOf(target.mid) != -1)
+                            target.setDie();
                         if(!this.getWudiCD())
                             this.addHp(-target.getAtk())
                         if(this.myHp > 0)

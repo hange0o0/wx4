@@ -120,17 +120,17 @@ class AtkMVCtrl_wx3 {
 
     public atkMV61_wx3(user,target,actionTime,endTime){
         var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        egret.Tween.get(userItem).to({x:userItem.x + user.atkRota*50},300)
+        egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV62_wx3(user,target,actionTime,endTime){
         var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        egret.Tween.get(userItem).to({x:userItem.x + user.atkRota*50},300)
+        egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV63_wx3(user,target,actionTime,endTime){
         var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        egret.Tween.get(userItem).to({x:userItem.x + user.atkRota*50},300)
+        egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV64_wx3(user,target,actionTime,endTime){
@@ -149,7 +149,7 @@ class AtkMVCtrl_wx3 {
             AM.removeImg(mc);
         })
         var atker = PKCode_wx3.getInstance().getItemByID(user.id)
-        mc.x = atker.x + user.atkRota * 20
+        mc.x = atker.x + -1 * 20
         mc.y = atker.y - 40
         atker.parent.addChildAt(mc,atker.parent.getChildIndex(atker) + 1);
         //PKVideoCon.getInstance().addMCOn(user.id,mc)
@@ -157,7 +157,7 @@ class AtkMVCtrl_wx3 {
 
     public atkMV70_wx3(user,target,actionTime,endTime){
         var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        egret.Tween.get(userItem).to({x:userItem.x + user.atkRota*50},300)
+        egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV72_wx3(user,target,actionTime,endTime){
@@ -193,7 +193,7 @@ class AtkMVCtrl_wx3 {
     public atkMV75_wx3(user,target,actionTime,endTime){
         var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
         var targetItem = {
-            x: user.x + user.atkRota * user.getSkillValue(1),
+            x: user.x + -1 * user.getSkillValue(1),
             y:user.y
         }
         PKBulletManager_wx3.getInstance().createBulletLine(userItem,targetItem,actionTime,endTime,'pk_arrow_1_png')
@@ -201,7 +201,7 @@ class AtkMVCtrl_wx3 {
 
     public atkMV76_wx3(user,target,actionTime,endTime){
         var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        egret.Tween.get(userItem).to({x:userItem.x + user.atkRota*50},300)
+        egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
 }

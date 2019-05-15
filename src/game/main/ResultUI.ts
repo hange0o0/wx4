@@ -67,7 +67,7 @@ class ResultUI extends game.BaseUI{
             this.barMC.width = 360*rate;
             this.rateText.text = '剩余怪物：'+MyTool.toFixed(rate*100,1)+'%'
         }
-        coin *= (1+add/100);
+        coin *= (1+add/100 + PKCode_wx3.getInstance().coinAdd/100);
         coin = this.addCoin = Math.ceil(coin);
         UM.addCoin(coin);
         this.coinText.text = '金币 +' + NumberUtil.addNumSeparator(coin);

@@ -80,7 +80,7 @@ class PKingUI extends game.BaseUI {
         var vo = GunVO.getObject(item.data)
         var num = 1;
         if(vo.type == 1)//散射
-            num = vo.v1;
+            num = vo.getLevelValue(1);
         var rota = 20;
         var total = (num - 1)*rota;
         var start = -total/2
@@ -100,9 +100,9 @@ class PKingUI extends game.BaseUI {
         var vo = GunVO.getObject(id)
         if(vo.type == 9)//有$1%的机率造成@2倍伤害';
         {
-            if(Math.random() < vo.getLevelValue(vo.v1,vo.v3)/100)
+            if(Math.random() < vo.getLevelValue(1)/100)
             {
-                double = vo.v2
+                double = vo.getLevelValue(2)
                 if(item)
                 {
                     this.playDoubleHit(item,MyTool.toFixed(double,2))
@@ -126,13 +126,14 @@ class PKingUI extends game.BaseUI {
     public playDoubleHit(item:GunItem,value){
         var txt = this.createTxt();
         txt.textColor = 0xFF0000;
-        txt.text = '!' + value;
-        txt.x = item.x;
-        txt.y = item.y;
-        this.con.addChildAt(txt,item.parent.getChildIndex(item) + 1)
+        txt.text = '! ' + value;
+        var p = item.localToGlobal(item.x,item.y)
+        txt.x = p.x;
+        txt.y = p.y;
+        this.addChild(txt)
 
         var tw = egret.Tween.get(txt);
-        tw.to({y:txt.y - 20},300).wait(200).call(function(){
+        tw.to({y:txt.y - 100,alpha:0},800).call(function(){
             this.freeTxt(txt);
         },this)
     }
@@ -241,7 +242,8 @@ class PKingUI extends game.BaseUI {
             for(var i=0;i<wall.length;i++)
             {
                 var wallItem = wall[i];
-                wallItem.stand()
+                if(!wallItem.isDie)
+                    wallItem.stand()
             }
             egret.Tween.get(this.gunGroup).wait(500).to({x:-100},200).wait(500).call(()=>{
                 this.stoping = true;
@@ -272,6 +274,7 @@ class PKingUI extends game.BaseUI {
         this.isDie = false;
         this.isReborn = true
         PKCode_wx3.getInstance().resetHP();
+        this.renewBar();
         var wall = PKCode_wx3.getInstance().wallArr;
         for(var i=0;i<wall.length;i++)
         {
@@ -315,7 +318,7 @@ class PKingUI extends game.BaseUI {
             var bullet = this.bulletArr[i];
             bullet.move();
             bullet.testHit(PD.monsterList)
-            if(bullet.isDie == 2 || bullet.x > 700)
+            if(bullet.isDie == 2 || (bullet.x > 700 && bullet.vo.type != 13))
             {
                 this.bulletArr.splice(i,1);
                 BulletMC.freeItem(bullet);

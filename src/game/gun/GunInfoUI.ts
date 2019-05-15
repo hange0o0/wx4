@@ -6,9 +6,18 @@ class GunInfoUI extends game.BaseWindow{
         return this._instance;
     }
 
-    private closeBtn: eui.Image;
-    private bitmap: egret.Bitmap;
-    private isdisplay = false;
+    private leftBtn: eui.Image;
+    private cancelBtn: eui.Button;
+    private okBtn: eui.Button;
+    private rightBtn: eui.Image;
+    private atkText: eui.Label;
+    private nameText: eui.Label;
+    private desText: eui.Label;
+    private gunItem: GunItem;
+    private levelText: eui.Label;
+
+
+
 
     public constructor() {
         super();
@@ -17,7 +26,7 @@ class GunInfoUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.addBtnEvent(this.cancelBtn,this.hide)
     }
 
     public onShow(){

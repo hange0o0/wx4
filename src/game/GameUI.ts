@@ -134,7 +134,7 @@ class GameUI extends game.BaseUI {
             item.rotation = -this.gunCon.rotation
         }
 
-        this.bg.y += 2;
+        this.bg.y += 1;
         if(this.bg.y > 0)
             this.bg.y -= 200;
     }
@@ -230,6 +230,7 @@ class GameUI extends game.BaseUI {
                 this.addChild(item);
                 item.x = p.x
                 item.y = p.y
+                //this.moveItem(item,i,Math.atan2(lastY - hh,lastX - 250)*180/Math.PI+90,true);
                 this.moveItem(item,i,Math.atan2(lastY - hh,lastX - 250)*180/Math.PI+90,(lastY - hh==0 && lastX - 250 == 0));
                 //this.moveItem(item,i,i*rotaAdd + this.gunCon.rotation);
             }
@@ -242,7 +243,7 @@ class GameUI extends game.BaseUI {
         this.blackBG.visible = true
         this.blackBG.alpha = 0
         this.addChild(this.blackBG);
-        egret.Tween.get(this.blackBG).wait(500).to({alpha:1},200)
+        egret.Tween.get(this.blackBG).wait(700).to({alpha:1},200)
 
 
 

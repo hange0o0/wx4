@@ -46,7 +46,29 @@ class LoadingUI extends game.BaseUI {
         if(res)
         {
             if(!res.userInfo)
+            {
+                this.infoBtn.visible = false;
+                if(UM.helpUser)
+                {
+                    MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
+                        if(b==1)
+                        {
+                            this.infoBtn.visible = false;
+                            this.haveGetUser = true;
+                            this.initData();
+                        }
+                        else
+                        {
+                            this.infoBtn.visible = true;
+                        }
+                    },['重新授权','进入游戏']);
+                    return;
+                }
+                this.infoBtn.visible = false;
+                this.haveGetUser = true;
+                this.initData();
                 return;
+            }
             this.infoBtn.visible = false;
             UM.renewInfo(res.userInfo)
             this.haveGetUser = true;
@@ -79,7 +101,7 @@ class LoadingUI extends game.BaseUI {
         if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)
         {
             this.changeUser.dataChanged()
-            this.loadText.text = '点击屏幕授权进入游戏';
+            this.loadText.text = '点击屏幕进入游戏';
             this.needShowStartBtn = false;
             this.infoBtn.visible = true;
             return;
@@ -87,6 +109,7 @@ class LoadingUI extends game.BaseUI {
         if(!this.haveLoadFinish || !this.haveGetInfo  || !this.haveGetUser)
             return;
         this.hide();
+        this.infoBtn.visible = false;
         GameUI.getInstance().show();
     }
 

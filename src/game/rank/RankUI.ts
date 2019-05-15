@@ -6,6 +6,12 @@ class RankUI extends game.BaseWindow{
         return this._instance;
     }
 
+    private tab: eui.TabBar;
+    private desText: eui.Label;
+    private scroller: eui.Scroller;
+    private list: eui.List;
+
+
     private bitmap: egret.Bitmap;
     private isdisplay = false;
 
@@ -16,10 +22,14 @@ class RankUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.setTitle('好友排名')
+        this.setTitle('排行榜')
+
+        this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
     }
 
+    private onTab(){
 
+    }
 
 
     public onShow(){

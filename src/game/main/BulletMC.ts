@@ -24,6 +24,9 @@ class BulletMC extends game.BaseItem{
     public isDie = 0
     public vo:GunVO
 
+    public enemy
+    public addRota
+
     public constructor() {
         super();
         this.skinName = "BulletItemSkin";
@@ -37,22 +40,76 @@ class BulletMC extends game.BaseItem{
         this.mc.scaleX = -1
     }
 
+
     public dataChanged():void {
         egret.Tween.removeTweens(this);
+        this.enemy = null;
         this.alpha = 1;
         this.isDie = 0;
         this.mc.source = 'knife_'+this.data.id+'_png'
-        this.rotation = 90 + this.data.rota;
+        this.rotation = 90 + (this.data.rota || 0);
         this.hitMonster = {};
         this.vo = GunVO.getObject(this.data.id)
-        console.log(this.data.rota)
+        this.speed = 20;
+        if(this.vo.type == 13)
+        {
+            this.speed = 12;
+            var addRota = -90 + Math.random()*180;
+            this.rotation += addRota
+            this.addRota = addRota > 0?-5:5;
+        }
+        //console.log(this.data.rota)
     }
 
+    private resetRota(rota){
+        while(rota < 0)
+            rota += 360
+        while(rota > 360)
+            rota -= 360
+        return rota
+    }
     public move(){
+        var b = this.x && this.y
+
         if(this.isDie)
             return;
-        this.x += this.speed*Math.cos(this.data.rota/180*Math.PI)
-        this.y += this.speed*Math.sin(this.data.rota/180*Math.PI)
+        if(this.vo.type == 13)
+        {
+            if(isNaN(this.rotation))
+                console.log(66666)
+            if(!this.enemy || this.enemy.isDie)
+                this.enemy = PKCode_wx3.getInstance().randomEnemy();
+            var rota1 = this.rotation - 90;
+            if(this.enemy)
+            {
+                var rota = Math.atan2(this.enemy.y - this.y,this.enemy.x - this.x)/Math.PI*180
+                if(isNaN(rota))
+                    console.log(66666)
+                rota = this.resetRota(rota)
+                rota1 = this.resetRota(rota1)
+
+                if(Math.abs(rota-rota1)>5)
+                {
+                    this.rotation += this.addRota
+                    rota1 += this.addRota
+                }
+                else
+                {
+                    rota1 = rota
+                    this.rotation = rota1 + 90
+                }
+            }
+            this.x += this.speed*Math.cos(rota1/180*Math.PI)
+            this.y += this.speed*Math.sin(rota1/180*Math.PI)
+        }
+        else
+        {
+            this.x += this.speed*Math.cos(this.data.rota/180*Math.PI)
+            this.y += this.speed*Math.sin(this.data.rota/180*Math.PI)
+        }
+
+        if(b && !this.x && !this.y)
+            console.log(999)
     }
 
     public testHit(monsterArr){
@@ -77,29 +134,29 @@ class BulletMC extends game.BaseItem{
             {
                 if(this.vo.type == 3) //杀敌爆炸
                 {
-                    PKCode_wx3.getInstance().hitEnemyAround(item.x,item.y,this.vo.v1,this.vo.getLevelValue(this.vo.v2,this.vo.v4))
+                    PKCode_wx3.getInstance().hitEnemyAround(item.x,item.y,this.vo.getLevelValue(1),this.vo.getLevelValue(2))
                     AniManager_wx3.getInstance().playOnItem(112,item);
                 }
                 else if(this.vo.type == 4) //杀敌吸血
                 {
-                    PKCode_wx3.getInstance().addHp(this.vo.getLevelValue(this.vo.v1,this.vo.v3))
+                    PKCode_wx3.getInstance().addHp(this.vo.getLevelValue(1))
                 }
                 else if(this.vo.type == 5) //杀敌攻击成长
                 {
-                    PKCode_wx3.getInstance().addAtk(this.vo.id,this.vo.getLevelValue(this.vo.v1,this.vo.v3))
+                    PKCode_wx3.getInstance().addAtk(this.vo.id,this.vo.getLevelValue(1))
                 }
             }
             else
             {
                 if(this.vo.type == 7) //使中刀敌人减慢$1%速度，持续#2秒
                 {
-                    item.setSlow(this.vo.getLevelValue(this.vo.v1,this.vo.v3),this.vo.v2)
+                    item.setSlow(this.vo.getLevelValue(1),this.vo.getLevelValue(2))
                 }
                 else if(this.vo.type == 8) //'有$1%的机率使敌人陷入眩晕状态，持续#2秒';
                 {
-                    if(Math.random() < this.vo.getLevelValue(this.vo.v1,this.vo.v3)/100)
+                    if(Math.random() < this.vo.getLevelValue(1)/100)
                     {
-                        item.setYun(this.vo.v1)
+                        item.setYun(this.vo.getLevelValue(2))
                     }
                 }
                 //else if(this.vo.type == 9) //'有$1%的机率造成@2倍伤害';
@@ -112,24 +169,28 @@ class BulletMC extends game.BaseItem{
                 //}
                 else if(this.vo.type == 12) //'使被命中的敌人退后@1距离';
                 {
-                    item.x += this.vo.getLevelValue(this.vo.v1,this.vo.v3)
-                }
-                else if(this.vo.type == 14) //'命中敌人后会分裂出#1把飞刀';
-                {
-                    var num = this.vo.v1;
-                    var rota = 180/num;
-                    var total = (num - 1)*rota;
-                    var start = -total/2
-                    for(var i=0;i<num;i++)
-                    {
-                        PKingUI.getInstance().createBullet(this.vo.id,this.x,this.y,start + i*rota).hitMonster[item.id] = true
-                    }
-                }
-                else if(this.vo.type == 15) // '命中敌人后回复城墙@1点血量';
-                {
-                    PKCode_wx3.getInstance().addHp(this.vo.getLevelValue(this.vo.v1,this.vo.v3))
+                    item.x += this.vo.getLevelValue(1)
                 }
             }
+
+            if(this.vo.type == 14 && !this.data.stop14) //'命中敌人后会分裂出#1把飞刀';
+            {
+                var num = this.vo.getLevelValue(1);
+                var rota = 180/num;
+                var total = (num - 1)*rota;
+                var start = -total/2
+                for(var i=0;i<num;i++)
+                {
+                    var bullet = PKingUI.getInstance().createBullet(this.vo.id,this.x,this.y,start + i*rota);
+                    bullet.hitMonster[item.id] = true
+                    bullet.data.stop14 = true
+                }
+            }
+            else if(this.vo.type == 15) // '命中敌人后回复城墙@1点血量';
+            {
+                PKCode_wx3.getInstance().addHp(this.vo.getLevelValue(1))
+            }
+
             this.hitMonster[item.id] = true//已经对这个怪造成伤害了
             if(this.vo.type != 2) //穿透
             {
@@ -154,6 +215,7 @@ class BulletMC extends game.BaseItem{
 
     public remove():void {
         MyTool.removeMC(this);
+        egret.Tween.removeTweens(this);
     }
 
 
