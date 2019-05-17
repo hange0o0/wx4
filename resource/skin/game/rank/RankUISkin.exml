@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="RankUISkin" width="600" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:TabBar id="tab" y="70" itemRendererSkinName="MyTabItemSkin" left="30" right="30">
+	<e:TabBar id="tab" y="70" itemRendererSkinName="MyTabItemSkin" left="30" right="30" height="50">
 		<e:ArrayCollection>
 			<e:Array>
 				<e:Object label="过关榜"/>
@@ -15,7 +15,7 @@
 		</e:layout>
 	</e:TabBar>
 	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="20" size="24" textColor="0xcccccc"/>
-	<e:Scroller id="scroller" left="30" right="30" top="110" bottom="60">
+	<e:Scroller id="scroller" left="30" right="30" top="120" bottom="60">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="74" y="166">
 				<e:layout>

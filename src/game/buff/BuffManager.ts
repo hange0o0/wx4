@@ -6,11 +6,11 @@ class BuffManager {
         return this._instance;
     }
 
-    public buffHp = 50
-    public buffWork = 10
+    public buffHp = 200
+    public buffWork = 25
 
     public getUserNum(){
-        return Math.min(100,UM.shareUser.length)
+        return Math.min(20,UM.shareUser.length)
     }
 
     public getHpAdd(){

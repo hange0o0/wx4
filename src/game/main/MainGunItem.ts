@@ -19,7 +19,7 @@ class MainGunItem extends game.BaseItem{
             if(this.currentState == 'lock')
             {
                 var cost = GunManager.getInstance().getPosCost();
-                MyWindow.Confirm('确定花费'+NumberUtil.addNumSeparator(cost)+'金币\n解锁该位置吗？',(b)=>{
+                MyWindow.Confirm('确定花费'+this.createHtml(NumberUtil.addNumSeparator(cost),0xFFFF00)+'金币\n解锁该位置吗？',(b)=>{
                     if(b==1)
                     {
                         if(!UM.checkCoin(cost))

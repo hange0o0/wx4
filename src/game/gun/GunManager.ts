@@ -8,6 +8,16 @@ class GunManager extends egret.EventDispatcher {
     public maxGunNum = 9
     public maxGunLevel = 8
 
+    public getGunVOs(id){
+        var typeObj = {};
+        if(id < 100)
+        {
+            var vo = GunVO.getObject(id)
+            typeObj[vo.type] = vo;
+        }
+        return typeObj
+    }
+
     public getGunByPos(index){
         return UM.gunPos[index];
     }
@@ -70,7 +80,7 @@ class GunManager extends egret.EventDispatcher {
         {
             if(this.getGunLevel(s))
             {
-                arr.push(GunVO.data[s])
+                arr.push(GunVO.data[s].id)
             }
         }
         return arr;

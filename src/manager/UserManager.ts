@@ -33,6 +33,7 @@ class UserManager {
     public gunLevel: any = {};
     public gunPos: any = {};
     public gunPosNum = 3;
+    public endLess = 0;
     public helpUser = null;
 
 
@@ -65,6 +66,7 @@ class UserManager {
         this.coin = data.coin || 0;
         this.shareUser = data.shareUser;
         this.helpUser = data.helpUser;
+        this.endLess = data.endLess;
         this.level = data.level || 1;
         this.gunLevel = data.gunLevel || {};
         this.gunPos = data.gunPos || {};
@@ -259,6 +261,7 @@ class UserManager {
             loginTime:UM.loginTime,
             coin:UM.coin,
             level:UM.level,
+            endLess:UM.endLess,
             helpUser:UM.helpUser,
             gunLevel:UM.gunLevel,
             gunPos:UM.gunPos,
@@ -288,12 +291,29 @@ class UserManager {
     }
 
 
-    public upWXChapter(){
+    public upWXEndLess(){
+        var wx = window['wx'];
+        if(!wx)
+            return;
+        var score = JSON.stringify({"wxgame":{"score":UM.endLess,"update_time": TM.now()}})
+        var upList = [{ key: 'endless', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
+        wx.setUserCloudStorage({
+            KVDataList: upList,
+            success: res => {
+                console.log(res);
+            },
+            fail: res => {
+                console.log(res);
+            }
+        });
+    }
+
+    public upWXLevel(){
         var wx = window['wx'];
         if(!wx)
             return;
         var score = JSON.stringify({"wxgame":{"score":UM.level,"update_time": TM.now()}})
-        var upList = [{ key: 'chapter', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
+        var upList = [{ key: 'endless', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
         wx.setUserCloudStorage({
             KVDataList: upList,
             success: res => {

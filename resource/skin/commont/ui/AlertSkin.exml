@@ -6,8 +6,8 @@
 	</e:Group>
 
 	<e:Group horizontalCenter="0" bottom="40">
-		<e:Button id="cancelBtn" y="4" label="按钮" x="0" width="150" skinName="Btn2Skin"/>
-		<e:Button id="okBtn" label="按钮" x="198" y="0" width="150" skinName="Btn1Skin"/>
+		<e:Button id="cancelBtn" y="4" label="按钮" x="0" width="150" skinName="Btn1Skin"/>
+		<e:Button id="okBtn" label="按钮" x="198" y="0" width="150" skinName="Btn2Skin"/>
 		<e:layout>
 			<e:HorizontalLayout gap="30"/>
 		</e:layout>

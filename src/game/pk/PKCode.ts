@@ -17,6 +17,7 @@ class PKCode_wx3 {
     public autoList = [];
     public enemyHp = 0//
     public enemyHpMax = 0//
+    public endLessStep = 0//无尽的步数
 
     public atkList = {}
 
@@ -91,11 +92,7 @@ class PKCode_wx3 {
 
 
     public initData(){
-        var level = UM.level;
-        var list = PlayManager.getInstance().getLevelMonster(level)
-        var height = Math.min(300 + level*10,960)
-        var startY = (GameManager.uiHeight - height)/2 + 30
-        var hpRate = 1 + (level - 1)*0.2;
+
 
         this.atkList = {};
         var addAtk = 0;
@@ -106,22 +103,22 @@ class PKCode_wx3 {
             var gunid = UM.gunPos[s];
             if(gunid)
             {
-                var vo = GunVO.getObject(gunid);
+                var vos = GunManager.getInstance().getGunVOs(gunid);
                 this.atkList[gunid] = {
                     base:GunManager.getInstance().getGunAtk(gunid),
                     add:0,
                 }
-                if(vo.type == 6)
+                if(vos[6])
                 {
-                    addAtk += vo.getLevelValue(1)
+                    addAtk += vos[6].getLevelValue(1)
                 }
-                if(vo.type == 10)
+                if(vos[10])
                 {
-                   this.coinAdd = vo.getLevelValue(1)
+                   this.coinAdd = vos[10].getLevelValue(1)
                 }
-                if(vo.type == 11)
+                if(vos[11])
                 {
-                    this.hpAdd = vo.getLevelValue(1)
+                    this.hpAdd = vos[11].getLevelValue(1)
                 }
             }
         }
@@ -132,9 +129,6 @@ class PKCode_wx3 {
                 this.atkList[s].add += this.atkList[s].base*(1+addAtk/100);
             }
         }
-
-
-
         this.resetHP();
 
         PKMonsterAction_wx3.getInstance().init();
@@ -147,23 +141,6 @@ class PKCode_wx3 {
         {
             PKMonsterItem_wx3.freeItem(this.monsterList.pop())
         }
-
-        this.enemyHp = 0;
-        this.autoList = list.split(',');
-        for(var i=0;i<this.autoList.length;i++)
-        {
-            var temp = this.autoList[i].split('|')
-            var mid = parseInt(temp[0]);
-            var hp = Math.floor(MonsterVO.getObject(mid).hp * hpRate)
-            this.autoList[i] = {
-                mid:mid,
-                hp:hp,
-                step:parseInt(temp[1]),
-                y:parseInt(temp[2])/100*height + startY
-            }
-            this.enemyHp += hp;
-        }
-        this.enemyHpMax = this.enemyHp;
 
         var wallDec = 70;
         var len = Math.ceil(GameManager.uiHeight/wallDec)
@@ -178,6 +155,82 @@ class PKCode_wx3 {
         }
 
         this.actionStep = 0;
+        this.enemyHp = 0;
+        if(PlayManager.getInstance().isEndLess)
+        {
+            this.endLessStep = 1;
+            this.autoList = [];
+            this.createEndLess();
+        }
+        else
+        {
+            var level = UM.level;
+            var list = PlayManager.getInstance().getLevelMonster(level)
+            var height = Math.min(300 + level*10,960)
+            var startY = (GameManager.uiHeight - height)/2 + 30
+            var hpRate = 1 + (level - 1)*0.2;
+
+            this.autoList = list.split(',');
+            for(var i=0;i<this.autoList.length;i++)
+            {
+                var temp = this.autoList[i].split('|')
+                var mid = parseInt(temp[0]);
+                var hp = Math.floor(MonsterVO.getObject(mid).hp * hpRate)
+                this.autoList[i] = {
+                    mid:mid,
+                    hp:hp,
+                    step:parseInt(temp[1]),
+                    y:parseInt(temp[2])/100*height + startY
+                }
+                this.enemyHp += hp;
+            }
+            this.enemyHpMax = this.enemyHp;
+        }
+
+    }
+
+    private createEndLess(){
+        var maxCost = 100 + this.endLessStep * 50
+        var stepCost = maxCost/10/60; //每一帧增加的花费
+        var nowCost = 0;
+        var step = this.actionStep;
+        var monsterCost = -10;
+        var monsterList = [];
+        var mlv = Math.ceil(this.endLessStep/2);
+        for(var s in MonsterVO.data)
+        {
+            if(MonsterVO.data[s].level <= mlv)
+            {
+                monsterList.push(MonsterVO.data[s])
+            }
+        }
+        ArrayUtil.sortByField(monsterList,['cost','id'],[0,0]);
+
+        var minRate = Math.random();//出现小怪的机率
+        var minRateAdd = 0.1 + Math.random()*0.4;//出现小怪的机率
+        var hpRate = 1 + (this.endLessStep - 1)*0.2;
+        var height = Math.min(300 + this.endLessStep*10,960)
+        var startY = (GameManager.uiHeight - height)/2 + 30
+        while(nowCost < maxCost)
+        {
+            while(monsterCost < nowCost)
+            {
+                if(minRate > Math.random())
+                    var vo = monsterList[Math.floor(monsterList.length*Math.random()*minRateAdd)]
+                else
+                    var vo = monsterList[Math.floor(monsterList.length*Math.random())]
+                monsterCost += vo.cost;
+                this.autoList.push({
+                    mid:vo.id,
+                    hp:Math.floor(vo.hp * hpRate),
+                    step:step,
+                    y:Math.random()*height + startY
+                })
+            }
+            step++;
+            nowCost += stepCost
+        }
+        this.endLessStep ++;
     }
 
     //每一步执行
@@ -194,6 +247,10 @@ class PKCode_wx3 {
     //自动出战上怪
     public autoAction(){
         var b = false
+        if(PlayManager.getInstance().isEndLess && this.autoList.length == 0)
+        {
+            this.createEndLess();
+        }
          while(this.autoList[0] && this.autoList[0].step <= this.actionStep)
          {
              b = true;

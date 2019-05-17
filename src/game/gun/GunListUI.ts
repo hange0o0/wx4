@@ -9,7 +9,6 @@ class GunListUI extends game.BaseWindow{
     private scroller: eui.Scroller;
     private list: eui.List;
     private atkText: eui.Label;
-    private desText: eui.Label;
     private gunItem: GunItem;
     private upGroup: eui.Group;
     private costText: eui.Label;
@@ -89,16 +88,21 @@ class GunListUI extends game.BaseWindow{
         var GM = GunManager.getInstance();
         var vo:GunVO = this.data;
         var lv = GM.getGunLevel(vo.id);
-        this.setTitle(vo.name)
+
 
 
         this.gunItem.data = vo.id;
-        this.setHtml(this.desText,this.data.getTitle() + '：' + this.data.getDes());
-
+        var str = '';
         if(!lv || lv == GM.maxGunLevel)
-            this.setHtml(this.atkText, '攻击:' + GM.getGunAtk(this.data.id) + '\n攻速:' + this.data.speed + '/秒')
+            str += this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data.id) + this.createHtml('\n攻速：',0xFFF666) + vo.speed + '/秒'
         else
-            this.setHtml(this.atkText, '攻击:' + GM.getGunAtk(this.data.id) + this.createHtml('  ('+GM.getGunAtk(this.data.id,lv+1) + ')',0x00FF00)+'\n攻速:' + this.data.speed + '/秒')
+        {
+            str +=  this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data.id) + this.createHtml('  ('+GM.getGunAtk(this.data.id,lv+1) + ')',0x00FF00)+
+                this.createHtml('\n攻速：',0xFFF666)  + this.data.speed + '/秒' ;
+        }
+        str += '\n' + this.createHtml(vo.getTitle() + '：',0xFFF666) + vo.getDes()
+        this.setHtml(this.atkText, str)
+
         this.costText.text = NumberUtil.addNumSeparator(GM.getGunCost(this.data.id))
         if(!lv)
         {
@@ -107,20 +111,23 @@ class GunListUI extends game.BaseWindow{
             this.upGroup.visible = true
             this.maxMC.text = ''
             this.levelText.text =  '';
+            this.setTitle(vo.name)
         }
         else if(lv == GM.maxGunLevel)
         {
-            this.levelText.text =   'LV.'+lv+''
+            this.levelText.text =  ''// 'LV.'+lv+''
             this.upGroup.visible = false
             this.maxMC.text = '已满级'
+            this.setTitle(vo.name + '  LV.'+lv)
         }
         else
         {
-            this.levelText.text =   'LV.'+lv+''
+            this.levelText.text =  ''// 'LV.'+lv+''
             this.btn.label = '升级'
             this.btn.skinName = 'Btn2Skin'
             this.upGroup.visible = true
             this.maxMC.text = ''
+            this.setTitle(vo.name + '  LV.'+lv)
         }
     }
 

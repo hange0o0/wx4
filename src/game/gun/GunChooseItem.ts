@@ -5,6 +5,8 @@ class GunChooseItem extends game.BaseItem{
     private levelText: eui.Label;
     private usingGroup: eui.Group;
     private usingText: eui.Label;
+    private skillText: eui.Label;
+
 
 
 
@@ -17,12 +19,7 @@ class GunChooseItem extends game.BaseItem{
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this,()=>{
-            var pos = GunManager.getInstance().getPosByGun(this.data.id)
-            if(pos == GunChooseUI.getInstance().index)
-                GunManager.getInstance().removeGun(this.data.id)
-            else
-                GunManager.getInstance().addGun(this.data.id,GunChooseUI.getInstance().index)
-            GunChooseUI.getInstance().hide();
+            GunInfoUI.getInstance().show(this.data)
         })
 
         //MyTool.addLongTouch(this,()=>{
@@ -31,26 +28,28 @@ class GunChooseItem extends game.BaseItem{
     }
 
     public dataChanged():void {
-        var pos = GunManager.getInstance().getPosByGun(this.data.id)
+        var pos = GunManager.getInstance().getPosByGun(this.data)
         if(pos)
         {
             this.usingGroup.visible = true;
-            this.usingText.text = '位置' + pos;
+            this.usingText.text =  pos + '号位';
         }
         else
         {
             this.usingGroup.visible = false;
         }
 
-        this.mc.source = this.data.getThumb()
-        this.levelText.text = this.data.name
-        this.bg.source = this.data.getBGRound()
+        var vo = GunVO.getObject(this.data);
+        this.mc.source = vo.getThumb()
+        this.levelText.text = vo.name
+        this.bg.source = vo.getBGRound()
+        this.skillText.text = vo.getTitle()
         if(DEBUG)
         {
-            this.levelText.text += this.data.id
+            this.levelText.text += this.data
         }
-
-        this.data.getTitle();
+        //
+        //this.data.getTitle();
     }
 
 

@@ -20,19 +20,29 @@
 	<e:Group horizontalCenter="0" bottom="20">
 		<e:Group id="rankBtn" x="0" y="0">
 			<e:Image source="rank_btn_png" x="0" y="0" scaleX="2" scaleY="2"/>
-			<e:Label text="好友排行" textColor="0xfdfdfd" horizontalCenter="0" bold="true" size="24" bottom="0"/>
+			<e:Label text="排行榜" textColor="0xfdfdfd" horizontalCenter="0" bold="true" size="24" bottom="0"/>
 		</e:Group>
 		<e:Group id="gunBtn" x="10" y="10">
 			<e:Image x="0" y="0" scaleX="2.5" scaleY="2.5" source="skin_btn_png"/>
 			<e:Label text="武器库" textColor="0xFDFDFD" horizontalCenter="0" bold="true" size="24" bottom="0"/>
+		</e:Group>
+		<e:Group id="buildBtn" x="20" y="20">
+			<e:Image x="0" y="0" source="build_btn_png" width="135" height="135"/>
+			<e:Group horizontalCenter="0" bottom="0">
+				<e:Image id="buildLockMC" source="lock_icon_png" x="36" y="0"/>
+				<e:Label text="武器改造" textColor="0xFDFDFD" bold="true" size="24" x="0" y="57"/>
+				<e:layout>
+					<e:HorizontalLayout verticalAlign="bottom"/>
+				</e:layout>
+			</e:Group>
 		</e:Group>
 		<e:Group id="friendBtn" x="20" y="20">
 			<e:Image x="0" y="0" source="friend_btn_png"/>
 			<e:Label text="好友助力" textColor="0xFDFDFD" horizontalCenter="0" bold="true" size="24" bottom="0"/>
 		</e:Group>
 		<e:layout>
-			<e:HorizontalLayout gap="80" verticalAlign="middle"/>
+			<e:HorizontalLayout gap="30" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0" visible="false"/>
 			</e:Skin>

@@ -15,6 +15,8 @@ class ResultUI extends game.BaseUI{
     private barMC: eui.Rect;
     private rateText: eui.Label;
     private titleText: eui.Label;
+    private timeText: eui.Label;
+
 
 
 
@@ -53,16 +55,43 @@ class ResultUI extends game.BaseUI{
         var rate = PD.enemyHp / PD.enemyHpMax;
         var coin = (PD.enemyHpMax - PD.enemyHp)/500
         var add = BuffManager.getInstance().getCoinAdd();
-        if(rate == 0)
+
+        this.timeText.text = ''
+        if(PlayManager.getInstance().isEndLess)
+        {
+            this.titleText.text = '游戏结束！'
+            this.titleText.textColor = 0xFFFFFF
+            this.failGroup.visible = false
+            coin = (Math.abs(PD.enemyHp)/500)
+            var cd = Math.floor(PD.actionStep/60)
+            var cd2 = Math.floor(PD.actionStep/60*100)%100
+
+            if(cd > UM.endLess)
+            {
+                UM.endLess = cd;
+                UM.needUpUser = true;
+                UM.upWXEndLess()
+                this.timeText.text = '新纪录\n' + DateUtil.getStringBySecond(cd).substr(-5) + '.' + ('00' + cd2).substr(-2)
+            }
+            else
+            {
+                this.timeText.text = '用时\n' + DateUtil.getStringBySecond(cd).substr(-5) + '.' + ('00' + cd2).substr(-2)
+            }
+        }
+        else if(rate == 0)
         {
              this.titleText.text = '大胜！'
+            this.titleText.textColor = 0xFFFF99
             this.failGroup.visible = false
             coin*=5;
             UM.level ++;
+            UM.needUpUser = true;
+            UM.upWXLevel()
         }
         else
         {
              this.titleText.text = '惜败！'
+            this.titleText.textColor = 0xFF9999
             this.failGroup.visible = true
             this.barMC.width = 360*rate;
             this.rateText.text = '剩余怪物：'+MyTool.toFixed(rate*100,1)+'%'

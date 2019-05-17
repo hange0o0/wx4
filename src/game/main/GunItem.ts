@@ -59,14 +59,23 @@ class GunItem extends game.BaseItem{
     public dataChanged():void {
         clearTimeout(this.timer)
         var lv = GunManager.getInstance().getGunLevel(this.data) || 1
-        var vo = GunVO.getObject(this.data);
-        this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
         this.roleBG.source = 'role_bg_'+lv+'_png'
         this.role.source = 'role_'+lv+'_png'
-        this.roundMC.source = 'knife_'+this.data+'_png'
-        this.shootMC.source = 'knife_'+this.data+'_png'
+        this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
         this.step = 0;
-        this.maxStep = Math.floor(vo.speed*60) - 10;
+
+        if(this.data >100)
+        {
+
+        }
+        else
+        {
+            var vo = GunVO.getObject(this.data);
+            this.maxStep = Math.floor(vo.speed*60) - 10;
+
+            this.roundMC.source = 'knife_'+this.data+'_png'
+            this.shootMC.source = 'knife_'+this.data+'_png'
+        }
     }
 
     public move(){

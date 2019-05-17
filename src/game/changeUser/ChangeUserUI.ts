@@ -13,7 +13,8 @@ class ChangeUserUI extends game.BaseItem {
 
     public static adList = []
     private static lastGetADTime = 0;
-    public static getAD(num=10,fun?){
+    public static getAD(fun?){
+        var num = 20
         var wx = window['wx'];
         //console.log(333333)
         if(!wx) {
@@ -44,6 +45,18 @@ class ChangeUserUI extends game.BaseItem {
         })
     }
 
+    //取指定长度的数据
+    public static getListByNum(num,fun?){
+        var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+        for(var i=0;i<this.adList.length;i++)
+        {
+            this.adList[i].temp = arr.indexOf(this.adList[i].appid)
+            this.adList[i].fun = fun;
+        }
+        ArrayUtil.sortByField(this.adList,['temp'],[-1]);
+        return this.adList.slice(0,num);
+    }
+
     public childrenCreated() {
         super.childrenCreated();
         this.list.itemRenderer = ChangeUserItem
@@ -54,7 +67,7 @@ class ChangeUserUI extends game.BaseItem {
     public dataChanged(){
         if(this.isSet)
             return;
-        ChangeUserUI.getAD(10,()=>{
+        ChangeUserUI.getAD(()=>{
             this.renew();
         });
     }
@@ -67,11 +80,11 @@ class ChangeUserUI extends game.BaseItem {
             return;
         }
 
-        for(var i=0;i<ChangeUserUI.adList.length;i++)
-        {
-            ChangeUserUI.adList[i].stopRed = this.stopRed
-        }
-        this.dataProvider.source = ChangeUserUI.adList;
+        //for(var i=0;i<ChangeUserUI.adList.length;i++)
+        //{
+        //    ChangeUserUI.adList[i].stopRed = this.stopRed
+        //}
+        this.dataProvider.source = ChangeUserUI.getListByNum(10);
         this.dataProvider.refresh();
     }
 }

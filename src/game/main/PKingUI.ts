@@ -74,41 +74,48 @@ class PKingUI extends game.BaseUI {
         this.touchID = null
     }
 
+
+
     public shoot(item:GunItem){
         if(this.isDie)
             return
-        var vo = GunVO.getObject(item.data)
+        //var vo = GunVO.getObject(item.data)
         var num = 1;
-        if(vo.type == 1)//散射
-            num = vo.getLevelValue(1);
-        var rota = 20;
-        var total = (num - 1)*rota;
-        var start = -total/2
-        for(var i=0;i<num;i++)
-        {
-            this.createBullet(item.data,50,item.y + this.gunGroup.y,start + i*rota,item)
-        }
-    }
+        var vos = GunManager.getInstance().getGunVOs(item.data);
+        var vo1 = vos[1]
+        var vo9 = vos[9]
+        if(vo1)//散射
+            num = vo1.getLevelValue(1);
 
-    public createBullet(id,x,y,rota,item?){
-        var mc = BulletMC.createItem();
-        this.bulletArr.push(mc);
-        this.con.addChild(mc);
-        mc.x = x
-        mc.y = y
         var double = 1;
-        var vo = GunVO.getObject(id)
-        if(vo.type == 9)//有$1%的机率造成@2倍伤害';
+        if(vo9)//有$1%的机率造成@2倍伤害';
         {
-            if(Math.random() < vo.getLevelValue(1)/100)
+            if(Math.random() < vo9.getLevelValue(1)/100)
             {
-                double = vo.getLevelValue(2)
+                double = vo9.getLevelValue(2)
                 if(item)
                 {
                     this.playDoubleHit(item,MyTool.toFixed(double,2))
                 }
             }
         }
+
+        var rota = 20;
+        var total = (num - 1)*rota;
+        var start = -total/2
+        for(var i=0;i<num;i++)
+        {
+            this.createBullet(item.data,50,item.y + this.gunGroup.y,start + i*rota,double)
+        }
+    }
+
+    public createBullet(id,x,y,rota,double=1){
+        var mc = BulletMC.createItem();
+        this.bulletArr.push(mc);
+        this.con.addChild(mc);
+        mc.x = x
+        mc.y = y
+
         mc.data = {
             id:id,
             rota:rota,
@@ -210,8 +217,17 @@ class PKingUI extends game.BaseUI {
         this.renewBar()
         egret.Tween.get(this.barGroup).wait(1000).to({y:10},200)
 
-        this.rateCon.bottom = -100;
-        egret.Tween.get(this.rateCon).wait(1000).to({bottom:0},200)
+        if(PlayManager.getInstance().isEndLess)
+        {
+            this.rateCon.visible = false
+        }
+        else
+        {
+            this.rateCon.visible = true
+            this.rateCon.bottom = -100;
+            egret.Tween.get(this.rateCon).wait(1000).to({bottom:0},200)
+        }
+
 
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.HP_CHANGE,this.renewBar)
@@ -318,7 +334,7 @@ class PKingUI extends game.BaseUI {
             var bullet = this.bulletArr[i];
             bullet.move();
             bullet.testHit(PD.monsterList)
-            if(bullet.isDie == 2 || (bullet.x > 700 && bullet.vo.type != 13))
+            if(bullet.isDie == 2 || (bullet.x > 700 && !bullet.isAuto))
             {
                 this.bulletArr.splice(i,1);
                 BulletMC.freeItem(bullet);
@@ -331,24 +347,24 @@ class PKingUI extends game.BaseUI {
             this.gunArr[i].move();
         }
 
-
-        var rate = PD.enemyHp / PD.enemyHpMax;
-        this.rateText.text = MyTool.toFixed(rate*100,1) + '%'
-        this.rateBar.width = 600*rate;
-        this.rateMC.x = this.rateBar.width;
-
-        if(rate == 0)
+        if(!PlayManager.getInstance().isEndLess)
         {
-            this.isFinish = true;
-            while(this.bulletArr.length)
+            var rate = PD.enemyHp / PD.enemyHpMax;
+            this.rateText.text = MyTool.toFixed(rate*100,1) + '%'
+            this.rateBar.width = 600*rate;
+            this.rateMC.x = this.rateBar.width;
+            if(rate == 0)
             {
-                BulletMC.freeItem(this.bulletArr.pop())
+                this.isFinish = true;
+                while(this.bulletArr.length)
+                {
+                    BulletMC.freeItem(this.bulletArr.pop())
+                }
+                setTimeout(()=>{
+                    this.stoping = true;
+                    ResultUI.getInstance().show()
+                },1000)
             }
-            setTimeout(()=>{
-                this.stoping = true;
-                ResultUI.getInstance().show()
-            },1000)
-
         }
     }
 

@@ -12,13 +12,15 @@ class GunInfoUI extends game.BaseWindow{
     private rightBtn: eui.Image;
     private atkText: eui.Label;
     private nameText: eui.Label;
-    private desText: eui.Label;
+    //private desText: eui.Label;
     private gunItem: GunItem;
     private levelText: eui.Label;
 
 
 
 
+    public index
+    public gunid;
     public constructor() {
         super();
         this.skinName = "GunInfoUISkin";
@@ -27,15 +29,71 @@ class GunInfoUI extends game.BaseWindow{
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.cancelBtn,this.hide)
+        this.addBtnEvent(this.okBtn,()=>{
+            var pos = GunManager.getInstance().getPosByGun(this.gunid)
+            if(pos == GunChooseUI.getInstance().index)
+                GunManager.getInstance().removeGun(this.gunid)
+            else
+                GunManager.getInstance().addGun(this.gunid,GunChooseUI.getInstance().index)
+            GunChooseUI.getInstance().hide();
+            this.hide();
+        })
+
+        this.addBtnEvent(this.leftBtn,()=>{
+            this.gunid = GunChooseUI.getInstance().dataList[this.index - 1]
+            this.renew();
+        })
+        this.addBtnEvent(this.rightBtn,()=>{
+            this.gunid = GunChooseUI.getInstance().dataList[this.index + 1]
+            this.renew();
+        })
+        this.gunItem.scaleX = this.gunItem.scaleY = 0.9
+    }
+
+    public show(gunid?){
+        this.gunid = gunid;
+        super.show();
     }
 
     public onShow(){
+        this.setTitle('更换'+GunChooseUI.getInstance().index+'号位武器')
         this.renew();
+        this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+    }
+
+    private onE(){
+        this.gunItem.move2();
     }
 
 
     public renew(){
 
+        this.index = GunChooseUI.getInstance().dataList.indexOf(this.gunid);
+        this.renewBtn()
+        var pos = GunManager.getInstance().getPosByGun(this.gunid)
+        if(pos == GunChooseUI.getInstance().index)
+        {
+            this.okBtn.label = '卸下'
+        }
+        else
+        {
+            this.okBtn.label = '装备'
+        }
+
+        var GM = GunManager.getInstance();
+
+        var lv = GM.getGunLevel(this.gunid);
+        var vo:GunVO = GunVO.getObject(this.gunid);
+        this.nameText.text = vo.name;
+        this.gunItem.data = this.gunid;
+        this.levelText.text = 'LV.' + lv;
+        this.setHtml(this.atkText, this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.gunid) + this.createHtml('\n攻速：',0xFFF666) + vo.speed + '/秒\n'+
+            this.createHtml(vo.getTitle() + '：',0xFFF666) + vo.getDes(lv,true))
+    }
+
+    private renewBtn(){
+        this.rightBtn.visible = GunChooseUI.getInstance().dataList[this.index + 1]
+        this.leftBtn.visible = this.index>0
     }
 
     public hide(){

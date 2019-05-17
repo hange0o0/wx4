@@ -16,8 +16,11 @@ class GameUI extends game.BaseUI {
     private soundBtn: eui.Image;
     private rankBtn: eui.Group;
     private gunBtn: eui.Group;
+    private buildBtn: eui.Group;
+    private buildLockMC: eui.Image;
     private friendBtn: eui.Group;
     private blackBG: eui.Image;
+
 
 
 
@@ -58,6 +61,9 @@ class GameUI extends game.BaseUI {
         })
         this.addBtnEvent(this.friendBtn,()=>{
             BuffUI.getInstance().show();
+        })
+        this.addBtnEvent(this.buildBtn,()=>{
+            MyWindow.ShowTips('双 刀 合 一\n武器改造 100关 开启')
         })
 
         for(var i=0;i<GunManager.getInstance().maxGunNum;i++)
@@ -137,6 +143,11 @@ class GameUI extends game.BaseUI {
         this.bg.y += 1;
         if(this.bg.y > 0)
             this.bg.y -= 200;
+
+        if(Math.random() < 0.1)
+        {
+
+        }
     }
 
     public onVisibleChange(){
@@ -187,6 +198,8 @@ class GameUI extends game.BaseUI {
 
         this.startBtn.visible = true
         this.endLessBtn.visible = true
+        if(UM.level > this.endLessLevel)
+            this.endLessBtn.icon = ''
     }
 
     private getPos(index,pos){

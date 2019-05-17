@@ -20,6 +20,7 @@ class PlayManager extends egret.EventDispatcher {
 
     public getLevelMonster(level){
         this.randomSeed = level*1234567890;
+
         var maxCost = 200 + level*100;
         var stepCost = maxCost/Math.min(180,30 + level)/60; //每一帧增加的花费
         var nowCost = 0;
@@ -34,13 +35,18 @@ class PlayManager extends egret.EventDispatcher {
                  monsterList.push(MonsterVO.data[s])
              }
         }
-
+        ArrayUtil.sortByField(monsterList,['cost','id'],[0,0]);
+        var minRate = this.random();//出现小怪的机率
+        var minRateAdd = 0.1 + this.random()*0.4;//出现小怪的机率
         var list = [];
         while(nowCost < maxCost)
         {
             while(monsterCost < nowCost)
             {
-                var vo = monsterList[Math.floor(monsterList.length*this.random())]
+                if(this.random() < minRate)
+                    var vo = monsterList[Math.floor(monsterList.length*this.random()*minRateAdd)]
+                else
+                    var vo = monsterList[Math.floor(monsterList.length*this.random())]
                 list.push(vo.id+'|' + step + '|' + Math.floor(this.random()*100))
                 monsterCost += vo.cost;
             }

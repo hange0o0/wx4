@@ -11,6 +11,7 @@ class GunChooseUI extends game.BaseWindow{
 
 
     public index;
+    public dataList;
     public constructor() {
         super();
         this.skinName = "GunChooseUISkin";
@@ -39,13 +40,23 @@ class GunChooseUI extends game.BaseWindow{
 
 
     public renew(){
+        var GM = GunManager.getInstance();
         this.setTitle('更换'+this.index+'号位武器')
         var arr = GunManager.getInstance().getMyGunList();
         for(var s in arr)
         {
-            arr[s].temp = arr[s].getLevel();
+            arr[s] = {
+                id:arr[s],
+                open:GunVO.getObject(arr[s]),
+                lv:GM.getGunLevel(arr[s]),
+            }
         }
-        ArrayUtil.sortByField(arr,['temp','open'],[1,1]);
+        ArrayUtil.sortByField(arr,['lv','open'],[1,1]);
+        for(var s in arr)
+        {
+            arr[s] = arr[s].id;
+        }
+        this.dataList = arr;
         this.list.dataProvider = new eui.ArrayCollection(arr)
     }
 

@@ -34,13 +34,16 @@ class ChangeUserItem extends game.BaseItem{
             success: function () {
                 if(!UM.gameid)
                     return;
-                var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
-                if(arr.indexOf(appid) == -1)
-                {
-                    GameManager.getInstance().changeUserTime = TM.now();
-                    GameManager.getInstance().changeUserID = appid;
-                    console.log(GameManager.getInstance().changeUserTime,GameManager.getInstance().changeUserID)
-                }
+                GameManager.getInstance().changeUserTime = TM.now();
+                GameManager.getInstance().changeUserID = appid;
+                GameManager.getInstance().changeUserFun = this.data.fun;
+                //var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+                //if(arr.indexOf(appid) == -1)
+                //{
+                //    GameManager.getInstance().changeUserTime = TM.now();
+                //    GameManager.getInstance().changeUserID = appid;
+                //    console.log(GameManager.getInstance().changeUserTime,GameManager.getInstance().changeUserID)
+                //}
             }
         })
     }

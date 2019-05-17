@@ -20,33 +20,30 @@ class ChangeJumpUI extends game.BaseWindow{
         super.childrenCreated();
         this.list.itemRenderer = ChangeUserItem
 
-        this.setTitle('体验其它小程序')
+        this.setTitle('体验更多小程序')
     }
 
     public show(str?,fun?){
         this.fun = fun;
         this.str = str;
-        super.show()
+        ChangeUserUI.getAD(()=>{
+            super.show()
+        })
+
     }
 
     public onShow(){
         this.renew();
     }
 
-    public renewList(){
-        MyTool.renewList(this.list);
-    }
+    //public renewList(){
+    //    MyTool.renewList(this.list);
+    //}
 
 
     public renew(){
         this.destText.text = this.str;
-        //var arr = GunManager.getInstance().getMyGunList();
-        //for(var s in arr)
-        //{
-        //    arr[s].temp = arr[s].getLevel();
-        //}
-        //ArrayUtil.sortByField(arr,['temp','open'],[1,1]);
-        //this.list.dataProvider = new eui.ArrayCollection(arr)
+        this.list.dataProvider = new eui.ArrayCollection(ChangeUserUI.getListByNum(9,this.fun))
     }
 
     public hide(){

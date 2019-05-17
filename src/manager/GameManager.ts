@@ -13,6 +13,7 @@ class GameManager {
     public lastTouchMC;
     public changeUserTime = 0
     public changeUserID = 0
+    public changeUserFun;
 
     public isActive = true;
     public onShowFun
@@ -331,22 +332,25 @@ if(window["wx"])
         console.log('show')
 
 
-        //if(GameManager.getInstance().changeUserTime)
-        //{
-        //    console.log(TM.now() - GameManager.getInstance().changeUserTime)
-        //    if(TM.now() - GameManager.getInstance().changeUserTime > 30) //停留超过30秒
-        //    {
-        //        UM.coinObj.shareNum ++;
-        //        UM.needUpUser = true;
-        //        var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
-        //        arr.unshift(GameManager.getInstance().changeUserID)
-        //        if(arr.length > 5)
-        //            arr.length = 5;
-        //        if(UM.coinObj.shareNum <= 3)
-        //            MyWindow.ShowTips('体验完成，可领取奖励！')
-        //    }
-        //}
+        if(GameManager.getInstance().changeUserTime)
+        {
+            console.log(TM.now() - GameManager.getInstance().changeUserTime)
+            if(TM.now() - GameManager.getInstance().changeUserTime > 30) //停留超过30秒
+            {
+                var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+                var index = arr.indexOf(GameManager.getInstance().changeUserID)
+                if(index != -1)
+                    arr.splice(index,1);
+                arr.push(GameManager.getInstance().changeUserID)
+                while(arr.length > 10)
+                    arr.shift()
+                SharedObjectManager.getInstance().setMyValue('exchangeUserAppid',arr)
+                if(GameManager.getInstance().changeUserFun)
+                    GameManager.getInstance().changeUserFun()
+            }
+        }
         GameManager.getInstance().changeUserTime = 0;
+        GameManager.getInstance().changeUserFun = null;
     });
     //wx.exitMiniProgram(function(res){
     //    if(!GameManager.stage)

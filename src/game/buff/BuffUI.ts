@@ -28,7 +28,7 @@ class BuffUI extends game.BaseWindow {
         this.scroller.viewport = this.list;
         this.list.itemRenderer = BuffItem
         var arr = [];
-        for(var i=0;i<100;i++)
+        for(var i=0;i<20;i++)
         {
             arr.push(i)
         }

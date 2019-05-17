@@ -42,62 +42,62 @@ class GunVO {
         return GunManager.getInstance().getGunLevel(this.id);
     }
 
-    public getDes(lv?){
+    public getDes(lv?,stopUp?){
 
         var str = ''
         switch(this.type)
         {
             case 1://散射
-                str =  '每次可同时射出#1把飞刀';
+                str =  '每次可同时射出 #1 把飞刀';
                 break;
             case 2://穿透
                 str =  '飞刀不会被阻挡，对飞行路径上的所有敌人造成伤害';
                 break;
             case 3://杀敌爆炸
-                str =  '消灭敌人后会爆炸，对#1范围内的敌人造成#2点伤害';
+                str =  '消灭敌人后爆炸，对 #1 范围内的敌人造成 #2 点伤害';
                 break;
             case 4://杀敌吸血
-                str =  '每消灭一个敌人会回复城墙#1点血量';
+                str =  '每消灭一个敌人会回复城墙 #1 点血量';
                 break;
             case 5://杀敌攻击成长
-                str =  '每消灭一个敌人会提升自身#1点攻击力';
+                str =  '每消灭一个敌人会提升自身 #1 点攻击力';
                 break;
             case 6://全体加攻
-                str =  '增加所有出战飞刀#1点攻击力';
+                str =  '增加所有出战飞刀 #1 点攻击力';
                 break;
             case 7://减速
-                str =  '使中刀敌人减慢#1%速度，持续#2秒';
+                str =  '使中刀敌人减慢 #1% 速度，持续 #2 秒';
                 break;
             case 8://晕 机率
-                str =  '有#1%的机率使敌人陷入眩晕状态，持续#2秒';
+                str =  '有 #1% 的机率使敌人陷入眩晕状态，持续 #2 秒';
                 break;
             case 9://机率 暴击
-                str =  '有#1%的机率造成#1倍伤害';
+                str =  '有 #1% 的机率造成 #1 倍伤害';
                 break;
             case 10://增加金币收益
-                str =  '战斗结束后多获得#1%的金币';
+                str =  '战斗结束后多获得 #1% 的金币';
                 break;
             case 11://增加城墙血量
-                str =  '增加#1点城墙血量';
+                str =  '增加 #1 点城墙血量';
                 break;
             case 12://推后
-                str =  '使被命中的敌人退后#1距离';
+                str =  '使被命中的敌人退后 #1 距离';
                 break;
             case 13://追踪
                 str =  '飞刀会追踪敌人直至命中';
                 break;
             case 14://命中后分裂
-                str =  '命中敌人后会分裂出#1把飞刀';
+                str =  '命中敌人后会分裂出 #1 把飞刀';
                 break;
             case 15://命中吸血
-                str =  '命中敌人后回复城墙#1点血量';
+                str =  '命中敌人后回复城墙 #1 点血量';
                 break;
         }
         if(!str)
             return '无特殊技能';
         lv = lv || this.getLevel()
-        return str.replace('#1',this.changeValue(1,lv)).
-            replace('#2',this.changeValue(2,lv))
+        return str.replace('#1',this.changeValue(1,lv,stopUp)).
+            replace('#2',this.changeValue(2,lv,stopUp))
     }
 
     public getTitle(){
@@ -118,13 +118,13 @@ class GunVO {
             case 7://减速
                 return '减速'
             case 8://晕 机率
-                return '晕'
+                return '眩晕'
             case 9://机率 暴击
                 return '暴击'
             case 10://增加金币收益
-                return '金币'
+                return '金山'
             case 11://增加城墙血量
-                return '血量'
+                return '血牛'
             case 12://推后
                 return '推后'
             case 13://追踪
@@ -138,7 +138,7 @@ class GunVO {
     }
 
     private fillColor(str,color?){
-        return MyTool.createHtml(str,color || 0xFFD67F)
+        return MyTool.createHtml(str,color || 0xFFFF00)
     }
 
     public getLevelValue(index,lv?){
@@ -156,7 +156,7 @@ class GunVO {
         return Math.floor(orgin + add*(lv-1))
     }
 
-    private changeValue(index,lv){
+    private changeValue(index,lv,stopUp?){
         var needShowAdd = true
         if(lv == 0)
         {
@@ -168,6 +168,8 @@ class GunVO {
         if(index == 1 && this.add1 == 0)
             needShowAdd = false
         if(index == 2 && this.add2 == 0)
+            needShowAdd = false
+        if(stopUp)
             needShowAdd = false
 
         var str = this.fillColor(this.getLevelValue(index,lv));
