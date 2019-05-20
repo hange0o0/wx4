@@ -18,9 +18,8 @@ class PKMonsterMV_wx3 extends eui.Group {
     }
 
     public monsterMV:MonsterMV
-    //public heroMV:HeroMVItem
+    public heroMV:HeroMVItem
     public currentMV;
-    public clickMC = new eui.Rect()
 
     public id;
     public set speed(v){
@@ -57,20 +56,29 @@ class PKMonsterMV_wx3 extends eui.Group {
          if(this.currentMV)
              this.currentMV.stop();
          MyTool.removeMC(this.currentMV)
-         if(!this.monsterMV)
+         if(vo.isHero())
          {
-             this.addChild(this.clickMC);
-             this.clickMC.visible = false;
-             this.monsterMV = new MonsterMV()
-             this.monsterMV.addEventListener('mv_die',this.fireDie,this)
+             if(!this.heroMV)
+             {
+                 this.heroMV = new HeroMVItem()
+                 this.heroMV.addEventListener('mv_die',this.fireDie,this)
+             }
+             this.currentMV = this.heroMV;
+             this.addChild(this.heroMV)
+             this.heroMV.load(id)
          }
-         this.clickMC.width = vo.width
-         this.clickMC.height = vo.height
-         this.clickMC.x = -vo.width/2
-         this.clickMC.y = -vo.height
-         this.currentMV = this.monsterMV;
-         this.addChild(this.monsterMV)
-         this.monsterMV.load(id)
+         else {
+             if (!this.monsterMV) {
+                 this.monsterMV = new MonsterMV()
+                 this.monsterMV.addEventListener('mv_die', this.fireDie, this)
+             }
+
+             this.currentMV = this.monsterMV;
+             this.addChild(this.monsterMV)
+             this.monsterMV.load(id)
+         }
+
+
      }
 
     private fireDie(){

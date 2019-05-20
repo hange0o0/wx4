@@ -32,6 +32,7 @@ class UserManager {
     public level: number = 1;
     public gunLevel: any = {};
     public gunPos: any = {};
+    public pastDayCoin
     public gunPosNum = 3;
     public endLess = 0;
     public helpUser = null;
@@ -71,6 +72,13 @@ class UserManager {
         this.gunLevel = data.gunLevel || {};
         this.gunPos = data.gunPos || {};
         this.gunPosNum = _get['pos'] || data.gunPosNum || 3;
+        this.pastDayCoin = data.pastDayCoin
+        if(!DateUtil.isSameDay(this.pastDayCoin.t))
+        {
+            this.pastDayCoin.t = TM.now();
+            this.pastDayCoin.coin =  this.level * 200
+            this.needUpUser = true
+        }
 
         DM.addTime = SharedObjectManager.getInstance().getMyValue('addTime') || 0;
         this.offlineTime = TM.now() - saveTime;
@@ -251,6 +259,7 @@ class UserManager {
              gunPos:{1:1,2:2,3:3},   //$
              gunLevel:{},   //$
              guideFinish:true,
+             pastDayCoin:{coin:0,t:TM.now()},
              saveTime:0,
              shareUser:[],
          };
@@ -266,6 +275,7 @@ class UserManager {
             gunLevel:UM.gunLevel,
             gunPos:UM.gunPos,
             gunPosNum:UM.gunPosNum,
+            pastDayCoin:UM.pastDayCoin,
             //guideFinish:UM.guideFinish,
             saveTime:TM.now(),
         };

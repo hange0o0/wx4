@@ -81,7 +81,7 @@ class ResultUI extends game.BaseUI{
         else if(rate == 0)
         {
              this.titleText.text = '大胜！'
-            this.titleText.textColor = 0xFFFF99
+            this.titleText.textColor = 0xFFFF00
             this.failGroup.visible = false
             coin*=5;
             UM.level ++;
@@ -91,7 +91,7 @@ class ResultUI extends game.BaseUI{
         else
         {
              this.titleText.text = '惜败！'
-            this.titleText.textColor = 0xFF9999
+            this.titleText.textColor = 0xFF0000
             this.failGroup.visible = true
             this.barMC.width = 360*rate;
             this.rateText.text = '剩余怪物：'+MyTool.toFixed(rate*100,1)+'%'

@@ -42,4 +42,9 @@ class MonsterVO {
     public getAtkDis(){
         return this.width/2 + this.atkrage
     }
+
+    public isHero(){
+        return this.id > 100;
+    }
+
 }

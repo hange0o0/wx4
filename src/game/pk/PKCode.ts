@@ -211,6 +211,7 @@ class PKCode_wx3 {
         var hpRate = 1 + (this.endLessStep - 1)*0.2;
         var height = Math.min(300 + this.endLessStep*10,960)
         var startY = (GameManager.uiHeight - height)/2 + 30
+        var needAddBoss = this.endLessStep%5 == 0
         while(nowCost < maxCost)
         {
             while(monsterCost < nowCost)
@@ -229,6 +230,22 @@ class PKCode_wx3 {
             }
             step++;
             nowCost += stepCost
+
+            if(needAddBoss && nowCost/maxCost > 0.75)
+            {
+                needAddBoss = false;
+                var bossNum = Math.ceil(this.endLessStep/50)
+                if(bossNum == 1)
+                    var bvo = MonsterVO.getObject(100 + Math.ceil(this.endLessStep/5))
+                else
+                    var bvo = MonsterVO.getObject(100 + Math.ceil(Math.random()*10))
+                this.autoList.push({
+                    mid:bvo.id,
+                    hp:Math.floor(bvo.hp * hpRate),
+                    step:step,
+                    y:0.5*height + startY
+                })
+            }
         }
         this.endLessStep ++;
     }
@@ -256,8 +273,8 @@ class PKCode_wx3 {
              b = true;
              var oo = this.autoList.shift();
              var monster = PKMonsterItem_wx3.createItem();
-             monster.data = oo;
              PKingUI.getInstance().addMonster(monster)
+             monster.data = oo;
              monster.y = oo.y
              monster.x = 680
              this.monsterList.push(monster);

@@ -21,6 +21,10 @@ class GunItem extends game.BaseItem{
     private shootMC: eui.Image;
     private mcGroup: eui.Group;
     private roundMC: eui.Image;
+    private stateMC2: eui.Image;
+    private stateMC1: eui.Image;
+    private stateMC0: eui.Image;
+
 
 
 
@@ -33,6 +37,7 @@ class GunItem extends game.BaseItem{
     public tw;
     public timer;
     public maxStep;
+    public state = {}//(skillid:step)
 
     public constructor() {
         super();
@@ -54,6 +59,8 @@ class GunItem extends game.BaseItem{
         //this.roleBG.scaleX = this.roleBG.scaleY = 0.8
         this.tw = egret.Tween.get(this.roleBG,{loop:true}).to({alpha:0.2},1000).to({alpha:1},1000)
         this.tw.setPaused(true)
+
+
     }
 
     public dataChanged():void {
@@ -63,6 +70,10 @@ class GunItem extends game.BaseItem{
         this.role.source = 'role_'+lv+'_png'
         this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
         this.step = 0;
+
+        this.stateMC0.source = ''
+        this.stateMC1.source = ''
+        this.stateMC2.source = ''
 
         if(this.data >100)
         {

@@ -10,6 +10,7 @@ class GameUI extends game.BaseUI {
 
     private bg: eui.Image;
     private gunCon: eui.Group;
+    private bulletGroup: eui.Group;
     private endLessBtn: eui.Button;
     private startBtn: eui.Button;
     private coinText: eui.Label;
@@ -26,8 +27,10 @@ class GameUI extends game.BaseUI {
 
 
 
+
     public endLessLevel = 5;
     public gunArr = [];
+    public lastShoot = 0
     public constructor() {
         super();
         this.skinName = "GameUISkin";
@@ -117,12 +120,18 @@ class GameUI extends game.BaseUI {
         this.bg.height = GameManager.uiHeight + 250;
         this.bg.y = 0;
         GameTool.getInstance().preLoadMV();
+        RES.loadGroup('hero');
         this.renewSound();
         this.renew();
         this.renewCoin();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renew)
+
+        if(UM.pastDayCoin.coin)
+        {
+            PassDayAwardUI.getInstance().show();
+        }
     }
 
     private onE(){
@@ -135,18 +144,31 @@ class GameUI extends game.BaseUI {
         if(!this.startBtn.visible)
             return;
         //this.gunCon.rotation += 0.1;
-        for(var i=0;i<this.gunArr.length;i++) {
-            var item = this.gunArr[i];
-            item.rotation = -this.gunCon.rotation
-        }
+        //for(var i=0;i<this.gunArr.length;i++) {
+        //    var item = this.gunArr[i];
+        //    item.rotation = -this.gunCon.rotation
+        //}
 
         this.bg.y += 1;
         if(this.bg.y > 0)
             this.bg.y -= 200;
 
-        if(Math.random() < 0.1)
+        if(egret.getTimer() - this.lastShoot > 500)
         {
-
+            this.lastShoot = egret.getTimer();
+            var mc = BulletMC.createItem();
+            this.bulletGroup.addChild(mc);
+            mc.x = 10 + Math.random()*620
+            mc.y = GameManager.uiHeight + 50;
+            mc.data = {
+                scale:1,
+                id:ArrayUtil.randomOne(GunManager.getInstance().getMyGunList()),
+            };
+            egret.Tween.get(mc).to({y:-100},(GameManager.uiHeight+150)*1).call(()=>{
+                BulletMC.freeItem(mc);
+            })
+            mc.rotation = 0
+            egret.Tween.get(mc,{loop:true}).to({rotation:360},300)
         }
     }
 

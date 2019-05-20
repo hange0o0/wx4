@@ -28,12 +28,20 @@ class PassDayAwardUI extends game.BaseWindow {
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.okBtn,this.hide)
+        this.setTitle('领取补助')
+        this.addBtnEvent(this.okBtn,this.onGet)
         this.addBtnEvent(this.shareBtn,this.onShare)
     }
 
     public hide(){
         super.hide();
+    }
+
+    public onGet(){
+        UM.pastDayCoin.coin = 0
+        UM.addCoin(this.coin);
+        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.coin,2),0xFFFF00),1000)
+        this.hide();
     }
 
     public onShare(){
@@ -54,7 +62,9 @@ class PassDayAwardUI extends game.BaseWindow {
 
     private onAddCoin_5742(){
         MyTool.removeMC(this.shareBtn);
-        UM.addCoin(this.coin*2);
+        UM.pastDayCoin.coin = 0
+        UM.addCoin(this.coin*3);
+        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.coin*3,2),0xFFFF00),1000)
         this.okBtn.label = '关闭'
 
         var old = this.coin
@@ -74,13 +84,19 @@ class PassDayAwardUI extends game.BaseWindow {
     }
 
     public onShow(){
-
+        this.coin = UM.pastDayCoin.coin
+        var add = BuffManager.getInstance().getCoinAdd();
+        if(add)
+        {
+            this.coin = Math.ceil(this.coin * (1+add/100));
+            this.coinAddText.text = '好友助力加成 +'+add+'%'
+        }
+        else
+        {
+            this.coinAddText.text = '没有好友助力加成'
+        }
         this.coinText.text = NumberUtil.addNumSeparator(this.coin,2);
-
         this.btnGroup.addChild(this.shareBtn)
         //MyTool.removeMC(this.shareBtn);
-
-
-
     }
 }
