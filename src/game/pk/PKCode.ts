@@ -20,13 +20,24 @@ class PKCode_wx3 {
     public endLessStep = 0//无尽的步数
 
     public atkList = {}
+    public buffList = {}
 
     public getWudiCD(){
         return Math.max(0,this.wudiTime - TM.nowMS())
     }
 
     public getBulletAtk(bid){
-        return this.atkList[bid].base + this.atkList[bid].add
+        var hp = this.atkList[bid].base + this.atkList[bid].add
+        var add = 1;
+        if(this.isInBuff(101))
+            add -= 0.2
+        if(this.isInBuff(106))
+            add -= 0.2
+        return Math.ceil(hp*add);
+    }
+
+    public isInBuff(id){
+        return this.buffList[id];
     }
 
 
@@ -93,7 +104,7 @@ class PKCode_wx3 {
 
     public initData(){
 
-
+        this.buffList = {};
         this.atkList = {};
         var addAtk = 0;
         this.hpAdd = 0
@@ -148,7 +159,7 @@ class PKCode_wx3 {
         {
             var wall = PKMonsterItem_wx3.createItem();
             wall.data = {mid:99};
-            PKingUI.getInstance().con.addChild(wall);
+            PKingUI.getInstance().getCon().addChild(wall);
             wall.y =i*wallDec+80
             wall.x =150
             this.wallArr.push(wall);
@@ -168,7 +179,7 @@ class PKCode_wx3 {
             var list = PlayManager.getInstance().getLevelMonster(level)
             var height = Math.min(300 + level*10,960)
             var startY = (GameManager.uiHeight - height)/2 + 30
-            var hpRate = 1 + (level - 1)*0.2;
+            var hpRate = 1 + (level - 1)*0.1;
 
             this.autoList = list.split(',');
             for(var i=0;i<this.autoList.length;i++)
@@ -208,7 +219,7 @@ class PKCode_wx3 {
 
         var minRate = Math.random();//出现小怪的机率
         var minRateAdd = 0.1 + Math.random()*0.4;//出现小怪的机率
-        var hpRate = 1 + (this.endLessStep - 1)*0.2;
+        var hpRate = 1 + (this.endLessStep - 1)*0.1;
         var height = Math.min(300 + this.endLessStep*10,960)
         var startY = (GameManager.uiHeight - height)/2 + 30
         var needAddBoss = this.endLessStep%5 == 0
@@ -294,6 +305,17 @@ class PKCode_wx3 {
 
              }
              monster.target = nearWall;
+
+             if(MonsterVO.getObject(oo.mid).isHero())
+             {
+                 if(!this.buffList[oo.mid])
+                     this.buffList[oo.mid] = [];
+                 this.buffList[oo.mid].push(monster.id);
+                 if(this.buffList[oo.mid].length == 1)
+                    EventManager.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
+                 else
+                    EventManager.getInstance().dispatch(GameEvent.client.ADD_BOSS)
+             }
          }
 
         if(b)
@@ -348,7 +370,7 @@ class PKCode_wx3 {
                 if(target.isDie)
                     return;
                 var step = this.getStepByTime(target.getVO().atkrage*5);
-                if(target.mid == 1)
+                if(target.mid == 103)
                     step = 10;
                 step = Math.floor(step*target.getSpeedRate());
                 AtkMVCtrl_wx3.getInstance().mAtkMV(target.mid,target,step);//飞行动画
@@ -411,11 +433,47 @@ class PKCode_wx3 {
 
     //一轮操作结束,移队死，过线的，结算,清除BUFF
     public actionFinish(){
+        //BUFF效果
+        if(this.actionStep%60 == 0)
+        {
+            if(this.isInBuff(107))
+            {
+                for(var i=0;i<this.monsterList.length;i++)
+                {
+                    var target = this.monsterList[i]
+                    if(!target.isDie) //死的
+                    {
+                        target.addHp(Math.ceil(target.maxHp*0.02))
+                    }
+                }
+            }
+            if(this.isInBuff(108))
+            {
+                if(!this.getWudiCD())
+                    this.addHp(-Math.ceil(this.myHpMax*0.02))
+            }
+        }
+
+
+
         for(var i=0;i<this.monsterList.length;i++)
         {
             var target = this.monsterList[i]
             if(target.isDie==2) //死的
             {
+
+                if(MonsterVO.getObject(target.data.mid).isHero())
+                {
+                    var index = this.buffList[target.data.mid].indexOf(target.id);
+                    this.buffList[target.data.mid].splice(index,1);
+                    if(this.buffList[target.data.mid].length == 0)
+                    {
+                        delete this.buffList[target.data.mid];
+                        EventManager.getInstance().dispatch(GameEvent.client.REMOVE_BOSS,target.data.mid)
+                    }
+                }
+
+
                 this.monsterList.splice(i,1);
                 i--;
                 PKMonsterItem_wx3.freeItem(target);

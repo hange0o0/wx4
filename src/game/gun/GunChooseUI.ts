@@ -49,9 +49,10 @@ class GunChooseUI extends game.BaseWindow{
                 id:arr[s],
                 open:GunVO.getObject(arr[s]),
                 lv:GM.getGunLevel(arr[s]),
+                using:GM.getPosByGun(arr[s]) || 999,
             }
         }
-        ArrayUtil.sortByField(arr,['lv','open'],[1,1]);
+        ArrayUtil.sortByField(arr,['using','lv','open'],[0,1,1]);
         for(var s in arr)
         {
             arr[s] = arr[s].id;

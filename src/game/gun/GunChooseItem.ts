@@ -22,9 +22,9 @@ class GunChooseItem extends game.BaseItem{
             GunInfoUI.getInstance().show(this.data)
         })
 
-        //MyTool.addLongTouch(this,()=>{
-        //   GunListUI.getInstance().show(this.data.id)
-        //},this)
+        MyTool.addLongTouch(this,()=>{
+           GunListUI.getInstance().show(this.data)
+        },this)
     }
 
     public dataChanged():void {

@@ -26,12 +26,15 @@ class GunManager extends egret.EventDispatcher {
         for(var s in UM.gunPos)
         {
             if(UM.gunPos[s] == gunid)
-                return s;
+                return parseInt(s);
         }
-        return null
+        return 0
     }
 
     public addGun(gunid,pos){
+        var lastPos = this.getPosByGun(gunid);
+        if(lastPos)
+            UM.gunPos[lastPos] = UM.gunPos[pos];
         this.removeGun(gunid);
         UM.gunPos[pos] = gunid;
         EM.dispatch(GameEvent.client.GUN_CHANGE)

@@ -6,15 +6,16 @@ class GunInfoUI extends game.BaseWindow{
         return this._instance;
     }
 
-    private leftBtn: eui.Image;
+    private leftBtn: eui.Group;
     private cancelBtn: eui.Button;
     private okBtn: eui.Button;
-    private rightBtn: eui.Image;
+    private rightBtn: eui.Group;
     private atkText: eui.Label;
-    private nameText: eui.Label;
-    //private desText: eui.Label;
     private gunItem: GunItem;
+    private nameText: eui.Label;
     private levelText: eui.Label;
+    private posText: eui.Label;
+
 
 
 
@@ -71,9 +72,17 @@ class GunInfoUI extends game.BaseWindow{
         this.index = GunChooseUI.getInstance().dataList.indexOf(this.gunid);
         this.renewBtn()
         var pos = GunManager.getInstance().getPosByGun(this.gunid)
+        if(pos)
+            this.posText.text = pos + ' 号位'
+        else
+            this.posText.text = '';
         if(pos == GunChooseUI.getInstance().index)
         {
             this.okBtn.label = '卸下'
+        }
+        else if(pos && GunManager.getInstance().getGunByPos(GunChooseUI.getInstance().index))
+        {
+            this.okBtn.label = '交换'
         }
         else
         {

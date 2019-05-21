@@ -9,7 +9,7 @@ class PKingUI extends game.BaseUI {
 
     private bg1: eui.Image;
     private bg2: eui.Image;
-    public con: eui.Group;
+    private con: eui.Group;
     private monsterGroup: eui.Group;
     private gunGroup: eui.Group;
     private barGroup: eui.Group;
@@ -20,7 +20,10 @@ class PKingUI extends game.BaseUI {
     private rateBar: eui.Rect;
     private rateMC: eui.Group;
     private rateText: eui.Label;
+    private bossGroup: eui.Group;
+    private buffGroup: eui.Group;
     private blackBG: eui.Image;
+
 
 
 
@@ -29,6 +32,7 @@ class PKingUI extends game.BaseUI {
     public ww = 630
 
     public bulletArr = [];
+    public stateArr = [];
     public gunArr = [];
     public speed = 5
     public txtPool = []
@@ -48,11 +52,16 @@ class PKingUI extends game.BaseUI {
 
     public childrenCreated() {
         super.childrenCreated();
+
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin,this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove,this);
         this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchEnd,this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd,this);
         this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onTouchEnd,this);
+    }
+
+    public getCon(){
+        return this.con;
     }
 
     private onTouchBegin(e:egret.TouchEvent){
@@ -88,7 +97,7 @@ class PKingUI extends game.BaseUI {
             num = vo1.getLevelValue(1);
 
         var double = 1;
-        if(vo9)//有$1%的机率造成@2倍伤害';
+        if(vo9 && !PKCode_wx3.getInstance().isInBuff(109))//有$1%的机率造成@2倍伤害';
         {
             if(Math.random() < vo9.getLevelValue(1)/100)
             {
@@ -119,6 +128,7 @@ class PKingUI extends game.BaseUI {
         mc.data = {
             id:id,
             rota:rota,
+            disableSkill:PKCode_wx3.getInstance().isInBuff(109),
             double:double
         };
         return mc
@@ -228,9 +238,44 @@ class PKingUI extends game.BaseUI {
             egret.Tween.get(this.rateCon).wait(1000).to({bottom:0},200)
         }
 
+        this.bossGroup.visible = false
 
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.HP_CHANGE,this.renewBar)
+        this.addPanelOpenEvent(GameEvent.client.ADD_BOSS,this.onAddBoss)
+        this.addPanelOpenEvent(GameEvent.client.REMOVE_BOSS,this.onRemoveBoss)
+    }
+
+    private onAddBoss(e){
+        var id = e.data;
+        if(id)
+        {
+            var item = PKStateItem.createItem();
+            this.stateArr.push(item);
+            this.buffGroup.addChild(item)
+            item.data = id;
+            item.showMV();
+        }
+
+        this.bossGroup.visible = true;
+        this.bossGroup.alpha = 1;
+        egret.Tween.get(this.bossGroup).to({alpha:0},200).to({alpha:1},200).to({alpha:0},200).to({alpha:1},200).to({alpha:0},200).call(()=>{
+            this.bossGroup.visible = false;
+        })
+
+    }
+    private onRemoveBoss(e){
+        var id = e.data;
+        for(var i=0;i<this.stateArr.length;i++)
+        {
+            if(this.stateArr[i].data == id)
+            {
+                this.stateArr[i].hideMV();
+                this.stateArr.splice(i,1);
+                break;
+            }
+        }
+
     }
 
     private wallMV(wallItem){
@@ -376,6 +421,10 @@ class PKingUI extends game.BaseUI {
         while(this.bulletArr.length)
         {
             BulletMC.freeItem(this.bulletArr.pop())
+        }
+        while(this.stateArr.length)
+        {
+            PKStateItem.freeItem(this.stateArr.pop())
         }
         this.bg1.source = UM.getBG();
         this.bg2.source = UM.getBG(UM.level + 1);

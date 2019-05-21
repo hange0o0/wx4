@@ -204,4 +204,25 @@ class AtkMVCtrl_wx3 {
         egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
+    public atkMV103_wx3(user,target,actionTime,endTime){
+        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var mc = this.playAniOn(user.id,MonsterVO.getObject(103).mvid)
+        if(mc)
+        {
+            mc.scaleY = 1;
+            if(userItem.x > targetItem.x)
+            {
+                mc.scaleX = -1
+                mc.x -= MonsterVO.getObject(103).atkx
+            }
+            else
+            {
+                mc.scaleX = 1
+                mc.x += MonsterVO.getObject(103).atkx
+            }
+            mc.y -= MonsterVO.getObject(103).atky
+        }
+    }
+
 }

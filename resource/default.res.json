@@ -1,11 +1,11 @@
 {
 	"groups":[
 		{
-			"keys":"data_txt,gun_txt,lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png",
+			"keys":"data_txt,gun_txt,lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg",
 			"name":"preload_png"
 		},
 		{
-			"keys":"101_json,101_png,102_json,102_png,112_json,112_png,113_json,113_png,114_json,114_png,115_json,115_png,117_json,117_png,119_json,119_png,120_json,120_png,121_json,121_png,m_shadow_mc_png,buff_1_png,buff_2_png,buff_3_png,buff_5_png,buff_11_png,buff_12_png,buff_13_png,buff_15_png,buff_23_png",
+			"keys":"101_json,101_png,102_json,102_png,m_shadow_mc_png,104_png,105_json,105_png,106_json,106_png,107_json,107_png,108_json,108_png,109_json,109_png,110_json,110_png,buff_101_png,buff_102_png,buff_103_png,buff_104_png,buff_105_png,buff_106_png,buff_107_png,buff_108_png,buff_109_png,buff_110_png,103_json,103_png,104_json",
 			"name":"hero"
 		}
 	],
@@ -1186,134 +1186,144 @@
 			"url":"game_assets2/hero/102.png"
 		},
 		{
-			"name":"112_json",
-			"type":"json",
-			"url":"game_assets2/hero/112.json"
-		},
-		{
-			"name":"112_png",
-			"type":"image",
-			"url":"game_assets2/hero/112.png"
-		},
-		{
-			"name":"113_json",
-			"type":"json",
-			"url":"game_assets2/hero/113.json"
-		},
-		{
-			"name":"113_png",
-			"type":"image",
-			"url":"game_assets2/hero/113.png"
-		},
-		{
-			"name":"114_json",
-			"type":"json",
-			"url":"game_assets2/hero/114.json"
-		},
-		{
-			"name":"114_png",
-			"type":"image",
-			"url":"game_assets2/hero/114.png"
-		},
-		{
-			"name":"115_json",
-			"type":"json",
-			"url":"game_assets2/hero/115.json"
-		},
-		{
-			"name":"115_png",
-			"type":"image",
-			"url":"game_assets2/hero/115.png"
-		},
-		{
-			"name":"117_json",
-			"type":"json",
-			"url":"game_assets2/hero/117.json"
-		},
-		{
-			"name":"117_png",
-			"type":"image",
-			"url":"game_assets2/hero/117.png"
-		},
-		{
-			"name":"119_json",
-			"type":"json",
-			"url":"game_assets2/hero/119.json"
-		},
-		{
-			"name":"119_png",
-			"type":"image",
-			"url":"game_assets2/hero/119.png"
-		},
-		{
-			"name":"120_json",
-			"type":"json",
-			"url":"game_assets2/hero/120.json"
-		},
-		{
-			"name":"120_png",
-			"type":"image",
-			"url":"game_assets2/hero/120.png"
-		},
-		{
-			"name":"121_json",
-			"type":"json",
-			"url":"game_assets2/hero/121.json"
-		},
-		{
-			"name":"121_png",
-			"type":"image",
-			"url":"game_assets2/hero/121.png"
-		},
-		{
 			"name":"m_shadow_mc_png",
 			"type":"image",
 			"url":"game_assets2/hero/m_shadow_mc.png"
 		},
 		{
-			"name":"buff_1_png",
+			"name":"pk_hero_jpg",
 			"type":"image",
-			"url":"game_assets2/hero/buff_1.png"
+			"url":"game_assets/pk_hero.jpg"
 		},
 		{
-			"name":"buff_2_png",
+			"name":"104_png",
 			"type":"image",
-			"url":"game_assets2/hero/buff_2.png"
+			"url":"game_assets2/hero/104.png"
 		},
 		{
-			"name":"buff_3_png",
-			"type":"image",
-			"url":"game_assets2/hero/buff_3.png"
+			"name":"105_json",
+			"type":"json",
+			"url":"game_assets2/hero/105.json"
 		},
 		{
-			"name":"buff_5_png",
+			"name":"105_png",
 			"type":"image",
-			"url":"game_assets2/hero/buff_5.png"
+			"url":"game_assets2/hero/105.png"
 		},
 		{
-			"name":"buff_11_png",
-			"type":"image",
-			"url":"game_assets2/hero/buff_11.png"
+			"name":"106_json",
+			"type":"json",
+			"url":"game_assets2/hero/106.json"
 		},
 		{
-			"name":"buff_12_png",
+			"name":"106_png",
 			"type":"image",
-			"url":"game_assets2/hero/buff_12.png"
+			"url":"game_assets2/hero/106.png"
 		},
 		{
-			"name":"buff_13_png",
-			"type":"image",
-			"url":"game_assets2/hero/buff_13.png"
+			"name":"107_json",
+			"type":"json",
+			"url":"game_assets2/hero/107.json"
 		},
 		{
-			"name":"buff_15_png",
+			"name":"107_png",
 			"type":"image",
-			"url":"game_assets2/hero/buff_15.png"
+			"url":"game_assets2/hero/107.png"
 		},
 		{
-			"name":"buff_23_png",
+			"name":"108_json",
+			"type":"json",
+			"url":"game_assets2/hero/108.json"
+		},
+		{
+			"name":"108_png",
 			"type":"image",
-			"url":"game_assets2/hero/buff_23.png"
+			"url":"game_assets2/hero/108.png"
+		},
+		{
+			"name":"109_json",
+			"type":"json",
+			"url":"game_assets2/hero/109.json"
+		},
+		{
+			"name":"109_png",
+			"type":"image",
+			"url":"game_assets2/hero/109.png"
+		},
+		{
+			"name":"110_json",
+			"type":"json",
+			"url":"game_assets2/hero/110.json"
+		},
+		{
+			"name":"110_png",
+			"type":"image",
+			"url":"game_assets2/hero/110.png"
+		},
+		{
+			"name":"buff_101_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_101.png"
+		},
+		{
+			"name":"buff_102_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_102.png"
+		},
+		{
+			"name":"buff_103_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_103.png"
+		},
+		{
+			"name":"buff_104_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_104.png"
+		},
+		{
+			"name":"buff_105_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_105.png"
+		},
+		{
+			"name":"buff_106_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_106.png"
+		},
+		{
+			"name":"buff_107_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_107.png"
+		},
+		{
+			"name":"buff_108_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_108.png"
+		},
+		{
+			"name":"buff_109_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_109.png"
+		},
+		{
+			"name":"buff_110_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_110.png"
+		},
+		{
+			"name":"103_json",
+			"type":"json",
+			"url":"game_assets2/hero/103.json"
+		},
+		{
+			"name":"103_png",
+			"type":"image",
+			"url":"game_assets2/hero/103.png"
+		},
+		{
+			"name":"104_json",
+			"type":"json",
+			"url":"game_assets2/hero/104.json"
 		}
 	]
 }

@@ -7,6 +7,10 @@ class GameEvent {
         GUN_CHANGE:'GUN_CHANGE',
 
 
+        ADD_BOSS:'ADD_BOSS',
+        REMOVE_BOSS:'REMOVE_BOSS',
+
+
         energy_change:'energy_change',
         red_change:'red_change',
         pass_day:'pass_day',

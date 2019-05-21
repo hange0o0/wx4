@@ -21,9 +21,6 @@ class GunItem extends game.BaseItem{
     private shootMC: eui.Image;
     private mcGroup: eui.Group;
     private roundMC: eui.Image;
-    private stateMC2: eui.Image;
-    private stateMC1: eui.Image;
-    private stateMC0: eui.Image;
 
 
 
@@ -71,10 +68,6 @@ class GunItem extends game.BaseItem{
         this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
         this.step = 0;
 
-        this.stateMC0.source = ''
-        this.stateMC1.source = ''
-        this.stateMC2.source = ''
-
         if(this.data >100)
         {
 
@@ -91,8 +84,11 @@ class GunItem extends game.BaseItem{
 
     public move(){
         this.step ++;
-        this.mcGroup.rotation += 30 - this.maxStep/5
-        if(this.step >= this.maxStep)
+        var maxStep = this.maxStep;
+        if(PKCode_wx3.getInstance().isInBuff(103))
+            maxStep = Math.floor(maxStep*1.2)
+        this.mcGroup.rotation += 30 - maxStep/5
+        if(this.step >= maxStep)
         {
             this.step = -10;  //-10
             this.shootMC.visible = false
@@ -102,7 +98,7 @@ class GunItem extends game.BaseItem{
         {
             this.shootMC.visible = true
 
-            this.shootMC.horizontalCenter = -80*(this.step)/this.maxStep + 20
+            this.shootMC.horizontalCenter = -80*(this.step)/maxStep + 20
         }
     }
 

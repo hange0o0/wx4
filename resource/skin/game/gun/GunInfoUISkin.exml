@@ -25,5 +25,6 @@
 				<e:HorizontalLayout verticalAlign="bottom" gap="10"/>
 			</e:layout>
 		</e:Group>
+		<e:Label id="posText" text="Label" x="28.44" y="151.68" width="120" textAlign="center" size="22"/>
 	</e:Group>
 </e:Skin>

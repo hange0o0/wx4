@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GunChooseUISkin" width="580" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:Scroller id="scroller" top="80" bottom="30" width="520" horizontalCenter="0" bounces="false">
+	<e:Scroller id="scroller" top="80" bottom="60" width="520" horizontalCenter="0" bounces="false">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="65" y="56">
 				<e:layout>
@@ -10,4 +10,5 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
+	<e:Label text="* 长按打开武器库进行升级" horizontalCenter="0" size="20" bottom="25" textColor="0xadadad"/>
 </e:Skin>

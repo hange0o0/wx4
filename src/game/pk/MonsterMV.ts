@@ -125,6 +125,8 @@ class MonsterMV extends eui.Group {
         var w = this.mw
         var h = this.mh
         var speed = (this.speed || 0);
+        if(PKCode_wx3.getInstance().isInBuff(104))
+            speed += 20;
         if(speed)
         {
             if(speed > 0)

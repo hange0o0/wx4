@@ -34,7 +34,7 @@ class GunListUI extends game.BaseWindow{
         this.setTitle('我的飞刀')
         this.scroller.viewport = this.list;
         this.list.itemRenderer = GunListItem
-        this.list.selectedIndex = 1;
+        this.list.selectedIndex = 0;
         this.gunItem.scaleX = this.gunItem.scaleY = 1
 
         this.addBtnEvent(this.btn,()=>{

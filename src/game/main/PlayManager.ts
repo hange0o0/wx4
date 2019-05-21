@@ -39,6 +39,7 @@ class PlayManager extends egret.EventDispatcher {
         var minRate = this.random();//出现小怪的机率
         var minRateAdd = 0.1 + this.random()*0.4;//出现小怪的机率
         var list = [];
+        //list.push(103+'|' + step + '|' +50)
 
         var needAddBoss = level%5 == 0
         while(nowCost < maxCost)
@@ -63,10 +64,18 @@ class PlayManager extends egret.EventDispatcher {
                     list.push((100 + Math.ceil(level/5))+'|' + step + '|' +50)
                 else
                 {
+                    var bossObj = {};
                     var hh = (100/bossNum);
                     for(var i=0;i<bossNum;i++)
                     {
-                        list.push((100 + Math.ceil(Math.random()*10))+'|' + step + '|' +Math.floor(this.random()*hh +hh*i))
+                        var bossid =  Math.ceil(Math.random()*10)
+                        if(!bossObj[bossid])
+                        {
+                            list.push((100 + bossid)+'|' + step + '|' +Math.floor(this.random()*hh +hh*i))
+                            bossObj[bossid] = true
+                        }
+                        else
+                            i--;
                     }
                 }
             }

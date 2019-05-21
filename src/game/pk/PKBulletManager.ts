@@ -12,8 +12,6 @@ class PKBulletManager_wx3 {
     private bulletLinePool = [];
     private useItem = [];
 
-    private wx3_fun_asdfasdfasdf(){}
-    private wx3_fun_ast34(){}
     //有抛物线
     public createArrow(fromMC,toMC,beginTime,endTime,id?):ArrowMC_wx3{
         var item:ArrowMC_wx3 = this.arrowPool.pop();

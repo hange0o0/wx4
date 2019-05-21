@@ -31,7 +31,6 @@ class HeroMVItem extends game.BaseItem {
         this.footShadow.y = this.anchorOffsetY;
         this.footShadow.anchorOffsetX = 401/2;
         this.footShadow.anchorOffsetY = 178/2;
-        //this.mc.scaleX = this.mc.scaleY = this.scale;
     }
 
 
@@ -49,7 +48,7 @@ class HeroMVItem extends game.BaseItem {
     }
 
     private renew(){
-        var mcFactorys = this.mcFactory = HeroMVManager.getInstance().getFactory(this.heroid);
+        this.mcFactory = HeroMVManager.getInstance().getFactory(this.heroid);
         this.reset();
     }
 
