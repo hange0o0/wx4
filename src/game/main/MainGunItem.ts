@@ -33,6 +33,12 @@ class MainGunItem extends game.BaseItem{
         })
         //this.scaleX = this.scaleY = 0.7
 
+
+        MyTool.addLongTouch(this,()=>{
+            if(this.currentState == 'lock')
+                return
+            GunListUI.getInstance().show(this.data)
+        },this)
     }
 
     public dataChanged():void {

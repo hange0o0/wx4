@@ -295,6 +295,10 @@ if(window["wx"])
     window["BottomUI"] = BottomUI;
     window["TopUI"] = TopUI
     window["ChangeUserUI"] = ChangeUserUI
+    window["GunItem"] = GunItem
+    window["sendClientError"] = sendClientError
+    window["GameManager"] = GameManager
+    window["BasePanel"] = BasePanel
 
 
     var wx =  window["wx"];

@@ -110,7 +110,7 @@ class GunVO {
             case 3://杀敌爆炸
                 return '爆炸'
             case 4://杀敌吸血
-                return '吸血'
+                return '反哺'
             case 5://杀敌攻击成长
                 return '成长'
             case 6://全体加攻
@@ -132,7 +132,7 @@ class GunVO {
             case 14://命中后分裂
                 return '分裂'
             case 15://命中吸血
-                return '回血'
+                return '吸血'
         }
         return '';
     }

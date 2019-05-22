@@ -8,7 +8,6 @@ class ChangeUserItem extends game.BaseItem{
 
 
     private mc: eui.Image;
-    private redMC: eui.Image;
     private nameText: eui.Label;
     //private desText: eui.Label;
 
@@ -28,7 +27,6 @@ class ChangeUserItem extends game.BaseItem{
     private onClick(){
         var wx = window['wx'];
         var appid = this.data.appid
-        this.redMC.visible = false;
         wx.previewImage({
             urls: [this.data.img],
             success: function () {
@@ -51,19 +49,19 @@ class ChangeUserItem extends game.BaseItem{
     public dataChanged():void {
         this.mc.source = this.data.logo;
         this.nameText.text = StringUtil.getStringByLength(this.data.name,5);
-        this.redMC.visible = false;
 
-        if(!this.data.stopRed)
-        {
-            this.currentState = 's1'
-            var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
-            if(UM.gameid && arr.indexOf(this.data.appid) == -1)
-                this.redMC.visible = true
-        }
-        else
-        {
-            this.currentState = 's2'
-        }
+
+        //if(!this.data.stopRed)
+        //{
+        //    this.currentState = 's1'
+        //    var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+        //    if(UM.gameid && arr.indexOf(this.data.appid) == -1)
+        //        this.redMC.visible = true
+        //}
+        //else
+        //{
+        //    this.currentState = 's2'
+        //}
 
 
         //this.desText.text = this.data.desc;

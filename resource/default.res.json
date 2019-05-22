@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"data_txt,gun_txt,lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg",
+			"keys":"lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg,data_txt,gun_txt",
 			"name":"preload_png"
 		},
 		{
@@ -561,21 +561,6 @@
 			"url":"game_assets2/knives/knife_9.png"
 		},
 		{
-			"name":"knife_98_png",
-			"type":"image",
-			"url":"game_assets2/knives/knife_98.png"
-		},
-		{
-			"name":"knife_99_png",
-			"type":"image",
-			"url":"game_assets2/knives/knife_99.png"
-		},
-		{
-			"name":"data_txt",
-			"type":"text",
-			"url":"game_assets2/data.txt"
-		},
-		{
 			"name":"enemy8_png",
 			"type":"image",
 			"url":"game_assets2/monster/enemy8.png"
@@ -744,11 +729,6 @@
 			"name":"role_bg_8_png",
 			"type":"image",
 			"url":"game_assets2/role/role_bg_8.png"
-		},
-		{
-			"name":"gun_txt",
-			"type":"text",
-			"url":"game_assets2/gun.txt"
 		},
 		{
 			"name":"lock_png",
@@ -1136,16 +1116,6 @@
 			"url":"game_assets2/knives_icon/thum_50.png"
 		},
 		{
-			"name":"thum_98_png",
-			"type":"image",
-			"url":"game_assets2/knives_icon/thum_98.png"
-		},
-		{
-			"name":"thum_99_png",
-			"type":"image",
-			"url":"game_assets2/knives_icon/thum_99.png"
-		},
-		{
 			"name":"main_shop_png",
 			"type":"image",
 			"url":"game_assets/main_shop.png"
@@ -1324,6 +1294,16 @@
 			"name":"104_json",
 			"type":"json",
 			"url":"game_assets2/hero/104.json"
+		},
+		{
+			"name":"data_txt",
+			"type":"text",
+			"url":"data/data.txt"
+		},
+		{
+			"name":"gun_txt",
+			"type":"text",
+			"url":"data/gun.txt"
 		}
 	]
 }

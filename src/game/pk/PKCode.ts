@@ -207,7 +207,7 @@ class PKCode_wx3 {
         var step = this.actionStep;
         var monsterCost = -10;
         var monsterList = [];
-        var mlv = Math.ceil(this.endLessStep/2);
+        var mlv = Math.ceil(this.endLessStep/3);
         for(var s in MonsterVO.data)
         {
             if(MonsterVO.data[s].level <= mlv)
