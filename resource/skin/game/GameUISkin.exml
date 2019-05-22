@@ -46,5 +46,6 @@
 			<e:HorizontalLayout gap="30" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
+	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="320" size="22"/>
 	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0" visible="false"/>
 			</e:Skin>

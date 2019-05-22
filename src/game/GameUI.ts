@@ -20,12 +20,14 @@ class GameUI extends game.BaseUI {
     private buildBtn: eui.Group;
     private buildLockMC: eui.Image;
     private friendBtn: eui.Group;
+    private desText: eui.Label;
     private blackBG: eui.Image;
 
 
 
 
 
+    private dragTarget = new MainGunItem()
 
 
     public endLessLevel = 5;
@@ -96,6 +98,66 @@ class GameUI extends game.BaseUI {
                 DebugUI.getInstance().show();
             }
         },this)
+
+        this.gunCon.addEventListener('start_drag',this.onDragStart,this);
+        this.gunCon.addEventListener('end_drag',this.onDragEnd,this);
+        this.gunCon.addEventListener('move_drag',this.onDragMove,this);
+    }
+
+    private onDragStart(e){
+        e.target.setChoose(true);
+        this.dragTarget.data = e.target.data
+        this.stage.addChild(this.dragTarget);
+        this.dragTarget.x = e.data.x;
+        this.dragTarget.y = e.data.y;
+    }
+
+    private onDragMove(e){
+        if(!this.dragTarget.parent)
+            return;
+        this.dragTarget.x = e.data.x
+        this.dragTarget.y = e.data.y
+
+        var x = this.dragTarget.x //+ this.dragTarget.width/2
+        var y = this.dragTarget.y //+ this.dragTarget.height/2
+        for(var i=0;i<this.gunArr.length;i++)
+        {
+            var mc:any = this.gunArr[i];
+            mc.showDragState(false)
+        }
+        for(var i=0;i<this.gunArr.length;i++)
+        {
+            var mc:any = this.gunArr[i];
+            if(mc.currentState == 'normal' && mc.visible && mc.hitTestPoint(x,y))
+            {
+                if(mc.data != this.dragTarget.data)
+                {
+                    mc.showDragState(true)
+                    break;
+                }
+            }
+        }
+    }
+
+    private onDragEnd(e){
+        if(!this.dragTarget.parent)
+            return;
+        MyTool.removeMC(this.dragTarget)
+        var x = this.dragTarget.x
+        var y = this.dragTarget.y
+        for(var i=0;i<this.gunArr.length;i++)
+        {
+            var mc:any = this.gunArr[i];
+            mc.showDragState(false);
+            mc.setChoose(false);
+            if(mc.currentState == 'normal' && mc.visible && mc.hitTestPoint(x,y))
+            {
+                if(mc.data != this.dragTarget.data)
+                {
+                    GunManager.getInstance().addGun(GunManager.getInstance().getGunByPos(this.dragTarget.data),mc.data)
+                }
+            }
+        }
     }
 
     private renewSound(){
@@ -132,6 +194,11 @@ class GameUI extends game.BaseUI {
         {
             PassDayAwardUI.getInstance().show();
         }
+
+        this.desText.text = '长按武器查看详情,拖动调整位置'
+        setTimeout(()=>{
+            this.desText.text = ''
+        },5000)
     }
 
     private onE(){
@@ -141,6 +208,9 @@ class GameUI extends game.BaseUI {
             var item = this.gunArr[i];
             item.onE();
         }
+        if(this.dragTarget.stage)
+            this.dragTarget.onE();
+
         if(!this.startBtn.visible)
             return;
         //this.gunCon.rotation += 0.1;

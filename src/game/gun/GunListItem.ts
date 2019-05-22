@@ -27,7 +27,7 @@ class GunListItem extends game.BaseItem{
         this.lockGroup.visible = false
         if(!lv)
         {
-            if(this.data.open <= UM.level)
+            if(this.data.open < UM.level)
             {
                 this.levelText.text = '可解锁'
             }
@@ -46,6 +46,11 @@ class GunListItem extends game.BaseItem{
         else
         {
             this.levelText.text = 'LV.' + lv;
+        }
+
+        if(DEBUG)
+        {
+            this.levelText.text += this.data.id
         }
 
         //this.currentState = 'levelUp'

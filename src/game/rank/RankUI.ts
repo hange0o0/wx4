@@ -30,10 +30,11 @@ class RankUI extends game.BaseWindow{
         this.list.itemRenderer = RankItem;
 
         this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
+        this.tab.selectedIndex = 0;
     }
 
     private onTab(){
-
+        this.renew()
     }
 
 
@@ -68,11 +69,11 @@ class RankUI extends game.BaseWindow{
             return;
         }
 
-        if(this.rankData[type])
-        {
-            this.showRank(type);
-            return;
-        }
+        //if(this.rankData[type])
+        //{
+        //    this.showRank(type);
+        //    return;
+        //}
 
         var oo = {
             type:type,
@@ -81,11 +82,13 @@ class RankUI extends game.BaseWindow{
             head:UM.head,
             value:myValue,
         }
+        console.log(oo)
 
         wx.cloud.callFunction({      //取玩家openID,
             name: 'getRank',
             data: oo,
             complete: (res) => {
+                console.log(res)
                 if(res.result)
                 {
                     this.rankData[oo.type] = {
@@ -96,7 +99,7 @@ class RankUI extends game.BaseWindow{
                 }
             },
             fail:()=>{
-
+                console.log('fail')
             }
         })
     }

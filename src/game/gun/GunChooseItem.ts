@@ -33,6 +33,10 @@ class GunChooseItem extends game.BaseItem{
         {
             this.usingGroup.visible = true;
             this.usingText.text =  pos + '号位';
+            if(pos == GunChooseUI.getInstance().index)
+                this.usingText.textColor = 0x66ff66
+            else
+                this.usingText.textColor = 0xffffff
         }
         else
         {
@@ -41,13 +45,17 @@ class GunChooseItem extends game.BaseItem{
 
         var vo = GunVO.getObject(this.data);
         this.mc.source = vo.getThumb()
-        this.levelText.text = vo.name
+        //this.levelText.text = vo.name
         this.bg.source = vo.getBGRound()
         this.skillText.text = vo.getTitle()
-        if(DEBUG)
-        {
-            this.levelText.text += this.data
-        }
+
+        var atk = Math.floor(GunManager.getInstance().getGunAtk(vo.id)/vo.speed)
+        this.levelText.text =  atk + ' /秒'
+
+        //if(DEBUG)
+        //{
+        //    this.levelText.text += this.data
+        //}
         //
         //this.data.getTitle();
     }
