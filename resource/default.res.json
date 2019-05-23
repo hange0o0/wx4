@@ -51,16 +51,6 @@
 			"url":"game_assets2/ani/bullet9.png"
 		},
 		{
-			"name":"skill103_json",
-			"type":"json",
-			"url":"game_assets2/ani/skill103.json"
-		},
-		{
-			"name":"skill103_png",
-			"type":"image",
-			"url":"game_assets2/ani/skill103.png"
-		},
-		{
 			"name":"skill112_json",
 			"type":"json",
 			"url":"game_assets2/ani/skill112.json"
@@ -69,16 +59,6 @@
 			"name":"skill112_png",
 			"type":"image",
 			"url":"game_assets2/ani/skill112.png"
-		},
-		{
-			"name":"skill128_json",
-			"type":"json",
-			"url":"game_assets2/ani/skill128.json"
-		},
-		{
-			"name":"skill128_png",
-			"type":"image",
-			"url":"game_assets2/ani/skill128.png"
 		},
 		{
 			"name":"skill200_json",
@@ -1304,6 +1284,26 @@
 			"name":"gun_txt",
 			"type":"text",
 			"url":"data/gun.txt"
+		},
+		{
+			"name":"share1_jpg",
+			"type":"image",
+			"url":"game_assets2/share/share1.jpg"
+		},
+		{
+			"name":"share2_jpg",
+			"type":"image",
+			"url":"game_assets2/share/share2.jpg"
+		},
+		{
+			"name":"share3_jpg",
+			"type":"image",
+			"url":"game_assets2/share/share3.jpg"
+		},
+		{
+			"name":"share4_jpg",
+			"type":"image",
+			"url":"game_assets2/share/share4.jpg"
 		}
 	]
 }

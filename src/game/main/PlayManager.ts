@@ -22,7 +22,7 @@ class PlayManager extends egret.EventDispatcher {
         this.randomSeed = level*1234567890;
 
         var maxCost = 100 + level*20;
-        var stepCost = maxCost/Math.min(180,30 + level)/60; //每一帧增加的花费
+        var stepCost = maxCost/Math.min(180,20 + level)/60; //每一帧增加的花费
         var nowCost = 0;
         var step = 0;
         var monsterCost = -10;

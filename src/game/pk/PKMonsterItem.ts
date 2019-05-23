@@ -36,6 +36,11 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public yunStep = 0;
     public slowStep = 0;
     public speedDec = 0;
+    public get speedDec2(){
+        if(PKCode_wx3.getInstance().isInBuff(104))
+            return 20;
+        return 0;
+    }
 
 
     public buffHp = 0;
@@ -90,8 +95,13 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         var step = Math.ceil(cd*1000*(60/1000))
         this.slowStep = Math.max(this.slowStep,step)
         this.speedDec = Math.max(this.speedDec,speedDec)
-        this.monsterMV.speed = - this.speedDec
-        this.monsterMV.alpha = 0.8;
+        this.resetSpeed();
+        this.monsterMV.alpha = 0.6;
+    }
+
+    public resetSpeed(){
+        var speed = -this.speedDec + this.speedDec2;
+        this.monsterMV.speed = speed
     }
 
     public setYun(cd){
@@ -129,7 +139,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public getSpeedRate(){
-        return 1 + this.speedDec/100
+        return 1 + (this.speedDec - this.speedDec2)/100 * 1.5
     }
 
     public dataChanged(){
@@ -169,14 +179,16 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
 
     public run(){
+        this.resetSpeed();
         if(this.monsterMV.state != MonsterMV.STAT_RUN )
             this.monsterMV.run();
         this.x -= (this.speed/20)/this.getSpeedRate();
-        if(isNaN(this.x))
-            console.log('???')
+        //if(isNaN(this.x))
+        //    console.log('???')
     }
 
     public stand(){
+        this.resetSpeed();
         if(this.monsterMV.state != MonsterMV.STAT_STAND)
             this.monsterMV.stand();
     }
@@ -188,9 +200,11 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.barGroup.visible = true;
         var tw = egret.Tween.get(this.barGroup);
         tw.to({alpha:0},300)
+        //SoundManager.getInstance().playEffect('kill')
     }
 
     public atk(){
+        this.resetSpeed();
         this.monsterMV.atk();
     }
 

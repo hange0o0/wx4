@@ -48,7 +48,7 @@ class BuffUI extends game.BaseWindow {
     }
 
     public share(){
-        ShareTool.share('加入我们，让我们一起进步',Config.localResRoot + "share_img_2.jpg",{type:1,from:UM.gameid},()=>{
+        ShareTool.share('加入我们，让我们一起进步',Config.getShare(0),{type:1,from:UM.gameid},()=>{
             MyWindow.ShowTips('等待好友加入')
         },true)
     }

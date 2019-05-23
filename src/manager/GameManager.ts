@@ -326,7 +326,7 @@ if(window["wx"])
     wx.onShow(function(res){
         if(!GameManager.stage)
             return;
-        SoundManager.getInstance().playSound('bg');
+        SoundManager.getInstance().testBGPlay();
         //GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
         EM.dispatch(egret.Event.ACTIVATE)
         GameManager.getInstance().onShowFun && GameManager.getInstance().onShowFun();
@@ -350,7 +350,10 @@ if(window["wx"])
                     arr.shift()
                 SharedObjectManager.getInstance().setMyValue('exchangeUserAppid',arr)
                 if(GameManager.getInstance().changeUserFun)
+                {
                     GameManager.getInstance().changeUserFun()
+                    ChangeJumpUI.getInstance().hide();
+                }
             }
         }
         GameManager.getInstance().changeUserTime = 0;

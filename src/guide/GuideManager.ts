@@ -7,7 +7,7 @@ class GuideManager {
     //work*2->def*2->mlv,cnum->clv->tec->fight
     private static _instance: GuideManager;
     public currentStepId: Number;
-    public isGuiding:boolean = true;
+    public isGuiding:boolean = false;
 
     public temp;
 

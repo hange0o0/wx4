@@ -30,8 +30,11 @@ class RebornUI extends game.BaseWindow{
         })
 
         this.addBtnEvent(this.rebornBtn,()=>{
-            this.hide();
-            PKingUI.getInstance().reborn();
+            ShareTool.openGDTV(()=>{
+                this.hide();
+                PKingUI.getInstance().reborn();
+            })
+
         })
 
         this.rebornGroup.addChildAt(this.shape,1);

@@ -5,7 +5,7 @@
 	<e:Label id="desText" text="满血复活，并获得10秒无敌状态" horizontalCenter="1.5" textAlign="center" lineSpacing="20" size="24" bottom="130" textColor="0xb7b7b7"/>
 	<e:Group horizontalCenter="0" bottom="50">
 		<e:Button id="cancelBtn" label="放弃" skinName="Btn1Skin" width="160" x="0" y="0"/>
-		<e:Button id="rebornBtn" label="复活" width="160" x="0" y="0" skinName="Btn2Skin"/>
+		<e:Button id="rebornBtn" label="复活" width="160" x="0" y="0" skinName="Btn2Skin" icon="video_icon_png"/>
 		<e:layout>
 			<e:HorizontalLayout gap="50"/>
 		</e:layout>

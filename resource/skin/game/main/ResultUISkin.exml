@@ -4,7 +4,7 @@
 	<e:Group horizontalCenter="0" bottom="350">
 		<e:Group x="50" y="178">
 			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80"/>
-			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80"/>
+			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" icon="video_icon_png"/>
 			<e:layout>
 			<e:VerticalLayout gap="20"/>
 			</e:layout>

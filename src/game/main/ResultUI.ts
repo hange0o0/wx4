@@ -32,11 +32,16 @@ class ResultUI extends game.BaseUI{
         this.addBtnEvent(this.awardBtn,()=>{
             MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin,2),0xFFFF00),1000)
             this.close();
+            SoundManager.getInstance().playEffect('coin')
         })
         this.addBtnEvent(this.shareBtn,()=>{
-            UM.addCoin(this.addCoin*2);
-            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin*3,2),0xFFFF00),1000)
-            this.close();
+            ShareTool.openGDTV(()=>{
+                UM.addCoin(this.addCoin*2);
+                MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin*3,2),0xFFFF00),1000)
+                this.close();
+                SoundManager.getInstance().playEffect('coin')
+            })
+
         })
     }
 
@@ -77,6 +82,7 @@ class ResultUI extends game.BaseUI{
             {
                 this.timeText.text = '用时\n' + DateUtil.getStringBySecond(cd).substr(-5) + '.' + ('00' + cd2).substr(-2)
             }
+            SoundManager.getInstance().playEffect('lose')
         }
         else if(rate == 0)
         {
@@ -87,6 +93,7 @@ class ResultUI extends game.BaseUI{
             UM.level ++;
             UM.needUpUser = true;
             UM.upWXLevel()
+            SoundManager.getInstance().playEffect('win')
         }
         else
         {
@@ -95,6 +102,7 @@ class ResultUI extends game.BaseUI{
             this.failGroup.visible = true
             this.barMC.width = 360*rate;
             this.rateText.text = '剩余怪物：'+MyTool.toFixed(rate*100,1)+'%'
+            SoundManager.getInstance().playEffect('lose')
         }
         coin *= (1+add/100 + PKCode_wx3.getInstance().coinAdd/100);
         coin = this.addCoin = Math.ceil(coin);

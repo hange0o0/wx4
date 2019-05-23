@@ -57,6 +57,8 @@ class GunChooseUI extends game.BaseWindow{
         {
             arr[s] = arr[s].id;
         }
+        if(GM.getUnlock())
+            arr.push(0);
         this.dataList = arr;
         this.list.dataProvider = new eui.ArrayCollection(arr)
     }

@@ -33,6 +33,7 @@ class GameUI extends game.BaseUI {
     public endLessLevel = 5;
     public gunArr = [];
     public lastShoot = 0
+    public tipsTimer = 0
     public constructor() {
         super();
         this.skinName = "GameUISkin";
@@ -56,6 +57,10 @@ class GameUI extends game.BaseUI {
         this.addBtnEvent(this.soundBtn,()=>{
             SoundManager.getInstance().soundPlaying = !SoundManager.getInstance().soundPlaying
             SoundManager.getInstance().bgPlaying = !SoundManager.getInstance().bgPlaying
+            if(SoundManager.getInstance().bgPlaying)
+                SoundManager.getInstance().playSound('bg')
+            else
+                SoundManager.getInstance().stopBgSound()
             this.renewSound();
         })
         this.addBtnEvent(this.rankBtn,()=>{
@@ -177,6 +182,7 @@ class GameUI extends game.BaseUI {
             UM.gunPosNum = parseInt(_get['pos']);
         if(_get['level'])
             UM.level = parseInt(_get['level']);
+        SoundManager.getInstance().playSound('bg')
 
 
         this.bg.height = GameManager.uiHeight + 250;
@@ -194,9 +200,14 @@ class GameUI extends game.BaseUI {
         {
             PassDayAwardUI.getInstance().show();
         }
+        this.showTips();
 
+    }
+
+    private showTips(){
         this.desText.text = '长按武器查看详情,拖动调整位置'
-        setTimeout(()=>{
+        clearTimeout(this.tipsTimer);
+        this.tipsTimer = setTimeout(()=>{
             this.desText.text = ''
         },5000)
     }
@@ -246,6 +257,7 @@ class GameUI extends game.BaseUI {
         if(this.visible)
         {
             this.renew();
+            this.showTips();
         }
     }
 
@@ -318,6 +330,8 @@ class GameUI extends game.BaseUI {
     public startMV(){
         this.startBtn.visible = false
         this.endLessBtn.visible = false
+        this.desText.text = ''
+        clearTimeout(this.tipsTimer);
         var num =  Math.min(UM.gunPosNum + 1,GunManager.getInstance().maxGunNum);
         var r = 220;
         var rotaAdd = 360/num;

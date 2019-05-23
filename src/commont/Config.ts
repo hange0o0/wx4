@@ -21,10 +21,16 @@ class Config {
     public static cdn: string = "";
     public static localResRoot:string = "resource/game_assets/";
     public static localResRoot2:string = "resource/game_assets2/";
+    public static getShare(id){
+        id = id || Math.ceil(Math.random()*4)
+       return "resource/game_assets2/share/share"+id+".jpg";
+    }
 
     public static adHeight = 0
 
     public static openRate = 10;
+
+
 
 
     //public static friendLevel = 3;

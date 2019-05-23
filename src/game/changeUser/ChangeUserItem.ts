@@ -26,6 +26,17 @@ class ChangeUserItem extends game.BaseItem{
 
     private onClick(){
         var wx = window['wx'];
+        if(!wx)
+        {
+            if(this.data.fun)
+            {
+                this.data.fun()
+                ChangeJumpUI.getInstance().hide();
+            }
+            return;
+        }
+
+
         var appid = this.data.appid
         wx.previewImage({
             urls: [this.data.img],

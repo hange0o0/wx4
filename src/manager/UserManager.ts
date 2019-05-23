@@ -67,7 +67,7 @@ class UserManager {
         this.coin = data.coin || 0;
         this.shareUser = data.shareUser;
         this.helpUser = data.helpUser;
-        this.endLess = data.endLess;
+        this.endLess = data.endLess || 0;
         this.level = data.level || 1;
         this.gunLevel = data.gunLevel || {};
         this.gunPos = data.gunPos || {};

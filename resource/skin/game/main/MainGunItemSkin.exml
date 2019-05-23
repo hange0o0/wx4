@@ -3,6 +3,6 @@
 	<e:Image source="lock_png" width="120" height="120" horizontalCenter="0" verticalCenter="0" source.empty="item_empty_png" visible.normal="false"/>
 	<ns1:GunItem id="gunItem" skinName="GunItemSkin" horizontalCenter="0" verticalCenter="0" visible.lock="false" visible.empty="false"/>
 	<e:Label id="indexText" text="1" bold="true"  textColor="0xffffff" stroke="3" y="120" size="22" horizontalCenter="0"/>
-	<e:Label id="desText" text="Label" includeIn="normal" y="35" size="20" stroke="3" horizontalCenter="0" lineSpacing="10" textAlign="center" textColor="0xa4e1fc"/>
+	<e:Label id="desText" text="Label" includeIn="normal" size="20" stroke="3" horizontalCenter="0" lineSpacing="10" textAlign="center" textColor="0xa4e1fc" verticalCenter="0"/>
 	<e:Label id="coinText" text="123.456.78" includeIn="lock" y="71" size="20" horizontalCenter="0" textColor="0xffe46d"/>
 </e:Skin>

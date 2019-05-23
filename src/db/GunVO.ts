@@ -26,6 +26,8 @@ class GunVO {
 
     public reInit(){
          this.speed/=1000
+        this.v1 =this.v1 || 0
+        this.v2 = this.v2 || 0
         this.add1 = this.add1 || 0
         this.add2 = this.add2 || 0
     }
@@ -66,13 +68,13 @@ class GunVO {
                 str =  '增加所有出战飞刀 #1 点攻击力';
                 break;
             case 7://减速
-                str =  '使中刀敌人减慢 #1% 速度，持续 #2 秒';
+                str =  '使中刀敌人减慢 #1% 速度，持续 $2 秒';
                 break;
             case 8://晕 机率
-                str =  '有 #1% 的机率使敌人陷入眩晕状态，持续 #2 秒';
+                str =  '有 #1% 的机率使敌人陷入眩晕状态，持续 $2 秒';
                 break;
             case 9://机率 暴击
-                str =  '有 #1% 的机率造成 #1 倍伤害';
+                str =  '有 #1% 的机率造成 $1 倍伤害';
                 break;
             case 10://增加金币收益
                 str =  '战斗结束后多获得 #1% 的金币';
@@ -97,7 +99,9 @@ class GunVO {
             return '无特殊技能';
         lv = lv || this.getLevel()
         return str.replace('#1',this.changeValue(1,lv,stopUp)).
-            replace('#2',this.changeValue(2,lv,stopUp))
+            replace('#2',this.changeValue(2,lv,stopUp)).
+            replace('$1',this.changeValue(1,lv,stopUp,false)).
+            replace('$2',this.changeValue(2,lv,stopUp,false))
     }
 
     public getTitle(){
@@ -141,7 +145,7 @@ class GunVO {
         return MyTool.createHtml(str,color || 0xFFFF00)
     }
 
-    public getLevelValue(index,lv?){
+    public getLevelValue(index,lv?,needInt=true){
         lv = lv || this.getLevel();
         if(index == 1)
         {
@@ -153,10 +157,12 @@ class GunVO {
             var orgin = this.v2
             var add = this.add2
         }
-        return Math.floor(orgin + add*(lv-1))
+        if(needInt)
+            return Math.floor(orgin + add*(lv-1))
+        return orgin + add*(lv-1)
     }
 
-    private changeValue(index,lv,stopUp?){
+    private changeValue(index,lv,stopUp?,needInt=true){
         var needShowAdd = true
         if(lv == 0)
         {
@@ -172,9 +178,9 @@ class GunVO {
         if(stopUp)
             needShowAdd = false
 
-        var str = this.fillColor(this.getLevelValue(index,lv));
+        var str = this.fillColor(MyTool.toFixed(this.getLevelValue(index,lv,needInt),1));
         if(needShowAdd)
-            str += this.fillColor('(' + this.getLevelValue(index,lv+1) + ')',0x00FF00);
+            str += this.fillColor('(' + MyTool.toFixed(this.getLevelValue(index,lv+1,needInt),1) + ')',0x00FF00);
         return str;
     }
 

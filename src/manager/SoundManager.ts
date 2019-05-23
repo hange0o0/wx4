@@ -31,7 +31,11 @@ class SoundManager {
     private bgTimer;
     public pkKey = [];
     public effectKey = [];
+
+    public lastSoundTime = {};
     // private tween:egret.Tween
+
+    public currentLoader;
     
     private init(){
         //if(!App.isMobile){//pc上默认开音乐
@@ -124,7 +128,15 @@ class SoundManager {
         this.playEffect('btn');
     }
 
+    public testBGPlay(){
+        if(PKingUI.getInstance().stage)
+            this.playSound('bg2')
+        else
+            this.playSound('bg')
+    }
+
     public stopBgSound(){
+        console.log('stopBgSound',this.currentChannel)
         this.lastBGKey = this.bgKey;
         this.bgKey = null;
         try{
@@ -146,6 +158,9 @@ class SoundManager {
         if(GuideManager.getInstance().isGuiding)
             return;
         if(!this.soundPlaying) return;
+        if(this.lastSoundTime[v] && egret.getTimer() - this.lastSoundTime[v] < 200)
+            return;
+        this.lastSoundTime[v] = egret.getTimer();
         //console.log('call:',v)
         var url = "resource/sound/" + v +".mp3"
         var loader: egret.URLLoader = new egret.URLLoader();
@@ -179,9 +194,13 @@ class SoundManager {
         var url = "resource/sound/" + key +".mp3"
         if(this.currentKey == url) return;
         this.currentKey=url;
+        console.log('playSound',this.currentChannel)
 
-
-        
+        if(this.currentLoader)
+        {
+            this.onLoadError({target:this.currentLoader})
+        }
+        this.stopBgSound()
         try{
 
             this.tempLoop = loop;
@@ -191,7 +210,7 @@ class SoundManager {
 
             this.currentKey=url*/
 
-            var loader: egret.URLLoader = new egret.URLLoader();
+            var loader: egret.URLLoader = this.currentLoader = new egret.URLLoader();
             loader.dataFormat = egret.URLLoaderDataFormat.SOUND;
             loader.addEventListener(egret.Event.COMPLETE,this.onLoadComplete,this);
             loader.addEventListener(egret.IOErrorEvent.IO_ERROR,this.onLoadError,this);
@@ -205,9 +224,13 @@ class SoundManager {
     
     private playTime:number;
     private onLoadComplete(event: egret.Event): void {
+        console.log('onLoadComplete',this.currentChannel)
         egret.clearTimeout(this.playTime);
 
         var loader: egret.URLLoader = <egret.URLLoader>event.target;
+        if(loader != this.currentLoader)
+            return;
+
         var self = this;
         try{
             this.onLoadError(event);
@@ -228,10 +251,10 @@ class SoundManager {
                             //self.currentChannel.volume = 0.3 + Math.random()*0.7
 
                             if(!self._bgPlaying)return;
-                            //this.playTime = setTimeout(()=>{
-                            //
-                            //}, 150);
-                             fun();
+                            this.playTime = setTimeout(()=>{
+                                fun();
+                            }, 150);
+
                     // }
                     // catch(e){
                     // }
@@ -245,9 +268,14 @@ class SoundManager {
 
         function fun(){
             var sound: egret.Sound = <egret.Sound>loader.data;
+            if(!sound)
+                return;
             var channel: egret.SoundChannel = sound.play(0,self.tempLoop);
+            if(self.currentChannel)
+                self.currentChannel.stop();
             // channel.volume =0;
             self.currentChannel = channel;
+            console.log('playSoundFun',this.currentChannel)
             //self.currentChannel.volume = 0.3 + Math.random()*0.7
             // self.tween = egret.Tween.get(channel).to({volume:1},500).call(
             //     ()=>{
@@ -270,7 +298,9 @@ class SoundManager {
 
     }
 
-    private onLoadError(event: egret.Event): void {
+    private onLoadError(event): void {
+        console.log('onLoadError',this.currentChannel)
+        this.currentLoader = null;
         var loader: egret.URLLoader = <egret.URLLoader>event.target;
         loader.removeEventListener(egret.Event.COMPLETE,this.onLoadComplete,this);
         loader.removeEventListener(egret.IOErrorEvent.IO_ERROR,this.onLoadError,this);

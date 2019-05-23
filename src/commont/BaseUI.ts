@@ -140,6 +140,9 @@ module game {
         public isShowAD = false;
         public adBottom = 0;
 
+        public baseX = 0
+        public baseY = 0
+
         public constructor(isWindow?:boolean) {
             super();
             this.isWindow = isWindow;

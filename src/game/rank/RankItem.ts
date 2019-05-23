@@ -23,7 +23,7 @@ class RankItem extends game.BaseItem{
         this.indexText.text = this.data.index;
         this.nickText.text = this.data.nick
         this.headMC.source = this.data.head
-        this.valueText.text = this.data.type == 'level'?NumberUtil.addNumSeparator(this.data.value,2):'第' +this.data.value + '关'
+        this.valueText.text = this.data.type == 'level'?'第 ' +this.data.value + ' 关':DateUtil.getStringBySecond(this.data.value).substr(-5)
     }
 
 

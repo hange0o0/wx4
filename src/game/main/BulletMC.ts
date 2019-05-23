@@ -149,6 +149,7 @@ class BulletMC extends game.BaseItem{
             if(Math.abs(item.x -this.x)>mvo.width/2)
                 continue;
 
+            SoundManager.getInstance().playEffect('hit')
             item.addHp(-PKCode_wx3.getInstance().getBulletAtk(this.data.id)*this.data.double);
             if(!this.disableSkill)
             {
@@ -172,13 +173,13 @@ class BulletMC extends game.BaseItem{
                 {
                     if(this.getTypeVO(7)) //使中刀敌人减慢$1%速度，持续#2秒
                     {
-                        item.setSlow(this.getTypeVO(7).getLevelValue(1),this.getTypeVO(7).getLevelValue(2))
+                        item.setSlow(this.getTypeVO(7).getLevelValue(1),this.getTypeVO(7).getLevelValue(2,null,false))
                     }
                     else if(this.getTypeVO(8)) //'有$1%的机率使敌人陷入眩晕状态，持续#2秒';
                     {
                         if(Math.random() < this.getTypeVO(8).getLevelValue(1)/100)
                         {
-                            item.setYun(this.getTypeVO(8).getLevelValue(2))
+                            item.setYun(this.getTypeVO(8).getLevelValue(2,null,false))
                         }
                     }
                     else if(this.getTypeVO(12)) //'使被命中的敌人退后@1距离';

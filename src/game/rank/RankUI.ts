@@ -10,12 +10,16 @@ class RankUI extends game.BaseWindow{
     private desText: eui.Label;
     private scroller: eui.Scroller;
     private list: eui.List;
+    private openBtn: eui.Image;
+
 
 
     private bitmap: egret.Bitmap;
     private isdisplay = false;
 
     private rankData = {};
+
+    private infoBtn:UserInfoBtn
 
     public constructor() {
         super();
@@ -26,11 +30,27 @@ class RankUI extends game.BaseWindow{
         super.childrenCreated();
         this.setTitle('排行榜')
 
+        this.infoBtn = new UserInfoBtn(this.openBtn, (res)=>{
+            this.renewInfo(res);
+        }, this, Config.localResRoot + "wx_btn_info.png");
+
         this.scroller.viewport = this.list;
         this.list.itemRenderer = RankItem;
 
         this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
         this.tab.selectedIndex = 0;
+    }
+
+    private renewInfo(res?){
+        var wx = window['wx'];
+        if(!wx)
+            return;
+        if(res && res.userInfo)
+        {
+            this.infoBtn.visible = false;
+            UM.renewInfo(res.userInfo)
+            this.renew();
+        }
     }
 
     private onTab(){
@@ -69,11 +89,12 @@ class RankUI extends game.BaseWindow{
             return;
         }
 
-        //if(this.rankData[type])
-        //{
-        //    this.showRank(type);
-        //    return;
-        //}
+
+        if(this.rankData[type])
+        {
+            this.showRank(type);
+            return;
+        }
 
         var oo = {
             type:type,
@@ -114,7 +135,7 @@ class RankUI extends game.BaseWindow{
         for(var i=0;i<arr.length;i++) //更新自己成绩
         {
             arr[i].type = type;
-            if(arr[i].openid == UM.gameid)
+            if(arr[i].openid == UM.gameid && UM.nick)
             {
                 arr[i].value = myScore;
                 arr[i].nick = UM.nick;
@@ -151,6 +172,7 @@ class RankUI extends game.BaseWindow{
         else
         {
             this.desText.text = '点击授权后可在排行榜中显示你的名次';
+            this.infoBtn.visible = true;
         }
     }
 
@@ -191,8 +213,8 @@ class RankUI extends game.BaseWindow{
         if (!this.isdisplay) {
 
             this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight);
-            this.bitmap.x = 20;
-            this.bitmap.y = 75;
+            this.bitmap.x = 30;
+            this.bitmap.y = 120;
             this.addChild(this.bitmap);
             this.bitmap.touchEnabled = false
 
@@ -214,6 +236,7 @@ class RankUI extends game.BaseWindow{
 
         this.scroller.visible = false
         this.desText.text = ''
+        this.infoBtn.visible = false;
     }
     public hide(){
         this.remove();

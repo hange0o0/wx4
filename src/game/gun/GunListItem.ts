@@ -30,6 +30,7 @@ class GunListItem extends game.BaseItem{
             if(this.data.open < UM.level)
             {
                 this.levelText.text = '可解锁'
+                this.levelText.textColor = 0x00ff00
             }
             else
             {
@@ -42,16 +43,18 @@ class GunListItem extends game.BaseItem{
         else if(lv == GM.maxGunLevel)
         {
             this.levelText.text = 'MAX'
+            this.levelText.textColor = 0xffff00
         }
         else
         {
             this.levelText.text = 'LV.' + lv;
+            this.levelText.textColor = 0xffffFF
         }
 
-        if(DEBUG)
-        {
-            this.levelText.text += this.data.id
-        }
+        //if(DEBUG)
+        //{
+        //    this.levelText.text += this.data.id
+        //}
 
         //this.currentState = 'levelUp'
         //this.currentState = 'max'

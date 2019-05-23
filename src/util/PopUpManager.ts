@@ -46,7 +46,8 @@ class PopUpManager {
             this.shape.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onTap,this)
         }
         var shape = this.shape;
-        GameManager.container.addChild(shape);
+        if(isWindow)
+            GameManager.container.addChild(shape);
         GameManager.container.addChild(display);
         this.testVisible();
         if(isWindow) {
@@ -62,8 +63,8 @@ class PopUpManager {
             display.removeEventListener(egret.Event.ENTER_FRAME,onEnterFrame,this);
             
 //            console.log(display.width,display.height);
-            var x = (ww - display.width) / 2;
-            var y = (hh - display.height) / 2;
+            var x = display['baseX'] = (ww - display.width) / 2;
+            var y = display['baseY'] = (hh - display.height) / 2;
             var x2 = (ww - display.width*1.1) / 2;
             var y2 = (hh - display.height*1.1) / 2;
             display.alpha = 1;
@@ -137,9 +138,10 @@ class PopUpManager {
             for(var i=GameManager.container.numChildren-1 ;i>=0;i--)
             {
                 var ui = GameManager.container.getChildAt(i);
-                if(ui instanceof game.BaseWindow)
+                if(ui instanceof game.BaseUI)
                 {
-                    GameManager.container.addChildAt(this.shape,i)
+                    if(ui.isWindow)
+                        GameManager.container.addChildAt(this.shape,i)
                     return
                 }
             }

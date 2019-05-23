@@ -87,6 +87,7 @@ class HeroMVItem extends game.BaseItem {
         if(!this.mcFactory)
             return;
         this.mc.removeEventListener(egret.Event.COMPLETE, this.stand, this);
+        //this.mc.frameRate
         switch(this.state)
         {
             case MonsterMV.STAT_RUN:

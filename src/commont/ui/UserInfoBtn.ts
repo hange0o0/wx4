@@ -1,13 +1,13 @@
 
 class UserInfoBtn {
 
-    private sourceBtn:eui.Image | eui.Button;
+    private sourceBtn;
     private callFun:Function;
     private parent:game.BaseUI;
     private okBtn;
     private isNew:string;
 
-    public constructor(btn:eui.Image | eui.Button, fun:Function, parent:game.BaseUI, url:string) {
+    public constructor(btn, fun:Function, parent:game.BaseUI, url:string) {
         //if(DEBUG){
         //    if(!(parent instanceof game.BaseUI)){
         //        console.error("不支持！");
@@ -50,8 +50,8 @@ class UserInfoBtn {
             let scaley = screen.availHeight/GameManager.stage.stageHeight;
             // let left = scalex * ((640-this.width)/2 + btnx);
             // let top = scaley * ((GameManagerHitPeng.uiHeight-this.height)/2 + btny + (AppF.isIOS ? 52 : 0));
-            let left = scalex * (btnx);
-            let top = scaley * (btny);
+            let left = scalex * (this.parent['baseX'] + btnx);
+            let top = scaley * (this.parent['baseY'] + btny);
             let width = scalex * btnw;
             let height = scalex * btnh;
             var button = window["wx"].createUserInfoButton({
@@ -79,7 +79,7 @@ class UserInfoBtn {
     }
 
     public set visible(v:boolean){
-        console.log(v,this.isNew)
+        //console.log(v,this.isNew)
         if(v && this.isNew && !this.okBtn){
             let btn = this.sourceBtn;
             // console.log(btn.width, btn.height, btn.x, btn.y, btn.right, btn.bottom, this.parent.width, this.parent.height);
@@ -93,7 +93,7 @@ class UserInfoBtn {
             }
             this.okBtn = this.initBtn(btn.width, btn.height, btn.x, btn.y, this.isNew);
         }
-        console.log(this.okBtn)
+        //console.log(this.okBtn)
         if(!this.okBtn) return;
 
 

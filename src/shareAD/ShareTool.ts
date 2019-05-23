@@ -120,11 +120,17 @@ class ShareTool {
     private static videoAD
     private static adSuccFun;
     public static openGDTV(success?){
-        if(DEBUG) {
-            console.log('视频广告');
-            success && success();
-            return
-        }
+        //if(DEBUG) {
+        //    console.log('视频广告');
+        //    success && success();
+        //    return
+        //}
+
+        //监时用进入好友代替
+        ChangeJumpUI.getInstance().show('没有可观看的广告，体验以上小程序30秒也可获得',success)
+        return;
+
+
         this.adSuccFun = success;
         //if(MobileQU.isWXGame){ //视频广告，需要基础库版本号 >= 2.0.4
         if(!window["wx"].createRewardedVideoAd){

@@ -38,6 +38,7 @@ class GunManager extends egret.EventDispatcher {
         this.removeGun(gunid);
         UM.gunPos[pos] = gunid;
         EM.dispatch(GameEvent.client.GUN_CHANGE)
+        UM.needUpUser = true;
     }
 
     public removeGun(gunid){
@@ -46,6 +47,7 @@ class GunManager extends egret.EventDispatcher {
         {
             UM.gunPos[pos] = 0;
             EM.dispatch(GameEvent.client.GUN_CHANGE)
+            UM.needUpUser = true;
         }
     }
 
@@ -69,12 +71,27 @@ class GunManager extends egret.EventDispatcher {
         UM.addCoin(-this.getPosCost())
         UM.gunPosNum ++;
         EM.dispatch(GameEvent.client.GUN_CHANGE)
+        SoundManager.getInstance().playEffect('upgrade')
+        UM.needUpUser = true;
     }
 
     public levelUpGun(gunid){
         UM.addCoin(-this.getGunCost(gunid))
         UM.gunLevel[gunid] = this.getGunLevel(gunid) + 1;
         EM.dispatch(GameEvent.client.GUN_CHANGE)
+        SoundManager.getInstance().playEffect('buy')
+        UM.needUpUser = true;
+    }
+
+    public getUnlock(){
+        for(var s in GunVO.data)
+        {
+            if(GunVO.data[s].open < UM.level && !this.getGunLevel(s))
+            {
+                return s;
+            }
+        }
+        return false;
     }
 
     public getMyGunList(){

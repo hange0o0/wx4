@@ -14,7 +14,7 @@
 			<e:HorizontalLayout horizontalAlign="justify"/>
 		</e:layout>
 	</e:TabBar>
-	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="20" size="24" textColor="0xcccccc"/>
+	<e:Label id="desText" text="Label" bottom="0" size="24" textColor="0xcccccc" left="0" right="0" height="60" textAlign="center" verticalAlign="middle"/>
 	<e:Scroller id="scroller" left="30" right="30" top="120" bottom="60">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="74" y="166">
@@ -24,4 +24,5 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
+	<e:Image id="openBtn" left="0" right="0" bottom="0" height="60"/>
 </e:Skin>

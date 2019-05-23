@@ -37,7 +37,7 @@ class PKingUI extends game.BaseUI {
     public speed = 5
     public txtPool = []
 
-    private touchID
+    private touchID = {}
 
     private stoping = true
     private begining = true
@@ -65,22 +65,23 @@ class PKingUI extends game.BaseUI {
     }
 
     private onTouchBegin(e:egret.TouchEvent){
-        this.touchID = {
+        this.touchID[e.touchPointID] = {
             touchY:e.stageY,
             gunY:this.gunGroup.y
         }
     }
 
     private onTouchMove(e){
-        if(!this.touchID)
-            return;
         if(this.isDie)
             return
-        this.gunGroup.y = this.touchID.gunY - this.touchID.touchY + e.stageY
+        if(!this.touchID[e.touchPointID])
+            return;
+
+        this.gunGroup.y = this.touchID[e.touchPointID].gunY - this.touchID[e.touchPointID].touchY + e.stageY
     }
 
     private onTouchEnd(e){
-        this.touchID = null
+        delete this.touchID[e.touchPointID];
     }
 
 
@@ -88,6 +89,7 @@ class PKingUI extends game.BaseUI {
     public shoot(item:GunItem){
         if(this.isDie)
             return
+        SoundManager.getInstance().playEffect('shoot')
         //var vo = GunVO.getObject(item.data)
         var num = 1;
         var vos = GunManager.getInstance().getGunVOs(item.data);
@@ -101,7 +103,7 @@ class PKingUI extends game.BaseUI {
         {
             if(Math.random() < vo9.getLevelValue(1)/100)
             {
-                double = vo9.getLevelValue(2)
+                double = vo9.getLevelValue(2,null,false)
                 if(item)
                 {
                     this.playDoubleHit(item,MyTool.toFixed(double,2))
@@ -109,13 +111,13 @@ class PKingUI extends game.BaseUI {
             }
         }
 
-        var rota = 20;
+        var rota = Math.min(20,120/num);
         var total = (num - 1)*rota;
         var start = -total/2
         for(var i=0;i<num;i++)
         {
             this.createBullet(item.data,50,item.y + this.gunGroup.y,start + i*rota,double)
-        }
+        }                                                                                                                                                         1
     }
 
     public createBullet(id,x,y,rota,double=1){
@@ -143,14 +145,14 @@ class PKingUI extends game.BaseUI {
     public playDoubleHit(item:GunItem,value){
         var txt = this.createTxt();
         txt.textColor = 0xFF0000;
-        txt.text = '! ' + value;
+        txt.text = 'x ' + value;
         var p = item.localToGlobal(item.x,item.y)
         txt.x = p.x;
-        txt.y = p.y;
+        txt.y = p.y - item.height/2;
         this.addChild(txt)
 
         var tw = egret.Tween.get(txt);
-        tw.to({y:txt.y - 100,alpha:0},800).call(function(){
+        tw.to({y:txt.y - 100,alpha:0.5},800).call(function(){
             this.freeTxt(txt);
         },this)
     }
@@ -186,9 +188,12 @@ class PKingUI extends game.BaseUI {
 
     public hide() {
         super.hide();
+        SoundManager.getInstance().playSound('bg')
     }
 
     public onShow(){
+        SoundManager.getInstance().playSound('bg2')
+        this.touchID = {};
         this.isDie = false
         this.isReborn = false
         this.isFinish = false
@@ -326,10 +331,14 @@ class PKingUI extends game.BaseUI {
     }
 
     private dieWall(wallItem){
-        setTimeout(()=>{wallItem.die()},Math.random()*800)
+        setTimeout(()=>{
+            wallItem.die();
+            SoundManager.getInstance().playEffect('die')
+        },Math.random()*800)
     }
 
     public reborn(){
+        SoundManager.getInstance().playEffect('reborn')
         PKCode_wx3.getInstance().wudiTime = TM.nowMS() + 10*1000;
         //this.showWudi = true;
         this.isDie = false;
@@ -348,7 +357,7 @@ class PKingUI extends game.BaseUI {
     }
 
     private onE(){
-        if(this.begining)
+        if(this.begining || this.isFinish)
         {
             for(var i=0;i<this.gunArr.length;i++)
             {

@@ -42,25 +42,29 @@ class PassDayAwardUI extends game.BaseWindow {
         UM.addCoin(this.coin);
         MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.coin,2),0xFFFF00),1000)
         this.hide();
+        SoundManager.getInstance().playEffect('coin')
     }
 
     public onShare(){
-        if(this.isVideo)
-        {
-
-        }
+        //if(this.isVideo)
+        //{
+            ShareTool.openGDTV(()=>{
+                this.onAddCoin_5742()
+            })
+        //}
         //if(this.videoIcon.visible)
         //{
         //    this.onAddCoin_5742()
         //    return
         //}
-        ShareTool.share('我需要你们的帮助！！',Config.localResRoot + "share_img_2.jpg",{},()=>{
-            this.onAddCoin_5742()
-        })
+        //ShareTool.share('我需要你们的帮助！！',Config.getShare(0),{},()=>{
+        //    this.onAddCoin_5742()
+        //})
     }
 
 
     private onAddCoin_5742(){
+        SoundManager.getInstance().playEffect('coin')
         MyTool.removeMC(this.shareBtn);
         UM.pastDayCoin.coin = 0
         UM.addCoin(this.coin*3);

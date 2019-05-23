@@ -202,7 +202,7 @@ class PKCode_wx3 {
 
     private createEndLess(){
         var maxCost = 50 + this.endLessStep * 20
-        var stepCost = maxCost/10/60; //每一帧增加的花费
+        var stepCost = maxCost/5/60; //每一帧增加的花费
         var nowCost = 0;
         var step = this.actionStep;
         var monsterCost = -10;
