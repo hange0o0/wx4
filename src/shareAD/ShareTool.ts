@@ -127,7 +127,7 @@ class ShareTool {
         //}
 
         //监时用进入好友代替
-        ChangeJumpUI.getInstance().show('没有可观看的广告，体验以上小程序30秒也可获得',success)
+        ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序30秒也可获得',success)
         return;
 
 

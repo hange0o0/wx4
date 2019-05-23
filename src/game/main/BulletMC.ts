@@ -234,6 +234,7 @@ class BulletMC extends game.BaseItem{
     public remove():void {
         MyTool.removeMC(this);
         egret.Tween.removeTweens(this);
+        //console.log('remove')
     }
 
 

@@ -79,3 +79,10 @@ class ChangeUserItem extends game.BaseItem{
     }
 
 }
+
+class ChangeUserItem2 extends ChangeUserItem {
+    public constructor() {
+        super();
+        this.currentState = 's2'
+    }
+}

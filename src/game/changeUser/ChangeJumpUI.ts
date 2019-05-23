@@ -18,8 +18,7 @@ class ChangeJumpUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.list.itemRenderer = ChangeUserItem
-
+        this.list.itemRenderer = ChangeUserItem2
         this.setTitle('体验更多小程序')
     }
 

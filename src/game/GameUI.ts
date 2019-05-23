@@ -57,12 +57,12 @@ class GameUI extends game.BaseUI {
         this.addBtnEvent(this.soundBtn,()=>{
             SoundManager.getInstance().soundPlaying = !SoundManager.getInstance().soundPlaying
             SoundManager.getInstance().bgPlaying = !SoundManager.getInstance().bgPlaying
-            if(SoundManager.getInstance().bgPlaying)
-                SoundManager.getInstance().playSound('bg')
-            else
-                SoundManager.getInstance().stopBgSound()
+            //if(SoundManager.getInstance().bgPlaying)
+            //    SoundManager.getInstance().playSound('bg')
+            //else
+            //    SoundManager.getInstance().stopBgSound()
             this.renewSound();
-        })
+        },this,true)
         this.addBtnEvent(this.rankBtn,()=>{
             RankUI.getInstance().show();
         })

@@ -53,6 +53,8 @@ class RebornUI extends game.BaseWindow{
     private onE(){
         if(!GameManager.getInstance().isActive)
             return;
+        if(ChangeJumpUI.getInstance().stage)
+            return;
         if(this.step <= 0)
         {
             this.hide();

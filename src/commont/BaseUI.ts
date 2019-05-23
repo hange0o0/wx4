@@ -66,12 +66,12 @@ module game {
         * 给按钮添加事件  
         * this.addBtnEvent(this.btn, this.btnClick);
         */ 
-        public addBtnEvent(btn: egret.DisplayObject, fun:any, thisObject?:any):void{
+        public addBtnEvent(btn: egret.DisplayObject, fun:any, thisObject?:any,stopAddSound?):void{
             btn.touchEnabled = true;
             btn.addEventListener(egret.TouchEvent.TOUCH_TAP,fun,thisObject || this);
 
             var btnName = (btn['id'] || '').toLocaleLowerCase();
-            if(btnName.indexOf('btn')!=-1 || btnName.indexOf('button')!=-1)
+            if(!stopAddSound && (btnName.indexOf('btn')!=-1 || btnName.indexOf('button')!=-1))
                 SoundManager.getInstance().addBtnClickEffect(btn);
         }
 
