@@ -165,6 +165,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
         this.hp = this.data.hp
         this.maxHp = this.hp
+        this.speed = this.getVO().speed
 
 
         this.barGroup.visible = false;

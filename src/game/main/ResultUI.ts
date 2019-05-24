@@ -21,10 +21,14 @@ class ResultUI extends game.BaseUI{
 
 
     public addCoin = 0;
+    public rate = 3;
     public constructor() {
         super();
         this.skinName = "ResultUISkin";
         this.hideBehind = false;
+
+        this.isShowAD = true;
+        this.adBottom = 50;
     }
 
     public childrenCreated() {
@@ -36,8 +40,8 @@ class ResultUI extends game.BaseUI{
         })
         this.addBtnEvent(this.shareBtn,()=>{
             ShareTool.openGDTV(()=>{
-                UM.addCoin(this.addCoin*2);
-                MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin*3,2),0xFFFF00),1000)
+                UM.addCoin(this.addCoin*(this.rate-1));
+                MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.addCoin*this.rate,2),0xFFFF00),1000)
                 this.close();
                 SoundManager.getInstance().playEffect('coin')
             })
@@ -112,6 +116,14 @@ class ResultUI extends game.BaseUI{
             this.coinAddText.text = '好友助力加成 +'+add+'%'
         else
             this.coinAddText.text = '没有好友助力加成'
+
+
+        if(PlayManager.getInstance().isEndLess || rate != 0)
+            this.rate = Math.max(3,Math.ceil(300/this.addCoin))
+        else
+            this.rate = Math.max(3,Math.ceil(500/this.addCoin))
+        this.rate = Math.min(20,this.rate);
+        this.shareBtn.label = this.rate + '倍领取'
 
         //this.bg.source = UM.getBG();
     }

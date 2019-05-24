@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="ResultUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image id="bg" source="black_bg_alpha_png" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
-	<e:Group horizontalCenter="0" bottom="350">
+	<e:Group horizontalCenter="0" bottom="300">
 		<e:Group x="50" y="178">
 			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80"/>
 			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" icon="video_icon_png"/>
@@ -27,5 +27,5 @@
 		<e:Label id="rateText" text="剩余怪物：60%" size="20" textColor="0xfce662" verticalCenter="0" x="380"/>
 	</e:Group>
 	<e:Label id="titleText" text="大胜！" y="180" size="50" bold="true" horizontalCenter="10"/>
-	<e:Label id="timeText" text="用时：00:00" y="246" size="30" horizontalCenter="0" lineSpacing="10" textAlign="center"/>
+	<e:Label id="timeText" text="用时：00:00" y="250" size="30" horizontalCenter="0" lineSpacing="10" textAlign="center"/>
 </e:Skin>

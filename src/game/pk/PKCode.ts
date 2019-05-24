@@ -180,13 +180,18 @@ class PKCode_wx3 {
             var height = Math.min(300 + level*10,960)
             var startY = (GameManager.uiHeight - height)/2 + 30
             var hpRate = 1 + (level - 1)*0.1;
+            var bossHpRate =  1 + (level - 1)*Math.pow(1.1,level/7)/10;
 
             this.autoList = list.split(',');
             for(var i=0;i<this.autoList.length;i++)
             {
                 var temp = this.autoList[i].split('|')
                 var mid = parseInt(temp[0]);
-                var hp = Math.floor(MonsterVO.getObject(mid).hp * hpRate)
+                var vo =  MonsterVO.getObject(mid);
+                if(vo.isHero())
+                    var hp = Math.floor(vo.hp * bossHpRate)
+                else
+                    var hp = Math.floor(vo.hp * hpRate)
                 this.autoList[i] = {
                     mid:mid,
                     hp:hp,
@@ -201,8 +206,8 @@ class PKCode_wx3 {
     }
 
     private createEndLess(){
-        var maxCost = 50 + this.endLessStep * 20
-        var stepCost = maxCost/5/60; //每一帧增加的花费
+        var maxCost = 30 + this.endLessStep * 5
+        var stepCost = maxCost/(5+this.endLessStep/10)/60; //每一帧增加的花费
         var nowCost = 0;
         var step = this.actionStep;
         var monsterCost = -10;
@@ -215,10 +220,16 @@ class PKCode_wx3 {
                 monsterList.push(MonsterVO.data[s])
             }
         }
+        if(monsterList.length > 10)//同一次最多出场10种怪物
+        {
+            ArrayUtil.sortByField(monsterList,['level'],[1]);
+            monsterList.length = 10;
+        }
+
         ArrayUtil.sortByField(monsterList,['cost','id'],[0,0]);
 
-        var minRate = Math.random();//出现小怪的机率
-        var minRateAdd = 0.1 + Math.random()*0.4;//出现小怪的机率
+        var minRate = Math.random()*0.8;//出现小怪的机率
+        var minRateAdd = 0.2 + Math.random()*0.3;//出现小怪的机率
         var hpRate = 1 + (this.endLessStep - 1)*0.1;
         var height = Math.min(300 + this.endLessStep*10,960)
         var startY = (GameManager.uiHeight - height)/2 + 30
@@ -244,6 +255,7 @@ class PKCode_wx3 {
 
             if(needAddBoss && nowCost/maxCost > 0.75)
             {
+                var bossHpRate =  1 + (this.endLessStep - 1)*Math.pow(1.1,this.endLessStep/10)/10;
                 needAddBoss = false;
                 var bossNum = Math.ceil(this.endLessStep/50)
                 if(bossNum == 1)
@@ -252,7 +264,7 @@ class PKCode_wx3 {
                     var bvo = MonsterVO.getObject(100 + Math.ceil(Math.random()*10))
                 this.autoList.push({
                     mid:bvo.id,
-                    hp:Math.floor(bvo.hp * hpRate),
+                    hp:Math.floor(bvo.hp * bossHpRate),
                     step:step,
                     y:0.5*height + startY
                 })
@@ -372,6 +384,8 @@ class PKCode_wx3 {
                 var step = this.getStepByTime(target.getVO().atkrage*5);
                 if(target.mid == 103)
                     step = 10;
+                else if(target.mid == 64)
+                    step = Math.floor(step/2);
                 step = Math.floor(step*target.getSpeedRate());
                 AtkMVCtrl_wx3.getInstance().mAtkMV(target.mid,target,step);//飞行动画
 

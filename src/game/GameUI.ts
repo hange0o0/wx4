@@ -206,10 +206,10 @@ class GameUI extends game.BaseUI {
 
     private showTips(){
         this.desText.text = '长按武器查看详情,拖动调整位置'
-        clearTimeout(this.tipsTimer);
-        this.tipsTimer = setTimeout(()=>{
-            this.desText.text = ''
-        },5000)
+        //clearTimeout(this.tipsTimer);
+        //this.tipsTimer = setTimeout(()=>{
+        //    this.desText.text = ''
+        //},5000)
     }
 
     private onE(){

@@ -38,6 +38,7 @@ class ChangeUserItem extends game.BaseItem{
 
 
         var appid = this.data.appid
+        var fun = this.data.fun;
         wx.previewImage({
             urls: [this.data.img],
             success: function () {
@@ -45,7 +46,7 @@ class ChangeUserItem extends game.BaseItem{
                     return;
                 GameManager.getInstance().changeUserTime = TM.now();
                 GameManager.getInstance().changeUserID = appid;
-                GameManager.getInstance().changeUserFun = this.data.fun;
+                GameManager.getInstance().changeUserFun = fun;
                 //var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
                 //if(arr.indexOf(appid) == -1)
                 //{

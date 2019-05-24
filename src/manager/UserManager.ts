@@ -256,7 +256,7 @@ class UserManager {
              loginTime:TM.now(),   //$
              coin:500,   //$
              level:1,   //$
-             gunPos:{1:1,2:2,3:3},   //$
+             gunPos:{1:2,2:1,3:3},   //$
              gunLevel:{},   //$
              guideFinish:true,
              pastDayCoin:{coin:0,t:TM.now()},

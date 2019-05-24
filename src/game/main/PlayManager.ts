@@ -35,9 +35,16 @@ class PlayManager extends egret.EventDispatcher {
                  monsterList.push(MonsterVO.data[s])
              }
         }
+        if(monsterList.length > 10)//同一次最多出场10种怪物
+        {
+            ArrayUtil.sortByField(monsterList,['level'],[1]);
+            monsterList.length = 10;
+        }
+
+
         ArrayUtil.sortByField(monsterList,['cost','id'],[0,0]);
-        var minRate = this.random();//出现小怪的机率
-        var minRateAdd = 0.1 + this.random()*0.4;//出现小怪的机率
+        var minRate = this.random()*0.8;//出现小怪的机率
+        var minRateAdd = 0.2 + this.random()*0.3;//出现小怪的机率
         var list = [];
         //list.push(103+'|' + step + '|' +50)
 

@@ -103,26 +103,34 @@ class GunListUI extends game.BaseWindow{
         str += '\n' + this.createHtml(vo.getTitle() + '：',0xFFF666) + vo.getDes()
         this.setHtml(this.atkText, str)
 
-        this.costText.text = NumberUtil.addNumSeparator(GM.getGunCost(this.data.id))
+        var cost = GM.getGunCost(this.data.id);
+        this.costText.text = NumberUtil.addNumSeparator(UM.coin) + ' / ' + NumberUtil.addNumSeparator(cost)
+        this.costText.textColor = cost>UM.coin?0xFF0000:0xFFFFFF;
+
+        var pos = GunManager.getInstance().getPosByGun(this.gunid)
+        if(pos)
+            this.levelText.text = pos + ' 号位'
+        else
+            this.levelText.text = '';
+
         if(!lv)
         {
             this.btn.label = '解锁'
             this.btn.skinName = 'Btn1Skin'
             this.upGroup.visible = true
             this.maxMC.text = ''
-            this.levelText.text =  '';
+
             this.setTitle(vo.name)
         }
         else if(lv == GM.maxGunLevel)
         {
-            this.levelText.text =  ''// 'LV.'+lv+''
+
             this.upGroup.visible = false
             this.maxMC.text = '已满级'
             this.setTitle(vo.name + '  LV.'+lv)
         }
         else
         {
-            this.levelText.text =  ''// 'LV.'+lv+''
             this.btn.label = '升级'
             this.btn.skinName = 'Btn2Skin'
             this.upGroup.visible = true
