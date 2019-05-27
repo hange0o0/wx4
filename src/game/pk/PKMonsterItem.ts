@@ -178,6 +178,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
     }
 
+    public isWuDi(){
+        return this.x > 620
+    }
+
 
     public run(){
         this.resetSpeed();
@@ -225,6 +229,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             this.buffHp ++;
             return;
         }
+        if(!v)
+            console.log(v);
 
         if(-v > this.hp)
             v = -this.hp;

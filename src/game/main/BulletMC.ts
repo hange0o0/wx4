@@ -139,6 +139,8 @@ class BulletMC extends game.BaseItem{
             var item = monsterArr[i];
             if(item.isDie)
                 continue;
+            if(item.isWuDi())
+                continue;
             if(this.hitMonster[item.id]) //打过
                 continue;
             if(item.y < this.y)
@@ -157,7 +159,7 @@ class BulletMC extends game.BaseItem{
                 {
                     if(this.getTypeVO(3)) //杀敌爆炸
                     {
-                        PKCode_wx3.getInstance().hitEnemyAround(item.x,item.y,this.getTypeVO(3).getLevelValue(1),this.getTypeVO(3).getLevelValue(2))
+                        PKCode_wx3.getInstance().hitEnemyAround(item.x,item.y,this.getTypeVO(3).getLevelValue(1)/2,this.getTypeVO(3).getLevelValue(2))
                         AniManager_wx3.getInstance().playOnItem(112,item);
                     }
                     else if(this.getTypeVO(4)) //杀敌吸血
@@ -166,7 +168,9 @@ class BulletMC extends game.BaseItem{
                     }
                     else if(this.getTypeVO(5)) //杀敌攻击成长
                     {
-                        PKCode_wx3.getInstance().addAtk(this.data.id,this.getTypeVO(5).getLevelValue(1))
+                        var addAtk = this.getTypeVO(5).getLevelValue(1);
+                        PKCode_wx3.getInstance().addAtk(this.data.id,addAtk)
+                        PKingUI.getInstance().playItemText(this.data.relateGun, '攻击+ ' +Math.round(addAtk),0xFFFF88)
                     }
                 }
                 else
@@ -196,7 +200,7 @@ class BulletMC extends game.BaseItem{
                     var start = -total/2
                     for(var i=0;i<num;i++)
                     {
-                        var bullet = PKingUI.getInstance().createBullet(this.data.id,this.x,this.y,start + i*rota);
+                        var bullet = PKingUI.getInstance().createBullet(this.data.id,this.x,this.y,start + i*rota,this.data.double,this.data.relateGun);
                         bullet.hitMonster[item.id] = true
                         bullet.data.stop14 = true
                     }

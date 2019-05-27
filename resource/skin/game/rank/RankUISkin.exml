@@ -4,10 +4,10 @@
 	<e:TabBar id="tab" y="70" itemRendererSkinName="MyTabItemSkin" left="30" right="30" height="50">
 		<e:ArrayCollection>
 			<e:Array>
-				<e:Object label="过关榜"/>
-				<e:Object label="无尽榜"/>
 				<e:Object label="好友榜"/>
 				<e:Object label="友尽榜"/>
+				<e:Object label="过关榜"/>
+				<e:Object label="无尽榜"/>
 			</e:Array>
 		</e:ArrayCollection>
 		<e:layout>
@@ -19,7 +19,7 @@
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="74" y="166">
 				<e:layout>
-					<e:VerticalLayout gap="0"/>
+					<e:VerticalLayout gap="0" paddingTop="10"/>
 				</e:layout>
 			</e:List>
 		</e:Group>

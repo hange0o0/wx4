@@ -21,8 +21,8 @@ class PlayManager extends egret.EventDispatcher {
     public getLevelMonster(level){
         this.randomSeed = level*1234567890;
 
-        var maxCost = 100 + level*20;
-        var stepCost = maxCost/Math.min(180,20 + level)/60; //每一帧增加的花费
+        var maxCost = 100 + level*50;  //每一关增加的花费
+        var stepCost = maxCost/Math.min(180,20 + level)/60;//每一关增加的时间
         var nowCost = 0;
         var step = 0;
         var monsterCost = -10;
@@ -35,10 +35,10 @@ class PlayManager extends egret.EventDispatcher {
                  monsterList.push(MonsterVO.data[s])
              }
         }
-        if(monsterList.length > 10)//同一次最多出场10种怪物
+        if(monsterList.length > 16)//同一次最多出场16种怪物
         {
             ArrayUtil.sortByField(monsterList,['level'],[1]);
-            monsterList.length = 10;
+            monsterList.length = 16;
         }
 
 
@@ -63,9 +63,10 @@ class PlayManager extends egret.EventDispatcher {
             step++;
             nowCost += stepCost
 
-            if(needAddBoss && nowCost/maxCost > 0.75)
+            if(needAddBoss && nowCost/maxCost > 0.5)
             {
                 needAddBoss = false;
+                nowCost += 10;//固定10费
                 var bossNum = Math.ceil(level/50)
                 if(bossNum == 1)
                     list.push((100 + Math.ceil(level/5))+'|' + step + '|' +50)

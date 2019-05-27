@@ -70,8 +70,16 @@ class DebugUI extends game.BaseUI {
             UM.level ++;
             MyWindow.ShowTips('第'+UM.level+'关')
         })
+        this.addB('跳10关',()=>{
+            UM.level +=10;
+            MyWindow.ShowTips('第'+UM.level+'关')
+        })
         this.addB('降1关',()=>{
             UM.level --;
+            MyWindow.ShowTips('第'+UM.level+'关')
+        })
+        this.addB('降10关',()=>{
+            UM.level -=10;
             MyWindow.ShowTips('第'+UM.level+'关')
         })
 

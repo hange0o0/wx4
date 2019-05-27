@@ -32,6 +32,7 @@ class GunChooseUI extends game.BaseWindow{
     public onShow(){
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.GUN_UNLOCK,this.renew)
     }
 
     public renewList(){
@@ -47,17 +48,17 @@ class GunChooseUI extends game.BaseWindow{
         {
             arr[s] = {
                 id:arr[s],
-                open:GunVO.getObject(arr[s]),
+                open:GunVO.getObject(arr[s]).open,
                 lv:GM.getGunLevel(arr[s]),
                 using:GM.getPosByGun(arr[s]) || 999,
             }
         }
-        ArrayUtil.sortByField(arr,['using','lv','open'],[0,1,1]);
+        ArrayUtil.sortByField(arr,['using','open','lv'],[0,1,1]);
         for(var s in arr)
         {
             arr[s] = arr[s].id;
         }
-        if(GM.getUnlock())
+        if(GM.getUnlockGun())
             arr.push(0);
         this.dataList = arr;
         this.list.dataProvider = new eui.ArrayCollection(arr)

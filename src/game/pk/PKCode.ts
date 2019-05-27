@@ -18,6 +18,7 @@ class PKCode_wx3 {
     public enemyHp = 0//
     public enemyHpMax = 0//
     public endLessStep = 0//无尽的步数
+    public endLessPassStep = 0//无尽的开始跳过的步数
 
     public atkList = {}
     public buffList = {}
@@ -62,7 +63,7 @@ class PKCode_wx3 {
         for(var i=0;i<this.monsterList.length;i++)
         {
             var item = this.monsterList[i];
-            if(!item.isDie)
+            if(!item.isDie && !item.isWuDi())
                 arr.push(item)
         }
         return ArrayUtil.randomOne(arr);
@@ -92,7 +93,7 @@ class PKCode_wx3 {
         for(var i=0;i<this.monsterList.length;i++)
         {
             var item = this.monsterList[i];
-            if(item.isDie)
+            if(item.isDie || item.isWuDi())
                 continue;
             if(Math.abs(item.x - x) <= range &&  Math.abs(item.y - y) <= range)
             {
@@ -169,7 +170,8 @@ class PKCode_wx3 {
         this.enemyHp = 0;
         if(PlayManager.getInstance().isEndLess)
         {
-            this.endLessStep = 1;
+            this.endLessPassStep = Math.max(0,Math.floor((UM.endLess - 60)/5))
+            this.endLessStep =  this.endLessPassStep + 1;
             this.autoList = [];
             this.createEndLess();
         }
@@ -177,10 +179,10 @@ class PKCode_wx3 {
         {
             var level = UM.level;
             var list = PlayManager.getInstance().getLevelMonster(level)
-            var height = Math.min(300 + level*10,960)
-            var startY = (GameManager.uiHeight - height)/2 + 30
+            var height = Math.min(300 + level*8,960)
+            var startY = (GameManager.uiHeight - height)/2 + 100
             var hpRate = 1 + (level - 1)*0.1;
-            var bossHpRate =  1 + (level - 1)*Math.pow(1.1,level/7)/10;
+            var bossHpRate = Math.pow(1.1,level/2.5);
 
             this.autoList = list.split(',');
             for(var i=0;i<this.autoList.length;i++)
@@ -207,7 +209,7 @@ class PKCode_wx3 {
 
     private createEndLess(){
         var maxCost = 30 + this.endLessStep * 5
-        var stepCost = maxCost/(5+this.endLessStep/10)/60; //每一帧增加的花费
+        var stepCost = maxCost/(5)/60; //每一帧增加的花费
         var nowCost = 0;
         var step = this.actionStep;
         var monsterCost = -10;
@@ -220,10 +222,10 @@ class PKCode_wx3 {
                 monsterList.push(MonsterVO.data[s])
             }
         }
-        if(monsterList.length > 10)//同一次最多出场10种怪物
+        if(monsterList.length > 16)//同一次最多出场10种怪物
         {
             ArrayUtil.sortByField(monsterList,['level'],[1]);
-            monsterList.length = 10;
+            monsterList.length = 16;
         }
 
         ArrayUtil.sortByField(monsterList,['cost','id'],[0,0]);
@@ -232,7 +234,7 @@ class PKCode_wx3 {
         var minRateAdd = 0.2 + Math.random()*0.3;//出现小怪的机率
         var hpRate = 1 + (this.endLessStep - 1)*0.1;
         var height = Math.min(300 + this.endLessStep*10,960)
-        var startY = (GameManager.uiHeight - height)/2 + 30
+        var startY = (GameManager.uiHeight - height)/2 + 100
         var needAddBoss = this.endLessStep%5 == 0
         while(nowCost < maxCost)
         {
@@ -255,7 +257,8 @@ class PKCode_wx3 {
 
             if(needAddBoss && nowCost/maxCost > 0.75)
             {
-                var bossHpRate =  1 + (this.endLessStep - 1)*Math.pow(1.1,this.endLessStep/10)/10;
+                nowCost += 10;//固定10费
+                var bossHpRate =  Math.pow(1.1,this.endLessStep/3);
                 needAddBoss = false;
                 var bossNum = Math.ceil(this.endLessStep/50)
                 if(bossNum == 1)

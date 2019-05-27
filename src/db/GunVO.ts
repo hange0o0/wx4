@@ -13,6 +13,7 @@ class GunVO {
     public type: number;
     public name: string;
     public atk: number;
+    public atkrate: number;
     public open: number;
     public speed: number;
     public v1: number;

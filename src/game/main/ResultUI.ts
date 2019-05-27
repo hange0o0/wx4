@@ -16,6 +16,8 @@ class ResultUI extends game.BaseUI{
     private rateText: eui.Label;
     private titleText: eui.Label;
     private timeText: eui.Label;
+    private failText: eui.Label;
+
 
 
 
@@ -66,13 +68,14 @@ class ResultUI extends game.BaseUI{
         var add = BuffManager.getInstance().getCoinAdd();
 
         this.timeText.text = ''
+        this.failText.text = ''
         if(PlayManager.getInstance().isEndLess)
         {
             this.titleText.text = '游戏结束！'
             this.titleText.textColor = 0xFFFFFF
             this.failGroup.visible = false
-            coin = (Math.abs(PD.enemyHp)/500)
-            var cd = Math.floor(PD.actionStep/60)
+            coin = (Math.abs(PD.enemyHp)/400)
+            var cd = Math.floor(PD.actionStep/60)  + PD.endLessPassStep*5
             var cd2 = Math.floor(PD.actionStep/60*100)%100
 
             if(cd > UM.endLess)
@@ -106,6 +109,17 @@ class ResultUI extends game.BaseUI{
             this.failGroup.visible = true
             this.barMC.width = 360*rate;
             this.rateText.text = '剩余怪物：'+MyTool.toFixed(rate*100,1)+'%'
+            var arr = [ '* 升级武器提升攻击力']
+            if(GunManager.getInstance().getUnlockGun())
+                arr.push( '* 解锁并装备新的武器')
+            if(UM.level >= 100)
+                arr.push( '* 打造新的武器')
+            if(UM.gunPosNum < 9)
+                arr.push( '* 解锁新的武器槽')
+            if(BuffManager.getInstance().getUserNum() < 20)
+                arr.push( '* 邀请好友增加城墙血量')
+
+            this.failText.text = arr.join('\n')
             SoundManager.getInstance().playEffect('lose')
         }
         coin *= (1+add/100 + PKCode_wx3.getInstance().coinAdd/100);
@@ -118,10 +132,12 @@ class ResultUI extends game.BaseUI{
             this.coinAddText.text = '没有好友助力加成'
 
 
-        if(PlayManager.getInstance().isEndLess || rate != 0)
-            this.rate = Math.max(3,Math.ceil(300/this.addCoin))
+        if(PlayManager.getInstance().isEndLess)
+            this.rate = Math.max(3,Math.ceil(900/this.addCoin))
+        else if(rate != 0)
+            this.rate = Math.max(3,Math.ceil(800/this.addCoin))
         else
-            this.rate = Math.max(3,Math.ceil(500/this.addCoin))
+            this.rate = Math.max(3,Math.ceil(1000/this.addCoin))
         this.rate = Math.min(20,this.rate);
         this.shareBtn.label = this.rate + '倍领取'
 

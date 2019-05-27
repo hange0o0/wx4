@@ -21,7 +21,7 @@ class GunChooseItem extends game.BaseItem{
         this.addBtnEvent(this,()=>{
             if(!this.data)
             {
-                GunListUI.getInstance().show(GunManager.getInstance().getUnlock());
+                GunListUI.getInstance().show(GunManager.getInstance().getUnlockGun());
                 return;
             }
             GunInfoUI.getInstance().show(this.data)
@@ -42,6 +42,7 @@ class GunChooseItem extends game.BaseItem{
             this.currentState = 's2'
             return;
         }
+        this.currentState = 's1'
         var pos = GunManager.getInstance().getPosByGun(this.data)
         if(pos)
         {
@@ -66,12 +67,6 @@ class GunChooseItem extends game.BaseItem{
         var atk = Math.floor(GunManager.getInstance().getGunAtk(vo.id)/vo.speed)
         this.levelText.text =  atk + ' /秒'
 
-        //if(DEBUG)
-        //{
-        //    this.levelText.text += this.data
-        //}
-        //
-        //this.data.getTitle();
     }
 
 

@@ -68,11 +68,11 @@ class RankUI extends game.BaseWindow{
         if(!window['wx'])
             return;
         this.remove();
-        if(this.tab.selectedIndex == 0)
+        if(this.tab.selectedIndex == 2)
         {
             this.worldRank('level',UM.level);
         }
-        else if(this.tab.selectedIndex == 1)
+        else if(this.tab.selectedIndex == 3)
         {
             this.worldRank('endless',UM.endLess);
         }
@@ -104,7 +104,7 @@ class RankUI extends game.BaseWindow{
             value:myValue,
         }
         console.log(oo)
-
+        MsgingUI.getInstance().show()
         wx.cloud.callFunction({      //取玩家openID,
             name: 'getRank',
             data: oo,
@@ -118,9 +118,11 @@ class RankUI extends game.BaseWindow{
                     }
                     this.showRank(type);
                 }
+                MsgingUI.getInstance().hide()
             },
             fail:()=>{
-                console.log('fail')
+                MyWindow.Alert('排行榜拉取失败')
+                MsgingUI.getInstance().hide()
             }
         })
     }
@@ -179,12 +181,12 @@ class RankUI extends game.BaseWindow{
 
 
     private poseData(){
-        if(this.tab.selectedIndex == 2)
+        if(this.tab.selectedIndex == 0)
         {
             var key = 'level'
             var value = UM.level
         }
-        else if(this.tab.selectedIndex == 3)
+        else if(this.tab.selectedIndex == 1)
         {
             var key = 'endless'
             var value = UM.endLess
@@ -214,7 +216,7 @@ class RankUI extends game.BaseWindow{
 
             this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight);
             this.bitmap.x = 30;
-            this.bitmap.y = 120;
+            this.bitmap.y = 130;
             this.addChild(this.bitmap);
             this.bitmap.touchEnabled = false
 

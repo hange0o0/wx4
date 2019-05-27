@@ -78,12 +78,15 @@ class GunManager extends egret.EventDispatcher {
     public levelUpGun(gunid){
         UM.addCoin(-this.getGunCost(gunid))
         UM.gunLevel[gunid] = this.getGunLevel(gunid) + 1;
-        EM.dispatch(GameEvent.client.GUN_CHANGE)
+        if(!UM.gunLevel[gunid])
+            EM.dispatch(GameEvent.client.GUN_CHANGE)
+        else
+            EM.dispatch(GameEvent.client.GUN_UNLOCK)
         SoundManager.getInstance().playEffect('buy')
         UM.needUpUser = true;
     }
 
-    public getUnlock(){
+    public getUnlockGun(){
         for(var s in GunVO.data)
         {
             if(GunVO.data[s].open < UM.level && !this.getGunLevel(s))

@@ -111,6 +111,7 @@ class PKMonsterMV_wx3 extends eui.Group {
      }
 
      public die(){
+         this.currentMV.speed = 0
          this.currentMV.die();
      }
 }

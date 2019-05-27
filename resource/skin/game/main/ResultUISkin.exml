@@ -28,4 +28,5 @@
 	</e:Group>
 	<e:Label id="titleText" text="大胜！" y="180" size="50" bold="true" horizontalCenter="10"/>
 	<e:Label id="timeText" text="用时：00:00" y="250" size="30" horizontalCenter="0" lineSpacing="10" textAlign="center"/>
+	<e:Label id="failText" text="Label" y="250" horizontalCenter="0" lineSpacing="10" textColor="0xbcbcbc"/>
 </e:Skin>

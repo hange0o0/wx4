@@ -5,24 +5,11 @@ class MsgingUI extends egret.Sprite {
         if (!this.instance) this.instance = new MsgingUI();
         return this.instance;
     }
-    private static instance2:MsgingUI;//PK服务器
-    public static getInstance2() {
-        if (!this.instance2) this.instance2 = new MsgingUI();
-        return this.instance2;
-    }
+
 
     public constructor() {
         super();
         this.createView();
-        //this.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
-        //    if(Config.isDebug)
-        //        MyWindow.Alert(Net.getInstance().actionRecord.join('\n'));
-        //    //else if(egret.getTimer() - this.showTimer > 10*1000)
-        //    //{
-        //    //    sendClientError('转圈ing:' + Net.getInstance().actionRecord.join('\n'))
-        //    //    this.showTimer = egret.getTimer();
-        //    //}
-        //},this)
     }
 
     private loadingMC

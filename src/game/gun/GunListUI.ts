@@ -56,6 +56,7 @@ class GunListUI extends game.BaseWindow{
         this.renew();
         this.renewChoose();
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.GUN_UNLOCK,this.renewList)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
     }
 
@@ -107,7 +108,7 @@ class GunListUI extends game.BaseWindow{
         this.costText.text = NumberUtil.addNumSeparator(UM.coin) + ' / ' + NumberUtil.addNumSeparator(cost)
         this.costText.textColor = cost>UM.coin?0xFF0000:0xFFFFFF;
 
-        var pos = GunManager.getInstance().getPosByGun(this.gunid)
+        var pos = GunManager.getInstance().getPosByGun(vo.id)
         if(pos)
             this.levelText.text = pos + ' 号位'
         else
@@ -137,6 +138,8 @@ class GunListUI extends game.BaseWindow{
             this.maxMC.text = ''
             this.setTitle(vo.name + '  LV.'+lv)
         }
+
+        console.log(vo.id)
     }
 
     public hide(){

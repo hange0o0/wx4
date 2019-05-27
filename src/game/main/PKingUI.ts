@@ -106,7 +106,7 @@ class PKingUI extends game.BaseUI {
                 double = vo9.getLevelValue(2,null,false)
                 if(item)
                 {
-                    this.playDoubleHit(item,MyTool.toFixed(double,2))
+                    this.playItemText(item, '爆击x ' +MyTool.toFixed(double,2))
                 }
             }
         }
@@ -116,11 +116,11 @@ class PKingUI extends game.BaseUI {
         var start = -total/2
         for(var i=0;i<num;i++)
         {
-            this.createBullet(item.data,50,item.y + this.gunGroup.y,start + i*rota,double)
+            this.createBullet(item.data,50,item.y + this.gunGroup.y,start + i*rota,double,item)
         }                                                                                                                                                         1
     }
 
-    public createBullet(id,x,y,rota,double=1){
+    public createBullet(id,x,y,rota,double=1,item?){
         var mc = BulletMC.createItem();
         this.bulletArr.push(mc);
         this.con.addChild(mc);
@@ -128,6 +128,7 @@ class PKingUI extends game.BaseUI {
         mc.y = y
 
         mc.data = {
+            relateGun:item,
             id:id,
             rota:rota,
             disableSkill:PKCode_wx3.getInstance().isInBuff(109),
@@ -142,17 +143,17 @@ class PKingUI extends game.BaseUI {
         BulletMC.freeItem(mc);
     }
 
-    public playDoubleHit(item:GunItem,value){
+    public playItemText(item:GunItem,value,color=0xFF0000){
         var txt = this.createTxt();
-        txt.textColor = 0xFF0000;
-        txt.text = 'x ' + value;
-        var p = item.localToGlobal(item.x,item.y)
+        txt.textColor = color;
+        txt.text = value;
+        var p = item.localToGlobal(item.width/2,item.height/2)
         txt.x = p.x;
-        txt.y = p.y - item.height/2;
+        txt.y = p.y;
         this.addChild(txt)
 
         var tw = egret.Tween.get(txt);
-        tw.to({y:txt.y - 100,alpha:0.5},800).call(function(){
+        tw.to({y:txt.y - 50,alpha:0.5},800).call(function(){
             this.freeTxt(txt);
         },this)
     }
@@ -210,6 +211,11 @@ class PKingUI extends game.BaseUI {
         egret.Tween.get(this.gunGroup).to({x:280},500).to({x:196},100).to({x:0},400).wait(100).call(()=>{
             this.stoping = false
             this.begining = false
+
+            if(PlayManager.getInstance().isEndLess && PKCode_wx3.getInstance().endLessPassStep)
+            {
+                MyWindow.ShowTips('已自动跳过'+PKCode_wx3.getInstance().endLessPassStep*5+'秒')
+            }
         })
 
         this.bg1.x = 0;

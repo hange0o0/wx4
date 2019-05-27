@@ -76,7 +76,7 @@ class UserManager {
         if(!DateUtil.isSameDay(this.pastDayCoin.t))
         {
             this.pastDayCoin.t = TM.now();
-            this.pastDayCoin.coin =  this.level * 200
+            this.pastDayCoin.coin =  this.level * 300
             this.needUpUser = true
         }
 
