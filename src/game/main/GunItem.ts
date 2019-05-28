@@ -85,7 +85,7 @@ class GunItem extends game.BaseItem{
     public move(){
         this.step ++;
         var maxStep = this.maxStep;
-        if(PKCode_wx3.getInstance().isInBuff(103))
+        if(PKCode_wx4.getInstance().isInBuff(103))
             maxStep = Math.floor(maxStep*1.2)
         this.mcGroup.rotation += 30 - maxStep/5
         if(this.step >= maxStep)

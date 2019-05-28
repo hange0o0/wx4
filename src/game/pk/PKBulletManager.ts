@@ -99,7 +99,7 @@ class PKBulletManager_wx3 {
             this.bulletAniPool2.push(item);
         else if(item.type == 'bullet_line')
             this.bulletLinePool.push(item);
-        ArrayUtil.removeItem(this.useItem,item)
+        ArrayUtil_wx4.removeItem(this.useItem,item)
     }
 
     public actionAll(){
@@ -107,7 +107,7 @@ class PKBulletManager_wx3 {
         for(var i=0;i<this.useItem.length;i++)
         {
              var item = this.useItem[i];
-            if(!item.onAction(PKCode_wx3.getInstance().actionStep))
+            if(!item.onAction(PKCode_wx4.getInstance().actionStep))
             {
                 removeArr.push(item);
             }

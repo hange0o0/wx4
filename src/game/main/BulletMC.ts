@@ -93,7 +93,7 @@ class BulletMC extends game.BaseItem{
             if(isNaN(this.rotation))
                 console.log(66666)
             if(!this.enemy || this.enemy.isDie)
-                this.enemy = PKCode_wx3.getInstance().randomEnemy();
+                this.enemy = PKCode_wx4.getInstance().randomEnemy();
             var rota1 = this.rotation - 90;
             if(this.enemy)
             {
@@ -152,24 +152,24 @@ class BulletMC extends game.BaseItem{
                 continue;
 
             SoundManager.getInstance().playEffect('hit')
-            item.addHp(-PKCode_wx3.getInstance().getBulletAtk(this.data.id)*this.data.double);
+            item.addHp(-PKCode_wx4.getInstance().getBulletAtk(this.data.id)*this.data.double);
             if(!this.disableSkill)
             {
                 if(item.isDie) //杀人啦
                 {
                     if(this.getTypeVO(3)) //杀敌爆炸
                     {
-                        PKCode_wx3.getInstance().hitEnemyAround(item.x,item.y,this.getTypeVO(3).getLevelValue(1)/2,this.getTypeVO(3).getLevelValue(2))
+                        PKCode_wx4.getInstance().hitEnemyAround(item.x,item.y,this.getTypeVO(3).getLevelValue(1)/2,this.getTypeVO(3).getLevelValue(2))
                         AniManager_wx3.getInstance().playOnItem(112,item);
                     }
                     else if(this.getTypeVO(4)) //杀敌吸血
                     {
-                        PKCode_wx3.getInstance().addHp(this.getTypeVO(4).getLevelValue(1))
+                        PKCode_wx4.getInstance().addHp(this.getTypeVO(4).getLevelValue(1))
                     }
                     else if(this.getTypeVO(5)) //杀敌攻击成长
                     {
                         var addAtk = this.getTypeVO(5).getLevelValue(1);
-                        PKCode_wx3.getInstance().addAtk(this.data.id,addAtk)
+                        PKCode_wx4.getInstance().addAtk(this.data.id,addAtk)
                         PKingUI.getInstance().playItemText(this.data.relateGun, '攻击+ ' +Math.round(addAtk),0xFFFF88)
                     }
                 }
@@ -207,7 +207,7 @@ class BulletMC extends game.BaseItem{
                 }
                 else if(this.getTypeVO(15)) // '命中敌人后回复城墙@1点血量';
                 {
-                    PKCode_wx3.getInstance().addHp(this.getTypeVO(15).getLevelValue(1))
+                    PKCode_wx4.getInstance().addHp(this.getTypeVO(15).getLevelValue(1))
                 }
 
             }

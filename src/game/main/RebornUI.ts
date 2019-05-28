@@ -1,4 +1,4 @@
-class RebornUI extends game.BaseWindow{
+class RebornUI extends game.BaseWindow_wx4{
 
     private static _instance:RebornUI;
     public static getInstance() {
@@ -30,9 +30,10 @@ class RebornUI extends game.BaseWindow{
         })
 
         this.addBtnEvent(this.rebornBtn,()=>{
-            ShareTool.openGDTV(()=>{
+            ShareTool.openGDTV((type)=>{
                 this.hide();
                 PKingUI.getInstance().reborn();
+                PlayManager.getInstance().sendGameReborn(type)
             })
 
         })
@@ -51,7 +52,7 @@ class RebornUI extends game.BaseWindow{
 
 
     private onE(){
-        if(!GameManager.getInstance().isActive)
+        if(!GameManager_wx4.getInstance().isActive)
             return;
         if(ChangeJumpUI.getInstance().stage)
             return;

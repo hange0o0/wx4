@@ -5,6 +5,7 @@ class MyTool {
 
          */
     }
+	private wx4_functionX_45803(){console.log(829)}
     public static getRes(name,isPacket2=true){
          if(isPacket2)
             return "stage2/images/" + name;
@@ -12,6 +13,7 @@ class MyTool {
     }
 
     //只有前面num位是非0数字
+	private wx4_functionX_45804(){console.log(7451)}
     public static reInit(value:number,num){
         var value = Math.floor(value);
         var str = value + ''
@@ -19,6 +21,7 @@ class MyTool {
             return value;
         return parseInt(str.substr(0,num))*Math.pow(10,str.length - num)
     }
+	private wx4_functionX_45805(){console.log(2015)}
 
     //显示bar
     public static renewBar(rect,value,total,width,start){
@@ -35,6 +38,7 @@ class MyTool {
         }
         rect.scrollRect = new egret.Rectangle(0,0,(width - start)*value/total + start,100)
     }
+	private wx4_functionX_45806(){console.log(1116)}
 
     //public static getPropCoin(){
     //    return Config.localResRoot + 'prop/prop_coin.png'
@@ -92,6 +96,7 @@ class MyTool {
         list.dataProviderRefreshed();
         list.validateNow();
     }
+	private wx4_functionX_45807(){console.log(2541)}
 
     public static renewList(list){
         for(var i=0;i<list.numChildren;i++)
@@ -99,6 +104,7 @@ class MyTool {
             list.getChildAt(i)['dataChanged']();
         }
     }
+	private wx4_functionX_45808(){console.log(7214)}
     public static runListFun(list,funName,value?){
         for(var i=0;i<list.numChildren;i++)
         {
@@ -106,12 +112,14 @@ class MyTool {
             mc[funName] && mc[funName](value);
         }
     }
+	private wx4_functionX_45809(){console.log(3718)}
 
 
     public static removeMC(mc:any){
         if(mc && mc.parent)
             mc.parent.removeChild(mc)
     }
+	private wx4_functionX_45810(){console.log(9219)}
     public static upMC(mc:any){
         if(mc && mc.parent)
             mc.parent.addChild(mc)
@@ -120,6 +128,7 @@ class MyTool {
     public static getDis(a,b){
         return Math.pow(Math.pow(a.x-b.x,2) + Math.pow(a.y-b.y,2),0.5)
     }
+	private wx4_functionX_45811(){console.log(882)}
 
     public static getMiddleXY(a,b){
         return {
@@ -127,6 +136,7 @@ class MyTool {
             y:a.y + (b.y - a.y)/2,
         }
     }
+	private wx4_functionX_45812(){console.log(9003)}
 
     public static addColor(img,color){
         if(color == -1)
@@ -146,6 +156,7 @@ class MyTool {
             strength, quality, inner, knockout );
         img.filters = [ glowFilter ];
     }
+	private wx4_functionX_45813(){console.log(5186)}
 
     public static changeGray(mc,b=true,isBtn?){
         if(isBtn)
@@ -166,6 +177,7 @@ class MyTool {
         var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
         mc.filters = [colorFlilter];
     }
+	private wx4_functionX_45814(){console.log(3787)}
 
     //加载时隐藏，加载完显示
     public static setImgSource(img,source){
@@ -175,6 +187,7 @@ class MyTool {
         img.once(egret.Event.COMPLETE,this.onImgComplete,this); //写在外部，防止重复调用
         img.source = source;
     }
+	private wx4_functionX_45815(){console.log(4172)}
     private static onImgComplete(e){
        e.currentTarget.visible = true;
     }
@@ -192,6 +205,7 @@ class MyTool {
         }
         return str
     }
+	private wx4_functionX_45816(){console.log(3915)}
 
     public static toFixed2(v:any,length){
         var str = v+''//.toFixed(length)
@@ -210,6 +224,7 @@ class MyTool {
         }
         return str
     }
+	private wx4_functionX_45817(){console.log(6468)}
 
     public static resetScrollV(scroller){
         if(scroller.viewport.scrollV < 0)
@@ -220,6 +235,7 @@ class MyTool {
             return;
         scroller.stopAnimation();
     }
+	private wx4_functionX_45818(){console.log(2148)}
 
 
 
@@ -236,6 +252,7 @@ class MyTool {
         }
         return array;
     }
+	private wx4_functionX_45819(){console.log(1761)}
 
 
     public static addLongTouch(mc,fun,thisObj){
@@ -245,16 +262,16 @@ class MyTool {
         function onTouchStart(e){
             var stageX = e.stageX
             var stageY = e.stageY
-            GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
-            GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
-            GameManager.stage.once(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
-            GameManager.stage.once(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
+            GameManager_wx4.stage.removeEventListener(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
+            GameManager_wx4.stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
+            GameManager_wx4.stage.once(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
+            GameManager_wx4.stage.once(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
             clearTimeout(timer);
             timer = setTimeout(function(){
-                if( Math.abs(GameManager.stageX - stageX) > 20 ||  Math.abs(GameManager.stageY - stageY) > 20)
+                if( Math.abs(GameManager_wx4.stageX - stageX) > 20 ||  Math.abs(GameManager_wx4.stageY - stageY) > 20)
                 {
-                    GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
-                    GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
+                    GameManager_wx4.stage.removeEventListener(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
+                    GameManager_wx4.stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
                     return;
                 }
                 //mc.touchEnabled = false;
@@ -266,12 +283,13 @@ class MyTool {
 
         }
         function onTouchEnd(e){
-            GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
-            GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
+            GameManager_wx4.stage.removeEventListener(egret.TouchEvent.TOUCH_END,onTouchEnd,thisObj);
+            GameManager_wx4.stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,onTouchEnd,thisObj);
             clearTimeout(timer);
         }
 
     }
+	private wx4_functionX_45820(){console.log(5028)}
 
     //public static addTouchUp(mc,fun,thisObj){
     //    mc.touchEnabled = true;
@@ -311,6 +329,7 @@ class MyTool {
             timer = egret.getTimer();
         }
     }
+	private wx4_functionX_45821(){console.log(919)}
 
     public static setHtml(txt,str){
         txt.textFlow = new egret.HtmlTextParser().parser(str);
@@ -321,12 +340,14 @@ class MyTool {
         str = str.replace(/\]/g,'</font>')
         this.setHtml(txt,str);
     }
+	private wx4_functionX_45822(){console.log(7978)}
 
     public static myHitTest(item,x,y){
         var p1 = item.localToGlobal(0,0)
         var p2 = item.localToGlobal(item.width,item.height);
         return p1.x < x && x < p2.x &&  p1.y < y && y < p2.y;
     }
+	private wx4_functionX_45823(){console.log(8380)}
 
     public static changeToChinese(num){
         var s = String(num);
@@ -349,6 +370,7 @@ class MyTool {
         return ss;
 
     }
+	private wx4_functionX_45824(){console.log(7931)}
 
     public static addTestBlock(mc){
         var item = new egret.Sprite()
@@ -358,6 +380,7 @@ class MyTool {
         item.graphics.endFill();
         return item;
     }
+	private wx4_functionX_45825(){console.log(2835)}
 
     //把单个字符翻译为数字
     public static str2Num(str){
@@ -368,6 +391,7 @@ class MyTool {
             return code - 55//code - 65 + 10
         return  code - 61//code-97+10+26
     }
+	private wx4_functionX_45826(){console.log(6557)}
 
 
     public static replaceEmoji(str){
@@ -378,6 +402,7 @@ class MyTool {
         ];
         return str.replace(new RegExp(ranges.join('|'), 'g'), '');
     }
+	private wx4_functionX_45827(){console.log(5167)}
 
     public static getBtnPath(btn){
         if(!btn)
@@ -395,6 +420,7 @@ class MyTool {
         }
         return arr.join('.')
     }
+	private wx4_functionX_45828(){console.log(5329)}
 
     public static refresh(){
         location.reload();
@@ -405,15 +431,17 @@ class MyTool {
         if(size != undefined) str2 += ' size="' + size + '"';
         return '<font ' + str2 + '>'+ str + '</font>';
     }
+	private wx4_functionX_45829(){console.log(3393)}
 
     //一定时间内不能点击屏幕
     public static stopClick(cd){
-        GameManager.container.touchChildren = GameManager.container.touchEnabled = false;
+        GameManager_wx4.container.touchChildren = GameManager_wx4.container.touchEnabled = false;
         setTimeout(function(){
-            GameManager.container.touchChildren = GameManager.container.touchEnabled = true
+            GameManager_wx4.container.touchChildren = GameManager_wx4.container.touchEnabled = true
         },cd)
 
     }
+	private wx4_functionX_45830(){console.log(4498)}
 
     public static getSector(r: number = 100,startFrom: number = 0,angle: number = 360,color: number = 0xff0000,alpha=1,shape?: egret.Shape): egret.Shape {
         if(!shape)

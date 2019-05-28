@@ -1,4 +1,4 @@
-class PassDayAwardUI extends game.BaseWindow {
+class PassDayAwardUI extends game.BaseWindow_wx4 {
 
     private static _instance:PassDayAwardUI;
 
@@ -38,9 +38,9 @@ class PassDayAwardUI extends game.BaseWindow {
     }
 
     public onGet(){
-        UM.pastDayCoin.coin = 0
-        UM.addCoin(this.coin);
-        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.coin,2),0xFFFF00),1000)
+        UM_wx4.pastDayCoin.coin = 0
+        UM_wx4.addCoin(this.coin);
+        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.coin,2),0xFFFF00),1000)
         this.hide();
         SoundManager.getInstance().playEffect('coin')
     }
@@ -66,9 +66,9 @@ class PassDayAwardUI extends game.BaseWindow {
     private onAddCoin_5742(){
         SoundManager.getInstance().playEffect('coin')
         MyTool.removeMC(this.shareBtn);
-        UM.pastDayCoin.coin = 0
-        UM.addCoin(this.coin*3);
-        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(this.coin*3,2),0xFFFF00),1000)
+        UM_wx4.pastDayCoin.coin = 0
+        UM_wx4.addCoin(this.coin*3);
+        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.coin*3,2),0xFFFF00),1000)
         this.okBtn.label = '关闭'
 
         var old = this.coin
@@ -78,7 +78,7 @@ class PassDayAwardUI extends game.BaseWindow {
         {
             egret.setTimeout(()=>{
                 coin += pre
-                this.coinText.text = NumberUtil.addNumSeparator(Math.round(coin),2);
+                this.coinText.text = NumberUtil_wx4.addNumSeparator(Math.round(coin),2);
             },this,20*i)
         }
     }
@@ -88,7 +88,7 @@ class PassDayAwardUI extends game.BaseWindow {
     }
 
     public onShow(){
-        this.coin = UM.pastDayCoin.coin
+        this.coin = UM_wx4.pastDayCoin.coin
         var add = BuffManager.getInstance().getCoinAdd();
         if(add)
         {
@@ -99,7 +99,7 @@ class PassDayAwardUI extends game.BaseWindow {
         {
             this.coinAddText.text = '没有好友助力加成'
         }
-        this.coinText.text = NumberUtil.addNumSeparator(this.coin,2);
+        this.coinText.text = NumberUtil_wx4.addNumSeparator(this.coin,2);
         this.btnGroup.addChild(this.shareBtn)
         //MyTool.removeMC(this.shareBtn);
     }

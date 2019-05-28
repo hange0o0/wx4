@@ -9,7 +9,7 @@ class WXDB{
         }
         console.log('update - user')
         const db = wx.cloud.database();
-        db.collection(dbName).doc(UM.dbid).update({
+        db.collection(dbName).doc(UM_wx4.dbid).update({
             data: data,
             success: (res)=>{
                 //DEBUG && console.log(res)

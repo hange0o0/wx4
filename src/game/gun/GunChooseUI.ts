@@ -1,4 +1,4 @@
-class GunChooseUI extends game.BaseWindow{
+class GunChooseUI extends game.BaseWindow_wx4{
 
     private static _instance:GunChooseUI;
     public static getInstance() {
@@ -53,7 +53,7 @@ class GunChooseUI extends game.BaseWindow{
                 using:GM.getPosByGun(arr[s]) || 999,
             }
         }
-        ArrayUtil.sortByField(arr,['using','open','lv'],[0,1,1]);
+        ArrayUtil_wx4.sortByField(arr,['using','open','lv'],[0,1,1]);
         for(var s in arr)
         {
             arr[s] = arr[s].id;

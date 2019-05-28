@@ -1,8 +1,8 @@
-class PKCode_wx3 {
-    private static instance:PKCode_wx3;
+class PKCode_wx4 {
+    private static instance:PKCode_wx4;
 
     public static getInstance() {
-        if (!this.instance) this.instance = new PKCode_wx3();
+        if (!this.instance) this.instance = new PKCode_wx4();
         return this.instance;
     }
 
@@ -24,13 +24,13 @@ class PKCode_wx3 {
     public buffList = {}
 
     public getWudiCD(){
-        return Math.max(0,this.wudiTime - TM.nowMS())
+        return Math.max(0,this.wudiTime - TM_wx4.nowMS())
     }
 
     public getBulletAtk(bid){
         var hp = this.atkList[bid].base + this.atkList[bid].add
         var add = 1;
-        if(this.isInBuff(101))
+        if(this.isInBuff(109))
             add -= 0.2
         if(this.isInBuff(106))
             add -= 0.2
@@ -66,7 +66,7 @@ class PKCode_wx3 {
             if(!item.isDie && !item.isWuDi())
                 arr.push(item)
         }
-        return ArrayUtil.randomOne(arr);
+        return ArrayUtil_wx4.randomOne(arr);
     }
 
     public playAniOn(a,mvID){
@@ -110,9 +110,9 @@ class PKCode_wx3 {
         var addAtk = 0;
         this.hpAdd = 0
         this.coinAdd = 0
-        for(var s in UM.gunPos)
+        for(var s in UM_wx4.gunPos)
         {
-            var gunid = UM.gunPos[s];
+            var gunid = UM_wx4.gunPos[s];
             if(gunid)
             {
                 var vos = GunManager.getInstance().getGunVOs(gunid);
@@ -155,7 +155,7 @@ class PKCode_wx3 {
         }
 
         var wallDec = 70;
-        var len = Math.ceil(GameManager.uiHeight/wallDec)
+        var len = Math.ceil(GameManager_wx4.uiHeight/wallDec)
         for(var i=0;i<len;i++)
         {
             var wall = PKMonsterItem_wx3.createItem();
@@ -170,17 +170,17 @@ class PKCode_wx3 {
         this.enemyHp = 0;
         if(PlayManager.getInstance().isEndLess)
         {
-            this.endLessPassStep = Math.max(0,Math.floor((UM.endLess - 60)/5))
+            this.endLessPassStep = Math.max(0,Math.floor((UM_wx4.endLess - 60)/5))
             this.endLessStep =  this.endLessPassStep + 1;
             this.autoList = [];
             this.createEndLess();
         }
         else
         {
-            var level = UM.level;
+            var level = UM_wx4.level;
             var list = PlayManager.getInstance().getLevelMonster(level)
             var height = Math.min(300 + level*8,960)
-            var startY = (GameManager.uiHeight - height)/2 + 100
+            var startY = (GameManager_wx4.uiHeight - height)/2 + 60
             var hpRate = 1 + (level - 1)*0.1;
             var bossHpRate = Math.pow(1.1,level/2.5);
 
@@ -224,17 +224,17 @@ class PKCode_wx3 {
         }
         if(monsterList.length > 16)//同一次最多出场10种怪物
         {
-            ArrayUtil.sortByField(monsterList,['level'],[1]);
+            ArrayUtil_wx4.sortByField(monsterList,['level'],[1]);
             monsterList.length = 16;
         }
 
-        ArrayUtil.sortByField(monsterList,['cost','id'],[0,0]);
+        ArrayUtil_wx4.sortByField(monsterList,['cost','id'],[0,0]);
 
         var minRate = Math.random()*0.8;//出现小怪的机率
         var minRateAdd = 0.2 + Math.random()*0.3;//出现小怪的机率
         var hpRate = 1 + (this.endLessStep - 1)*0.1;
         var height = Math.min(300 + this.endLessStep*10,960)
-        var startY = (GameManager.uiHeight - height)/2 + 100
+        var startY = (GameManager_wx4.uiHeight - height)/2 + 60
         var needAddBoss = this.endLessStep%5 == 0
         while(nowCost < maxCost)
         {
@@ -327,15 +327,15 @@ class PKCode_wx3 {
                      this.buffList[oo.mid] = [];
                  this.buffList[oo.mid].push(monster.id);
                  if(this.buffList[oo.mid].length == 1)
-                    EventManager.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
+                    EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
                  else
-                    EventManager.getInstance().dispatch(GameEvent.client.ADD_BOSS)
+                    EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS)
              }
          }
 
         if(b)
         {
-            ArrayUtil.sortByField(this.monsterList,['y'],[0]);
+            ArrayUtil_wx4.sortByField(this.monsterList,['y'],[0]);
             for(var i=0;i<this.monsterList.length;i++)
             {
                 MyTool.upMC(this.monsterList[i]);
@@ -385,7 +385,8 @@ class PKCode_wx3 {
                 if(target.isDie)
                     return;
                 var step = this.getStepByTime(target.getVO().atkrage*5);
-                if(target.mid == 103)
+                var delay10 = [103,61,62,63,70,76]
+                if(delay10.indexOf(Math.floor(target.mid)) != -1)
                     step = 10;
                 else if(target.mid == 64)
                     step = Math.floor(step/2);
@@ -425,7 +426,7 @@ class PKCode_wx3 {
         this.myHp += v
         if(this.myHp > this.myHpMax)
             this.myHp = this.myHpMax
-        EM.dispatch(GameEvent.client.HP_CHANGE)
+        EM_wx4.dispatch(GameEvent.client.HP_CHANGE)
     }
     public addAtk(id,v){
         this.atkList[id].add += v;
@@ -486,7 +487,7 @@ class PKCode_wx3 {
                     if(this.buffList[target.data.mid].length == 0)
                     {
                         delete this.buffList[target.data.mid];
-                        EventManager.getInstance().dispatch(GameEvent.client.REMOVE_BOSS,target.data.mid)
+                        EventManager_wx4.getInstance().dispatch(GameEvent.client.REMOVE_BOSS,target.data.mid)
                     }
                 }
 

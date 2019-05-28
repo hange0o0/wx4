@@ -1,4 +1,4 @@
-class GunListUI extends game.BaseWindow{
+class GunListUI extends game.BaseWindow_wx4{
 
     private static _instance:GunListUI;
     public static getInstance() {
@@ -39,7 +39,7 @@ class GunListUI extends game.BaseWindow{
 
         this.addBtnEvent(this.btn,()=>{
             var GM = GunManager.getInstance();
-            if(!UM.checkCoin(GM.getGunCost(this.data.id)))
+            if(!UM_wx4.checkCoin(GM.getGunCost(this.data.id)))
                 return;
             GM.levelUpGun(this.data.id)
         })
@@ -70,7 +70,7 @@ class GunListUI extends game.BaseWindow{
     }
 
     public renew(){
-        var list = ObjectUtil.objToArray(GunVO.data);
+        var list = ObjectUtil_wx4.objToArray(GunVO.data);
         this.list.dataProvider = new eui.ArrayCollection(list)
         if(this.gunid)
         {
@@ -105,8 +105,8 @@ class GunListUI extends game.BaseWindow{
         this.setHtml(this.atkText, str)
 
         var cost = GM.getGunCost(this.data.id);
-        this.costText.text = NumberUtil.addNumSeparator(UM.coin) + ' / ' + NumberUtil.addNumSeparator(cost)
-        this.costText.textColor = cost>UM.coin?0xFF0000:0xFFFFFF;
+        this.costText.text = NumberUtil_wx4.addNumSeparator(UM_wx4.coin) + ' / ' + NumberUtil_wx4.addNumSeparator(cost)
+        this.costText.textColor = cost>UM_wx4.coin?0xFF0000:0xFFFFFF;
 
         var pos = GunManager.getInstance().getPosByGun(vo.id)
         if(pos)

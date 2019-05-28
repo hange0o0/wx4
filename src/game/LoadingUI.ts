@@ -1,4 +1,4 @@
-class LoadingUI extends game.BaseUI {
+class LoadingUI extends game.BaseUI_wx4 {
 
     private static _instance:LoadingUI;
 
@@ -48,7 +48,7 @@ class LoadingUI extends game.BaseUI {
             if(!res.userInfo)
             {
                 this.infoBtn.visible = false;
-                if(UM.helpUser)
+                if(UM_wx4.helpUser)
                 {
                     MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
                         if(b==1)
@@ -70,7 +70,7 @@ class LoadingUI extends game.BaseUI {
                 return;
             }
             this.infoBtn.visible = false;
-            UM.renewInfo(res.userInfo)
+            UM_wx4.renewInfo(res.userInfo)
             this.haveGetUser = true;
             this.initData();
             return;
@@ -85,7 +85,7 @@ class LoadingUI extends game.BaseUI {
                     wx.getUserInfo({
                         success: (res) =>{
                             var userInfo = res.userInfo
-                            UM.renewInfo(userInfo)
+                            UM_wx4.renewInfo(userInfo)
                         }
                     })
                 }
@@ -118,7 +118,7 @@ class LoadingUI extends game.BaseUI {
         ChangeUserUI.getAD();
         self.loadText.text = '正在加载素材，请耐心等候..'
         this.renewInfo();
-        UM.getUserInfo(()=>{
+        UM_wx4.getUserInfo(()=>{
             this.haveGetInfo = true;
             this.initData();
         });

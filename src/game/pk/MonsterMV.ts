@@ -100,12 +100,12 @@ class MonsterMV extends eui.Group {
 
     public play(){
         this.runing = true
-        EM.addEventListener(GameEvent.client.timerE,this.onE,this)
+        EM_wx4.addEventListener(GameEvent.client.timerE,this.onE,this)
     }
 
     public stop(){
         this.runing = false
-        EM.removeEventListener(GameEvent.client.timerE,this.onE,this)
+        EM_wx4.removeEventListener(GameEvent.client.timerE,this.onE,this)
     }
 
     public reset(){

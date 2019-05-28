@@ -1,4 +1,4 @@
-class ChangeJumpUI extends game.BaseWindow{
+class ChangeJumpUI extends game.BaseWindow_wx4{
 
     private static _instance:ChangeJumpUI;
     public static getInstance() {

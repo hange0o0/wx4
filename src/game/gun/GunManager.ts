@@ -19,13 +19,13 @@ class GunManager extends egret.EventDispatcher {
     }
 
     public getGunByPos(index){
-        return UM.gunPos[index];
+        return UM_wx4.gunPos[index];
     }
 
     public getPosByGun(gunid){
-        for(var s in UM.gunPos)
+        for(var s in UM_wx4.gunPos)
         {
-            if(UM.gunPos[s] == gunid)
+            if(UM_wx4.gunPos[s] == gunid)
                 return parseInt(s);
         }
         return 0
@@ -34,25 +34,25 @@ class GunManager extends egret.EventDispatcher {
     public addGun(gunid,pos){
         var lastPos = this.getPosByGun(gunid);
         if(lastPos)
-            UM.gunPos[lastPos] = UM.gunPos[pos];
+            UM_wx4.gunPos[lastPos] = UM_wx4.gunPos[pos];
         this.removeGun(gunid);
-        UM.gunPos[pos] = gunid;
-        EM.dispatch(GameEvent.client.GUN_CHANGE)
-        UM.needUpUser = true;
+        UM_wx4.gunPos[pos] = gunid;
+        EM_wx4.dispatch(GameEvent.client.GUN_CHANGE)
+        UM_wx4.needUpUser = true;
     }
 
     public removeGun(gunid){
        var pos = this.getPosByGun(gunid);
         if(pos)
         {
-            UM.gunPos[pos] = 0;
-            EM.dispatch(GameEvent.client.GUN_CHANGE)
-            UM.needUpUser = true;
+            UM_wx4.gunPos[pos] = 0;
+            EM_wx4.dispatch(GameEvent.client.GUN_CHANGE)
+            UM_wx4.needUpUser = true;
         }
     }
 
     public getGunLevel(gunid){
-         return UM.gunLevel[gunid] || (GunVO.getObject(gunid).open == 0?1:0);
+         return UM_wx4.gunLevel[gunid] || (GunVO.getObject(gunid).open == 0?1:0);
     }
 
     public getGunCost(gunid){
@@ -63,33 +63,34 @@ class GunManager extends egret.EventDispatcher {
 
     //解锁位置花费
     public getPosCost(){
-        var pos = UM.gunPosNum + 1;
+        var pos = UM_wx4.gunPosNum + 1;
         return 500*Math.floor(Math.pow(pos-3,2.5))
     }
 
     public unlockPos(){
-        UM.addCoin(-this.getPosCost())
-        UM.gunPosNum ++;
-        EM.dispatch(GameEvent.client.GUN_CHANGE)
+        UM_wx4.addCoin(-this.getPosCost())
+        UM_wx4.gunPosNum ++;
+        EM_wx4.dispatch(GameEvent.client.GUN_CHANGE)
         SoundManager.getInstance().playEffect('upgrade')
-        UM.needUpUser = true;
+        UM_wx4.needUpUser = true;
     }
 
     public levelUpGun(gunid){
-        UM.addCoin(-this.getGunCost(gunid))
-        UM.gunLevel[gunid] = this.getGunLevel(gunid) + 1;
-        if(!UM.gunLevel[gunid])
-            EM.dispatch(GameEvent.client.GUN_CHANGE)
+        UM_wx4.addCoin(-this.getGunCost(gunid))
+        var isNew = !UM_wx4.gunLevel[gunid];
+        UM_wx4.gunLevel[gunid] = this.getGunLevel(gunid) + 1;
+        if(isNew)
+            EM_wx4.dispatch(GameEvent.client.GUN_UNLOCK)
         else
-            EM.dispatch(GameEvent.client.GUN_UNLOCK)
+            EM_wx4.dispatch(GameEvent.client.GUN_CHANGE)
         SoundManager.getInstance().playEffect('buy')
-        UM.needUpUser = true;
+        UM_wx4.needUpUser = true;
     }
 
     public getUnlockGun(){
         for(var s in GunVO.data)
         {
-            if(GunVO.data[s].open < UM.level && !this.getGunLevel(s))
+            if(GunVO.data[s].open < UM_wx4.level && !this.getGunLevel(s))
             {
                 return s;
             }

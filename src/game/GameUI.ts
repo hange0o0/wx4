@@ -1,4 +1,4 @@
-class GameUI extends game.BaseUI {
+class GameUI extends game.BaseUI_wx4 {
 
     private static _instance: GameUI;
     public static getInstance(): GameUI {
@@ -46,7 +46,7 @@ class GameUI extends game.BaseUI {
             this.startMV();
         })
         this.addBtnEvent(this.endLessBtn,()=>{
-            if(UM.level <= this.endLessLevel)
+            if(UM_wx4.level <= this.endLessLevel)
             {
                 MyWindow.ShowTips('通关第'+this.endLessLevel+'关后开启')
                 return;
@@ -179,13 +179,13 @@ class GameUI extends game.BaseUI {
 
     public onShow(){
         if(_get['pos'])
-            UM.gunPosNum = parseInt(_get['pos']);
+            UM_wx4.gunPosNum = parseInt(_get['pos']);
         if(_get['level'])
-            UM.level = parseInt(_get['level']);
+            UM_wx4.level = parseInt(_get['level']);
         SoundManager.getInstance().playSound('bg')
 
 
-        this.bg.height = GameManager.uiHeight + 250;
+        this.bg.height = GameManager_wx4.uiHeight + 250;
         this.bg.y = 0;
         GameTool.getInstance().preLoadMV();
         RES.loadGroup('hero');
@@ -196,7 +196,7 @@ class GameUI extends game.BaseUI {
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renew)
 
-        if(UM.pastDayCoin.coin)
+        if(UM_wx4.pastDayCoin.coin)
         {
             PassDayAwardUI.getInstance().show();
         }
@@ -205,7 +205,7 @@ class GameUI extends game.BaseUI {
     }
 
     private showTips(){
-        this.setHtml(this.desText, '长按武器查看详情,拖动调整位置\n根据当前成绩，明天可获得金币 '+this.createHtml('+' + UM.level * 300,0xFFFF00))
+        this.setHtml(this.desText, '长按武器查看详情,拖动调整位置\n根据当前成绩，明天可获得金币 '+this.createHtml('x' + UM_wx4.level * 300,0xFFFF00))
         //clearTimeout(this.tipsTimer);
         //this.tipsTimer = setTimeout(()=>{
         //    this.desText.text = ''
@@ -240,12 +240,12 @@ class GameUI extends game.BaseUI {
             var mc = BulletMC.createItem();
             this.bulletGroup.addChild(mc);
             mc.x = 10 + Math.random()*620
-            mc.y = GameManager.uiHeight + 50;
+            mc.y = GameManager_wx4.uiHeight + 50;
             mc.data = {
                 scale:1,
-                id:ArrayUtil.randomOne(GunManager.getInstance().getMyGunList()),
+                id:ArrayUtil_wx4.randomOne(GunManager.getInstance().getMyGunList()),
             };
-            egret.Tween.get(mc).to({y:-100},(GameManager.uiHeight+150)*1).call(()=>{
+            egret.Tween.get(mc).to({y:-100},(GameManager_wx4.uiHeight+150)*1).call(()=>{
                 BulletMC.freeItem(mc);
             })
             mc.rotation = 0
@@ -262,14 +262,14 @@ class GameUI extends game.BaseUI {
     }
 
     private renewCoin(){
-        this.coinText.text = NumberUtil.addNumSeparator(UM.coin);
+        this.coinText.text = NumberUtil_wx4.addNumSeparator(UM_wx4.coin);
     }
 
     public renew(){
         this.blackBG.visible = false
-        this.startBtn.label = '第 '+UM.level+' 关'
-        this.bg.source = UM.getBG();
-        var num = Math.min(UM.gunPosNum + 1,GunManager.getInstance().maxGunNum);
+        this.startBtn.label = '第 '+UM_wx4.level+' 关'
+        this.bg.source = UM_wx4.getBG();
+        var num = Math.min(UM_wx4.gunPosNum + 1,GunManager.getInstance().maxGunNum);
         //var r = 220;
         //var rotaAdd = 360/num;
         var lineObj = {
@@ -302,7 +302,7 @@ class GameUI extends game.BaseUI {
 
         this.startBtn.visible = true
         this.endLessBtn.visible = true
-        if(UM.level > this.endLessLevel)
+        if(UM_wx4.level > this.endLessLevel)
             this.endLessBtn.icon = ''
     }
 
@@ -332,7 +332,7 @@ class GameUI extends game.BaseUI {
         this.endLessBtn.visible = false
         this.desText.text = ''
         clearTimeout(this.tipsTimer);
-        var num =  Math.min(UM.gunPosNum + 1,GunManager.getInstance().maxGunNum);
+        var num =  Math.min(UM_wx4.gunPosNum + 1,GunManager.getInstance().maxGunNum);
         var r = 220;
         var rotaAdd = 360/num;
 
@@ -380,9 +380,9 @@ class GameUI extends game.BaseUI {
         //var rota = 360*Math.random();
         var r0 = 120
         var r = 700
-        var y0 = Math.sin(rota/180*Math.PI)*r0 + GameManager.uiHeight/2-50;
+        var y0 = Math.sin(rota/180*Math.PI)*r0 + GameManager_wx4.uiHeight/2-50;
         var x0 = Math.cos(rota/180*Math.PI)*r0 + 320;
-        var y = Math.sin(rota/180*Math.PI)*r + GameManager.uiHeight/2-50;
+        var y = Math.sin(rota/180*Math.PI)*r + GameManager_wx4.uiHeight/2-50;
         var x = Math.cos(rota/180*Math.PI)*r + 320;
 
         var tw = egret.Tween.get(item)

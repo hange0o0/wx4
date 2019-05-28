@@ -16,13 +16,13 @@ class AtkMVCtrl_wx3 {
         //RES.loadGroup([url])
     }
     public playAniOn(id,mvid){
-        return PKCode_wx3.getInstance().playAniOn(id,mvid)
+        return PKCode_wx4.getInstance().playAniOn(id,mvid)
     }
 
     public mAtkMV(mid,user,endTime){
         if(this['atkMV' + mid + '_wx3'])
         {
-            var currentStep = PKCode_wx3.getInstance().actionStep;
+            var currentStep = PKCode_wx4.getInstance().actionStep;
             this['atkMV' + mid + '_wx3'](user,user.target,currentStep,currentStep + endTime)
         }
     }
@@ -33,31 +33,31 @@ class AtkMVCtrl_wx3 {
 
 
     ////////////////////////////////////////////////////////////////
-    private atkMV1_wx3(user,target,actionTime,endTime){
-       this.playAniOn(target.id,MonsterVO.getObject(1).mvid)
-    }
-
-
-    private atkMV3_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
-        var item = PKBulletManager_wx3.getInstance().createBullet(userItem,targetItem,actionTime,endTime)
-        var mc = item.mc;
-        mc.source = 'enemy3_attack_png'
-        mc.anchorOffsetX = 55/2
-        mc.anchorOffsetY = 30/2
-        var tw = egret.Tween.get(mc,{loop:true});
-        tw.to({rotation:360},300)
-    }
+    //private atkMV1_wx3(user,target,actionTime,endTime){
+    //   this.playAniOn(target.id,MonsterVO.getObject(1).mvid)
+    //}
+    //
+    //
+    //private atkMV3_wx3(user,target,actionTime,endTime){
+    //    var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+    //    var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
+    //    var item = PKBulletManager_wx3.getInstance().createBullet(userItem,targetItem,actionTime,endTime)
+    //    var mc = item.mc;
+    //    mc.source = 'enemy3_attack_png'
+    //    mc.anchorOffsetX = 55/2
+    //    mc.anchorOffsetY = 30/2
+    //    var tw = egret.Tween.get(mc,{loop:true});
+    //    tw.to({rotation:360},300)
+    //}
 
     private atkMV38_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         PKBulletManager_wx3.getInstance().createBullet(userItem,targetItem,actionTime,endTime,9)
     }
     private atkMV43_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(43).mvid))
         mc.needRota = false
         mc.targetOffsetY = target.getVO().height/2
@@ -65,8 +65,8 @@ class AtkMVCtrl_wx3 {
     }
 
     private atkMV44_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(44).mvid))
         mc.needRota = false
         mc.targetOffsetY = target.getVO().height/2
@@ -74,8 +74,8 @@ class AtkMVCtrl_wx3 {
     }
 
     private atkMV45_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(45).mvid))
         mc.needRota = false
         mc.targetOffsetY = target.getVO().height/2
@@ -83,8 +83,8 @@ class AtkMVCtrl_wx3 {
     }
 
     private atkMV46_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(46).mvid))
         mc.needRota = false
         mc.targetOffsetY = target.getVO().height/2
@@ -96,8 +96,8 @@ class AtkMVCtrl_wx3 {
     }
 
     private atkMV48_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc = this.playAniOn(user.id,MonsterVO.getObject(48).mvid)
         if(mc)
         {
@@ -119,23 +119,23 @@ class AtkMVCtrl_wx3 {
 
 
     public atkMV61_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
         egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV62_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
         egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV63_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
         egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV64_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         PKBulletManager_wx3.getInstance().createArrow(userItem,targetItem,actionTime,endTime)
     }
 
@@ -148,7 +148,7 @@ class AtkMVCtrl_wx3 {
         tw.to({rotation:720},200).set({rotation:0}).to({rotation:720,scaleX:0.1,scaleY:0.1},100).call(()=>{
             AM.removeImg(mc);
         })
-        var atker = PKCode_wx3.getInstance().getItemByID(user.id)
+        var atker = PKCode_wx4.getInstance().getItemByID(user.id)
         mc.x = atker.x + -1 * 20
         mc.y = atker.y - 40
         atker.parent.addChildAt(mc,atker.parent.getChildIndex(atker) + 1);
@@ -156,13 +156,13 @@ class AtkMVCtrl_wx3 {
     }
 
     public atkMV70_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
         egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV72_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC2_wx3 = <BulletAniMC2_wx3>(PKBulletManager_wx3.getInstance().createBulletAni2(userItem,targetItem,actionTime,endTime))
         mc.mc.anchorOffsetX = 560/4/2
         mc.mc.anchorOffsetY = 90
@@ -176,8 +176,8 @@ class AtkMVCtrl_wx3 {
     }
 
     public atkMV74_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC2_wx3 = <BulletAniMC2_wx3>(PKBulletManager_wx3.getInstance().createBulletAni2(userItem,targetItem,actionTime,endTime))
         mc.mc.anchorOffsetX = 560/4/2
         mc.mc.anchorOffsetY = 90
@@ -191,7 +191,7 @@ class AtkMVCtrl_wx3 {
     }
 
     public atkMV75_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
         var targetItem = {
             x: user.x + -1 * user.getSkillValue(1),
             y:user.y
@@ -200,13 +200,13 @@ class AtkMVCtrl_wx3 {
     }
 
     public atkMV76_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
         egret.Tween.get(userItem).to({x:userItem.x + -1*50},300)
     }
 
     public atkMV103_wx3(user,target,actionTime,endTime){
-        var userItem = PKCode_wx3.getInstance().getItemByID(user.id);
-        var targetItem = PKCode_wx3.getInstance().getItemByID(target.id);
+        var userItem = PKCode_wx4.getInstance().getItemByID(user.id);
+        var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc = this.playAniOn(user.id,MonsterVO.getObject(103).mvid)
         if(mc)
         {

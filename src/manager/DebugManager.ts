@@ -6,36 +6,42 @@ class DebugManager {
             this._instance = new DebugManager();
         return this._instance;
     }
+	private wx4_functionX_45882(){console.log(9624)}
 
     public jumpPK = false;
     public stop = 0;
     public winCardArr = [];
     public finishFun = function(winArr){return false}
 
+	private wx4_functionX_45883(){console.log(5531)}
 
     public constructor() {
 
     }
 
 
+	private wx4_functionX_45884(){console.log(306)}
     public printDetail = false;  //打印胜出怪物
     public winMonster = {}
     public winUseCard = []
 
     public outPut = []
 
+	private wx4_functionX_45885(){console.log(2523)}
     public callCost = 0
     public callLevel = 0
     public callNum = 0
     public repeatNum = 0
 
     public addTime = 0;
+	private wx4_functionX_45886(){console.log(2214)}
     public addTimeCD(t){
         this.addTime += t;
-        SharedObjectManager.getInstance().setMyValue('addTime',this.addTime)
+        SharedObjectManager_wx4.getInstance().setMyValue('addTime',this.addTime)
 
 
     }
+	private wx4_functionX_45887(){console.log(6743)}
 
 
 

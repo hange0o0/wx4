@@ -10,7 +10,7 @@ class BuffManager {
     public buffWork = 25
 
     public getUserNum(){
-        return Math.min(20,UM.shareUser.length)
+        return Math.min(20,UM_wx4.shareUser.length)
     }
 
     public getHpAdd(){

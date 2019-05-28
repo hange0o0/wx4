@@ -1,4 +1,4 @@
-class DebugUI extends game.BaseUI {
+class DebugUI extends game.BaseUI_wx4 {
 
     private static _instance:DebugUI;
 
@@ -6,103 +6,120 @@ class DebugUI extends game.BaseUI {
         if (!this._instance) this._instance = new DebugUI();
         return this._instance;
     }
+	private wx4_functionX_46062(){console.log(3469)}
 
     private con: eui.Group;
     private backBtn: eui.Button;
     private desText: eui.Label;
 
 
+	private wx4_functionX_46063(){console.log(1159)}
     public debugTimer = 0;
     public debugOpen = false;
     public constructor() {
         super();
         this.skinName = "DebugUISkin";
     }
+	private wx4_functionX_46064(){console.log(7859)}
 
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.backBtn,this.hide)
 
 
-        this.addB('清除本地数据',()=>{
+        this.addB_6909('清除本地数据',()=>{
             MyWindow.Confirm('确定清除所有本地数据？',(b)=>{
                 if(b==1)
                 {
-                     SharedObjectManager.getInstance().removeMyValue('localSave')
+                     SharedObjectManager_wx4.getInstance().removeMyValue('localSave')
                 }
             });
+	wx4_function(6426);
         })
 
-        this.addB('清除公网数据',()=>{
+        this.addB_6909('清除公网数据',()=>{
             MyWindow.Confirm('确定清除所有公网数据？',(b)=>{
                 if(b==1)
                 {
                     var wx = window['wx'];
+	wx4_function(2383);
                     if(!wx)
                     {
                         MyWindow.ShowTips('只在公网生效')
                         return;
                     }
                     const db = wx.cloud.database();
-                    db.collection('user').doc(UM.dbid).remove({
+	wx4_function(9703);
+                    db.collection('user').doc(UM_wx4.dbid).remove({
                         success(res) {
-                            UM.needUpUser = false;
+                            UM_wx4.needUpUser = false;
                             wx.exitMiniProgram();
                         }
                     })
                 }
             });
+	wx4_function(3330);
         })
 
 
-        this.addB('加10000钱',()=>{
+        this.addB_6909('加10000钱',()=>{
             var coin = 10000
-           UM.addCoin(coin)
-            MyWindow.ShowTips('钱 + ' + NumberUtil.addNumSeparator(coin,2))
+           UM_wx4.addCoin(coin)
+            MyWindow.ShowTips('钱 + ' + NumberUtil_wx4.addNumSeparator(coin,2))
         })
-        this.addB('加10000000000钱',()=>{
+        this.addB_6909('加10000000000钱',()=>{
             var coin = 10000000000
-           UM.addCoin(coin)
-            MyWindow.ShowTips('钱 + ' + NumberUtil.addNumSeparator(coin,2))
+           UM_wx4.addCoin(coin)
+            MyWindow.ShowTips('钱 + ' + NumberUtil_wx4.addNumSeparator(coin,2))
         })
 
-        this.addB('跳1关',()=>{
-            UM.level ++;
-            MyWindow.ShowTips('第'+UM.level+'关')
+        this.addB_6909('跳1关',()=>{
+            UM_wx4.level ++;
+	wx4_function(7545);
+            MyWindow.ShowTips('第'+UM_wx4.level+'关')
         })
-        this.addB('跳10关',()=>{
-            UM.level +=10;
-            MyWindow.ShowTips('第'+UM.level+'关')
+        this.addB_6909('跳10关',()=>{
+            UM_wx4.level +=10;
+            MyWindow.ShowTips('第'+UM_wx4.level+'关')
         })
-        this.addB('降1关',()=>{
-            UM.level --;
-            MyWindow.ShowTips('第'+UM.level+'关')
+        this.addB_6909('降1关',()=>{
+            UM_wx4.level --;
+	wx4_function(631);
+            MyWindow.ShowTips('第'+UM_wx4.level+'关')
         })
-        this.addB('降10关',()=>{
-            UM.level -=10;
-            MyWindow.ShowTips('第'+UM.level+'关')
+        this.addB_6909('降10关',()=>{
+            UM_wx4.level -=10;
+            MyWindow.ShowTips('第'+UM_wx4.level+'关')
         })
 
-        this.addB('加好友',()=>{
-            UM.shareUser.push({h:'',n:Math.random() + ''})
-            MyWindow.ShowTips('当前好友数量:' + UM.shareUser.length)
+        this.addB_6909('加好友',()=>{
+            UM_wx4.shareUser.push({h:'',n:Math.random() + ''})
+            MyWindow.ShowTips('当前好友数量:' + UM_wx4.shareUser.length)
+        })
+
+        this.addB_6909('跳过分享',()=>{
+            DM.jumpPK = ! DM.jumpPK
+            MyWindow.ShowTips('跳过分享:' + DM.jumpPK)
         })
     }
+	private wx4_functionX_46065(){console.log(7491)}
 
-    private addB(label,fun){
+    private addB_6909(label,fun){
        var btn = new eui.Button();
         btn.skinName = 'Btn2Skin'
         btn.width = 190
         btn.label = label;
+	wx4_function(5818);
         this.con.addChild(btn);
         this.addBtnEvent(btn,fun);
     }
 
     public onShow(){
         var arr = [];
-        arr.push('已经过游戏时间：' + DateUtil.getStringBySeconds(TM.now() - UM.loginTime))
-        arr.push('当前时间：'+DateUtil.formatDate('yyyy-MM-dd hh:mm:ss',TM.chineseDate()))
-        arr.push('实际时间：' + DateUtil.formatDate('yyyy-MM-dd hh:mm:ss',new Date()))
+	wx4_function(6127);
+        arr.push('已经过游戏时间：' + DateUtil_wx4.getStringBySeconds(TM_wx4.now() - UM_wx4.loginTime))
+        arr.push('当前时间：'+DateUtil_wx4.formatDate('yyyy-MM-dd hh:mm:ss',TM_wx4.chineseDate()))
+        arr.push('实际时间：' + DateUtil_wx4.formatDate('yyyy-MM-dd hh:mm:ss',new Date()))
         this.desText.text = arr.join('\n')
     }
 

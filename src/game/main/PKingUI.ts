@@ -1,4 +1,4 @@
-class PKingUI extends game.BaseUI {
+class PKingUI extends game.BaseUI_wx4 {
 
     private static _instance: PKingUI;
     public static getInstance(): PKingUI {
@@ -22,7 +22,9 @@ class PKingUI extends game.BaseUI {
     private rateText: eui.Label;
     private bossGroup: eui.Group;
     private buffGroup: eui.Group;
+    private guideMC: eui.Image;
     private blackBG: eui.Image;
+
 
 
 
@@ -78,6 +80,7 @@ class PKingUI extends game.BaseUI {
             return;
 
         this.gunGroup.y = this.touchID[e.touchPointID].gunY - this.touchID[e.touchPointID].touchY + e.stageY
+        this.guideMC.visible = false
     }
 
     private onTouchEnd(e){
@@ -95,11 +98,11 @@ class PKingUI extends game.BaseUI {
         var vos = GunManager.getInstance().getGunVOs(item.data);
         var vo1 = vos[1]
         var vo9 = vos[9]
-        if(vo1)//散射
+        if(vo1 && !PKCode_wx4.getInstance().isInBuff(101))//散射
             num = vo1.getLevelValue(1);
 
         var double = 1;
-        if(vo9 && !PKCode_wx3.getInstance().isInBuff(109))//有$1%的机率造成@2倍伤害';
+        if(vo9 && !PKCode_wx4.getInstance().isInBuff(101))//有$1%的机率造成@2倍伤害';
         {
             if(Math.random() < vo9.getLevelValue(1)/100)
             {
@@ -131,7 +134,7 @@ class PKingUI extends game.BaseUI {
             relateGun:item,
             id:id,
             rota:rota,
-            disableSkill:PKCode_wx3.getInstance().isInBuff(109),
+            disableSkill:PKCode_wx4.getInstance().isInBuff(101),
             double:double
         };
         return mc
@@ -208,13 +211,15 @@ class PKingUI extends game.BaseUI {
         this.createMap();
 
         this.gunGroup.x = 0;
+        this.guideMC.visible = false
         egret.Tween.get(this.gunGroup).to({x:280},500).to({x:196},100).to({x:0},400).wait(100).call(()=>{
             this.stoping = false
             this.begining = false
+            this.guideMC.visible = UM_wx4.level <= 3;
 
-            if(PlayManager.getInstance().isEndLess && PKCode_wx3.getInstance().endLessPassStep)
+            if(PlayManager.getInstance().isEndLess && PKCode_wx4.getInstance().endLessPassStep)
             {
-                MyWindow.ShowTips('已自动跳过'+PKCode_wx3.getInstance().endLessPassStep*5+'秒')
+                MyWindow.ShowTips('已自动跳过'+PKCode_wx4.getInstance().endLessPassStep*5+'秒')
             }
         })
 
@@ -223,7 +228,7 @@ class PKingUI extends game.BaseUI {
         this.bg2.x = 640;
         egret.Tween.get(this.bg2).to({x:150},1000)
 
-        var wall = PKCode_wx3.getInstance().wallArr;
+        var wall = PKCode_wx4.getInstance().wallArr;
         var middleIndex = wall.length/2;
         for(var i=0;i<wall.length;i++)
         {
@@ -241,15 +246,19 @@ class PKingUI extends game.BaseUI {
         if(PlayManager.getInstance().isEndLess)
         {
             this.rateCon.visible = false
+            PlayManager.getInstance().sendGameStart(9999)
         }
         else
         {
+
             this.rateCon.visible = true
             this.rateCon.bottom = -100;
             egret.Tween.get(this.rateCon).wait(1000).to({bottom:0},200)
+            PlayManager.getInstance().sendGameStart(UM_wx4.level)
         }
 
         this.bossGroup.visible = false
+
 
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.HP_CHANGE,this.renewBar)
@@ -297,20 +306,20 @@ class PKingUI extends game.BaseUI {
     private renewBar(){
         if(this.isDie)
             return;
-        var rate = PKCode_wx3.getInstance().myHp/ PKCode_wx3.getInstance().myHpMax
+        var rate = PKCode_wx4.getInstance().myHp/ PKCode_wx4.getInstance().myHpMax
 
-        if( PKCode_wx3.getInstance().myHp <= 0)
+        if( PKCode_wx4.getInstance().myHp <= 0)
         {
             this.isDie = true;
             this.hpText.text = '城墙血量：' + 0;
             this.bar.scrollRect = new egret.Rectangle(0,0,0,40)
-            var wall = PKCode_wx3.getInstance().wallArr;
+            var wall = PKCode_wx4.getInstance().wallArr;
             for(var i=0;i<wall.length;i++)
             {
                 var wallItem = wall[i];
                 this.dieWall(wallItem);
             }
-            var wall = PKCode_wx3.getInstance().monsterList;
+            var wall = PKCode_wx4.getInstance().monsterList;
             for(var i=0;i<wall.length;i++)
             {
                 var wallItem = wall[i];
@@ -331,7 +340,7 @@ class PKingUI extends game.BaseUI {
         }
         else
         {
-            this.hpText.text = '城墙血量：' + PKCode_wx3.getInstance().myHp;
+            this.hpText.text = '城墙血量：' + PKCode_wx4.getInstance().myHp;
             this.bar.scrollRect = new egret.Rectangle(0,0,rate*630,40)
         }
     }
@@ -345,13 +354,13 @@ class PKingUI extends game.BaseUI {
 
     public reborn(){
         SoundManager.getInstance().playEffect('reborn')
-        PKCode_wx3.getInstance().wudiTime = TM.nowMS() + 10*1000;
+        PKCode_wx4.getInstance().wudiTime = TM_wx4.nowMS() + 10*1000;
         //this.showWudi = true;
         this.isDie = false;
         this.isReborn = true
-        PKCode_wx3.getInstance().resetHP();
+        PKCode_wx4.getInstance().resetHP();
         this.renewBar();
-        var wall = PKCode_wx3.getInstance().wallArr;
+        var wall = PKCode_wx4.getInstance().wallArr;
         for(var i=0;i<wall.length;i++)
         {
             var wallItem = wall[i];
@@ -373,7 +382,7 @@ class PKingUI extends game.BaseUI {
         if(this.stoping)
             return;
 
-        var PD = PKCode_wx3.getInstance();
+        var PD = PKCode_wx4.getInstance();
         PD.onStep();
 
         var cd = PD.getWudiCD();
@@ -441,11 +450,11 @@ class PKingUI extends game.BaseUI {
         {
             PKStateItem.freeItem(this.stateArr.pop())
         }
-        this.bg1.source = UM.getBG();
-        this.bg2.source = UM.getBG(UM.level + 1);
+        this.bg1.source = UM_wx4.getBG();
+        this.bg2.source = UM_wx4.getBG(UM_wx4.level + 1);
 
 
-        var num = UM.gunPosNum;
+        var num = UM_wx4.gunPosNum;
         for(var i=0;i<num;i++)
         {
             var gunid = GunManager.getInstance().getGunByPos(i+1);
@@ -460,9 +469,9 @@ class PKingUI extends game.BaseUI {
             }
 
         }
-        this.gunGroup.y = (GameManager.uiHeight - num*80)/2
+        this.gunGroup.y = (GameManager_wx4.uiHeight - num*80)/2
 
-        PKCode_wx3.getInstance().initData();
+        PKCode_wx4.getInstance().initData();
     }
 
     public addMonster(item){

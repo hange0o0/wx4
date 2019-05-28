@@ -15,7 +15,7 @@ class BuffItem extends game.BaseItem{
         })
     }
     public dataChanged():void {
-        var user = UM.shareUser[this.data]
+        var user = UM_wx4.shareUser[this.data]
         if(user)
         {
             this.currentState = 'normal'

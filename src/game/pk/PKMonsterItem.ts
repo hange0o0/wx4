@@ -37,7 +37,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public slowStep = 0;
     public speedDec = 0;
     public get speedDec2(){
-        if(PKCode_wx3.getInstance().isInBuff(104))
+        if(PKCode_wx4.getInstance().isInBuff(104))
             return 20;
         return 0;
     }
@@ -76,9 +76,9 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public getAtk(){
         var hp = this.getVO().atk
         var add = 1;
-        if(PKCode_wx3.getInstance().isInBuff(102))
+        if(PKCode_wx4.getInstance().isInBuff(102))
             add += 0.2;
-        if(PKCode_wx3.getInstance().isInBuff(105))
+        if(PKCode_wx4.getInstance().isInBuff(105))
             add += 0.2;
         return Math.ceil(hp*add);
     }
@@ -224,7 +224,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public addHp(v){
         if(this.isDie)
             return;
-        if(v < 0 && this.buffHp < 3 && PKCode_wx3.getInstance().isInBuff(110))
+        if(v < 0 && this.buffHp < 3 && PKCode_wx4.getInstance().isInBuff(110))
         {
             this.buffHp ++;
             return;
@@ -236,7 +236,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             v = -this.hp;
         this.hp += v;
         if(v < 0)
-            PKCode_wx3.getInstance().enemyHp += v;
+            PKCode_wx4.getInstance().enemyHp += v;
         this.renewHp();
         if(this.hp <= 0)
             this.die();

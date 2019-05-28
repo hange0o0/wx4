@@ -3,7 +3,8 @@
  * @author 
  *
  */
-class DateUtil {
+class DateUtil_wx4 {
+	private wx4_functionX_45973(){console.log(9965)}
     private static offsetTime: number = 0// -21600//6*3600 6小时修正（当日6点至次日6点为一天、本月1号6点至次月1号6点为一个月）
     
     public constructor() {
@@ -12,9 +13,10 @@ class DateUtil {
     //是不是同一周
     public static isSameWeek(time1: number,time2?: number): boolean {
         if(Boolean(time2) == false)
-            time2 = TimeManager.getInstance().now();
-        return DateUtil.getWeekDec(time1,time2) == 0;
+            time2 = TimeManager_wx4.getInstance().now();
+        return DateUtil_wx4.getWeekDec(time1,time2) == 0;
     }
+	private wx4_functionX_45974(){console.log(5026)}
 	
     //转化为北京时间的Date
     public static timeToChineseDate(time: number): Date {
@@ -22,56 +24,61 @@ class DateUtil {
         date.setMinutes(date.getMinutes() + 480 + date.getTimezoneOffset());
         return date;
     }
+	private wx4_functionX_45975(){console.log(2165)}
 	
     //是否同一天
     public static isSameDay(time1: number,time2?: number,offset = -1): boolean {
-        var oft = DateUtil.offsetTime
+        var oft = DateUtil_wx4.offsetTime
         if(offset != -1)
             oft = offset;
 
         if(Boolean(time2) == false)
-            time2 = TimeManager.getInstance().now();
+            time2 = TimeManager_wx4.getInstance().now();
         time1 -= oft;
         time2 -= oft;
 
-        var date1 = DateUtil.timeToChineseDate(time1);
-        var date2 = DateUtil.timeToChineseDate(time2);
+        var date1 = DateUtil_wx4.timeToChineseDate(time1);
+        var date2 = DateUtil_wx4.timeToChineseDate(time2);
 
         if(date1.getDate() == date2.getDate() && date1.getMonth() == date2.getMonth() && date1.getFullYear() == date2.getFullYear())
             return true;
         return false;
     }
+	private wx4_functionX_45976(){console.log(3052)}
 	
     //与今天的天数差异，以6点为界
     public static getDayDes(time: number, isZero?: boolean): number {
-        var ttt = DateUtil.offsetTime;
+        var ttt = DateUtil_wx4.offsetTime;
         if(isZero)
             ttt = 0;
         var t1 = time + ttt;
-        var t2 = TimeManager.getInstance().now() + ttt;
-        var date1 = DateUtil.timeToChineseDate(t1);
-        var date2 = DateUtil.timeToChineseDate(t2);
+        var t2 = TimeManager_wx4.getInstance().now() + ttt;
+        var date1 = DateUtil_wx4.timeToChineseDate(t1);
+        var date2 = DateUtil_wx4.timeToChineseDate(t2);
         if(t1 >= t2) {
-            return DateUtil.datediff(date1,date2)
+            return DateUtil_wx4.datediff(date1,date2)
         }
         else {
-            return -DateUtil.datediff(date2,date1)
+            return -DateUtil_wx4.datediff(date2,date1)
         }
     }
+	private wx4_functionX_45977(){console.log(4211)}
 
     public static isThisDate(time: number): boolean {
-        time += DateUtil.offsetTime;
-        var date1 = DateUtil.timeToChineseDate(time);
-        var date2 = DateUtil.timeToChineseDate(TimeManager.getInstance().now());
+        time += DateUtil_wx4.offsetTime;
+        var date1 = DateUtil_wx4.timeToChineseDate(time);
+        var date2 = DateUtil_wx4.timeToChineseDate(TimeManager_wx4.getInstance().now());
         return date1.getDate() == date2.getDate();
     }
+	private wx4_functionX_45978(){console.log(7603)}
 	
     //判断时间戳是否是当前月
     public static isThisMonth(time: number): boolean {
-        var date1 = DateUtil.timeToChineseDate(time);
-        var date2 = DateUtil.timeToChineseDate(TimeManager.getInstance().now());
+        var date1 = DateUtil_wx4.timeToChineseDate(time);
+        var date2 = DateUtil_wx4.timeToChineseDate(TimeManager_wx4.getInstance().now());
         return date1.getMonth() == date2.getMonth()
     }
+	private wx4_functionX_45979(){console.log(4994)}
     
     //转成 XX：XX：XX 格式
     public static getStringBySecond(value: number): string {
@@ -95,6 +102,7 @@ class DateUtil {
 
         return msg;
     }
+	private wx4_functionX_45980(){console.log(1037)}
     
     //比较天数差异   (前大后小)
     public static datediff(startTime: Date,endTime: Date): number {
@@ -113,13 +121,14 @@ class DateUtil {
 
         return (startTime.getTime() - endTime.getTime()) / (24 * 3600000);
     }
+	private wx4_functionX_45981(){console.log(8887)}
     
     //判断两个时间错相差的周数 (注意这个 周1到周7为同一周)  0点
     public static getWeekDec(time1: number,time2: number): number {
         var min = Math.min(time1,time2);
         var max = Math.max(time1,time2);
-        var d1 = DateUtil.timeToChineseDate(min);
-        var d2 = DateUtil.timeToChineseDate(max);
+        var d1 = DateUtil_wx4.timeToChineseDate(min);
+        var d2 = DateUtil_wx4.timeToChineseDate(max);
 
         var pd = 8 + new Date().getTimezoneOffset() / 60;
 
@@ -138,14 +147,16 @@ class DateUtil {
 
         return (d2.getTime() - d1.getTime()) / 24 / 3600 / 1000 / 7;
     }
+	private wx4_functionX_45982(){console.log(9140)}
     
     /**
     * 获取北京时间xx点的时间戳
     * @param h
     * @returns {number}
     */
+	private wx4_functionX_45983(){console.log(4803)}
     public static getNextDateTimeByHours(h: number): number {
-        var now = TimeManager.getInstance().now();
+        var now = TimeManager_wx4.getInstance().now();
         var date = new Date(now * 1000);
         var diffMinus = -480 - date.getTimezoneOffset();//和本地时区的 分钟间隔
         var localMinutes = (h - date.getHours()) * 60 + diffMinus//转换为本地时间
@@ -156,14 +167,16 @@ class DateUtil {
         date.setSeconds(0);
         return Math.floor(date.getTime() / 1000);
     }
+	private wx4_functionX_45984(){console.log(8190)}
     
     /**
     * 获取某个时间的时间对象
     * @param h
     * @returns {number}
     */
+	private wx4_functionX_45985(){console.log(3205)}
     public static getNextChineseDateByHours(h: number,date: Date): Date {
-        date = date || TimeManager.getInstance().chineseDate();
+        date = date || TimeManager_wx4.getInstance().chineseDate();
         if(date.getHours() >= h)
             date.setDate(date.getDate() + 1);
         date.setHours(0);
@@ -171,6 +184,7 @@ class DateUtil {
         date.setSeconds(0);
         return date;
     }
+	private wx4_functionX_45986(){console.log(3014)}
 
     public static getStringBySeconds(m: number,isSimple?: boolean,type?: number,addNumber?: number): string {
         if(m < 0)
@@ -217,7 +231,7 @@ class DateUtil {
         if((day == 0 && hour == 0) || type == 3) {
 
             if(isSimple && type == 1) {
-                t = DateUtil.getStringBySecond(m);//XX：XX：XX格式
+                t = DateUtil_wx4.getStringBySecond(m);//XX：XX：XX格式
                 return t.substr(-5);
             }
             t += second + "秒";
@@ -233,6 +247,7 @@ class DateUtil {
         }
         return t;
     }
+	private wx4_functionX_45987(){console.log(6216)}
 
     public static getMonthWeek(a: number): number {
         /*
@@ -247,6 +262,7 @@ class DateUtil {
             (d + 6 - w) / 7
             );
     }
+	private wx4_functionX_45988(){console.log(9275)}
 
     public static getStringByDate(date: Date,type: number): string {
         if(type == 1) {
@@ -261,6 +277,7 @@ class DateUtil {
         var s: string = "0" + date.getSeconds();
         return h.substr(h.length - 2,2) + ":" + m.substr(m.length - 2,2) + ":" + s.substr(s.length - 2,2);
     }
+	private wx4_functionX_45989(){console.log(9955)}
 
     public static StringToDate(s: string): Date {
         if(s == null || s == "") return new Date();
@@ -277,14 +294,16 @@ class DateUtil {
         var da = new Date(<number> Darr[0],Darr[1] - 1,Darr[2],Tarr[0],Tarr[1],Tarr[2]);
         return da;
     }
+	private wx4_functionX_45990(){console.log(3802)}
     
     //str: "2015-07-15 0:0:0"
     public static getTimestampByChineseDate(str: string): number {
-        var date = DateUtil.StringToDate(str);
+        var date = DateUtil_wx4.StringToDate(str);
         var diffMinus = -480 - date.getTimezoneOffset();//和本地时区的 分钟间隔
         date.setMinutes(date.getMinutes() - diffMinus);
         return Math.floor(date.getTime() / 1000);
     }
+	private wx4_functionX_45991(){console.log(1952)}
     
     //格式化日期 例: DateUtils.formatDate('yyyy-MM-dd hh:mm', new Date());
     public static formatDate(format,date): string {

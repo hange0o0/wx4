@@ -1,4 +1,4 @@
-class RankUI extends game.BaseWindow{
+class RankUI extends game.BaseWindow_wx4{
 
     private static _instance:RankUI;
     public static getInstance() {
@@ -48,7 +48,7 @@ class RankUI extends game.BaseWindow{
         if(res && res.userInfo)
         {
             this.infoBtn.visible = false;
-            UM.renewInfo(res.userInfo)
+            UM_wx4.renewInfo(res.userInfo)
             this.renew();
         }
     }
@@ -70,11 +70,11 @@ class RankUI extends game.BaseWindow{
         this.remove();
         if(this.tab.selectedIndex == 2)
         {
-            this.worldRank('level',UM.level);
+            this.worldRank('level',UM_wx4.level);
         }
         else if(this.tab.selectedIndex == 3)
         {
-            this.worldRank('endless',UM.endLess);
+            this.worldRank('endless',UM_wx4.endLess);
         }
         else
         {
@@ -98,9 +98,9 @@ class RankUI extends game.BaseWindow{
 
         var oo = {
             type:type,
-            openid:UM.gameid,
-            nick:UM.nick,
-            head:UM.head,
+            openid:UM_wx4.gameid,
+            nick:UM_wx4.nick,
+            head:UM_wx4.head,
             value:myValue,
         }
         console.log(oo)
@@ -114,7 +114,7 @@ class RankUI extends game.BaseWindow{
                 {
                     this.rankData[oo.type] = {
                         list:res.result,
-                        time:TM.now()
+                        time:TM_wx4.now()
                     }
                     this.showRank(type);
                 }
@@ -133,38 +133,38 @@ class RankUI extends game.BaseWindow{
         this.scroller.visible = true;
         var arr = this.rankData[type].list;
         var b = false;
-        var myScore = type=='level'?UM.level:UM.endLess;
+        var myScore = type=='level'?UM_wx4.level:UM_wx4.endLess;
         for(var i=0;i<arr.length;i++) //更新自己成绩
         {
             arr[i].type = type;
-            if(arr[i].openid == UM.gameid && UM.nick)
+            if(arr[i].openid == UM_wx4.gameid && UM_wx4.nick)
             {
                 arr[i].value = myScore;
-                arr[i].nick = UM.nick;
-                arr[i].head = UM.head;
+                arr[i].nick = UM_wx4.nick;
+                arr[i].head = UM_wx4.head;
                 b = true;
             }
         }
-        if(!b && UM.nick && arr.length<50 && myScore > 1)
+        if(!b && UM_wx4.nick && arr.length<50 && myScore > 1)
         {
             arr.push({
-                nick:UM.nick,
+                nick:UM_wx4.nick,
                 value:myScore,
-                head:UM.head,
-                openid:UM.gameid
+                head:UM_wx4.head,
+                openid:UM_wx4.gameid
             })
         }
-        ArrayUtil.sortByField(arr,['value'],[1])
+        ArrayUtil_wx4.sortByField(arr,['value'],[1])
         var myRank = 0
         for(var i=0;i<arr.length;i++)
         {
             arr[i].index = i+1;
-            if(arr[i].openid == UM.gameid)
+            if(arr[i].openid == UM_wx4.gameid)
                 myRank = i+1;
         }
         this.list.dataProvider = new eui.ArrayCollection(arr)
 
-        if(UM.nick)
+        if(UM_wx4.nick)
         {
             if(myRank)
                 this.desText.text = '你当前排名为：' + myRank;
@@ -184,20 +184,20 @@ class RankUI extends game.BaseWindow{
         if(this.tab.selectedIndex == 0)
         {
             var key = 'level'
-            var value = UM.level
+            var value = UM_wx4.level
         }
         else if(this.tab.selectedIndex == 1)
         {
             var key = 'endless'
-            var value = UM.endLess
+            var value = UM_wx4.endLess
         }
         let param:any = {
-            me: UM.gameid,
+            me: UM_wx4.gameid,
             command: 'open',
             key:key,
             rankHeight:this.height-this.bitmap.y - 20,
-            x:this.bitmap.x + (GameManager.uiWidth - this.width)/2,
-            y:this.bitmap.y + (GameManager.uiHeight - this.height)/2,
+            x:this.bitmap.x + (GameManager_wx4.uiWidth - this.width)/2,
+            y:this.bitmap.y + (GameManager_wx4.uiHeight - this.height)/2,
             me_value: value,// + ',0', //第2位时间传0，永远排在最上面
             root: "openDataContext/",
         }

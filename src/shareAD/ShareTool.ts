@@ -1,9 +1,9 @@
 class ShareTool {
-    private static SHARE_KEYS = ["ACT_TYPE","FROM_SERVER","FROM_USER","ACT_ITEMID","ACT_MODE","CHANGE_S"];//注意，还有顺序之分，只能在数组后面添加顺序
 
     /**
      * 分享
      */
+	private wx4_functionX_45962(){console.log(4005)}
     public static share(title, imgUrl,shareArgs,success?,mustSuccess?){
         if(DEBUG){
             //if(!shareArgs || !shareArgs.ACT_TYPE){
@@ -14,9 +14,7 @@ class ShareTool {
                 for(var key in shareArgs){
                     ss.push(key + "=" + shareArgs[key]);
 
-                    if(DEBUG && ShareTool.SHARE_KEYS.indexOf(key) == -1){
-                        console.warn("SHARE_KEYS未配置该参数：" + key);
-                    }
+                   
                 }
                 console.log("分享参数：" + ss.join("&"));
                 console.log("title：" + title);
@@ -63,8 +61,8 @@ class ShareTool {
         //console.log(ObjectUtil.join(shareArgs))
         var shareTime = egret.getTimer();
         var failText = '分享失败！建议分享受到其它群试试'
-        GameManager.getInstance().onShowFun = function(){
-            if(mustSuccess || !UM.shareFail)
+        GameManager_wx4.getInstance().onShowFun = function(){
+            if(mustSuccess || !UM_wx4.shareFail)
             {
                 success && success();
                 return;
@@ -72,31 +70,31 @@ class ShareTool {
             var cd = egret.getTimer()-shareTime;
             if(cd < 2500)
             {
-                GameManager.getInstance().shareFailTime ++;
+                GameManager_wx4.getInstance().shareFailTime ++;
                 MyWindow.ShowTips(failText)
                 return;
             }
 
-            if(GameManager.getInstance().shareFailTime < 3)
+            if(GameManager_wx4.getInstance().shareFailTime < 3)
             {
-                if(Math.random()*(GameManager.getInstance().shareFailTime+1) < 0.8)
+                if(Math.random()*(GameManager_wx4.getInstance().shareFailTime+1) < 0.8)
                 {
-                    GameManager.getInstance().shareFailTime ++;
+                    GameManager_wx4.getInstance().shareFailTime ++;
                     MyWindow.ShowTips(failText)
                     return;
                 }
             }
 
-            GameManager.getInstance().shareFailTime = 0;
+            GameManager_wx4.getInstance().shareFailTime = 0;
             success && success();
         }
 
         wx.shareAppMessage({
             title:title,
             imageUrl:imgUrl,
-            query:ObjectUtil.join(shareArgs),
+            query:ObjectUtil_wx4.join(shareArgs),
             cancel:()=>{
-                GameManager.getInstance().onShowFun = null;
+                GameManager_wx4.getInstance().onShowFun = null;
             }
         })
 
@@ -114,17 +112,17 @@ class ShareTool {
         //    return;
         //}
     }
+	private wx4_functionX_45963(){console.log(5376)}
 
 
 
     private static videoAD
     private static adSuccFun;
     public static openGDTV(success?){
-        //if(DEBUG) {
-        //    console.log('视频广告');
-        //    success && success();
-        //    return
-        //}
+        if(DM.jumpPK ) {
+            success && success('debugJump');
+            return
+        }
 
         //监时用进入好友代替
         ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序30秒也可获得',success)
@@ -145,7 +143,7 @@ class ShareTool {
         }
         let close = (res) => {
             if(!res || res.isEnded){ //部分版本（比如：2.0.9，不能提前关闭广告）播放完成回调res为undefined，故没有res当做成功
-                success && success();
+                success && success('video');
             }
             window["wx"].isPlayAD = false
         };
@@ -162,6 +160,7 @@ class ShareTool {
             window["wx"].isPlayAD = false
         })
     }
+	private wx4_functionX_45964(){console.log(8702)}
 
     //是否支持播放视频广告
     //默认canPay=false，表示改渠道支持播放广告，但当前播放不了，提示版本升级； true时严格判断当前是不是可以播广告

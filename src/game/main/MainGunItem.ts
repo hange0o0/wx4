@@ -24,10 +24,10 @@ class MainGunItem extends game.BaseItem{
             if(this.currentState == 'lock')
             {
                 var cost = GunManager.getInstance().getPosCost();
-                MyWindow.Confirm('确定花费'+this.createHtml(NumberUtil.addNumSeparator(cost),0xFFFF00)+'金币\n解锁该位置吗？',(b)=>{
+                MyWindow.Confirm('确定花费'+this.createHtml(NumberUtil_wx4.addNumSeparator(cost),0xFFFF00)+'金币\n解锁该位置吗？',(b)=>{
                     if(b==1)
                     {
-                        if(!UM.checkCoin(cost))
+                        if(!UM_wx4.checkCoin(cost))
                             return;
                         GunManager.getInstance().unlockPos();
                     }
@@ -60,7 +60,7 @@ class MainGunItem extends game.BaseItem{
     public dataChanged():void {
        this.indexText.text = this.data + ' 号位'
         this.stopDrag = true
-        if(this.data <= UM.gunPosNum)
+        if(this.data <= UM_wx4.gunPosNum)
         {
             var gun = GunManager.getInstance().getGunByPos(this.data);
             if(gun)
@@ -81,7 +81,7 @@ class MainGunItem extends game.BaseItem{
         else
         {
             this.currentState = 'lock'
-            this.coinText.text = NumberUtil.addNumSeparator(GunManager.getInstance().getPosCost())
+            this.coinText.text = NumberUtil_wx4.addNumSeparator(GunManager.getInstance().getPosCost())
         }
     }
 

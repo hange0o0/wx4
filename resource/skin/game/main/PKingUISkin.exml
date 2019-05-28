@@ -35,5 +35,6 @@
 		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
+	<e:Image id="guideMC" source="guide_png" horizontalCenter="0" bottom="100"/>
 	<e:Image id="blackBG" source="black_bg_png" left="0" right="0" top="0" bottom="0" visible="false"/>
 </e:Skin>

@@ -36,7 +36,7 @@ class PKStateItem extends game.BaseItem{
         switch(this.data)
         {
             case 101:
-                str = '降低所有飞刀20%攻击力';
+                str = '封印所有飞刀的技能';
                 break
             case 102:
                 str = '降低城墙20%的防御力';
@@ -60,7 +60,7 @@ class PKStateItem extends game.BaseItem{
                 str = '城墙20%每秒损失2%的生命';
                 break
             case 109:
-                str = '封印所有飞刀的技能';
+                str = '降低所有飞刀20%攻击力';
                 break
             case 110:
                 str = '所有怪物可免疫前3次伤害';

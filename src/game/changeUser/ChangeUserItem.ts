@@ -42,11 +42,12 @@ class ChangeUserItem extends game.BaseItem{
         wx.previewImage({
             urls: [this.data.img],
             success: function () {
-                if(!UM.gameid)
+                if(!UM_wx4.gameid)
                     return;
-                GameManager.getInstance().changeUserTime = TM.now();
-                GameManager.getInstance().changeUserID = appid;
-                GameManager.getInstance().changeUserFun = fun;
+                wx.aldSendEvent("点击跳转其它小程序")
+                GameManager_wx4.getInstance().changeUserTime = TM_wx4.now();
+                GameManager_wx4.getInstance().changeUserID = appid;
+                GameManager_wx4.getInstance().changeUserFun = fun;
                 //var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
                 //if(arr.indexOf(appid) == -1)
                 //{

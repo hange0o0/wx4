@@ -39,7 +39,7 @@ class ChangeUserUI extends game.BaseItem {
         this.adList.length = 0;
         wx.wladGetAds(num,function (res) { //第⼀一个参数为获取⼴广告条数，第⼆二个参数为获取成功后回调⽅方法;
             //console.log(res);
-            ChangeUserUI.lastGetADTime = TM.now();
+            ChangeUserUI.lastGetADTime = TM_wx4.now();
             ChangeUserUI.adList = res.data;
             fun && fun();
         })
@@ -47,13 +47,13 @@ class ChangeUserUI extends game.BaseItem {
 
     //取指定长度的数据
     public static getListByNum(num,fun?){
-        var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+        var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
         for(var i=0;i<this.adList.length;i++)
         {
             this.adList[i].temp = arr.indexOf(this.adList[i].appid)
             this.adList[i].fun = fun;
         }
-        ArrayUtil.sortByField(this.adList,['temp'],[-1]);
+        ArrayUtil_wx4.sortByField(this.adList,['temp'],[-1]);
         return this.adList.slice(0,num);
     }
 

@@ -1,4 +1,4 @@
-class GunInfoUI extends game.BaseWindow{
+class GunInfoUI extends game.BaseWindow_wx4{
 
     private static _instance:GunInfoUI;
     public static getInstance() {

@@ -3,7 +3,8 @@
  * @author 
  *
  */
-class ObjectUtil {
+class ObjectUtil_wx4 {
+	private wx4_functionX_46028(){console.log(5313)}
 	public constructor() {
 	}
 
@@ -13,6 +14,7 @@ class ObjectUtil {
             arr.push(key + "=" + paramList[key]);
         return arr.join(joinStr);
     }
+	private wx4_functionX_46029(){console.log(4998)}
 		
 	public static arrayToObj(array:Array<any>, key:string, value:any):any{
     	key = key || "key";
@@ -27,6 +29,7 @@ class ObjectUtil {
     	}
     	return o;
 	}
+	private wx4_functionX_46030(){console.log(7392)}
     	
     public static objToArray(obj:any):Array<any>{
         var list = [];
@@ -34,6 +37,7 @@ class ObjectUtil {
             list.push(obj[key]);
         return list;
     }
+	private wx4_functionX_46031(){console.log(3855)}
     
         	
     public static objLength(obj: any,removeEmpty?): number {
@@ -46,6 +50,7 @@ class ObjectUtil {
         }
         return count;
     }
+	private wx4_functionX_46032(){console.log(1807)}
 
 	public static clone (source) {
 		return JSON.parse(JSON.stringify(source))    //++add   临时
@@ -78,12 +83,14 @@ class ObjectUtil {
         }
 		
 	}
+	private wx4_functionX_46033(){console.log(9248)}
     public static removeClickEvent(btn: egret.DisplayObject,fun: any,thisObject: any): void {
         if(btn) {
             btn.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,btn["clickFun_touchBegin"],thisObject);
             btn.removeEventListener(egret.TouchEvent.TOUCH_END,btn["clickFun_touchEnd"],thisObject);
         }
     }
+	private wx4_functionX_46034(){console.log(1260)}
 
     public static swapKey(data,key1,key2){
         var temp = data[key1]

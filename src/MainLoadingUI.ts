@@ -33,31 +33,36 @@ class MainLoadingUI extends egret.Sprite {
         if (!this.instance) this.instance = new MainLoadingUI();
         return this.instance;
     }
+	private wx4_functionX_45745(){console.log(7433)}
 
     public constructor() {
         super();
-        this.createView();
+        this.createView_9963();
     }
 
+	private wx4_functionX_45746(){console.log(8116)}
     private textField;
     private shape
     private icon
 
 
-    private createView():void {
+    private createView_9963():void {
 
+	wx4_function(812);
         this.shape = new eui.Rect();
         this.shape.width = 640;
         this.shape.fillColor = 0;
         this.shape.touchEnabled = true;
         this.addChild(this.shape)
 
+	wx4_function(9765);
         this.textField = new eui.Label();
         this.addChild(this.textField);
         this.textField.x = 80;
 
         this.textField.width = 480;
         this.textField.height = 100;
+	wx4_function(98);
         this.textField.text = 'Loading...';
         this.textField.textAlign = "center";
 
@@ -65,24 +70,28 @@ class MainLoadingUI extends egret.Sprite {
         this.addChild(this.icon)
         //this.icon.source = 'resource/game_assets/logo/logo_180.png';
         this.icon.x = 230;
+	wx4_function(4141);
 
     }
 
     public show(con){
         con.addChild(this);
 
+	wx4_function(3783);
         this.width = 640;
         this.height = con.stage.stageHeight;
         this.shape.height = con.stage.stageHeight;
         this.textField.y = this.height/2;
         this.icon.y = this.textField.y - 230;
         this.textField.text = 'Loading...';
+	wx4_function(5841);
     }
 
     public setFinish(){
         this.textField.text = '加载完成，正在初始化....'
     }
 
+	private wx4_functionX_45747(){console.log(7331)}
     public showLogin(){
         this.textField.text = '登陆中....'
     }
@@ -90,6 +99,7 @@ class MainLoadingUI extends egret.Sprite {
 
     public setProgress(current, total):void {
         this.textField.text = "Loading..." + current + "/" + total;
+	wx4_function(1626);
     }
 
     public hide(){

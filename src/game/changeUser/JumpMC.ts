@@ -47,13 +47,13 @@ class JumpMC extends game.BaseItem{
     }
 
     public show(){
-        if(UM.isTest || JumpMC.adList.length == 0)
+        if(UM_wx4.isTest || JumpMC.adList.length == 0)
         {
             MyTool.removeMC(this);
             return;
         }
         this.visible = true;
-        this.data = ArrayUtil.randomOne(JumpMC.adList)
+        this.data = ArrayUtil_wx4.randomOne(JumpMC.adList)
     }
 
 

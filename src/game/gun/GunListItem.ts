@@ -27,7 +27,7 @@ class GunListItem extends game.BaseItem{
         this.lockGroup.visible = false
         if(!lv)
         {
-            if(this.data.open < UM.level)
+            if(this.data.open < UM_wx4.level)
             {
                 this.levelText.text = '可解锁'
                 this.levelText.textColor = 0x00ff00
