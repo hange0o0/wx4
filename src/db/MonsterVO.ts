@@ -34,6 +34,7 @@ class MonsterVO {
     public atky: number;
 	private wx4_functionX_45851(){console.log(1616)}
     public mvid: number;
+    public diesound: number;
 
     public constructor() {
 
@@ -52,6 +53,13 @@ class MonsterVO {
 
     public isHero(){
         return this.id > 100;
+    }
+
+    public playDieSound(){
+        if(this.isHero())
+            SoundManager.getInstance().playEffect('enemy_dead4')
+        else
+            SoundManager.getInstance().playEffect('enemy_dead' + this.diesound)
     }
 
 }

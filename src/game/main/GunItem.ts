@@ -30,6 +30,7 @@ class GunItem extends game.BaseItem{
 
 
 
+    public baseY = 0//初始位置
     public step = 0;
     public tw;
     public timer;
@@ -103,12 +104,13 @@ class GunItem extends game.BaseItem{
     }
 
     public move2(){
-        this.mcGroup.rotation += 10
+        this.mcGroup.rotation += 8
         this.shootMC.visible = false;
     }
 
     public remove():void {
         MyTool.removeMC(this);
+        egret.Tween.removeTweens(this);
         this.tw.setPaused(true)
         clearTimeout(this.timer)
     }

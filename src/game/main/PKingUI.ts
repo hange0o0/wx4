@@ -39,7 +39,10 @@ class PKingUI extends game.BaseUI_wx4 {
     public speed = 5
     public txtPool = []
 
-    private touchID = {}
+    //private touchID = {}
+
+    private touchID1:any = null
+    private touchID2:any = null
 
     private stoping = true
     private begining = true
@@ -47,6 +50,7 @@ class PKingUI extends game.BaseUI_wx4 {
     private isDie = false
     //private showWudi = false
     private isReborn = false
+    //private lastNoMoveTime = 0;//进入怪攻击判断，保持
     public constructor() {
         super();
         this.skinName = "PKingUISkin";
@@ -67,24 +71,84 @@ class PKingUI extends game.BaseUI_wx4 {
     }
 
     private onTouchBegin(e:egret.TouchEvent){
-        this.touchID[e.touchPointID] = {
-            touchY:e.stageY,
-            gunY:this.gunGroup.y
+        if(!this.touchID1)
+        {
+            this.touchID1 = {
+                id:e.touchPointID,
+                touchY:e.stageY,
+                gunY:this.gunGroup.y
+            }
+            return
+        }
+        if(!this.touchID2)
+        {
+            var gunItem;
+            for(var i=0;i<this.gunArr.length;i++)
+            {
+                if(this.gunArr[i].role.hitTestPoint(e.stageX,e.stageY))
+                {
+                    gunItem = this.gunArr[i];
+                    break;
+                }
+            }
+            if(gunItem)
+            {
+                this.touchID2 = {
+                    id:e.touchPointID,
+                    touchY:e.stageY,
+                    gunItemY:gunItem.y,
+                    gunItem:gunItem,
+                }
+            }
         }
     }
 
     private onTouchMove(e){
         if(this.isDie)
             return
-        if(!this.touchID[e.touchPointID])
+        if(this.touchID1 && e.touchPointID == this.touchID1.id)
+        {
+            var yy = this.touchID1.gunY - this.touchID1.touchY + e.stageY;
+            var moveDis = this.gunGroup.y - yy
+            this.gunGroup.y = yy
+            if(this.guideMC.visible && this.guideMC.source == 'guide_png')
+                this.guideMC.source = 'guide2_png'
+            if(this.touchID2) //同时按下了2，2的位置保持不变
+            {
+                this.touchID2.gunItem.y += moveDis
+                this.touchID2.gunItemY += moveDis
+            }
             return;
-
-        this.gunGroup.y = this.touchID[e.touchPointID].gunY - this.touchID[e.touchPointID].touchY + e.stageY
-        this.guideMC.visible = false
+        }
+        if(this.touchID2 && e.touchPointID == this.touchID2.id)
+        {
+            this.touchID2.gunItem.y = this.touchID2.gunItemY - this.touchID2.touchY + e.stageY
+            if(this.guideMC.visible && this.guideMC.source == 'guide2_png')
+                this.guideMC.visible = false
+        }
     }
 
     private onTouchEnd(e){
-        delete this.touchID[e.touchPointID];
+        if(this.touchID2 && e.touchPointID == this.touchID2.id)
+        {
+            this.touchID2 = null;
+             return;
+        }
+        //其它手指，统一回弹
+        if(this.touchID1 && e.touchPointID == this.touchID1.id)
+        {
+            this.touchID1 = null
+            this.touchID2 = null
+            for(var i=0;i<this.gunArr.length;i++)
+            {
+                this.moveGunBack(this.gunArr[i])
+            }
+        }
+    }
+
+    private moveGunBack(item){
+        egret.Tween.removeTweens(item)
+        egret.Tween.get(item).to({y:item.baseY},200);
     }
 
 
@@ -92,7 +156,7 @@ class PKingUI extends game.BaseUI_wx4 {
     public shoot(item:GunItem){
         if(this.isDie)
             return
-        SoundManager.getInstance().playEffect('shoot')
+        //SoundManager.getInstance().playEffect('shoot')
         //var vo = GunVO.getObject(item.data)
         var num = 1;
         var vos = GunManager.getInstance().getGunVOs(item.data);
@@ -197,7 +261,8 @@ class PKingUI extends game.BaseUI_wx4 {
 
     public onShow(){
         SoundManager.getInstance().playSound('bg2')
-        this.touchID = {};
+        this.touchID1 = null;
+        this.touchID2 = null;
         this.isDie = false
         this.isReborn = false
         this.isFinish = false
@@ -216,6 +281,7 @@ class PKingUI extends game.BaseUI_wx4 {
             this.stoping = false
             this.begining = false
             this.guideMC.visible = UM_wx4.level <= 3;
+            this.guideMC.source = 'guide_png'
 
             if(PlayManager.getInstance().isEndLess && PKCode_wx4.getInstance().endLessPassStep)
             {
@@ -310,8 +376,8 @@ class PKingUI extends game.BaseUI_wx4 {
 
         if( PKCode_wx4.getInstance().myHp <= 0)
         {
-            this.isDie = true;
             this.hpText.text = '城墙血量：' + 0;
+            this.isDie = true;
             this.bar.scrollRect = new egret.Rectangle(0,0,0,40)
             var wall = PKCode_wx4.getInstance().wallArr;
             for(var i=0;i<wall.length;i++)
@@ -343,6 +409,47 @@ class PKingUI extends game.BaseUI_wx4 {
             this.hpText.text = '城墙血量：' + PKCode_wx4.getInstance().myHp;
             this.bar.scrollRect = new egret.Rectangle(0,0,rate*630,40)
         }
+    }
+
+
+    private testGameOver(){
+        if(!PlayManager.getInstance().isEndLess)
+        {
+            var PD =  PKCode_wx4.getInstance();
+            var rate = PD.enemyHp / PD.enemyHpMax;
+            this.rateText.text = MyTool.toFixed(rate*100,1) + '%'
+            this.rateBar.width = 600*rate;
+            this.rateMC.x = this.rateBar.width;
+            if(rate > 0 && PD.autoList.length == 0)
+            {
+                var liveNum = 0
+                var monsterList = PD.monsterList;
+                for(var i=0;i<monsterList.length;i++)
+                {
+                    var enemy = monsterList[i];
+                    if(enemy.isDie)
+                        continue;
+                    liveNum ++
+                    break;
+                }
+                if(liveNum == 0)
+                    rate = 0;
+            }
+
+            if(rate == 0)
+            {
+                this.isFinish = true;
+                while(this.bulletArr.length)
+                {
+                    BulletMC.freeItem(this.bulletArr.pop())
+                }
+                setTimeout(()=>{
+                    this.stoping = true;
+                    ResultUI.getInstance().show()
+                },1000)
+            }
+        }
+
     }
 
     private dieWall(wallItem){
@@ -416,25 +523,9 @@ class PKingUI extends game.BaseUI_wx4 {
             this.gunArr[i].move();
         }
 
-        if(!PlayManager.getInstance().isEndLess)
-        {
-            var rate = PD.enemyHp / PD.enemyHpMax;
-            this.rateText.text = MyTool.toFixed(rate*100,1) + '%'
-            this.rateBar.width = 600*rate;
-            this.rateMC.x = this.rateBar.width;
-            if(rate == 0)
-            {
-                this.isFinish = true;
-                while(this.bulletArr.length)
-                {
-                    BulletMC.freeItem(this.bulletArr.pop())
-                }
-                setTimeout(()=>{
-                    this.stoping = true;
-                    ResultUI.getInstance().show()
-                },1000)
-            }
-        }
+
+
+        this.testGameOver();
     }
 
     private createMap(){
@@ -463,6 +554,7 @@ class PKingUI extends game.BaseUI_wx4 {
                 var gun = GunItem.createItem();
                 gun.data = gunid
                 gun.y = (i+0.5)*80;
+                gun.baseY = gun.y
                 gun.x = 50;
                 this.gunArr.push(gun);
                 this.gunGroup.addChild(gun);

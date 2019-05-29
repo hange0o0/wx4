@@ -1324,6 +1324,11 @@
 			"name":"guide_png",
 			"type":"image",
 			"url":"game_assets/guide.png"
+		},
+		{
+			"name":"guide2_png",
+			"type":"image",
+			"url":"game_assets/guide2.png"
 		}
 	]
 }

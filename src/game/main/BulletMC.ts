@@ -151,7 +151,7 @@ class BulletMC extends game.BaseItem{
             if(Math.abs(item.x -this.x)>mvo.width/2)
                 continue;
 
-            SoundManager.getInstance().playEffect('hit')
+
             item.addHp(-PKCode_wx4.getInstance().getBulletAtk(this.data.id)*this.data.double);
             if(!this.disableSkill)
             {
@@ -161,6 +161,7 @@ class BulletMC extends game.BaseItem{
                     {
                         PKCode_wx4.getInstance().hitEnemyAround(item.x,item.y,this.getTypeVO(3).getLevelValue(1)/2,this.getTypeVO(3).getLevelValue(2))
                         AniManager_wx3.getInstance().playOnItem(112,item);
+                        SoundManager.getInstance().playEffect('boom')
                     }
                     else if(this.getTypeVO(4)) //杀敌吸血
                     {

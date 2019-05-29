@@ -12,6 +12,7 @@ class ResultUI extends game.BaseUI_wx4{
     private coinText: eui.Label;
     private coinAddText: eui.Label;
     private failGroup: eui.Group;
+    private failTipsGroup: eui.Group;
     private barMC: eui.Rect;
     private rateText: eui.Label;
     private titleText: eui.Label;
@@ -69,6 +70,7 @@ class ResultUI extends game.BaseUI_wx4{
 
         this.timeText.text = ''
         this.failText.text = ''
+        this.failTipsGroup.visible = false
         if(PlayManager.getInstance().isEndLess)
         {
             this.titleText.text = '游戏结束！'
@@ -122,6 +124,7 @@ class ResultUI extends game.BaseUI_wx4{
                 arr.push( '* 邀请好友增加城墙血量')
 
             this.failText.text = arr.join('\n')
+            this.failTipsGroup.visible = true
             SoundManager.getInstance().playEffect('lose')
             PlayManager.getInstance().sendGameEnd(false,MyTool.toFixed(rate*100,1)+'%')
         }

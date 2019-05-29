@@ -30,7 +30,7 @@ class PKMonsterAction_wx3 {
                 this.atkList.splice(i,1);
                 i--;
 
-                if(data.onlyID == data.target.onlyID)
+                if(data.onlyID == data.target.onlyID) //不一样的话代表怪物变了
                 {
                     data.fun && data.fun();
                 }

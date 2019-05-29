@@ -26,7 +26,12 @@
 		<e:Rect id="barMC" width="180" height="18" y="4" anchorOffsetX="0" ellipseWidth="5" fillColor="0xf7c94c" x="4"/>
 		<e:Label id="rateText" text="剩余怪物：60%" size="20" textColor="0xfce662" verticalCenter="0" x="380"/>
 	</e:Group>
-	<e:Label id="titleText" text="大胜！" y="180" size="50" bold="true" horizontalCenter="10"/>
-	<e:Label id="timeText" text="用时：00:00" y="250" size="30" horizontalCenter="0" lineSpacing="10" textAlign="center"/>
-	<e:Label id="failText" text="Label" y="255" horizontalCenter="0" lineSpacing="20" size="24" textColor="0xffe391"/>
+	<e:Label id="titleText" text="大胜！" y="160" size="50" bold="true" horizontalCenter="10"/>
+	<e:Label id="timeText" text="用时：00:00" y="230" size="30" horizontalCenter="0" lineSpacing="10" textAlign="center"/>
+	<e:Group id="failTipsGroup" top="230" bottom="700" horizontalCenter="0">
+		<e:Group horizontalCenter="0" verticalCenter="0">
+			<e:Image source="window_bg_png" scale9Grid="28,29,48,52" left="0" right="0" top="0" bottom="0"/>
+			<e:Label id="failText" text="LabelLabelLabelLabel" lineSpacing="20" size="24" textColor="0xffe391" left="25" right="25" top="25" bottom="25"/>
+		</e:Group>
+	</e:Group>
 </e:Skin>

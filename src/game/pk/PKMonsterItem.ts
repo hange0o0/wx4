@@ -28,7 +28,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
     public hp
     public maxHp
-    public stop = 0
+    public stop = 0  //攻击中
     public isDie = 0
     public mid = 0
 
@@ -36,6 +36,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public yunStep = 0;
     public slowStep = 0;
     public speedDec = 0;
+    public buffHp = 0;
+
+
+
     public get speedDec2(){
         if(PKCode_wx4.getInstance().isInBuff(104))
             return 20;
@@ -43,12 +47,11 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
 
-    public buffHp = 0;
+
 
 
 
     public stateMV =  new MonsterAtkMV();
-
     public monsterMV:PKMonsterMV_wx3 = new PKMonsterMV_wx3();
 
     public constructor() {
@@ -119,8 +122,9 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         if(this.yunStep)
         {
             this.yunStep --;
-            if(this.yunStep == 0)
+            if(this.yunStep <= 0)
             {
+                this.yunStep = 0;
                 this.stateMV.stop()
                 MyTool.removeMC(this.stateMV)
             }
@@ -143,6 +147,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public dataChanged(){
+        this.stop = 0;
         this.buffHp = 0;
         this.isDie = 0;
         this.yunStep = 0;
@@ -187,7 +192,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.resetSpeed();
         if(this.monsterMV.state != MonsterMV.STAT_RUN )
             this.monsterMV.run();
-        this.x -= (this.speed/20)/this.getSpeedRate();
+        var speedAdd = (this.speed/20)/this.getSpeedRate();
+        if(!speedAdd || speedAdd < 0) //防止一动不动
+            speedAdd = 1;
+        this.x -=  speedAdd
         //if(isNaN(this.x))
         //    console.log('???')
     }
@@ -205,7 +213,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.barGroup.visible = true;
         var tw = egret.Tween.get(this.barGroup);
         tw.to({alpha:0},300)
-        //SoundManager.getInstance().playEffect('kill')
+        this.getVO().playDieSound();
+
     }
 
     public atk(){

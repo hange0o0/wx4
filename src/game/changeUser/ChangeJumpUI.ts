@@ -41,7 +41,7 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
 
 
     public renew(){
-        this.destText.text = this.str;
+        this.setHtml(this.destText, this.str);
         this.list.dataProvider = new eui.ArrayCollection(ChangeUserUI.getListByNum(9,this.fun))
     }
 

@@ -150,6 +150,7 @@ class RankUI extends game.BaseWindow_wx4{
             arr.push({
                 nick:UM_wx4.nick,
                 value:myScore,
+                type:type,
                 head:UM_wx4.head,
                 openid:UM_wx4.gameid
             })
