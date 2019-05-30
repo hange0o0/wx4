@@ -104,6 +104,7 @@ class ResultUI extends game.BaseUI_wx4{
             UM_wx4.needUpUser = true;
             UM_wx4.upWXLevel()
             SoundManager.getInstance().playEffect('win')
+            PlayManager.getInstance().sendUseGun()
             PlayManager.getInstance().sendGameEnd(true)
         }
         else

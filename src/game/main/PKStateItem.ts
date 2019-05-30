@@ -16,10 +16,30 @@ class PKStateItem extends game.BaseItem{
             this.pool.push(item);
     }
 
+    public static leftBuff = [101,102,103,108,109,1104,1105,1107,1110]
+    public static buffcd = {
+        1111:5*60,
+        1102:20*60,
+        1103:20*60,
+        1104:20*60,
+        1105:20*60,
+        1106:20*60,
+        1107:20*60,
+        1108:20*60,
+        1109:20*60,
+        1110:10*60,
+    }
 
+    public static isBuffLeft(id){
+         return this.leftBuff.indexOf(id) != -1
+    }
+
+    private cdGroup: eui.Group;
+    private cdMC: eui.Image;
     private mc: eui.Image;
     private txt: eui.Label;
 
+    private shape = new egret.Shape()
     public constructor() {
         super();
         this.skinName = "PKStateItemSkin";
@@ -28,10 +48,15 @@ class PKStateItem extends game.BaseItem{
     public childrenCreated() {
         super.childrenCreated();
 
+        this.cdGroup.addChild(this.shape);
+        this.cdMC.mask = this.shape
+        this.shape.x = 20
+        this.shape.y = 20
+
     }
 
     public dataChanged():void {
-        this.mc.source = 'buff_'+this.data+'_png'
+        this.mc.source = 'buff_'+(this.data%1000)+'_png'
         var str = ''
         switch(this.data)
         {
@@ -45,29 +70,74 @@ class PKStateItem extends game.BaseItem{
                 str = '降低飞刀20%的攻击速度';
                 break
             case 104:
-                str = '增加所有怪物20%的速度';
+                str = '增加怪物20%的速度';
                 break
             case 105:
-                str = '增加所有怪物20%的攻击力';
+                str = '增加怪物20%的攻击力';
                 break
             case 106:
-                str = '增加所有怪物20%的防御力';
+                str = '增加怪物20%的防御力';
                 break
             case 107:
-                str = '所有怪物每秒自动回复2%的生命';
+                str = '每秒回复怪物5%的生命';
                 break
             case 108:
-                str = '城墙20%每秒损失2%的生命';
+                str = '每秒扣除城墙3%的生命';
                 break
             case 109:
-                str = '降低所有飞刀20%攻击力';
+                str = '降低飞刀20%攻击力';
                 break
             case 110:
-                str = '所有怪物可免疫前3次伤害';
+                str = '怪物可免疫前3次伤害';
+                break
+
+
+            case 1111:
+                str = '晕眩地图上所有怪物';
+                break
+            case 1102:
+                str = '降低怪物20%的防御力';
+                break
+            case 1103:
+                str = '降低怪物20%的速度';
+                break
+            case 1104:
+                str = '增加飞刀20%的攻击速度';
+                break
+            case 1105:
+                str = '增加飞刀20%的攻击力';
+                break
+            case 1106:
+                str = '增加城墙20%的防御力';
+                break
+            case 1107:
+                str = '每秒回复城墙3%的生命';
+                break
+            case 1108:
+                str = '每秒扣除怪物5%的生命';
+                break
+            case 1109:
+                str = '降低怪物20%攻击力';
+                break
+            case 1110:
+                str = '获得10秒无敌时间';
                 break
         }
 
         this.txt.text = str;
+        this.cdMC.visible = this.data > 1000
+    }
+
+    public onE(){
+        if(this.data > 1000)
+        {
+            var buffVO = PKCode_wx4.getInstance().isInBuff(this.data);
+            if(!buffVO)
+                return;
+            var v = buffVO.step
+            var maxStep = PKStateItem.buffcd[this.data];
+            MyTool.getSector(30,-90,-v/maxStep*360,0xFFFFFF,1,this.shape)
+        }
     }
 
     public remove(){

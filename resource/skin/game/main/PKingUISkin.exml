@@ -17,7 +17,6 @@
 		<e:Image id="bar" source="hp_bar_jpg" x="5" y="5" width="590" height="30"/>
 		<e:Label id="hpText" text="Label" horizontalCenter="0" verticalCenter="1" size="22" stroke="2"/>
 	</e:Group>
-	<e:Label id="tipsText" text="无敌时间：00：22：22" y="60" strokeColor="0xffff00" stroke="1" textColor="0xfffae8" size="24" textAlign="center" right="30"/>
 	<e:Group id="rateCon" x="20" bottom="0">
 		<e:Rect width="600" height="10" fillColor="0x000000" x="0" y="40"/>
 		<e:Rect id="rateBar" width="300" height="10" fillColor="0xFDCF1F" x="0" y="40"/>
@@ -30,7 +29,12 @@
 		<e:Image source="pk_hero_jpg" y="0" x="0"/>
 		<e:Label text="BOSS来袭" horizontalCenter="0" verticalCenter="0" size="40" bold="true" stroke="3" strokeColor="0xbf3131"/>
 	</e:Group>
-	<e:Group id="buffGroup" width="600" y="50" horizontalCenter="0">
+	<e:Group id="buffGroup1" width="300" y="50" x="20">
+		<e:layout>
+		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="buffGroup2" width="300" y="50" right="20">
 		<e:layout>
 		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
 		</e:layout>

@@ -258,6 +258,10 @@ class GameUI extends game.BaseUI_wx4 {
         {
             this.renew();
             this.showTips();
+            if(UM_wx4.pastDayCoin.coin)
+            {
+                PassDayAwardUI.getInstance().show();
+            }
         }
     }
 

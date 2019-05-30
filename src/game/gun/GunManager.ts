@@ -8,6 +8,20 @@ class GunManager extends egret.EventDispatcher {
     public maxGunNum = 9
     public maxGunLevel = 8
 
+    public disableGun = {}//已合成的枪
+
+    public initData(){
+        var list = this.getMakeGuns();
+        for(var i=0;i<list.length;i++)
+        {
+            var gunid = list[i];
+            var gun1 = Math.floor(gunid/100)
+            var gun2 = gunid%100;
+            this.disableGun[gun1] = gunid;
+            this.disableGun[gun2] = gunid;
+        }
+    }
+
     public getGunVOs(id){
         var typeObj = {};
         if(id < 100)
@@ -15,7 +29,40 @@ class GunManager extends egret.EventDispatcher {
             var vo = GunVO.getObject(id)
             typeObj[vo.type] = vo;
         }
+        else
+        {
+             var vos = this.getVOs(id);
+            typeObj[vos.vo1.type] = vos.vo1;
+            typeObj[vos.vo2.type] = vos.vo2;
+        }
         return typeObj
+    }
+
+    public getMakeGuns(){
+        var list = []
+        for(var s in UM_wx4.gunLevel)
+        {
+            if(parseInt(s) > 100)
+                list.push(parseInt(s));
+        }
+        return list;
+    }
+    public getNormalGuns(){
+        var list = ObjectUtil_wx4.objToArray(GunVO.data);
+        for(var i=0;i<list.length;i++)
+        {
+            var id = list[i].id;
+            if(GunManager.getInstance().disableGun[id])
+            {
+                list.splice(i,1);
+                i--;
+            }
+            else
+            {
+                list[i] = id;
+            }
+        }
+        return list;
     }
 
     public getGunByPos(index){
@@ -56,9 +103,13 @@ class GunManager extends egret.EventDispatcher {
     }
 
     public getGunCost(gunid){
-        var vo = GunVO.getObject(gunid);
         var level = this.getGunLevel(gunid);
-        return Math.floor(Math.pow(level+2.3,1.8)*(vo.open*0.75+3)*5/10)*10
+        if(gunid < 100)
+        {
+            var vo = GunVO.getObject(gunid);
+            return Math.floor(Math.pow(level+2.3,1.8)*(vo.open*0.75+3)*5/10)*10
+        }
+        return Math.floor(Math.pow(level+2.3,1.8)*(100*0.75+3)*5/10)*10
     }
 
     //解锁位置花费
@@ -77,7 +128,7 @@ class GunManager extends egret.EventDispatcher {
 
     public levelUpGun(gunid){
         UM_wx4.addCoin(-this.getGunCost(gunid))
-        var isNew = !UM_wx4.gunLevel[gunid];
+        var isNew = !this.getGunLevel(gunid);;
         UM_wx4.gunLevel[gunid] = this.getGunLevel(gunid) + 1;
         if(isNew)
             EM_wx4.dispatch(GameEvent.client.GUN_UNLOCK)
@@ -110,8 +161,55 @@ class GunManager extends egret.EventDispatcher {
         return arr;
     }
 
+    public getVOs(gunid){
+        if(gunid < 100)
+            return {vo1:GunVO.getObject(gunid),vo2:null}
+        var gun1 = Math.floor(gunid/100)
+        var gun2 = gunid%100;
+        return {
+            vo1: GunVO.getObject(gun1),
+            vo2: GunVO.getObject(gun2),
+        }
+    }
+
+
+    public getGunName(gunid){
+        if(gunid < 100)
+            return GunVO.getObject(gunid).name
+        var gun2 = gunid%100;
+        return GunVO.getObject(gun2).name + '·改'
+    }
+
+    public getGunTitle(gunid){
+        if(gunid < 100)
+            return GunVO.getObject(gunid).getTitle()
+        var gun1 = Math.floor(gunid/100)
+        var gun2 = gunid%100;
+        var vo1 = GunVO.getObject(gun1)
+        var vo2 = GunVO.getObject(gun2)
+        return vo1.getTitle()  + '·' + vo2.getTitle();
+    }
+
+    public getGunBaseAtk(gunid){
+        if(gunid < 100)
+            return GunVO.getObject(gunid).atk
+        var gun1 = Math.floor(gunid/100)
+        var gun2 = gunid%100;
+        var vo1 = GunVO.getObject(gun1)
+        var vo2 = GunVO.getObject(gun2)
+        return Math.round(2000*Math.pow(this.getGunSpeed(gunid)/500,1.5)*vo1.atkrate*vo2.atkrate);
+    }
+
     public getGunAtk(gunid,lv?){
         lv = lv || this.getGunLevel(gunid) || 1;
-        return Math.floor(GunVO.getObject(gunid).atk *(1 + (lv-1)*0.3))
+        return Math.floor(this.getGunBaseAtk(gunid) *(1 + (lv-1)*0.3))
+    }
+    public getGunSpeed(gunid){
+        if(gunid < 100)
+            return GunVO.getObject(gunid).speed
+
+        var gun1 = Math.floor(gunid/100)
+        var gun2 = gunid%100;
+        return  Math.floor((GunVO.getObject(gun1).speed + GunVO.getObject(gun2).speed)/2)
     }
 }

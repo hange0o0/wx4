@@ -56,6 +56,10 @@ class UserManager_wx4 {
 	private wx4_functionX_45952(){console.log(5316)}
 
 
+    public nextMakeTime = 0//上次免费时间
+    public videoMakeTimes = 0;
+    public makeList = []  //图纸
+
 
     public haveGetUser = false
     public fill(data:any):void{
@@ -80,17 +84,15 @@ class UserManager_wx4 {
         this.endLess = data.endLess || 0;
         this.level = data.level || 1;
         this.gunLevel = data.gunLevel || {};
+        this.nextMakeTime = data.nextMakeTime || 0;
+        this.videoMakeTimes = data.videoMakeTimes || 0;
+        this.makeList = data.makeList || [];
 	wx4_function(111);
         this.gunPos = data.gunPos || {};
         this.gunPosNum = _get['pos'] || data.gunPosNum || 3;
         this.pastDayCoin = data.pastDayCoin
-        if(!DateUtil_wx4.isSameDay(this.pastDayCoin.t))
-        {
-            this.pastDayCoin.t = TM_wx4.now();
-	wx4_function(4957);
-            this.pastDayCoin.coin =  this.level * 300
-            this.needUpUser = true
-        }
+
+        this.testPassDay()
 
         DM.addTime = SharedObjectManager_wx4.getInstance().getMyValue('addTime') || 0;
         this.offlineTime = TM_wx4.now() - saveTime;
@@ -115,6 +117,17 @@ class UserManager_wx4 {
 	wx4_function(5335);
         this.testAddInvite_3788();
         this.localSave_3405();
+        GunManager.getInstance().initData();
+    }
+
+    public testPassDay(){
+        if(!DateUtil_wx4.isSameDay(this.pastDayCoin.t))
+        {
+            this.pastDayCoin.t = TM_wx4.now();
+            this.videoMakeTimes = 0;
+            this.pastDayCoin.coin =  this.level * 300
+            this.needUpUser = true
+        }
     }
 
     public renewInfo(userInfo){
@@ -306,6 +319,9 @@ class UserManager_wx4 {
             helpUser:UM_wx4.helpUser,
             gunLevel:UM_wx4.gunLevel,
             gunPos:UM_wx4.gunPos,
+            nextMakeTime:UM_wx4.nextMakeTime,
+            videoMakeTimes:UM_wx4.videoMakeTimes,
+            makeList:UM_wx4.makeList,
             gunPosNum:UM_wx4.gunPosNum,
             pastDayCoin:UM_wx4.pastDayCoin,
             //guideFinish:UM.guideFinish,

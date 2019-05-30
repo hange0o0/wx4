@@ -140,6 +140,22 @@ class PlayManager extends egret.EventDispatcher {
     }
 
 
+    public sendUseGun(){
+        var wx = window['wx']
+        if(!wx)
+            return;
+        if(UM_wx4.level <= 5)
+            return;
+        for(var s in UM_wx4.gunPos)
+        {
+            if(UM_wx4.gunPos[s])
+            {
+                wx.aldSendEvent("使用武器",{'gunid' : UM_wx4.gunPos[s]})
+            }
+        }
+    }
+
+
 
 
 }

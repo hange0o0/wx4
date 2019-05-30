@@ -60,6 +60,11 @@ class BulletMC extends game.BaseItem{
         {
             this.mc.source = 'knife_'+this.data.id+'_png'
         }
+        else
+        {
+            var vos = GunManager.getInstance().getVOs(this.data.id)
+            this.mc.source = 'knife_'+vos.vo2.id+'_png'
+        }
         //this.vo = GunVO.getObject(this.data.id)
         this.speed = 20;
         this.isAuto = false
@@ -131,9 +136,22 @@ class BulletMC extends game.BaseItem{
         return this.typeObj[type];
     }
 
-    public testHit(monsterArr){
+    public testHit(monsterArr,ballArr){
         if(this.isDie)
             return;
+        for(var i=0;i<ballArr.length;i++)
+        {
+             var ball = ballArr[i];
+            if(ball.y < this.y)
+                continue;
+            if(ball.y > this.y + 150)
+                continue;
+            if(Math.abs(ball.x -this.x)>60/2)
+                continue;
+            ball.addHp()
+            this.playDie();
+                return;
+        }
         for(var i=0;i<monsterArr.length;i++)
         {
             var item = monsterArr[i];

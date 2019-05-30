@@ -201,7 +201,7 @@ class GameManager_wx4 {
             //DayGameManager.getInstance().passDay();
             //GuessManager.getInstance().passDay();
 
-            //UserManager.getInstance().testPassDay();
+            UM_wx4.testPassDay();
             EM_wx4.dispatch(GameEvent.client.pass_day);
 	wx4_function(3791);
         }
@@ -300,7 +300,7 @@ if(window["wx"])
     var wx =  window["wx"];
 
     wx.onError(function(res){
-        UM_wx4.upDateUserData();
+        UM_wx4 && UM_wx4.upDateUserData();
         try{
             var str = "onError:" + ("openid:" + UM_wx4.gameid + "--") + res.message + "--" + res.stack;
             sendClientError(str);
@@ -308,9 +308,10 @@ if(window["wx"])
     });
 
     wx.onHide(function(res){
+        console.log(res)
         if(!GameManager_wx4.stage)
             return;
-        UM_wx4.upDateUserData();
+        UM_wx4 && UM_wx4.upDateUserData();
         SoundManager.getInstance().stopBgSound();
         GameManager_wx4.getInstance().isActive = false;
         //GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
@@ -320,6 +321,7 @@ if(window["wx"])
     });
 
     wx.onShow(function(res){
+        console.log(res)
         if(!GameManager_wx4.stage)
             return;
         SoundManager.getInstance().testBGPlay();
@@ -342,7 +344,7 @@ if(window["wx"])
                 if(index != -1)
                     arr.splice(index,1);
                 arr.push(GameManager_wx4.getInstance().changeUserID)
-                while(arr.length > 10)
+                while(arr.length > 30)
                     arr.shift()
                 SharedObjectManager_wx4.getInstance().setMyValue('exchangeUserAppid',arr)
                 if(GameManager_wx4.getInstance().changeUserFun)
@@ -352,7 +354,10 @@ if(window["wx"])
                     ChangeJumpUI.getInstance().hide();
                 }
             }
-            wx.aldSendEvent("点击跳转其它小程序_不通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})
+            else
+            {
+                wx.aldSendEvent("点击跳转其它小程序_不通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})
+            }
         }
         GameManager_wx4.getInstance().changeUserTime = 0;
         GameManager_wx4.getInstance().changeUserFun = null;

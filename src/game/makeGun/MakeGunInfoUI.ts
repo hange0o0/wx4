@@ -1,8 +1,8 @@
-class GunInfoUI extends game.BaseWindow_wx4{
+class MakeGunInfoUI extends game.BaseWindow_wx4{
 
-    private static _instance:GunInfoUI;
+    private static _instance:MakeGunInfoUI;
     public static getInstance() {
-        if (!this._instance) this._instance = new GunInfoUI();
+        if (!this._instance) this._instance = new MakeGunInfoUI();
         return this._instance;
     }
 
@@ -17,43 +17,27 @@ class GunInfoUI extends game.BaseWindow_wx4{
     private posText: eui.Label;
 
 
+    private gunid
+    private index
 
-
-
-    public index
-    public gunid;
     public constructor() {
         super();
-        this.skinName = "GunInfoUISkin";
+        this.skinName = "MakeGunInfoUISkin";
+        this.canBGClose = false
     }
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.cancelBtn,this.hide)
-        this.addBtnEvent(this.okBtn,()=>{
-            var pos = GunManager.getInstance().getPosByGun(this.gunid)
-            if(pos == GunChooseUI.getInstance().index)
-                GunManager.getInstance().removeGun(this.gunid)
-            else
-                GunManager.getInstance().addGun(this.gunid,GunChooseUI.getInstance().index)
-            GunChooseUI.getInstance().hide();
+        this.addBtnEvent(this.cancelBtn,()=>{
             this.hide();
+            ResultUI.getInstance().show();
         })
 
-        this.addBtnEvent(this.leftBtn,()=>{
-            this.gunid = GunChooseUI.getInstance().dataList[this.index - 1]
-            this.renew();
-        })
-        this.addBtnEvent(this.rightBtn,()=>{
-            this.gunid = GunChooseUI.getInstance().dataList[this.index + 1]
-            this.renew();
-        })
-        this.gunItem.scaleX = this.gunItem.scaleY = 0.9
     }
 
-    public show(gunid?){
+    public show(gunid?,list?){
         this.gunid = gunid;
-        super.show();
+         super.show();
     }
 
     public onShow(){

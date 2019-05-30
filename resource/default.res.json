@@ -1329,6 +1329,21 @@
 			"name":"guide2_png",
 			"type":"image",
 			"url":"game_assets/guide2.png"
+		},
+		{
+			"name":"coin_ball_png",
+			"type":"image",
+			"url":"game_assets/coin_ball.png"
+		},
+		{
+			"name":"buff_111_png",
+			"type":"image",
+			"url":"game_assets2/hero/buff_111.png"
+		},
+		{
+			"name":"split_mc_png",
+			"type":"image",
+			"url":"game_assets/split_mc.png"
 		}
 	]
 }

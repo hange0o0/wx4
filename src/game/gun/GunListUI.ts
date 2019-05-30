@@ -39,9 +39,9 @@ class GunListUI extends game.BaseWindow_wx4{
 
         this.addBtnEvent(this.btn,()=>{
             var GM = GunManager.getInstance();
-            if(!UM_wx4.checkCoin(GM.getGunCost(this.data.id)))
+            if(!UM_wx4.checkCoin(GM.getGunCost(this.data)))
                 return;
-            GM.levelUpGun(this.data.id)
+            GM.levelUpGun(this.data)
         })
 
         this.list.addEventListener(egret.Event.CHANGE,this.renewChoose,this)
@@ -70,13 +70,15 @@ class GunListUI extends game.BaseWindow_wx4{
     }
 
     public renew(){
-        var list = ObjectUtil_wx4.objToArray(GunVO.data);
+        var list = GunManager.getInstance().getMakeGuns().concat(GunManager.getInstance().getNormalGuns())
+
+
         this.list.dataProvider = new eui.ArrayCollection(list)
         if(this.gunid)
         {
             for(var i=0;i<list.length;i++)
             {
-                  if(list[i].id == this.gunid)
+                  if(list[i] == this.gunid)
                   {
                       this.list.selectedIndex = i;
                       break
@@ -87,28 +89,31 @@ class GunListUI extends game.BaseWindow_wx4{
 
     public renewChoose(){
         var GM = GunManager.getInstance();
-        var vo:GunVO = this.data;
-        var lv = GM.getGunLevel(vo.id);
+        //var vo:GunVO = this.data;
+        var lv = GM.getGunLevel(this.data);
 
 
-
-        this.gunItem.data = vo.id;
+        var vos = GM.getVOs(this.data)
+        this.gunItem.data =  this.data;
         var str = '';
         if(!lv || lv == GM.maxGunLevel)
-            str += this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data.id) + this.createHtml('\n攻速：',0xFFF666) + vo.speed + '/秒'
+            str += this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data) + this.createHtml('\n攻速：',0xFFF666) + GM.getGunSpeed(this.data) + '/秒'
         else
         {
-            str +=  this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data.id) + this.createHtml('  ('+GM.getGunAtk(this.data.id,lv+1) + ')',0x00FF00)+
-                this.createHtml('\n攻速：',0xFFF666)  + this.data.speed + '/秒' ;
+            str +=  this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data) + this.createHtml('  ('+GM.getGunAtk(this.data,lv+1) + ')',0x00FF00)+
+                this.createHtml('\n攻速：',0xFFF666)  + GM.getGunSpeed(this.data) + '/秒' ;
         }
-        str += '\n' + this.createHtml(vo.getTitle() + '：',0xFFF666) + vo.getDes()
+
+        str += '\n' + this.createHtml(vos.vo1.getTitle() + '：',0xFFF666) + vos.vo1.getDes(lv || 1)
+        if(vos.vo2)
+            str += '\n' + this.createHtml(vos.vo2.getTitle() + '：',0xFFF666) + vos.vo2.getDes(lv || 1)
         this.setHtml(this.atkText, str)
 
-        var cost = GM.getGunCost(this.data.id);
+        var cost = GM.getGunCost(this.data);
         this.costText.text = NumberUtil_wx4.addNumSeparator(UM_wx4.coin) + ' / ' + NumberUtil_wx4.addNumSeparator(cost)
         this.costText.textColor = cost>UM_wx4.coin?0xFF0000:0xFFFFFF;
 
-        var pos = GunManager.getInstance().getPosByGun(vo.id)
+        var pos = GunManager.getInstance().getPosByGun( this.data)
         if(pos)
             this.levelText.text = pos + ' 号位'
         else
@@ -121,14 +126,14 @@ class GunListUI extends game.BaseWindow_wx4{
             this.upGroup.visible = true
             this.maxMC.text = ''
 
-            this.setTitle(vo.name)
+            this.setTitle(GM.getGunName(this.data))
         }
         else if(lv == GM.maxGunLevel)
         {
 
             this.upGroup.visible = false
             this.maxMC.text = '已满级'
-            this.setTitle(vo.name + '  LV.'+lv)
+            this.setTitle(GM.getGunName(this.data) + '  LV.'+lv)
         }
         else
         {
@@ -136,10 +141,10 @@ class GunListUI extends game.BaseWindow_wx4{
             this.btn.skinName = 'Btn2Skin'
             this.upGroup.visible = true
             this.maxMC.text = ''
-            this.setTitle(vo.name + '  LV.'+lv)
+            this.setTitle(GM.getGunName(this.data) + '  LV.'+lv)
         }
 
-        console.log(vo.id)
+        console.log( this.data)
     }
 
     public hide(){

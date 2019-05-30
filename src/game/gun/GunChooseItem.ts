@@ -1,11 +1,14 @@
 class GunChooseItem extends game.BaseItem{
 
+    private bg2: eui.Image;
     private bg: eui.Image;
     private mc: eui.Image;
+    private mc2: eui.Image;
     private levelText: eui.Label;
     private usingGroup: eui.Group;
     private usingText: eui.Label;
     private skillText: eui.Label;
+
 
 
 
@@ -42,8 +45,9 @@ class GunChooseItem extends game.BaseItem{
             this.currentState = 's2'
             return;
         }
+        var GM = GunManager.getInstance();
         this.currentState = 's1'
-        var pos = GunManager.getInstance().getPosByGun(this.data)
+        var pos =GM .getPosByGun(this.data)
         if(pos)
         {
             this.usingGroup.visible = true;
@@ -58,15 +62,24 @@ class GunChooseItem extends game.BaseItem{
             this.usingGroup.visible = false;
         }
 
-        var vo = GunVO.getObject(this.data);
-        this.mc.source = vo.getThumb()
-        //this.levelText.text = vo.name
-        this.bg.source = vo.getBGRound()
-        this.skillText.text = vo.getTitle()
+        var lv = GM.getGunLevel(this.data)
+        var vos = GM.getVOs(this.data);
 
-        var atk = Math.floor(GunManager.getInstance().getGunAtk(vo.id)/vo.speed)
+        //this.roleBG.source = 'role_bg_'+(lv%8 || 8)+'_png'
+        this.bg.source = 'role_'+(lv%8 || 8)+'_png'
+        this.bg2.visible = lv > 8
+        if(this.bg2.visible)
+            this.bg2.source = 'role_'+Math.floor(lv/8)+'_png'
+
+
+        this.mc.source = vos.vo1.getThumb()
+        this.mc2.visible = vos.vo2 != null
+        if(this.mc2.visible)
+            this.mc.source = vos.vo2.getThumb()
+
+        this.skillText.text = GM.getGunTitle(this.data)
+        var atk = Math.floor(GM.getGunAtk(this.data)/GM.getGunSpeed(this.data))
         this.levelText.text =  atk + ' /秒'
-
     }
 
 

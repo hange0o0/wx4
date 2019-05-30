@@ -15,15 +15,18 @@ class PKingUI extends game.BaseUI_wx4 {
     private barGroup: eui.Group;
     private bar: eui.Image;
     private hpText: eui.Label;
-    private tipsText: eui.Label;
     private rateCon: eui.Group;
     private rateBar: eui.Rect;
     private rateMC: eui.Group;
     private rateText: eui.Label;
     private bossGroup: eui.Group;
-    private buffGroup: eui.Group;
+    private buffGroup1: eui.Group;
+    private buffGroup2: eui.Group;
     private guideMC: eui.Image;
     private blackBG: eui.Image;
+    //private tipsGroup: eui.Group;
+    //private tipsText: eui.Label;
+
 
 
 
@@ -36,6 +39,7 @@ class PKingUI extends game.BaseUI_wx4 {
     public bulletArr = [];
     public stateArr = [];
     public gunArr = [];
+    public ballArr = [];
     public speed = 5
     public txtPool = []
 
@@ -50,6 +54,8 @@ class PKingUI extends game.BaseUI_wx4 {
     private isDie = false
     //private showWudi = false
     private isReborn = false
+
+    public lastBallStep = 0
     //private lastNoMoveTime = 0;//进入怪攻击判断，保持
     public constructor() {
         super();
@@ -261,6 +267,7 @@ class PKingUI extends game.BaseUI_wx4 {
 
     public onShow(){
         SoundManager.getInstance().playSound('bg2')
+        this.lastBallStep = 60*10;
         this.touchID1 = null;
         this.touchID2 = null;
         this.isDie = false
@@ -304,7 +311,7 @@ class PKingUI extends game.BaseUI_wx4 {
             this.wallMV(wallItem)
         }
 
-        this.tipsText.text = ''
+        //this.tipsGroup.visible = false
         this.barGroup.y = -50;
         this.renewBar()
         egret.Tween.get(this.barGroup).wait(1000).to({y:10},200)
@@ -337,17 +344,24 @@ class PKingUI extends game.BaseUI_wx4 {
         if(id)
         {
             var item = PKStateItem.createItem();
+            if(PKStateItem.isBuffLeft(id))
+                this.buffGroup1.addChild(item)
+            else
+                this.buffGroup2.addChild(item)
             this.stateArr.push(item);
-            this.buffGroup.addChild(item)
             item.data = id;
             item.showMV();
         }
 
-        this.bossGroup.visible = true;
-        this.bossGroup.alpha = 1;
-        egret.Tween.get(this.bossGroup).to({alpha:0},200).to({alpha:1},200).to({alpha:0},200).to({alpha:1},200).to({alpha:0},200).call(()=>{
-            this.bossGroup.visible = false;
-        })
+        if(id < 1000)
+        {
+            this.bossGroup.visible = true;
+            this.bossGroup.alpha = 1;
+            egret.Tween.get(this.bossGroup).to({alpha:0},200).to({alpha:1},200).to({alpha:0},200).to({alpha:1},200).to({alpha:0},200).call(()=>{
+                this.bossGroup.visible = false;
+            })
+        }
+
 
     }
     private onRemoveBoss(e){
@@ -455,13 +469,12 @@ class PKingUI extends game.BaseUI_wx4 {
     private dieWall(wallItem){
         setTimeout(()=>{
             wallItem.die();
-            SoundManager.getInstance().playEffect('die')
         },Math.random()*800)
     }
 
     public reborn(){
         SoundManager.getInstance().playEffect('reborn')
-        PKCode_wx4.getInstance().wudiTime = TM_wx4.nowMS() + 10*1000;
+        PKCode_wx4.getInstance().addBuff(1110)
         //this.showWudi = true;
         this.isDie = false;
         this.isReborn = true
@@ -491,16 +504,21 @@ class PKingUI extends game.BaseUI_wx4 {
 
         var PD = PKCode_wx4.getInstance();
         PD.onStep();
+        for(var i=0;i<this.stateArr.length;i++)
+        {
+            this.stateArr[i].onE();
+        }
 
-        var cd = PD.getWudiCD();
-        if(cd)
-        {
-            this.tipsText.text = '无敌时间：' + (cd/1000).toFixed(1)  + '秒';
-        }
-        else
-        {
-            this.tipsText.text = '';
-        }
+        //var cd = PD.getWudiCD();
+        //if(cd)
+        //{
+        //    this.tipsGroup.visible = true
+        //    this.tipsText.text = '无敌时间\n' + (cd/1000).toFixed(2)  + '秒';
+        //}
+        //else
+        //{
+        //    this.tipsGroup.visible = false
+        //}
 
         if(this.isFinish)
             return;
@@ -509,7 +527,7 @@ class PKingUI extends game.BaseUI_wx4 {
         {
             var bullet = this.bulletArr[i];
             bullet.move();
-            bullet.testHit(PD.monsterList)
+            bullet.testHit(PD.monsterList,this.ballArr)
             if(bullet.isDie == 2 || (bullet.x > 700 && !bullet.isAuto))
             {
                 this.bulletArr.splice(i,1);
@@ -523,9 +541,32 @@ class PKingUI extends game.BaseUI_wx4 {
             this.gunArr[i].move();
         }
 
+        for(var i=0;i<this.ballArr.length;i++)
+        {
+            this.con.addChild(this.ballArr[i]);
+        }
+
+        this.lastBallStep ++;
+        if(this.lastBallStep > 60*20)
+        {
+            this.lastBallStep = 0;
+            var ball = BallMC.createItem();
+            this.ballArr.push(ball);
+            this.con.addChild(ball);
+            ball.data = ArrayUtil_wx4.randomOne([1102,1103,1104,1105,1106,1107,1108,1109,1110,1111])
+            ball.x = 640
+            ball.y = Math.random()*GameManager_wx4.uiHeight*0.25 + 160;
+            ball.move();
+        }
 
 
         this.testGameOver();
+    }
+
+    public removeBall(ball){
+        var index = this.ballArr.indexOf(ball);
+        this.ballArr.splice(index,1);
+        BallMC.freeItem(ball);
     }
 
     private createMap(){
@@ -540,6 +581,10 @@ class PKingUI extends game.BaseUI_wx4 {
         while(this.stateArr.length)
         {
             PKStateItem.freeItem(this.stateArr.pop())
+        }
+        while(this.ballArr.length)
+        {
+            BallMC.freeItem(this.ballArr.pop())
         }
         this.bg1.source = UM_wx4.getBG();
         this.bg2.source = UM_wx4.getBG(UM_wx4.level + 1);

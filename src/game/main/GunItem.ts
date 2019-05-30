@@ -17,10 +17,13 @@ class GunItem extends game.BaseItem{
     }
 
     private roleBG: eui.Image;
+    private role2: eui.Image;
     private role: eui.Image;
     private shootMC: eui.Image;
     private mcGroup: eui.Group;
     private roundMC: eui.Image;
+    private roundMC2: eui.Image;
+
 
 
 
@@ -54,6 +57,9 @@ class GunItem extends game.BaseItem{
         this.roundMC.scaleX = -1
         this.roundMC.horizontalCenter = 50
 
+        this.roundMC2.scaleX = -1
+        this.roundMC2.horizontalCenter = -50
+
         //this.roleBG.scaleX = this.roleBG.scaleY = 0.8
         this.tw = egret.Tween.get(this.roleBG,{loop:true}).to({alpha:0.2},1000).to({alpha:1},1000)
         this.tw.setPaused(true)
@@ -64,30 +70,46 @@ class GunItem extends game.BaseItem{
     public dataChanged():void {
         clearTimeout(this.timer)
         var lv = GunManager.getInstance().getGunLevel(this.data) || 1
-        this.roleBG.source = 'role_bg_'+lv+'_png'
-        this.role.source = 'role_'+lv+'_png'
+        this.roleBG.source = 'role_bg_'+(lv%8 || 8)+'_png'
+        this.role.source = 'role_'+(lv%8 || 8)+'_png'
+        this.role2.visible = lv > 8
+        if(this.role2.visible)
+            this.role2.source = 'role_'+Math.floor(lv/8)+'_png'
+
         this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
         this.step = 0;
 
         if(this.data >100)
         {
+             var gun1 = Math.floor(this.data/100)
+             var gun2 = this.data%100;
+
+            this.roundMC.source = 'knife_'+gun1+'_png'
+            this.roundMC2.source = 'knife_'+gun2+'_png'
+            this.shootMC.source = 'knife_'+gun2+'_png'
+            this.roundMC2.visible = true
 
         }
         else
         {
-            var vo = GunVO.getObject(this.data);
-            this.maxStep = Math.floor(vo.speed*60) - 10;
-
             this.roundMC.source = 'knife_'+this.data+'_png'
             this.shootMC.source = 'knife_'+this.data+'_png'
+            this.roundMC2.visible = false
         }
+
+        this.maxStep = Math.floor(GunManager.getInstance().getGunSpeed(this.data)*60) - 10;
     }
 
     public move(){
         this.step ++;
         var maxStep = this.maxStep;
+        var speedAdd = 0
         if(PKCode_wx4.getInstance().isInBuff(103))
-            maxStep = Math.floor(maxStep*1.2)
+            speedAdd += 0.2
+        if(PKCode_wx4.getInstance().isInBuff(1104))
+            speedAdd -= 0.2
+
+        maxStep = Math.floor(maxStep*(1+speedAdd))
         this.mcGroup.rotation += 30 - maxStep/5
         if(this.step >= maxStep)
         {

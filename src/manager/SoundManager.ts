@@ -184,6 +184,8 @@ class SoundManager {
     }
 
     public playEffect(v:string, fun?, thisObj?) {
+        //if(v == 'enemy_dead')
+        //    throw new Error('1234')
         if (GuideManager.getInstance().isGuiding)
             return;
         if (!this.soundPlaying) return;

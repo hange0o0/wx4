@@ -41,9 +41,12 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
 
     public get speedDec2(){
+        var count = 0
         if(PKCode_wx4.getInstance().isInBuff(104))
-            return 20;
-        return 0;
+            count += 20;
+        if(PKCode_wx4.getInstance().isInBuff(1103))
+            count -= 20;
+        return count;
     }
 
 
@@ -83,6 +86,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             add += 0.2;
         if(PKCode_wx4.getInstance().isInBuff(105))
             add += 0.2;
+        if(PKCode_wx4.getInstance().isInBuff(1106))
+            add -= 0.2;
+        if(PKCode_wx4.getInstance().isInBuff(1109))
+            add -= 0.2;
         return Math.ceil(hp*add);
     }
 
@@ -240,6 +247,15 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         }
         if(!v)
             console.log(v);
+        if(v < 0)
+        {
+            var add = 1;
+            PKCode_wx4.getInstance().isInBuff(1102)
+                add += 0.2
+            PKCode_wx4.getInstance().isInBuff(1105)
+                add += 0.2
+            v = Math.floor(v*add)
+        }
 
         if(-v > this.hp)
             v = -this.hp;

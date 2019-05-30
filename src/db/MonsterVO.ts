@@ -56,7 +56,9 @@ class MonsterVO {
     }
 
     public playDieSound(){
-        if(this.isHero())
+        if(this.id == 99)
+            SoundManager.getInstance().playEffect('die')
+        else if(this.isHero())
             SoundManager.getInstance().playEffect('enemy_dead4')
         else
             SoundManager.getInstance().playEffect('enemy_dead' + this.diesound)

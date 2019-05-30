@@ -35,10 +35,23 @@ class ChangeUserItem extends game.BaseItem{
             }
             return;
         }
-
-
         var appid = this.data.appid
         var fun = this.data.fun;
+
+
+        if(this.data.isXiaoHu)
+        {
+            window['xhtad'].xhtAdsClick(this.data.adName)
+            if(!UM_wx4.gameid)
+                return;
+            wx.aldSendEvent("点击跳转其它小程序_xh")
+            GameManager_wx4.getInstance().changeUserTime = TM_wx4.now();
+            GameManager_wx4.getInstance().changeUserID = appid;
+            GameManager_wx4.getInstance().changeUserFun = fun;
+            return;
+        }
+
+
         wx.previewImage({
             urls: [this.data.img],
             success: function () {

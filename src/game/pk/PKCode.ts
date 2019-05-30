@@ -10,7 +10,7 @@ class PKCode_wx4 {
     public myHpMax = 1000;
     public hpAdd = 0;
     public coinAdd = 0;
-    public wudiTime = 1000;
+    //public wudiTime = 1000;
     public actionStep = 0;
     public monsterList = [];
     public wallArr = [];
@@ -23,17 +23,20 @@ class PKCode_wx4 {
     public atkList = {}
     public buffList = {}
 
-    public getWudiCD(){
-        return Math.max(0,this.wudiTime - TM_wx4.nowMS())
+    public isWDing(){
+        return this.isInBuff(1110)
     }
 
-    public getBulletAtk(bid){
+    public getBulletAtk(bid,noBuff?){
         var hp = this.atkList[bid].base + this.atkList[bid].add
         var add = 1;
-        if(this.isInBuff(109))
-            add -= 0.2
-        if(this.isInBuff(106))
-            add -= 0.2
+        if(!noBuff)
+        {
+            if(this.isInBuff(109))
+                add -= 0.2
+            if(this.isInBuff(106))
+                add -= 0.2
+        }
         return Math.ceil(hp*add);
     }
 
@@ -180,7 +183,7 @@ class PKCode_wx4 {
             var level = UM_wx4.level;
             var list = PlayManager.getInstance().getLevelMonster(level)
             var height = Math.min(300 + level*8,960)
-            var startY = (GameManager_wx4.uiHeight - height)/2 + 60
+            var startY = Math.min((GameManager_wx4.uiHeight - height)/2,GameManager_wx4.uiHeight - height-20)
             var hpRate = 1 + (level - 1)*0.1;
             var bossHpRate = Math.pow(1.1,level/2.5);
 
@@ -234,7 +237,7 @@ class PKCode_wx4 {
         var minRateAdd = 0.2 + Math.random()*0.3;//出现小怪的机率
         var hpRate = 1 + (this.endLessStep - 1)*0.1;
         var height = Math.min(300 + this.endLessStep*10,960)
-        var startY = (GameManager_wx4.uiHeight - height)/2 + 60
+        var startY = Math.min((GameManager_wx4.uiHeight - height)/2,GameManager_wx4.uiHeight - height-20)
         var needAddBoss = this.endLessStep%5 == 0
         while(nowCost < maxCost)
         {
@@ -264,7 +267,15 @@ class PKCode_wx4 {
                 if(bossNum == 1)
                     var bvo = MonsterVO.getObject(100 + Math.ceil(this.endLessStep/5))
                 else
-                    var bvo = MonsterVO.getObject(100 + Math.ceil(Math.random()*10))
+                {
+                    while(true)
+                    {
+                        var bossid = 100 + Math.ceil(Math.random()*10);
+                        if(!this.isInBuff(bossid))
+                            break;
+                    }
+                    var bvo = MonsterVO.getObject(bossid)
+                }
                 this.autoList.push({
                     mid:bvo.id,
                     hp:Math.floor(bvo.hp * bossHpRate),
@@ -324,12 +335,8 @@ class PKCode_wx4 {
              if(MonsterVO.getObject(oo.mid).isHero())
              {
                  if(!this.buffList[oo.mid])
-                     this.buffList[oo.mid] = [];
-                 this.buffList[oo.mid].push(monster.id);
-                 if(this.buffList[oo.mid].length == 1)
-                    EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
-                 else
-                    EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS)
+                     this.buffList[oo.mid] = {isHero:true};
+                 EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
              }
          }
 
@@ -342,6 +349,24 @@ class PKCode_wx4 {
             }
         }
 
+    }
+
+    public addBuff(id){
+        var noBuff = !this.buffList[id]
+        this.buffList[id] = {step:PKStateItem.buffcd[id]};
+        if(id == 111)
+        {
+            for(var i=0;i<this.monsterList.length;i++)
+            {
+                var target = this.monsterList[i]
+                if(!target.isDie) //死的
+                {
+                    target.setYun(1.1)
+                }
+            }
+        }
+        if(noBuff)
+            EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,id)
     }
 
     private getStepByTime(t){
@@ -400,7 +425,7 @@ class PKCode_wx4 {
                     fun:()=>{
                         if([61,62,63,70,76].indexOf(target.mid) != -1)
                             target.setDie();
-                        if(!this.getWudiCD())
+                        if(!this.isWDing())
                             this.addHp(-target.getAtk())
                         if(this.myHp > 0)
                             target.target.atk();
@@ -454,21 +479,47 @@ class PKCode_wx4 {
         //BUFF效果
         if(this.actionStep%60 == 0)
         {
-            if(this.isInBuff(107))
+            var buff107 =  this.isInBuff(107)
+            var buff1111 =  this.isInBuff(1111)
+            var buff1108 =  this.isInBuff(1108)
+            if(buff107 || buff1111 || buff1108)
             {
                 for(var i=0;i<this.monsterList.length;i++)
                 {
                     var target = this.monsterList[i]
                     if(!target.isDie) //死的
                     {
-                        target.addHp(Math.ceil(target.maxHp*0.02))
+                        if(buff107)
+                            target.addHp(Math.ceil(target.maxHp*0.05))
+                        if(buff1108)
+                            target.addHp(-Math.ceil(target.maxHp*0.05))
+                        if(buff1111)
+                            target.setYun(1.1)
                     }
                 }
             }
             if(this.isInBuff(108))
             {
-                if(!this.getWudiCD())
-                    this.addHp(-Math.ceil(this.myHpMax*0.02))
+                if(!this.isWDing())
+                    this.addHp(-Math.ceil(this.myHpMax*0.03))
+            }
+            if(this.isInBuff(1107))
+            {
+                this.addHp(Math.ceil(this.myHpMax*0.03))
+            }
+        }
+
+        for(var s in this.buffList)
+        {
+            var buff = this.buffList[s];
+            if(!buff.isHero)
+            {
+                buff.step --;
+                if(!buff.step || buff.step< 0)
+                {
+                    delete this.buffList[s];
+                    EventManager_wx4.getInstance().dispatch(GameEvent.client.REMOVE_BOSS,parseInt(s))
+                }
             }
         }
 
@@ -482,9 +533,7 @@ class PKCode_wx4 {
 
                 if(MonsterVO.getObject(target.data.mid).isHero())
                 {
-                    var index = this.buffList[target.data.mid].indexOf(target.id);
-                    this.buffList[target.data.mid].splice(index,1);
-                    if(this.buffList[target.data.mid].length == 0)
+                    if(this.buffList[target.data.mid])
                     {
                         delete this.buffList[target.data.mid];
                         EventManager_wx4.getInstance().dispatch(GameEvent.client.REMOVE_BOSS,target.data.mid)

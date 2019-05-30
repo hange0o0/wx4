@@ -37,11 +37,24 @@ class ChangeUserUI extends game.BaseItem {
             return;
         }
         this.adList.length = 0;
+
         wx.wladGetAds(num,function (res) { //第⼀一个参数为获取⼴广告条数，第⼆二个参数为获取成功后回调⽅方法;
             //console.log(res);
             ChangeUserUI.lastGetADTime = TM_wx4.now();
-            ChangeUserUI.adList = res.data;
+            ChangeUserUI.adList = ChangeUserUI.adList.concat(res.data);
             fun && fun();
+        })
+
+        window['xhtad'].xhtAdsData('fixed').then(ads => {
+            console.log('ads is ', ads)
+            if(ads)
+            {
+                ads.appid = ads.appId;
+                ads.logo = ads.img;
+                ads.img = ads.qrImg;
+                ads.isXiaoHu = true;
+                ChangeUserUI.adList.push(ads)
+            }
         })
     }
 
@@ -51,9 +64,10 @@ class ChangeUserUI extends game.BaseItem {
         for(var i=0;i<this.adList.length;i++)
         {
             this.adList[i].temp = arr.indexOf(this.adList[i].appid)
+            this.adList[i].temp2 = this.adList[i].isXiaoHu?0:1
             this.adList[i].fun = fun;
         }
-        ArrayUtil_wx4.sortByField(this.adList,['temp'],[-1]);
+        ArrayUtil_wx4.sortByField(this.adList,['temp','temp2'],[0,0]);
         return this.adList.slice(0,num);
     }
 

@@ -47,21 +47,35 @@ class LoadingUI extends game.BaseUI_wx4 {
         {
             if(!res.userInfo)
             {
-                this.infoBtn.visible = false;
+                //this.infoBtn.visible = false;
                 if(UM_wx4.helpUser)
                 {
-                    MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
-                        if(b==1)
-                        {
-                            this.infoBtn.visible = false;
-                            this.haveGetUser = true;
-                            this.initData();
+                    wx.showModal({
+                        title: '好友请求授权',
+                        showCancel:true,
+                        cancelText:'重新授权',
+                        confirmText:'进入游戏',
+                        content: '你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',
+                        success: (res)=> {
+                            if (res.confirm) {
+                                this.infoBtn.visible = false;
+                                this.haveGetUser = true;
+                                this.initData();
+                            }
                         }
-                        else
-                        {
-                            this.infoBtn.visible = true;
-                        }
-                    },['重新授权','进入游戏']);
+                    })
+                    //MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
+                    //    if(b==1)
+                    //    {
+                    //        this.infoBtn.visible = false;
+                    //        this.haveGetUser = true;
+                    //        this.initData();
+                    //    }
+                    //    else
+                    //    {
+                    //        this.infoBtn.visible = true;
+                    //    }
+                    //},['重新授权','进入游戏']);
                     return;
                 }
                 this.infoBtn.visible = false;
@@ -146,7 +160,7 @@ class LoadingUI extends game.BaseUI_wx4 {
     }
 
     private callShow(){
-        this.loadText.text = '初始化中'
+        this.loadText.text = '正在请求用户数据'
         if(this.needShowStartBtn)
         {
             this.haveLoadFinish = true;

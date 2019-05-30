@@ -206,12 +206,12 @@ class GunVO {
     }
 
 	private wx4_functionX_45846(){console.log(9970)}
-    public getBGRound(lv?){
-        lv = lv || this.getLevel() || 1
-        return 'role_'+lv+'_png'
-    }
-    public getBGRect(lv?){
-        lv = lv || this.getLevel() || 1
-        return 'role_rect_'+lv+'_png'
-    }
+    //public getBGRound(lv?){
+    //    lv = lv || this.getLevel() || 1
+    //    return 'role_'+lv+'_png'
+    //}
+    //public getBGRect(lv?){
+    //    lv = lv || this.getLevel() || 1
+    //    return 'role_rect_'+lv+'_png'
+    //}
 }
