@@ -65,7 +65,7 @@ class ResultUI extends game.BaseUI_wx4{
     public renew(){
         var PD = PKCode_wx4.getInstance();
         var rate = PD.enemyHp / PD.enemyHpMax;
-        var coin = (PD.enemyHpMax - PD.enemyHp)/500
+        var coin = (PD.enemyHpMax - PD.enemyHp)/300
         var add = BuffManager.getInstance().getCoinAdd();
 
         this.timeText.text = ''
@@ -76,7 +76,7 @@ class ResultUI extends game.BaseUI_wx4{
             this.titleText.text = '游戏结束！'
             this.titleText.textColor = 0xFFFFFF
             this.failGroup.visible = false
-            coin = (Math.abs(PD.enemyHp)/400)
+            coin = (Math.abs(PD.enemyHp)/200)
             var cd = Math.floor(PD.actionStep/60)  + PD.endLessPassStep*5
             var cd2 = Math.floor(PD.actionStep/60*100)%100
 
@@ -99,7 +99,8 @@ class ResultUI extends game.BaseUI_wx4{
              this.titleText.text = '大胜！'
             this.titleText.textColor = 0xFFFF00
             this.failGroup.visible = false
-            coin*=5;
+            coin*=3;
+            coin += 300 + 50*(UM_wx4.level - 1)
             UM_wx4.level ++;
             UM_wx4.needUpUser = true;
             UM_wx4.upWXLevel()

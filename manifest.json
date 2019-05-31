@@ -34,6 +34,7 @@
 		"bin-debug/game/GameTool.js",
 		"bin-debug/game/GameUI.js",
 		"bin-debug/game/LoadingUI.js",
+		"bin-debug/game/NotEnoughCoinUI.js",
 		"bin-debug/game/PassDayAwardUI.js",
 		"bin-debug/game/buff/BuffItem.js",
 		"bin-debug/game/buff/BuffManager.js",

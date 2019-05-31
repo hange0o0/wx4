@@ -68,9 +68,8 @@ class MainGunItem extends game.BaseItem{
                 this.currentState = 'normal'
                 this.gunItem.data = gun;
 
-                var vo = GunVO.getObject(gun);
                 var atk = Math.floor(GunManager.getInstance().getGunAtk(gun)/GunManager.getInstance().getGunSpeed(gun))
-                this.setHtml(this.desText, vo.getTitle() + '\n' + this.createHtml(atk + ' /秒',0xA6FF89))
+                this.setHtml(this.desText, GunManager.getInstance().getGunTitle(gun) + '\n' + this.createHtml(atk + ' /秒',0xA6FF89))
                 this.stopDrag = false
             }
             else

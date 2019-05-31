@@ -41,6 +41,7 @@ class UserManager_wx4 {
     public gunPosNum = 3;
 	private wx4_functionX_45950(){console.log(1471)}
     public endLess = 0;
+    public coinTimes = 0;
     public helpUser = null;
 
 
@@ -59,6 +60,7 @@ class UserManager_wx4 {
     public nextMakeTime = 0//上次免费时间
     public videoMakeTimes = 0;
     public makeList = []  //图纸
+
 
 
     public haveGetUser = false
@@ -83,6 +85,7 @@ class UserManager_wx4 {
         this.helpUser = data.helpUser;
         this.endLess = data.endLess || 0;
         this.level = data.level || 1;
+        this.coinTimes = data.coinTimes || 0;
         this.gunLevel = data.gunLevel || {};
         this.nextMakeTime = data.nextMakeTime || 0;
         this.videoMakeTimes = data.videoMakeTimes || 0;
@@ -120,12 +123,17 @@ class UserManager_wx4 {
         GunManager.getInstance().initData();
     }
 
+    public getPassDayCoin(){
+        return Math.floor(this.level * 5*Math.pow(1.23,this.level/10))*100
+    }
+
     public testPassDay(){
         if(!DateUtil_wx4.isSameDay(this.pastDayCoin.t))
         {
             this.pastDayCoin.t = TM_wx4.now();
             this.videoMakeTimes = 0;
-            this.pastDayCoin.coin =  this.level * 300
+            this.coinTimes = 0;
+            this.pastDayCoin.coin = this.getPassDayCoin();
             this.needUpUser = true
         }
     }
@@ -319,6 +327,7 @@ class UserManager_wx4 {
             helpUser:UM_wx4.helpUser,
             gunLevel:UM_wx4.gunLevel,
             gunPos:UM_wx4.gunPos,
+            coinTimes:UM_wx4.coinTimes,
             nextMakeTime:UM_wx4.nextMakeTime,
             videoMakeTimes:UM_wx4.videoMakeTimes,
             makeList:UM_wx4.makeList,
@@ -402,7 +411,7 @@ class UserManager_wx4 {
     public checkCoin(v){
         if(this.coin < v)
         {
-            MyWindow.ShowTips('金币不足！')
+            NotEnoughCoinUI.getInstance().show();
             return false
         }
         return true

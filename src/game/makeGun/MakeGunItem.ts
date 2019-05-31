@@ -17,6 +17,18 @@ class MakeGunItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.addBtnEvent(this,()=>{
+            var GM = GunManager.getInstance();
+            var lv = GM.getGunLevel(this.data)
+            if(lv)
+            {
+                MakeGunInfoUI.getInstance().show(this.data,MakeGunUI.getInstance().myGuns)
+            }
+            else
+            {
+                MakeBeforeUI.getInstance().show(this.data)
+            }
+        })
 
     }
 
@@ -25,7 +37,10 @@ class MakeGunItem extends game.BaseItem{
 
         var lv = GM.getGunLevel(this.data)
         var vos = GM.getVOs(this.data);
-        this.bg.source = 'role_'+(lv%8 || 8)+'_png'
+        if(lv == 0)
+            this.bg.source = 'role_1_png'
+        else
+            this.bg.source = 'role_'+(lv%8 || 8)+'_png'
         this.bg2.visible = lv > 8
         if(this.bg2.visible)
             this.bg2.source = 'role_'+Math.floor(lv/8)+'_png';
@@ -34,7 +49,7 @@ class MakeGunItem extends game.BaseItem{
         this.mc.source = vos.vo1.getThumb()
         this.mc2.visible = vos.vo2 != null
         if(this.mc2.visible)
-            this.mc.source = vos.vo2.getThumb()
+            this.mc2.source = vos.vo2.getThumb()
 
         this.skillText.text = GM.getGunTitle(this.data)
         if(lv)

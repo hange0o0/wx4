@@ -98,24 +98,49 @@ class GunManager extends egret.EventDispatcher {
         }
     }
 
-    public getGunLevel(gunid){
-         return UM_wx4.gunLevel[gunid] || (GunVO.getObject(gunid).open == 0?1:0);
+    public makeGun(gunid){
+        var gun1 = Math.floor(gunid/100)
+        var gun2 = gunid%100;
+        this.removeGun(gun1)
+        this.removeGun(gun2)
+
+        this.levelUpGun(gunid)
+        var index = UM_wx4.makeList.indexOf(gunid);
+        UM_wx4.makeList.splice(index,1);
+        EM_wx4.dispatch(GameEvent.client.MAKE_CHANGE)
     }
 
-    public getGunCost(gunid){
-        var level = this.getGunLevel(gunid);
+    public splitGun(gunid){
+        this.removeGun(gunid)
+        var gun1 = Math.floor(gunid/100)
+        var gun2 = gunid%100;
+        delete this.disableGun[gun1]
+        delete this.disableGun[gun2]
+        delete UM_wx4.gunLevel[gunid]
+        EM_wx4.dispatch(GameEvent.client.GUN_UNLOCK)
+        MyWindow.ShowTips('获得武器：'+MyTool.createHtml(GunVO.getObject(gun1).name,0xA4E1FC),1000)
+        MyWindow.ShowTips('获得武器：'+MyTool.createHtml(GunVO.getObject(gun2).name,0xA4E1FC),1000)
+    }
+
+    public getGunLevel(gunid){
+         return UM_wx4.gunLevel[gunid] || (GunVO.getObject(gunid) && GunVO.getObject(gunid).open == 0?1:0);
+    }
+
+    public getGunCost(gunid,level = -1){
+        if(level == -1)
+            level = this.getGunLevel(gunid);
         if(gunid < 100)
         {
             var vo = GunVO.getObject(gunid);
-            return Math.floor(Math.pow(level+2.3,1.8)*(vo.open*0.75+3)*5/10)*10
+            return Math.floor(Math.pow(level+2.3,1.8 + (vo.open/100))*(vo.open*0.75+3)*5/10)*10
         }
-        return Math.floor(Math.pow(level+2.3,1.8)*(100*0.75+3)*5/10)*10
+        return Math.floor(Math.pow(level+2.7565,3.2)*(100*0.75+3)*5/10)*10
     }
 
     //解锁位置花费
     public getPosCost(){
         var pos = UM_wx4.gunPosNum + 1;
-        return 500*Math.floor(Math.pow(pos-3,2.5))
+        return 600*Math.floor(Math.pow(pos-3,3))
     }
 
     public unlockPos(){
@@ -150,10 +175,10 @@ class GunManager extends egret.EventDispatcher {
     }
 
     public getMyGunList(){
-        var arr = [];
+        var arr = this.getMakeGuns();
         for(var s in GunVO.data)
         {
-            if(this.getGunLevel(s))
+            if(!this.disableGun[s] && this.getGunLevel(s))
             {
                 arr.push(GunVO.data[s].id)
             }
@@ -197,7 +222,7 @@ class GunManager extends egret.EventDispatcher {
         var gun2 = gunid%100;
         var vo1 = GunVO.getObject(gun1)
         var vo2 = GunVO.getObject(gun2)
-        return Math.round(2000*Math.pow(this.getGunSpeed(gunid)/500,1.5)*vo1.atkrate*vo2.atkrate);
+        return Math.round(2000*Math.pow(this.getGunSpeed(gunid)*1000/500,1.5)*vo1.atkrate*vo2.atkrate);
     }
 
     public getGunAtk(gunid,lv?){
@@ -210,6 +235,6 @@ class GunManager extends egret.EventDispatcher {
 
         var gun1 = Math.floor(gunid/100)
         var gun2 = gunid%100;
-        return  Math.floor((GunVO.getObject(gun1).speed + GunVO.getObject(gun2).speed)/2)
+        return  (GunVO.getObject(gun1).speed + GunVO.getObject(gun2).speed)/2
     }
 }

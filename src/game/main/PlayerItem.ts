@@ -14,6 +14,7 @@ class PlayerItem extends game.BaseItem{
 
     public dataChanged():void {
         this.mc.source = 'knife_'+this.data.id+'_png'
+
     }
 
     public move(){

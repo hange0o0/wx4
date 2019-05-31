@@ -182,10 +182,10 @@ class PKCode_wx4 {
         {
             var level = UM_wx4.level;
             var list = PlayManager.getInstance().getLevelMonster(level)
-            var height = Math.min(300 + level*8,960)
-            var startY = Math.min((GameManager_wx4.uiHeight - height)/2,GameManager_wx4.uiHeight - height-20)
+            var height = Math.min(300 + level*5,960)
+            var startY = this.getStartY(height);
             var hpRate = 1 + (level - 1)*0.1;
-            var bossHpRate = Math.pow(1.1,level/2.5);
+            var bossHpRate = Math.pow(1.122,level/2.5);
 
             this.autoList = list.split(',');
             for(var i=0;i<this.autoList.length;i++)
@@ -208,6 +208,15 @@ class PKCode_wx4 {
             this.enemyHpMax = this.enemyHp;
         }
 
+    }
+
+    private getStartY(height){
+        var yy = (GameManager_wx4.uiHeight - height)/2 + 80/2 //上移怪物身高
+        if(yy < 120) //不能太高
+            yy = 120;
+        if(yy > GameManager_wx4.uiHeight - height - 20) //也不能太低
+            yy = GameManager_wx4.uiHeight - height - 20
+        return yy
     }
 
     private createEndLess(){
@@ -236,8 +245,8 @@ class PKCode_wx4 {
         var minRate = Math.random()*0.8;//出现小怪的机率
         var minRateAdd = 0.2 + Math.random()*0.3;//出现小怪的机率
         var hpRate = 1 + (this.endLessStep - 1)*0.1;
-        var height = Math.min(300 + this.endLessStep*10,960)
-        var startY = Math.min((GameManager_wx4.uiHeight - height)/2,GameManager_wx4.uiHeight - height-20)
+        var height = Math.min(300 + this.endLessStep*5,960)
+        var startY = this.getStartY(height);
         var needAddBoss = this.endLessStep%5 == 0
         while(nowCost < maxCost)
         {
@@ -261,7 +270,7 @@ class PKCode_wx4 {
             if(needAddBoss && nowCost/maxCost > 0.75)
             {
                 nowCost += 10;//固定10费
-                var bossHpRate =  Math.pow(1.1,this.endLessStep/3);
+                var bossHpRate =  Math.pow(1.122,this.endLessStep/3);
                 needAddBoss = false;
                 var bossNum = Math.ceil(this.endLessStep/50)
                 if(bossNum == 1)

@@ -16,7 +16,7 @@
 		</e:Group>
 		<e:Group height="50" x="155" y="0">
 			<e:Image x="5" verticalCenter="0" source="coin_mc_png"/>
-			<e:Label text="获得金币数量增加 25%" x="50" size="22" verticalCenter="0" textColor="0xFFDC59" bold="true"/>
+			<e:Label text="所有金币获得增加 25%" x="50" size="22" verticalCenter="0" textColor="0xFFDC59" bold="true"/>
 		</e:Group>
 		<e:layout>
 			<e:VerticalLayout/>

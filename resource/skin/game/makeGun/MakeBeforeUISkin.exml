@@ -7,7 +7,7 @@
 	<e:Label id="des1" text="Label" y="246" horizontalCenter="130" size="24"/>
 	<e:Button id="btn0" label="Button" y="300" skinName="Btn2Skin" width="160" horizontalCenter="-130"/>
 	<e:Button id="btn1" label="Button" y="300" skinName="Btn2Skin" width="160" horizontalCenter="130"/>
-	<e:Group left="20" right="20" height="450" bottom="20">
+	<e:Group left="20" right="20" height="400" bottom="20">
 		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
 		<e:Label id="atkText" text="攻击：1234\n攻速：0.5秒" y="20" size="22" x="180" lineSpacing="10" anchorOffsetX="0" textColor="0xFCD79F" width="360"/>
 		<ns1:GunItem id="gunItem" skinName="GunItemSkin" x="90" y="90" anchorOffsetX="50" anchorOffsetY="50"/>

@@ -48,7 +48,7 @@ class GunChooseUI extends game.BaseWindow_wx4{
         {
             arr[s] = {
                 id:arr[s],
-                open:GunVO.getObject(arr[s]).open,
+                open:arr[s]>100?100:GunVO.getObject(arr[s]).open,
                 lv:GM.getGunLevel(arr[s]),
                 using:GM.getPosByGun(arr[s]) || 999,
             }

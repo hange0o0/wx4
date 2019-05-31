@@ -83,6 +83,17 @@ class GameManager_wx4 {
         //this.createAD_4819();
     }
 
+    public addJoinAppid(appid){
+        var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
+        var index = arr.indexOf(appid)
+        if(index != -1)
+            arr.splice(index,1);
+        arr.push(appid)
+        while(arr.length > 30)
+            arr.shift()
+        SharedObjectManager_wx4.getInstance().setMyValue('exchangeUserAppid',arr)
+    }
+
 	private wx4_functionX_45904(){console.log(2211)}
     private createAD_4819(){
     //Config.adHeight = 200;
@@ -339,14 +350,7 @@ if(window["wx"])
             console.log(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime)
             if(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime > 30) //停留超过30秒
             {
-                var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
-                var index = arr.indexOf(GameManager_wx4.getInstance().changeUserID)
-                if(index != -1)
-                    arr.splice(index,1);
-                arr.push(GameManager_wx4.getInstance().changeUserID)
-                while(arr.length > 30)
-                    arr.shift()
-                SharedObjectManager_wx4.getInstance().setMyValue('exchangeUserAppid',arr)
+                this.addJoinAppid(GameManager_wx4.getInstance().changeUserID);
                 if(GameManager_wx4.getInstance().changeUserFun)
                 {
                     wx.aldSendEvent("点击跳转其它小程序_通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})

@@ -345,9 +345,16 @@ class PKingUI extends game.BaseUI_wx4 {
         {
             var item = PKStateItem.createItem();
             if(PKStateItem.isBuffLeft(id))
+            {
                 this.buffGroup1.addChild(item)
+                //item.currentState = 's1'
+            }
             else
+            {
                 this.buffGroup2.addChild(item)
+                //item.currentState = 's2'
+            }
+
             this.stateArr.push(item);
             item.data = id;
             item.showMV();
@@ -547,16 +554,19 @@ class PKingUI extends game.BaseUI_wx4 {
         }
 
         this.lastBallStep ++;
-        if(this.lastBallStep > 60*20)
+        if(this.lastBallStep >= 60*15)
         {
             this.lastBallStep = 0;
-            var ball = BallMC.createItem();
-            this.ballArr.push(ball);
-            this.con.addChild(ball);
-            ball.data = ArrayUtil_wx4.randomOne([1102,1103,1104,1105,1106,1107,1108,1109,1110,1111])
-            ball.x = 640
-            ball.y = Math.random()*GameManager_wx4.uiHeight*0.25 + 160;
-            ball.move();
+            if(PlayManager.getInstance().isEndLess || PD.autoList.length >= 10)
+            {
+                var ball = BallMC.createItem();
+                this.ballArr.push(ball);
+                this.con.addChild(ball);
+                ball.data = ArrayUtil_wx4.randomOne([1102,1103,1104,1105,1106,1107,1108,1109,1110,1111])
+                ball.x = 640
+                ball.y = Math.random()*GameManager_wx4.uiHeight*0.25 + 160;
+                ball.move();
+            }
         }
 
 

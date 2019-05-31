@@ -92,12 +92,18 @@ class GunInfoUI extends game.BaseWindow_wx4{
         var GM = GunManager.getInstance();
 
         var lv = GM.getGunLevel(this.gunid);
-        var vo:GunVO = GunVO.getObject(this.gunid);
-        this.nameText.text = vo.name;
+        //var vo:GunVO = GunVO.getObject(this.gunid);
+        this.nameText.text = GM.getGunName(this.gunid);
         this.gunItem.data = this.gunid;
         this.levelText.text = 'LV.' + lv;
-        this.setHtml(this.atkText, this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.gunid) + this.createHtml('\n攻速：',0xFFF666) + GM.getGunSpeed(this.gunid) + '/秒\n'+
-            this.createHtml(vo.getTitle() + '：',0xFFF666) + vo.getDes(lv,true))
+
+        var vos = GM.getVOs(this.gunid)
+        var str = '';
+        str += this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.gunid) + this.createHtml('\n攻速：',0xFFF666) + GM.getGunSpeed(this.gunid) + '/秒'
+        str += '\n' + this.createHtml(vos.vo1.getTitle() + '：',0xFFF666) + vos.vo1.getDes(lv || 1)
+        if(vos.vo2)
+            str += '\n' + this.createHtml(vos.vo2.getTitle() + '：',0xFFF666) + vos.vo2.getDes(lv || 1)
+        this.setHtml(this.atkText, str)
     }
 
     private renewBtn(){

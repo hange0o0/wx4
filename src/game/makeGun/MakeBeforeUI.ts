@@ -58,12 +58,9 @@ class MakeBeforeUI extends game.BaseWindow_wx4{
              }
             if(!UM_wx4.checkCoin(GM.getGunCost(this.data)))
                 return;
-            GM.levelUpGun(this.data)
 
-            var index = UM_wx4.makeList.indexOf(this.data);
-            UM_wx4.makeList.splice(index,1);
+           GM.makeGun(this.data);
             this.hide()
-            EM_wx4.dispatch(GameEvent.client.MAKE_CHANGE)
             GunListUI.getInstance().show(this.data)
         })
 
@@ -101,6 +98,8 @@ class MakeBeforeUI extends game.BaseWindow_wx4{
     public onShow(){
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renew)
+        this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renew)
     }
 
 

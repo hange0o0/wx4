@@ -75,7 +75,7 @@ class GunChooseItem extends game.BaseItem{
         this.mc.source = vos.vo1.getThumb()
         this.mc2.visible = vos.vo2 != null
         if(this.mc2.visible)
-            this.mc.source = vos.vo2.getThumb()
+            this.mc2.source = vos.vo2.getThumb()
 
         this.skillText.text = GM.getGunTitle(this.data)
         var atk = Math.floor(GM.getGunAtk(this.data)/GM.getGunSpeed(this.data))

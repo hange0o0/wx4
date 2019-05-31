@@ -126,6 +126,11 @@ class PKStateItem extends game.BaseItem{
 
         this.txt.text = str;
         this.cdMC.visible = this.data > 1000
+
+        if(PKStateItem.isBuffLeft(this.data))
+            this.currentState = 's1'
+        else
+            this.currentState = 's2'
     }
 
     public onE(){

@@ -73,7 +73,12 @@ class GameUI extends game.BaseUI_wx4 {
             BuffUI.getInstance().show();
         })
         this.addBtnEvent(this.buildBtn,()=>{
-            MyWindow.ShowTips('双 刀 合 一\n武器改造 100关 开启')
+            if(UM_wx4.level <= 100)
+            {
+                MyWindow.ShowTips('双 刀 合 一\n武器改造 100关后 开启')
+                return;
+            }
+            MakeGunUI.getInstance().show();
         })
 
         for(var i=0;i<GunManager.getInstance().maxGunNum;i++)
@@ -205,7 +210,7 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     private showTips(){
-        this.setHtml(this.desText, '长按武器查看详情,拖动调整位置\n根据当前成绩，明天可获得金币 '+this.createHtml('x' + NumberUtil_wx4.addNumSeparator(UM_wx4.level * 300),0xFFFF00))
+        this.setHtml(this.desText, '长按武器查看详情,拖动调整位置\n根据当前成绩，明天可获得金币 '+this.createHtml('x' + NumberUtil_wx4.addNumSeparator(UM_wx4.getPassDayCoin()),0xFFFF00))
         //clearTimeout(this.tipsTimer);
         //this.tipsTimer = setTimeout(()=>{
         //    this.desText.text = ''
@@ -270,6 +275,9 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     public renew(){
+        if(UM_wx4.level > 100)
+            MyTool.removeMC(this.buildLockMC)
+
         this.blackBG.visible = false
         this.startBtn.label = '第 '+UM_wx4.level+' 关'
         this.bg.source = UM_wx4.getBG();

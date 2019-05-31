@@ -38,6 +38,20 @@ class ChangeUserItem extends game.BaseItem{
         var appid = this.data.appid
         var fun = this.data.fun;
 
+        if(this.data.isSelf)
+        {
+            wx.navigateToMiniProgram({
+                appId:appid,
+                success(res) {
+                    GameManager_wx4.getInstance().addJoinAppid(appid);
+                    wx.aldSendEvent("点击跳转其它小程序_通过_点击我的游戏")
+                    ChangeJumpUI.getInstance().hide();
+                    fun && fun('changeUser');
+                }
+            })
+            return;
+        }
+
 
         if(this.data.isXiaoHu)
         {

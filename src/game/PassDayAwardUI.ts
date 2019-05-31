@@ -28,7 +28,7 @@ class PassDayAwardUI extends game.BaseWindow_wx4 {
 
     public childrenCreated() {
         super.childrenCreated();
-        this.setTitle('领取补助')
+        this.setTitle('每日奖励')
         this.addBtnEvent(this.okBtn,this.onGet)
         this.addBtnEvent(this.shareBtn,this.onShare)
     }

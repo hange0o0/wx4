@@ -1344,6 +1344,21 @@
 			"name":"split_mc_png",
 			"type":"image",
 			"url":"game_assets/split_mc.png"
+		},
+		{
+			"name":"logo_wx3_png",
+			"type":"image",
+			"url":"game_assets2/share/logo_wx3.png"
+		},
+		{
+			"name":"logo_wx1_png",
+			"type":"image",
+			"url":"game_assets2/share/logo_wx1.png"
+		},
+		{
+			"name":"logo_wx2_png",
+			"type":"image",
+			"url":"game_assets2/share/logo_wx2.png"
 		}
 	]
 }

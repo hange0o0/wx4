@@ -17,6 +17,7 @@ class MakeGunUI extends game.BaseWindow_wx4{
 
 
 
+    public myGuns;
 
     public constructor() {
         super();
@@ -25,6 +26,7 @@ class MakeGunUI extends game.BaseWindow_wx4{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.setTitle('武器改造')
         this.scroller.viewport = this.list;
         this.list.itemRenderer = MakeGunItem;
 
@@ -37,16 +39,20 @@ class MakeGunUI extends game.BaseWindow_wx4{
             if(this.draw())
             {
                 UM_wx4.nextMakeTime = TM_wx4.now() + 8*3600;
+                UM_wx4.needUpUser = true
                 this.renew();
             }
         })
         this.addBtnEvent(this.videoBtn,()=>{
+            ShareTool.openGDTV(()=>{
+                if(this.draw())
+                {
+                    UM_wx4.videoMakeTimes ++;
+                    UM_wx4.needUpUser = true
+                    this.renew();
+                }
+            })
 
-            if(this.draw())
-            {
-                UM_wx4.videoMakeTimes ++;
-                this.renew();
-            }
         })
 
         this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
@@ -85,6 +91,22 @@ class MakeGunUI extends game.BaseWindow_wx4{
     public onShow(){
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.GUN_UNLOCK,this.renewGun)
+        this.addPanelOpenEvent(GameEvent.client.MAKE_CHANGE,this.renewMake)
+    }
+
+    private renewGun(){
+        if(this.tab.selectedIndex == 1)
+            this.renew();
+    }
+    private renewMake(){
+        if(this.tab.selectedIndex == 0)
+            this.renew();
+    }
+
+    private renewList(){
+        MyTool.renewList(this.list)
     }
 
 
@@ -116,13 +138,15 @@ class MakeGunUI extends game.BaseWindow_wx4{
             else
             {
                 this.btnGroup.addChild(this.videoBtn)
-                this.videoBtn.label = '获取（'+(6-UM_wx4.videoMakeTimes)+'/6）'
+                this.videoBtn.label = '直接获取 '+(6-UM_wx4.videoMakeTimes)+'/6 '
             }
             this.list.dataProvider = new eui.ArrayCollection(UM_wx4.makeList)
         }
         else
         {
-            this.list.dataProvider = new eui.ArrayCollection(GunManager.getInstance().getMakeGuns());
+            this.currentState = 's2'
+            this.myGuns = GunManager.getInstance().getMakeGuns()
+            this.list.dataProvider = new eui.ArrayCollection(this.myGuns);
         }
 
     }

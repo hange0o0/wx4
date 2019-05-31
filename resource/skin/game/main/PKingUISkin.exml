@@ -29,12 +29,12 @@
 		<e:Image source="pk_hero_jpg" y="0" x="0"/>
 		<e:Label text="BOSS来袭" horizontalCenter="0" verticalCenter="0" size="40" bold="true" stroke="3" strokeColor="0xbf3131"/>
 	</e:Group>
-	<e:Group id="buffGroup1" width="300" y="50" x="20">
+	<e:Group id="buffGroup1" width="300" y="60" x="20">
 		<e:layout>
 		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Group id="buffGroup2" width="300" y="50" right="20">
+	<e:Group id="buffGroup2" width="300" y="60" right="20">
 		<e:layout>
 		<e:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
 		</e:layout>
