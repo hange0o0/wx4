@@ -3,7 +3,7 @@
  * http://www.webtoolkit.info/
  */ 
 class Base64 {
-	private wx4_functionX_45992(){console.log(4107)}
+	private wx4_functionX_54663(){console.log(3929)}
 
     private static _keyStr: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     
@@ -39,7 +39,7 @@ class Base64 {
 
         return output;
     }
-	private wx4_functionX_45993(){console.log(7070)}
+	private wx4_functionX_54664(){console.log(8623)}
         
     public static decode(input) {
         var output = "";
@@ -75,7 +75,7 @@ class Base64 {
 
         return output;
     }
-	private wx4_functionX_45994(){console.log(2386)}
+	private wx4_functionX_54665(){console.log(6462)}
     
     private static _utf8_encode(string) {
         string = string.replace(/\r\n/g,"\n");
@@ -102,7 +102,7 @@ class Base64 {
 
         return utftext;
     }
-	private wx4_functionX_45995(){console.log(4519)}
+	private wx4_functionX_54666(){console.log(5323)}
     
     private static _utf8_decode(utftext) {
         var string = "";

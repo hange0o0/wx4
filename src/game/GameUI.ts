@@ -210,7 +210,7 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     private showTips(){
-        this.setHtml(this.desText, '长按武器查看详情,拖动调整位置\n根据当前成绩，明天可获得金币 '+this.createHtml('x' + NumberUtil_wx4.addNumSeparator(UM_wx4.getPassDayCoin()),0xFFFF00))
+        this.setHtml(this.desText, '长按武器进行升级,拖动调整位置\n根据当前成绩，明天可获得金币 '+this.createHtml('x' + NumberUtil_wx4.addNumSeparator(UM_wx4.getPassDayCoin()),0xFFFF00))
         //clearTimeout(this.tipsTimer);
         //this.tipsTimer = setTimeout(()=>{
         //    this.desText.text = ''

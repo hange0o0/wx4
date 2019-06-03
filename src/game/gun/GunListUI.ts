@@ -97,7 +97,7 @@ class GunListUI extends game.BaseWindow_wx4{
         var vos = GM.getVOs(this.data)
         this.gunItem.data =  this.data;
         var str = '';
-        var stopUp = !lv || lv == GM.maxGunLevel;
+        var stopUp = !lv || (lv == GM.maxGunLevel && this.data < 100);
         if(stopUp)
             str += this.createHtml('攻击：',0xFFF666) + GM.getGunAtk(this.data) + this.createHtml('\n攻速：',0xFFF666) + GM.getGunSpeed(this.data) + '/秒'
         else
@@ -106,9 +106,9 @@ class GunListUI extends game.BaseWindow_wx4{
                 this.createHtml('\n攻速：',0xFFF666)  + GM.getGunSpeed(this.data) + '/秒' ;
         }
 
-        str += '\n' + this.createHtml(vos.vo1.getTitle() + '：',0xFFF666) + vos.vo1.getDes(lv || 1,stopUp)
+        str += '\n' + this.createHtml(vos.vo1.getTitle() + '：',0xFFF666) + vos.vo1.getDes(lv || 1,stopUp,this.data > 100)
         if(vos.vo2)
-            str += '\n' + this.createHtml(vos.vo2.getTitle() + '：',0xFFF666) + vos.vo2.getDes(lv || 1,stopUp)
+            str += '\n' + this.createHtml(vos.vo2.getTitle() + '：',0xFFF666) + vos.vo2.getDes(lv || 1,stopUp,this.data > 100)
         this.setHtml(this.atkText, str)
 
         var cost = GM.getGunCost(this.data);

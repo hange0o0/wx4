@@ -100,12 +100,12 @@ class MonsterMV extends eui.Group {
 
     public play(){
         this.runing = true
-        EM_wx4.addEventListener(GameEvent.client.timerE,this.onE,this)
+        //EM_wx4.addEventListener(GameEvent.client.timerE,this.onE,this)
     }
 
     public stop(){
         this.runing = false
-        EM_wx4.removeEventListener(GameEvent.client.timerE,this.onE,this)
+        //EM_wx4.removeEventListener(GameEvent.client.timerE,this.onE,this)
     }
 
     public reset(){
@@ -122,6 +122,8 @@ class MonsterMV extends eui.Group {
     }
 
     public onE(){
+        if(!this.runing)
+            return;
         var w = this.mw
         var h = this.mh
         var speed = (this.speed || 0);

@@ -3,14 +3,14 @@ class ConfirmUI extends game.BaseWindow_wx4 {
         super();
         this.skinName = "AlertSkin";
     }
-	private wx4_functionX_46059(){console.log(8402)}
+	private wx4_functionX_54757(){console.log(7449)}
 
     private cancelBtn: eui.Button;
     private okBtn: eui.Button;
     public closeBtn: eui.Button;
     private text: eui.Label;
 
-	private wx4_functionX_46060(){console.log(7509)}
+	private wx4_functionX_54758(){console.log(5472)}
     private textIn;
     private fun;
     private btnWord;
@@ -18,21 +18,21 @@ class ConfirmUI extends game.BaseWindow_wx4 {
 
     public childrenCreated() {
         super.childrenCreated();
-	wx4_function(6905);
+	wx4_function(6584);
         this.canBGClose = false;
-        this.addBtnEvent(this.okBtn, this.onClick_4689);
-        this.addBtnEvent(this.cancelBtn, this.onCancelClick_1103);
-        this.addBtnEvent(this.closeBtn, this.onCloseClick_2638);
+        this.addBtnEvent(this.okBtn, this.onClick_7293);
+        this.addBtnEvent(this.cancelBtn, this.onCancelClick_4618);
+        this.addBtnEvent(this.closeBtn, this.onCloseClick_7165);
     }
 
-	private wx4_functionX_46061(){console.log(1100)}
+	private wx4_functionX_54759(){console.log(6723)}
     public show(v?,fun?,btnWord?,sp?){
         this.textIn = v;
         this.fun = fun;
         this.btnWord = btnWord;
         this.sp = sp || {};
         super.show();
-	wx4_function(4310);
+	wx4_function(4038);
     }
 
     public onShow(){
@@ -43,32 +43,32 @@ class ConfirmUI extends game.BaseWindow_wx4 {
         if(this.btnWord)
         {
             this.cancelBtn.label = this.btnWord[0];
-	wx4_function(7475);
+	wx4_function(8809);
             this.okBtn.label = this.btnWord[1];
         }
 
 
         var ww = GameManager_wx4.container.width;
         var hh = GameManager_wx4.container.height;
-	wx4_function(3265);
+	wx4_function(9790);
         this.x = (ww - this.width) / 2;
         this.y = (hh - this.height) / 2;
         this.closeBtn.visible = false;
     }
 
-    private onClick_4689(){
+    private onClick_7293(){
         this.hide();
-	wx4_function(7083);
+	wx4_function(9308);
         if(this.fun)
             this.fun(1);
     }
-    private onCancelClick_1103(){
+    private onCancelClick_4618(){
         this.hide();
         if(this.fun)
             this.fun(2);
-	wx4_function(3440);
+	wx4_function(1262);
     }
-    private onCloseClick_2638(){
+    private onCloseClick_7165(){
         this.hide();
         if(this.fun)
             this.fun(3);

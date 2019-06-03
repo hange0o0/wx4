@@ -3,7 +3,7 @@ class UserInfoBtn {
 
     private sourceBtn;
     private callFun:Function;
-	private wx4_functionX_46071(){console.log(7301)}
+	private wx4_functionX_54769(){console.log(3398)}
     private parent:game.BaseUI_wx4;
     private okBtn;
     private isNew:string;
@@ -20,7 +20,7 @@ class UserInfoBtn {
         //    }
         //}
         this.sourceBtn = btn;
-	wx4_function(6274);
+	wx4_function(4657);
         this.parent = parent;
         this.callFun = fun;
 
@@ -33,14 +33,14 @@ class UserInfoBtn {
         //}
         //else{
         //    MyToolQU.removeGUI(btn);
-        //    // this.okBtn = this.initBtn_3689(btn.width, btn.height, btn.x, btn.y, url)
+        //    // this.okBtn = this.initBtn_5365(btn.width, btn.height, btn.x, btn.y, url)
             this.isNew = url;
         //}
         //WXAddCode.execute();
     }
 
-	private wx4_functionX_46072(){console.log(1811)}
-    private initBtn_3689(btnw, btnh, btnx, btny, imgUrl){
+	private wx4_functionX_54770(){console.log(6613)}
+    private initBtn_5365(btnw, btnh, btnx, btny, imgUrl){
 
         console.log(1111)
         if(!window['wx'])
@@ -49,7 +49,7 @@ class UserInfoBtn {
         //if(RELEASE){
             //这里存在界面坐标、尺寸换算关系 width="180" height="60" bottom="40" x="230"
             // let btnw = 244, btnh = 71, btnx = 98, btny = 381;
-	wx4_function(4946);
+	wx4_function(473);
             let scalex = screen.availWidth/640;
             let scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
             // let left = scalex * ((640-this.width)/2 + btnx);
@@ -58,7 +58,7 @@ class UserInfoBtn {
             let top = scaley * (this.parent['baseY'] + btny);
             let width = scalex * btnw;
             let height = scalex * btnh;
-	wx4_function(8036);
+	wx4_function(412);
             var button = window["wx"].createUserInfoButton({
                 type: 'image',
                 image: '' + imgUrl,
@@ -76,7 +76,7 @@ class UserInfoBtn {
                 }
             })
             let self = this;
-	wx4_function(8639);
+	wx4_function(5536);
             button.onTap((res) => {
                 this.callFun && this.callFun(res)
             })
@@ -84,7 +84,7 @@ class UserInfoBtn {
         //}
     }
 
-	private wx4_functionX_46073(){console.log(2844)}
+	private wx4_functionX_54771(){console.log(9492)}
     public set visible(v:boolean){
         //console.log(v,this.isNew)
         if(v && this.isNew && !this.okBtn){
@@ -98,7 +98,7 @@ class UserInfoBtn {
                 btn.y = this.parent.height - btn.bottom - btn.height;
                 // console.log("111111111");
             }
-            this.okBtn = this.initBtn_3689(btn.width, btn.height, btn.x, btn.y, this.isNew);
+            this.okBtn = this.initBtn_5365(btn.width, btn.height, btn.x, btn.y, this.isNew);
         }
         //console.log(this.okBtn)
         if(!this.okBtn) return;
@@ -113,20 +113,20 @@ class UserInfoBtn {
             this.hide();
         }
     }
-	private wx4_functionX_46074(){console.log(8630)}
+	private wx4_functionX_54772(){console.log(281)}
 
-    private checkWindow_657(e:egret.Event){
+    private checkWindow_1023(e:egret.Event){
         if(e.data == this.parent) return;
 
         this.parent.hide();
     }
-	private wx4_functionX_46075(){console.log(3735)}
+	private wx4_functionX_54773(){console.log(9824)}
 
     public hide(){
         if(this.okBtn){
             this.okBtn.hide();
         }
         this.sourceBtn.visible = true;
-	wx4_function(9653);
+	wx4_function(148);
     }
 }

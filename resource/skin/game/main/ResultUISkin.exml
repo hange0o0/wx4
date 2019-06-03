@@ -22,8 +22,8 @@
 		</e:Group>
 	</e:Group>
 	<e:Group id="failGroup" horizontalCenter="0" bottom="20">
-		<e:Rect width="368" height="26" y="0" anchorOffsetX="0" ellipseWidth="5" x="0" strokeWeight="2"/>
-		<e:Rect id="barMC" width="180" height="18" y="4" anchorOffsetX="0" ellipseWidth="5" fillColor="0xf7c94c" x="4"/>
+		<e:Image width="368" height="26" x="0" y="0" source="black_bg_png"/>
+		<e:Image id="barMC" width="180" height="18" x="4" y="4" source="yellor_bg_png"/>
 		<e:Label id="rateText" text="剩余怪物：60%" size="20" textColor="0xfce662" verticalCenter="0" x="380"/>
 	</e:Group>
 	<e:Label id="titleText" text="大胜！" y="160" size="50" bold="true" horizontalCenter="10"/>

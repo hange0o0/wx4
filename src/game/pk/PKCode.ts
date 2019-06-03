@@ -46,14 +46,16 @@ class PKCode_wx4 {
 
 
     public getItemByID(id):PKMonsterItem_wx3{
-        for(var i=0;i<this.monsterList.length;i++)
+        var mlen = this.monsterList.length
+        for(var i=0;i<mlen;i++)
         {
             var item = this.monsterList[i];
             if(item.id == id)
                 return item;
         }
 
-        for(var i=0;i<this.wallArr.length;i++)
+        var mlen = this.wallArr.length
+        for(var i=0;i<mlen;i++)
         {
             var item = this.wallArr[i];
             if(item.id == id)
@@ -63,7 +65,8 @@ class PKCode_wx4 {
 
     public randomEnemy(){
         var arr = []
-        for(var i=0;i<this.monsterList.length;i++)
+        var mlen = this.monsterList.length
+        for(var i=0;i<mlen;i++)
         {
             var item = this.monsterList[i];
             if(!item.isDie && !item.isWuDi())
@@ -79,7 +82,7 @@ class PKCode_wx4 {
             throw new Error('XXX')
             return;
         }
-        var scale = Math.max(1,(atker.getVO().height)/70);
+        var scale = Math.max(1,(atker.vo.height)/70);
         var AM = AniManager_wx3.getInstance();
         var mv = AM.playOnItem(mvID,atker);
         if(mv)
@@ -93,7 +96,8 @@ class PKCode_wx4 {
 
     //对一定范围内的敌人造成伤害
     public hitEnemyAround(x,y,range,hurt){
-        for(var i=0;i<this.monsterList.length;i++)
+        var mlen = this.monsterList.length
+        for(var i=0;i<mlen;i++)
         {
             var item = this.monsterList[i];
             if(item.isDie || item.isWuDi())
@@ -345,6 +349,8 @@ class PKCode_wx4 {
              {
                  if(!this.buffList[oo.mid])
                      this.buffList[oo.mid] = {isHero:true};
+                 if(oo.mid == 104)
+                     this.speedBuffChange()
                  EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
              }
          }
@@ -352,7 +358,8 @@ class PKCode_wx4 {
         if(b)
         {
             ArrayUtil_wx4.sortByField(this.monsterList,['y'],[0]);
-            for(var i=0;i<this.monsterList.length;i++)
+            var mlen = this.monsterList.length
+            for(var i=0;i<mlen;i++)
             {
                 MyTool.upMC(this.monsterList[i]);
             }
@@ -365,7 +372,8 @@ class PKCode_wx4 {
         this.buffList[id] = {step:PKStateItem.buffcd[id]};
         if(id == 111)
         {
-            for(var i=0;i<this.monsterList.length;i++)
+            var mlen = this.monsterList.length
+            for(var i=0;i<mlen;i++)
             {
                 var target = this.monsterList[i]
                 if(!target.isDie) //死的
@@ -375,7 +383,11 @@ class PKCode_wx4 {
             }
         }
         if(noBuff)
+        {
+            if(id == 1103)
+                this.speedBuffChange()
             EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,id)
+        }
     }
 
     private getStepByTime(t){
@@ -386,7 +398,8 @@ class PKCode_wx4 {
     public monsterAction(){
         if(this.myHp <= 0)
             return;
-        for(var i=0;i<this.monsterList.length;i++)
+        var mlen = this.monsterList.length
+        for(var i=0;i<mlen;i++)
         {
             var target:PKMonsterItem_wx3 = this.monsterList[i]
             if(target.isDie)
@@ -399,7 +412,7 @@ class PKCode_wx4 {
                 continue;
 
 
-            if(target.x < target.getVO().getAtkDis() + 200)//普攻
+            if(target.x < target.vo.getAtkDis() + 200)//普攻
             {
                   this.targetAtk(target);
             }
@@ -412,13 +425,13 @@ class PKCode_wx4 {
         //前摇结束
         var id = target.id;
         PKMonsterAction_wx3.getInstance().addList({
-            step:Math.floor(this.getStepByTime(target.getVO().mv_atk)*target.getSpeedRate()),
+            step:Math.floor(this.getStepByTime(target.vo.mv_atk)*target.getSpeedRate()),
             id:id,
             target:target,
             fun:()=>{
                 if(target.isDie)
                     return;
-                var step = this.getStepByTime(target.getVO().atkrage*5);
+                var step = this.getStepByTime(target.vo.atkrage*5);
                 var delay10 = [103,61,62,63,70,76]
                 if(delay10.indexOf(Math.floor(target.mid)) != -1)
                     step = 10;
@@ -447,7 +460,7 @@ class PKCode_wx4 {
 
         //僵直结束
         PKMonsterAction_wx3.getInstance().addList({
-            step:Math.floor(this.getStepByTime(target.getVO().atkcd)*target.getSpeedRate()),
+            step:Math.floor(this.getStepByTime(target.vo.atkcd)*target.getSpeedRate()),
             id:id,
             target:target,
             fun:()=>{
@@ -470,7 +483,8 @@ class PKCode_wx4 {
     public monsterMove(){
         if(this.myHp <= 0)
             return;
-        for(var i=0;i<this.monsterList.length;i++)
+        var mlen = this.monsterList.length
+        for(var i=0;i<mlen;i++)
         {
             var target:PKMonsterItem_wx3 = this.monsterList[i]
             if(target.isDie)
@@ -483,9 +497,19 @@ class PKCode_wx4 {
         }
     }
 
+    public speedBuffChange(){
+        var mlen = this.monsterList.length
+        for(var i=0;i<mlen;i++)
+        {
+            var target:PKMonsterItem_wx3 = this.monsterList[i]
+            target.onSpeedChange();
+        }
+    }
+
     //一轮操作结束,移队死，过线的，结算,清除BUFF
     public actionFinish(){
         //BUFF效果
+        var mlen = this.monsterList.length
         if(this.actionStep%60 == 0)
         {
             var buff107 =  this.isInBuff(107)
@@ -493,7 +517,7 @@ class PKCode_wx4 {
             var buff1108 =  this.isInBuff(1108)
             if(buff107 || buff1111 || buff1108)
             {
-                for(var i=0;i<this.monsterList.length;i++)
+                for(var i=0;i<mlen;i++)
                 {
                     var target = this.monsterList[i]
                     if(!target.isDie) //死的
@@ -518,6 +542,7 @@ class PKCode_wx4 {
             }
         }
 
+        var sbc = false
         for(var s in this.buffList)
         {
             var buff = this.buffList[s];
@@ -528,13 +553,17 @@ class PKCode_wx4 {
                 {
                     delete this.buffList[s];
                     EventManager_wx4.getInstance().dispatch(GameEvent.client.REMOVE_BOSS,parseInt(s))
+                    if(s == '1103' || s == '104')
+                        sbc = true;
                 }
             }
         }
+        if(sbc)
+            this.speedBuffChange();
 
 
 
-        for(var i=0;i<this.monsterList.length;i++)
+        for(var i=0;i<mlen;i++)
         {
             var target = this.monsterList[i]
             if(target.isDie==2) //死的
@@ -552,6 +581,7 @@ class PKCode_wx4 {
 
                 this.monsterList.splice(i,1);
                 i--;
+                mlen--;
                 PKMonsterItem_wx3.freeItem(target);
             }
         }

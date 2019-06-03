@@ -3,7 +3,7 @@ class UserManager_wx4 {
 
     }
 
-	private wx4_functionX_45945(){console.log(2292)}
+	private wx4_functionX_54641(){console.log(4386)}
     private static _instance: UserManager_wx4;
 
     public static getInstance():UserManager_wx4{
@@ -11,55 +11,56 @@ class UserManager_wx4 {
             UserManager_wx4._instance = new UserManager_wx4();
         return UserManager_wx4._instance;
     }
-	private wx4_functionX_45946(){console.log(6664)}
+	private wx4_functionX_54642(){console.log(5253)}
 
     private _needUpUser = false;
     public get needUpUser(){return this._needUpUser}
-    public set needUpUser(v){this._needUpUser = v;v && egret.callLater(this.localSave_3405,this)}
+    public set needUpUser(v){this._needUpUser = v;v && egret.callLater(this.localSave_7136,this)}
 
 
-	private wx4_functionX_45947(){console.log(7158)}
+	private wx4_functionX_54643(){console.log(6875)}
     public nick
     public head
     public gender
 
 
     public isTest;
-	private wx4_functionX_45948(){console.log(5608)}
+	private wx4_functionX_54644(){console.log(2285)}
     public testVersion = 1//与服务器相同则为测试版本
     public shareFail;
 
     public gameid: string;
     public dbid: string;
 
-	private wx4_functionX_45949(){console.log(7640)}
+	private wx4_functionX_54645(){console.log(5518)}
     public coin: number = 999;
     public level: number = 1;
     public gunLevel: any = {};
     public gunPos: any = {};
     public pastDayCoin
     public gunPosNum = 3;
-	private wx4_functionX_45950(){console.log(1471)}
+	private wx4_functionX_54646(){console.log(1944)}
     public endLess = 0;
     public coinTimes = 0;
     public helpUser = null;
 
 
     public shareUser = [];//buff玩家的数据   openid:{head,nick,time}
+	private wx4_functionX_54647(){console.log(6974)}
     public loginTime = 0
-	private wx4_functionX_45951(){console.log(3980)}
 
 
     public isFirst = false
     public hourEarn = 0;
     public offlineTime
+	private wx4_functionX_54648(){console.log(9257)}
     public initDataTime
-	private wx4_functionX_45952(){console.log(5316)}
 
 
     public nextMakeTime = 0//上次免费时间
     public videoMakeTimes = 0;
     public makeList = []  //图纸
+	private wx4_functionX_54649(){console.log(2784)}
 
 
 
@@ -72,41 +73,42 @@ class UserManager_wx4 {
             for(var s in localData)
             {
                 data[s] = localData[s];
-	wx4_function(6742);
+	wx4_function(2455);
             }
         }
         var saveTime = data.saveTime;
 
         this.dbid = data._id;
         this.loginTime = data.loginTime || TM_wx4.now();
-	wx4_function(9109);
+	wx4_function(2223);
         this.coin = data.coin || 0;
         this.shareUser = data.shareUser;
         this.helpUser = data.helpUser;
         this.endLess = data.endLess || 0;
         this.level = data.level || 1;
         this.coinTimes = data.coinTimes || 0;
+	wx4_function(4749);
         this.gunLevel = data.gunLevel || {};
         this.nextMakeTime = data.nextMakeTime || 0;
         this.videoMakeTimes = data.videoMakeTimes || 0;
         this.makeList = data.makeList || [];
-	wx4_function(111);
         this.gunPos = data.gunPos || {};
         this.gunPosNum = _get['pos'] || data.gunPosNum || 3;
+	wx4_function(6588);
         this.pastDayCoin = data.pastDayCoin
 
         this.testPassDay()
 
         DM.addTime = SharedObjectManager_wx4.getInstance().getMyValue('addTime') || 0;
         this.offlineTime = TM_wx4.now() - saveTime;
-	wx4_function(6307);
+	wx4_function(5930);
 
         this.initDataTime = TM_wx4.now()
 
         if(this.isFirst)
         {
             var wx = window['wx'];
-	wx4_function(1242);
+	wx4_function(2340);
             if(wx)
             {
                 var query = wx.getLaunchOptionsSync().query;
@@ -117,59 +119,62 @@ class UserManager_wx4 {
             }
         }
 
-	wx4_function(5335);
-        this.testAddInvite_3788();
-        this.localSave_3405();
+	wx4_function(230);
+        this.testAddInvite_191();
+        this.localSave_7136();
         GunManager.getInstance().initData();
     }
 
     public getPassDayCoin(){
         return Math.floor(this.level * 5*Math.pow(1.23,this.level/10))*100
     }
+	private wx4_functionX_54650(){console.log(1437)}
 
     public testPassDay(){
         if(!DateUtil_wx4.isSameDay(this.pastDayCoin.t))
         {
             this.pastDayCoin.t = TM_wx4.now();
             this.videoMakeTimes = 0;
+	wx4_function(8245);
             this.coinTimes = 0;
             this.pastDayCoin.coin = this.getPassDayCoin();
             this.needUpUser = true
         }
     }
 
+	private wx4_functionX_54651(){console.log(2783)}
     public renewInfo(userInfo){
         if(!userInfo)
             return;
         this.haveGetUser = true;
-	wx4_function(236);
         this.nick = userInfo.nickName
         this.head = userInfo.avatarUrl
         this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
-        this.testAddInvite_3788();
+        this.testAddInvite_191();
+	wx4_function(4399);
     }
     public addCoin(v,stopSave?){
         if(!v)
             return;
         this.coin += v;
-	wx4_function(4332);
         if(this.coin < 0)
             this.coin = 0;
+	wx4_function(927);
         if(!stopSave)
             UM_wx4.needUpUser = true;
         EM_wx4.dispatch(GameEvent.client.COIN_CHANGE)
     }
-	private wx4_functionX_45953(){console.log(8079)}
 
     public getUserInfo(fun){
         var wx = window['wx'];
+	wx4_function(1645);
         if(!wx)
         {
             setTimeout(()=>{
                 this.gameid = _get['openid'];
-	wx4_function(75);
                 this.isFirst = !SharedObjectManager_wx4.getInstance().getMyValue('localSave')
-                this.fill(this.orginUserData_8159());
+                this.fill(this.orginUserData_5537());
+	wx4_function(3936);
                 fun && fun();
             },1000)
             return;
@@ -183,7 +188,7 @@ class UserManager_wx4 {
                         {
                             MyWindow.Alert('请求用户数据失败，请重新启动',()=>{
                                 wx.exitMiniProgram({});
-	wx4_function(8095);
+	wx4_function(4980);
                             })
                             return;
                         }
@@ -199,7 +204,7 @@ class UserManager_wx4 {
                     fail:()=>{
                        MyWindow.Alert('请求用户数据超时，请重新启动',()=>{
                            wx.exitMiniProgram({});
-	wx4_function(1947);
+	wx4_function(3137);
                        })
                     }
                 })
@@ -209,7 +214,7 @@ class UserManager_wx4 {
 
     public loginUser(fun?){
         var wx = window['wx'];
-	wx4_function(5922);
+	wx4_function(8702);
         const db = wx.cloud.database();
         db.collection('user').where({     //取玩家数据
             _openid: this.gameid,
@@ -218,11 +223,11 @@ class UserManager_wx4 {
                 //console.log(res,res.data.length == 0);
                 if(res.data.length == 0)//新用户
                 {
-                    this.onNewUser_2916(fun)
+                    this.onNewUser_8475(fun)
                     return;
                 }
                 this.fill(res.data[0]);
-	wx4_function(1186);
+	wx4_function(1769);
                 fun && fun();
             }
         })
@@ -233,7 +238,7 @@ class UserManager_wx4 {
         if(TM_wx4.now() - this.initDataTime < 5*60)
         {
             fun && fun();
-	wx4_function(7470);
+	wx4_function(3491);
             return;
         }
         this.initDataTime = TM_wx4.now();
@@ -241,7 +246,7 @@ class UserManager_wx4 {
         if(!wx)
         {
             fun && fun();
-	wx4_function(1106);
+	wx4_function(7992);
             return;
         }
         const db = wx.cloud.database();
@@ -250,15 +255,15 @@ class UserManager_wx4 {
         }).get({
             success: (res)=>{
                 var data = res.data[0];
-	wx4_function(2256);
+	wx4_function(4242);
                 this.shareUser = data.shareUser;
                 fun && fun();
             }
         })
     }
 
-	private wx4_functionX_45954(){console.log(3139)}
-    private testAddInvite_3788(){
+	private wx4_functionX_54652(){console.log(8769)}
+    private testAddInvite_191(){
         if(this.helpUser && this.haveGetUser)
         {
             var wx = window['wx'];
@@ -274,7 +279,7 @@ class UserManager_wx4 {
                 complete: (res) => {
                     console.log(res)
                     this.helpUser = null;
-	wx4_function(3398);
+	wx4_function(1896);
                     this.needUpUser = true;
                 }
             })
@@ -282,18 +287,18 @@ class UserManager_wx4 {
     }
 
     //新用户注册
-	private wx4_functionX_45955(){console.log(4531)}
-    private onNewUser_2916(fun?){
+	private wx4_functionX_54653(){console.log(6130)}
+    private onNewUser_8475(fun?){
         //console.log('newUser')
         this.isFirst = true;
         var wx = window['wx'];
         const db = wx.cloud.database();
-        var initData:any = this.orginUserData_8159();
+        var initData:any = this.orginUserData_5537();
         db.collection('user').add({
             data:initData,
             success: (res)=>{
                 initData._id = res._id;
-	wx4_function(4462);
+	wx4_function(5580);
                 this.fill(initData);
                 fun && fun();
             }
@@ -302,8 +307,8 @@ class UserManager_wx4 {
         //this.needUpUser = true;
     }
 
-	private wx4_functionX_45956(){console.log(3620)}
-    private orginUserData_8159(){
+	private wx4_functionX_54654(){console.log(4900)}
+    private orginUserData_5537(){
          return {
              loginTime:TM_wx4.now(),   //$
              coin:500,   //$
@@ -315,10 +320,10 @@ class UserManager_wx4 {
              saveTime:0,
              shareUser:[],
          };
-	wx4_function(6011);
+	wx4_function(7109);
     }
 
-    private getUpdataData_4415(){
+    private getUpdataData_3942(){
         return {
             loginTime:UM_wx4.loginTime,
             coin:UM_wx4.coin,
@@ -336,7 +341,7 @@ class UserManager_wx4 {
             //guideFinish:UM.guideFinish,
             saveTime:TM_wx4.now(),
         };
-	wx4_function(9141);
+	wx4_function(5252);
     }
 
 
@@ -344,22 +349,22 @@ class UserManager_wx4 {
         if(!this.needUpUser)
             return;
         var wx = window['wx'];
-	wx4_function(3696);
+	wx4_function(1378);
         if(wx)
         {
-            var updateData:any = this.getUpdataData_4415();;
+            var updateData:any = this.getUpdataData_3942();;
             WXDB.updata('user',updateData)
         }
         this.needUpUser = false;
-	wx4_function(1156);
-        this.localSave_3405();
+	wx4_function(1838);
+        this.localSave_7136();
         //this.upWXData();
     }
 
-    private localSave_3405(){
-        SharedObjectManager_wx4.getInstance().setMyValue('localSave',this.getUpdataData_4415())
+    private localSave_7136(){
+        SharedObjectManager_wx4.getInstance().setMyValue('localSave',this.getUpdataData_3942())
     }
-	private wx4_functionX_45957(){console.log(3603)}
+	private wx4_functionX_54655(){console.log(6589)}
 
 
     public upWXEndLess(){
@@ -372,14 +377,14 @@ class UserManager_wx4 {
             KVDataList: upList,
             success: res => {
                 console.log(res);
-	wx4_function(4411);
+	wx4_function(3752);
             },
             fail: res => {
                 console.log(res);
             }
         });
     }
-	private wx4_functionX_45958(){console.log(7736)}
+	private wx4_functionX_54656(){console.log(5119)}
 
     public upWXLevel(){
         var wx = window['wx'];
@@ -391,14 +396,14 @@ class UserManager_wx4 {
             KVDataList: upList,
             success: res => {
                 console.log(res);
-	wx4_function(4620);
+	wx4_function(9760);
             },
             fail: res => {
                 console.log(res);
             }
         });
     }
-	private wx4_functionX_45959(){console.log(6019)}
+	private wx4_functionX_54657(){console.log(3453)}
 
     public getBG(lv?){
         lv = lv || UM_wx4.level;
@@ -406,7 +411,7 @@ class UserManager_wx4 {
         var index = (lv * add)%15 || 1;
         return 'bg_'+index+'_jpg'
     }
-	private wx4_functionX_45960(){console.log(2636)}
+	private wx4_functionX_54658(){console.log(6298)}
 
     public checkCoin(v){
         if(this.coin < v)
@@ -416,6 +421,6 @@ class UserManager_wx4 {
         }
         return true
     }
-	private wx4_functionX_45961(){console.log(9962)}
+	private wx4_functionX_54659(){console.log(650)}
 
 }

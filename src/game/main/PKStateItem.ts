@@ -40,6 +40,7 @@ class PKStateItem extends game.BaseItem{
     private txt: eui.Label;
 
     private shape = new egret.Shape()
+    private lastDrawTime = 0
     public constructor() {
         super();
         this.skinName = "PKStateItemSkin";
@@ -134,11 +135,12 @@ class PKStateItem extends game.BaseItem{
     }
 
     public onE(){
-        if(this.data > 1000)
+        if(this.data > 1000 && egret.getTimer() - this.lastDrawTime > 100)
         {
             var buffVO = PKCode_wx4.getInstance().isInBuff(this.data);
             if(!buffVO)
                 return;
+            this.lastDrawTime = egret.getTimer();
             var v = buffVO.step
             var maxStep = PKStateItem.buffcd[this.data];
             MyTool.getSector(30,-90,-v/maxStep*360,0xFFFFFF,1,this.shape)

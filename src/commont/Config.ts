@@ -4,14 +4,14 @@
  *
  */
 class Config {
-	private wx4_functionX_45789(){console.log(8914)}
+	private wx4_functionX_54453(){console.log(1553)}
 	public constructor() {
 	}
 
     public static isDebug: boolean = true;
     public static userHost: string = 'hangegame.com';
     public static host: string = 'hangegame.com';
-	private wx4_functionX_45790(){console.log(2445)}
+	private wx4_functionX_54454(){console.log(4894)}
     public static pkServerHost: string = '172.17.196.195';
     public static pkServerPose = 9029;
     public static serverID: number = 1;
@@ -19,7 +19,7 @@ class Config {
     public static user_version: number = 1;
     public static version: number = 1;
     public static displayVersion = '1.0.0';
-	private wx4_functionX_45791(){console.log(111)}
+	private wx4_functionX_54455(){console.log(8855)}
     public static pk_version: number = 1;
     public static cdn: string = "";
     public static localResRoot:string = "resource/game_assets/";
@@ -28,14 +28,14 @@ class Config {
         id = id || Math.ceil(Math.random()*4)
        return "resource/game_assets2/share/share"+id+".jpg";
     }
-	private wx4_functionX_45792(){console.log(8859)}
+	private wx4_functionX_54456(){console.log(5070)}
 
     public static adHeight = 0
 
     public static openRate = 10;
 
 
-	private wx4_functionX_45793(){console.log(520)}
+	private wx4_functionX_54457(){console.log(8152)}
 
 
     //public static friendLevel = 3;
@@ -52,14 +52,14 @@ class Config {
 
     public static platform = '';
     public static platformGameidAdd = '';
-	private wx4_functionX_45794(){console.log(3313)}
+	private wx4_functionX_54458(){console.log(8032)}
     public static equalValue = 1000;
 
 
     public static init(){
 
     }
-	private wx4_functionX_45795(){console.log(3773)}
+	private wx4_functionX_54459(){console.log(8008)}
 
     private static createImg(name,path=''){
         return {
@@ -68,7 +68,7 @@ class Config {
            "url": path + name
        }
     }
-	private wx4_functionX_45796(){console.log(1339)}
+	private wx4_functionX_54460(){console.log(9433)}
     private static createJSON(name,path=''){
         return {
            "name":name.replace('.','_'),
@@ -76,7 +76,7 @@ class Config {
            "url": path + name
        }
     }
-	private wx4_functionX_45797(){console.log(5256)}
+	private wx4_functionX_54461(){console.log(609)}
 
     public static initURLRequest() {
         //if(AppQU.isApp) return;
@@ -99,7 +99,7 @@ class Config {
         //    }
         //}
     }
-	private wx4_functionX_45798(){console.log(8604)}
+	private wx4_functionX_54462(){console.log(1830)}
 
 }
 

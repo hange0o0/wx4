@@ -49,21 +49,21 @@ class PassDayAwardUI extends game.BaseWindow_wx4 {
         //if(this.isVideo)
         //{
             ShareTool.openGDTV(()=>{
-                this.onAddCoin_5742()
+                this.onAddCoin()
             })
         //}
         //if(this.videoIcon.visible)
         //{
-        //    this.onAddCoin_5742()
+        //    this.onAddCoin()
         //    return
         //}
         //ShareTool.share('我需要你们的帮助！！',Config.getShare(0),{},()=>{
-        //    this.onAddCoin_5742()
+        //    this.onAddCoin()
         //})
     }
 
 
-    private onAddCoin_5742(){
+    private onAddCoin(){
         SoundManager.getInstance().playEffect('coin')
         MyTool.removeMC(this.shareBtn);
         UM_wx4.pastDayCoin.coin = 0

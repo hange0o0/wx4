@@ -31,14 +31,14 @@
 class ThemeAdapter implements eui.IThemeAdapter {
 
     /**
-	private wx4_functionX_45758(){console.log(1990)}
+	private wx4_functionX_54451(){console.log(5889)}
      * 解析主题
      * @param url 待解析的主题url
      * @param onSuccess 解析完成回调函数，示例：compFunc(e:egret.Event):void;
      * @param onError 解析失败回调函数，示例：errorFunc():void;
      * @param thisObject 回调的this引用
      */
-	private wx4_functionX_45759(){console.log(3519)}
+	private wx4_functionX_54452(){console.log(5223)}
     public getTheme(url: string, onSuccess: Function, onError: Function, thisObject: any): void {
         function onResGet(e: string): void {
             onSuccess.call(thisObject, e);
@@ -46,7 +46,7 @@ class ThemeAdapter implements eui.IThemeAdapter {
         function onResError(e: RES.ResourceEvent): void {
             if (e.resItem.url == url) {
                 RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, onResError, null);
-	wx4_function(7580);
+	wx4_function(4446);
                 onError.call(thisObject);
             }
         }
@@ -54,7 +54,7 @@ class ThemeAdapter implements eui.IThemeAdapter {
         if (typeof generateEUI !== 'undefined') {
             egret.callLater(() => {
                 onSuccess.call(thisObject, generateEUI);
-	wx4_function(8157);
+	wx4_function(8880);
             }, this);
         }
         else if (typeof generateEUI2 !== 'undefined') {
@@ -62,14 +62,14 @@ class ThemeAdapter implements eui.IThemeAdapter {
                 window["JSONParseClass"]["setData"](data);
                 egret.callLater(() => {
                     onSuccess.call(thisObject, generateEUI2);
-	wx4_function(1809);
+	wx4_function(342);
                 }, this);
             }, this, RES.ResourceItem.TYPE_JSON);
         }
         else if (typeof generateJSON !== 'undefined') {
             if (url.indexOf(".exml") > -1) {
                 let dataPath = url.split("/");
-	wx4_function(92);
+	wx4_function(9342);
                 dataPath.pop();
                 let dirPath = dataPath.join("/") + "_EUI.json";
                 if (!generateJSON.paths[url]) {
@@ -77,21 +77,21 @@ class ThemeAdapter implements eui.IThemeAdapter {
                         window["JSONParseClass"]["setData"](data);
                         egret.callLater(() => {
                             onSuccess.call(thisObject, generateJSON.paths[url]);
-	wx4_function(5008);
+	wx4_function(9289);
                         }, this);
                     }, this, RES.ResourceItem.TYPE_JSON);
                 } else {
                     egret.callLater(() => {
                         onSuccess.call(thisObject, generateJSON.paths[url]);
                     }, this);
-	wx4_function(4703);
+	wx4_function(3894);
                 }
             }
             else {
                 egret.callLater(() => {
                     onSuccess.call(thisObject, generateJSON);
                 }, this);
-	wx4_function(969);
+	wx4_function(9002);
             }
         }
         else {

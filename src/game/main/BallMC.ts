@@ -25,6 +25,8 @@ class BallMC extends game.BaseItem{
         super.childrenCreated();
         this.anchorOffsetX = 74/2
         this.anchorOffsetY = 152
+
+        this.touchChildren = this.touchEnabled = false;
     }
 
     private mc: eui.Image;

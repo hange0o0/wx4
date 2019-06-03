@@ -1359,6 +1359,21 @@
 			"name":"logo_wx2_png",
 			"type":"image",
 			"url":"game_assets2/share/logo_wx2.png"
+		},
+		{
+			"name":"yellor_bg_png",
+			"type":"image",
+			"url":"game_assets/yellor_bg.png"
+		},
+		{
+			"name":"red_bg_png",
+			"type":"image",
+			"url":"game_assets/red_bg.png"
+		},
+		{
+			"name":"white_bg_png",
+			"type":"image",
+			"url":"game_assets/white_bg.png"
 		}
 	]
 }

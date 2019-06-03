@@ -20,6 +20,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
      }
 
      public id = 0
+    public vo;
 
 
     private barGroup: eui.Group;
@@ -37,14 +38,16 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public slowStep = 0;
     public speedDec = 0;
     public buffHp = 0;
+    public moveSpeed = 0;
 
 
 
     public get speedDec2(){
         var count = 0
-        if(PKCode_wx4.getInstance().isInBuff(104))
+        var PC = PKCode_wx4.getInstance();
+        if(PC.isInBuff(104))
             count += 20;
-        if(PKCode_wx4.getInstance().isInBuff(1103))
+        if(PC.isInBuff(1103))
             count -= 20;
         return count;
     }
@@ -66,6 +69,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public childrenCreated() {
         super.childrenCreated();
 
+        this.touchChildren = this.touchEnabled = false;
+
         this.addChildAt(this.monsterMV,0)
         this.monsterMV.x = 50;
         this.monsterMV.y = 300;
@@ -80,15 +85,16 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public getAtk(){
-        var hp = this.getVO().atk
+        var hp = this.vo.atk
         var add = 1;
-        if(PKCode_wx4.getInstance().isInBuff(102))
+        var PC = PKCode_wx4.getInstance();
+        if(PC.isInBuff(102))
             add += 0.2;
-        if(PKCode_wx4.getInstance().isInBuff(105))
+        if(PC.isInBuff(105))
             add += 0.2;
-        if(PKCode_wx4.getInstance().isInBuff(1106))
+        if(PC.isInBuff(1106))
             add -= 0.2;
-        if(PKCode_wx4.getInstance().isInBuff(1109))
+        if(PC.isInBuff(1109))
             add -= 0.2;
         return Math.ceil(hp*add);
     }
@@ -97,35 +103,38 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.isDie = 2;
     }
 
-    public getVO(){
-        return MonsterVO.getObject(this.mid);
-    }
-
     public setSlow(speedDec,cd){
         var step = Math.ceil(cd*1000*(60/1000))
         this.slowStep = Math.max(this.slowStep,step)
         this.speedDec = Math.max(this.speedDec,speedDec)
-        this.resetSpeed();
+        this.onSpeedChange();
         this.monsterMV.alpha = 0.6;
     }
 
-    public resetSpeed(){
+    public onSpeedChange(){
         var speed = -this.speedDec + this.speedDec2;
         this.monsterMV.speed = speed
+
+        var speedAdd = (this.speed/20)/this.getSpeedRate();
+        if(!speedAdd || speedAdd < 0) //防止一动不动
+            speedAdd = 1;
+        this.moveSpeed = speedAdd;
     }
+
 
     public setYun(cd){
         var step = Math.ceil(cd*1000*(60/1000))
         if(!this.yunStep)//表现晕
         {
             this.addChild(this.stateMV)
-            this.stateMV.y = 300 - this.getVO().height - 35;
+            this.stateMV.y = 300 - this.vo.height - 35;
             this.stateMV.play()
         }
         this.yunStep = Math.max(step,this.yunStep);
     }
 
     public onE(){
+        this.monsterMV.onE();
         if(this.yunStep)
         {
             this.yunStep --;
@@ -140,11 +149,12 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         if(this.slowStep)
         {
             this.slowStep --;
-            if(this.slowStep == 0)
+            if(this.slowStep <= 0)
             {
                 this.speedDec = 0;
                 this.monsterMV.speed = 0;
                 this.monsterMV.alpha = 1;
+                this.onSpeedChange();
             }
         }
     }
@@ -161,6 +171,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.slowStep = 0;
         this.speedDec = 0;
         this.mid = this.data.mid;
+        this.vo = MonsterVO.getObject(this.mid)
         this.monsterMV.load(this.mid)
         this.monsterMV.stand();
         this.monsterMV.alpha = 1;
@@ -177,13 +188,14 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
         this.hp = this.data.hp
         this.maxHp = this.hp
-        this.speed = this.getVO().speed
+        this.speed = this.vo.speed
 
 
         this.barGroup.visible = false;
         this.barGroup.alpha = 1;
-        this.barGroup.y = 300 - this.getVO().height - 20;
+        this.barGroup.y = 300 - this.vo.height - 20;
         this.renewHp();
+        this.onSpeedChange();
 
         this.stateMV.stop()
         MyTool.removeMC(this.stateMV)
@@ -196,19 +208,15 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
 
     public run(){
-        this.resetSpeed();
         if(this.monsterMV.state != MonsterMV.STAT_RUN )
             this.monsterMV.run();
-        var speedAdd = (this.speed/20)/this.getSpeedRate();
-        if(!speedAdd || speedAdd < 0) //防止一动不动
-            speedAdd = 1;
-        this.x -=  speedAdd
+
+        this.x -=  this.moveSpeed;
         //if(isNaN(this.x))
         //    console.log('???')
     }
 
     public stand(){
-        this.resetSpeed();
         if(this.monsterMV.state != MonsterMV.STAT_STAND)
             this.monsterMV.stand();
     }
@@ -217,15 +225,12 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.isDie = 1;
         this.monsterMV.die();
         this.bar.width = 0;
-        this.barGroup.visible = true;
-        var tw = egret.Tween.get(this.barGroup);
-        tw.to({alpha:0},300)
-        this.getVO().playDieSound();
+        this.barGroup.visible = false;
+        this.vo.playDieSound();
 
     }
 
     public atk(){
-        this.resetSpeed();
         this.monsterMV.atk();
     }
 
@@ -245,14 +250,15 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             this.buffHp ++;
             return;
         }
-        if(!v)
-            console.log(v);
+        //if(!v)
+        //    console.log(v);
+        var PC = PKCode_wx4.getInstance();
         if(v < 0)
         {
             var add = 1;
-            PKCode_wx4.getInstance().isInBuff(1102)
+            PC.isInBuff(1102)
                 add += 0.2
-            PKCode_wx4.getInstance().isInBuff(1105)
+            PC.isInBuff(1105)
                 add += 0.2
             v = Math.floor(v*add)
         }
@@ -261,7 +267,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             v = -this.hp;
         this.hp += v;
         if(v < 0)
-            PKCode_wx4.getInstance().enemyHp += v;
+            PC.enemyHp += v;
         this.renewHp();
         if(this.hp <= 0)
             this.die();

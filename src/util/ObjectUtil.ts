@@ -4,7 +4,7 @@
  *
  */
 class ObjectUtil_wx4 {
-	private wx4_functionX_46028(){console.log(5313)}
+	private wx4_functionX_54730(){console.log(285)}
 	public constructor() {
 	}
 
@@ -14,7 +14,7 @@ class ObjectUtil_wx4 {
             arr.push(key + "=" + paramList[key]);
         return arr.join(joinStr);
     }
-	private wx4_functionX_46029(){console.log(4998)}
+	private wx4_functionX_54731(){console.log(4464)}
 		
 	public static arrayToObj(array:Array<any>, key:string, value:any):any{
     	key = key || "key";
@@ -29,7 +29,7 @@ class ObjectUtil_wx4 {
     	}
     	return o;
 	}
-	private wx4_functionX_46030(){console.log(7392)}
+	private wx4_functionX_54732(){console.log(6407)}
     	
     public static objToArray(obj:any):Array<any>{
         var list = [];
@@ -37,7 +37,7 @@ class ObjectUtil_wx4 {
             list.push(obj[key]);
         return list;
     }
-	private wx4_functionX_46031(){console.log(3855)}
+	private wx4_functionX_54733(){console.log(2690)}
     
         	
     public static objLength(obj: any,removeEmpty?): number {
@@ -50,7 +50,7 @@ class ObjectUtil_wx4 {
         }
         return count;
     }
-	private wx4_functionX_46032(){console.log(1807)}
+	private wx4_functionX_54734(){console.log(7338)}
 
 	public static clone (source) {
 		return JSON.parse(JSON.stringify(source))    //++add   临时
@@ -83,14 +83,14 @@ class ObjectUtil_wx4 {
         }
 		
 	}
-	private wx4_functionX_46033(){console.log(9248)}
+	private wx4_functionX_54735(){console.log(4917)}
     public static removeClickEvent(btn: egret.DisplayObject,fun: any,thisObject: any): void {
         if(btn) {
             btn.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,btn["clickFun_touchBegin"],thisObject);
             btn.removeEventListener(egret.TouchEvent.TOUCH_END,btn["clickFun_touchEnd"],thisObject);
         }
     }
-	private wx4_functionX_46034(){console.log(1260)}
+	private wx4_functionX_54736(){console.log(9791)}
 
     public static swapKey(data,key1,key2){
         var temp = data[key1]

@@ -3,7 +3,7 @@ class ShareTool {
     /**
      * 分享
      */
-	private wx4_functionX_45962(){console.log(4005)}
+	private wx4_functionX_54660(){console.log(6813)}
     public static share(title, imgUrl,shareArgs,success?,mustSuccess?){
         if(DEBUG){
             //if(!shareArgs || !shareArgs.ACT_TYPE){
@@ -112,7 +112,7 @@ class ShareTool {
         //    return;
         //}
     }
-	private wx4_functionX_45963(){console.log(5376)}
+	private wx4_functionX_54661(){console.log(1815)}
 
 
 
@@ -160,7 +160,7 @@ class ShareTool {
             window["wx"].isPlayAD = false
         })
     }
-	private wx4_functionX_45964(){console.log(8702)}
+	private wx4_functionX_54662(){console.log(9951)}
 
     //是否支持播放视频广告
     //默认canPay=false，表示改渠道支持播放广告，但当前播放不了，提示版本升级； true时严格判断当前是不是可以播广告

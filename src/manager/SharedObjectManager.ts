@@ -4,7 +4,7 @@
  *
  */
 class SharedObjectManager_wx4 {
-	private wx4_functionX_45932(){console.log(6291)}
+	private wx4_functionX_54610(){console.log(3888)}
     public constructor() {
     }
 
@@ -14,37 +14,37 @@ class SharedObjectManager_wx4 {
             SharedObjectManager_wx4._instance = new SharedObjectManager_wx4();
         return SharedObjectManager_wx4._instance;
     }
-	private wx4_functionX_45933(){console.log(3567)}
+	private wx4_functionX_54611(){console.log(8600)}
 
-    private getUserSign_5866():string{
+    private getUserSign_9345():string{
         return UM_wx4.gameid;
     }
 
     public setMyValue(key:string,value:any){
-        key = this.getUserSign_5866() + "_" + key;
-	wx4_function(3905);
+        key = this.getUserSign_9345() + "_" + key;
+	wx4_function(1733);
         this.setValue(key,value);
     }
 
     public getMyValue(key:string):any{
-        key = this.getUserSign_5866() + "_" + key;
+        key = this.getUserSign_9345() + "_" + key;
         return this.getValue(key);
     }
-	private wx4_functionX_45934(){console.log(6078)}
+	private wx4_functionX_54612(){console.log(5935)}
 
     public removeMyValue(key:string) {
 
-        key = this.getUserSign_5866() + "_" + key;
+        key = this.getUserSign_9345() + "_" + key;
         egret.localStorage.removeItem(key);
     }
-	private wx4_functionX_45935(){console.log(8379)}
+	private wx4_functionX_54613(){console.log(3246)}
 
     public setValue(key:string,value:any) {
 
         var data:any = {};
         data.data = value;
         data = JSON.stringify(data);
-	wx4_function(1030);
+	wx4_function(5274);
         egret.localStorage.setItem(key, data);
         //console.log('setValue',key,data)
     }
@@ -55,7 +55,7 @@ class SharedObjectManager_wx4 {
         if(!value)
             return null;
         var data = JSON.parse(value);
-	wx4_function(3945);
+	wx4_function(3239);
         return data.data;
     }
 }

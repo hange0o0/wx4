@@ -16,7 +16,7 @@ class GunItem extends game.BaseItem{
             this.pool.push(item);
     }
 
-    private roleBG: eui.Image;
+    //private roleBG: eui.Image;
     private role2: eui.Image;
     private role: eui.Image;
     private shootMC: eui.Image;
@@ -35,7 +35,7 @@ class GunItem extends game.BaseItem{
 
     public baseY = 0//初始位置
     public step = 0;
-    public tw;
+    //public tw;
     public timer;
     public maxStep;
     public state = {}//(skillid:step)
@@ -47,6 +47,7 @@ class GunItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.touchChildren = this.touchEnabled = false;
         this.anchorOffsetX = 50
         this.anchorOffsetY = 50
         this.scaleX = this.scaleY = 0.7
@@ -61,8 +62,8 @@ class GunItem extends game.BaseItem{
         this.roundMC2.horizontalCenter = -50
 
         //this.roleBG.scaleX = this.roleBG.scaleY = 0.8
-        this.tw = egret.Tween.get(this.roleBG,{loop:true}).to({alpha:0.2},1000).to({alpha:1},1000)
-        this.tw.setPaused(true)
+        //this.tw = egret.Tween.get(this.roleBG,{loop:true}).to({alpha:0.2},1000).to({alpha:1},1000)
+        //this.tw.setPaused(true)
 
 
     }
@@ -70,13 +71,13 @@ class GunItem extends game.BaseItem{
     public dataChanged():void {
         clearTimeout(this.timer)
         var lv = GunManager.getInstance().getGunLevel(this.data) || 1
-        this.roleBG.source = 'role_bg_'+(lv%8 || 8)+'_png'
+        //this.roleBG.source = 'role_bg_'+(lv%8 || 8)+'_png'
         this.role.source = 'role_'+(lv%8 || 8)+'_png'
         this.role2.visible = lv > 8
         if(this.role2.visible)
             this.role2.source = 'role_'+Math.floor(lv/8)+'_png'
 
-        this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
+        //this.timer = setTimeout(()=>{this.tw && this.tw.setPaused(false)},1000*Math.random())
         this.step = 0;
 
         if(this.data >100)
@@ -104,9 +105,10 @@ class GunItem extends game.BaseItem{
         this.step ++;
         var maxStep = this.maxStep;
         var speedAdd = 0
-        if(PKCode_wx4.getInstance().isInBuff(103))
+        var PC = PKCode_wx4.getInstance()
+        if(PC.isInBuff(103))
             speedAdd += 0.2
-        if(PKCode_wx4.getInstance().isInBuff(1104))
+        if(PC.isInBuff(1104))
             speedAdd -= 0.2
 
         maxStep = Math.floor(maxStep*(1+speedAdd))
@@ -133,7 +135,7 @@ class GunItem extends game.BaseItem{
     public remove():void {
         MyTool.removeMC(this);
         egret.Tween.removeTweens(this);
-        this.tw.setPaused(true)
+        //this.tw.setPaused(true)
         clearTimeout(this.timer)
     }
 

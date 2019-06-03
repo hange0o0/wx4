@@ -4,7 +4,7 @@
  *
  */
 class DateUtil_wx4 {
-	private wx4_functionX_45973(){console.log(9965)}
+	private wx4_functionX_54675(){console.log(7240)}
     private static offsetTime: number = 0// -21600//6*3600 6小时修正（当日6点至次日6点为一天、本月1号6点至次月1号6点为一个月）
     
     public constructor() {
@@ -16,7 +16,7 @@ class DateUtil_wx4 {
             time2 = TimeManager_wx4.getInstance().now();
         return DateUtil_wx4.getWeekDec(time1,time2) == 0;
     }
-	private wx4_functionX_45974(){console.log(5026)}
+	private wx4_functionX_54676(){console.log(1032)}
 	
     //转化为北京时间的Date
     public static timeToChineseDate(time: number): Date {
@@ -24,7 +24,7 @@ class DateUtil_wx4 {
         date.setMinutes(date.getMinutes() + 480 + date.getTimezoneOffset());
         return date;
     }
-	private wx4_functionX_45975(){console.log(2165)}
+	private wx4_functionX_54677(){console.log(3948)}
 	
     //是否同一天
     public static isSameDay(time1: number,time2?: number,offset = -1): boolean {
@@ -44,7 +44,7 @@ class DateUtil_wx4 {
             return true;
         return false;
     }
-	private wx4_functionX_45976(){console.log(3052)}
+	private wx4_functionX_54678(){console.log(1271)}
 	
     //与今天的天数差异，以6点为界
     public static getDayDes(time: number, isZero?: boolean): number {
@@ -62,7 +62,7 @@ class DateUtil_wx4 {
             return -DateUtil_wx4.datediff(date2,date1)
         }
     }
-	private wx4_functionX_45977(){console.log(4211)}
+	private wx4_functionX_54679(){console.log(3664)}
 
     public static isThisDate(time: number): boolean {
         time += DateUtil_wx4.offsetTime;
@@ -70,7 +70,7 @@ class DateUtil_wx4 {
         var date2 = DateUtil_wx4.timeToChineseDate(TimeManager_wx4.getInstance().now());
         return date1.getDate() == date2.getDate();
     }
-	private wx4_functionX_45978(){console.log(7603)}
+	private wx4_functionX_54680(){console.log(4775)}
 	
     //判断时间戳是否是当前月
     public static isThisMonth(time: number): boolean {
@@ -78,7 +78,7 @@ class DateUtil_wx4 {
         var date2 = DateUtil_wx4.timeToChineseDate(TimeManager_wx4.getInstance().now());
         return date1.getMonth() == date2.getMonth()
     }
-	private wx4_functionX_45979(){console.log(4994)}
+	private wx4_functionX_54681(){console.log(1743)}
     
     //转成 XX：XX：XX 格式
     public static getStringBySecond(value: number): string {
@@ -102,7 +102,7 @@ class DateUtil_wx4 {
 
         return msg;
     }
-	private wx4_functionX_45980(){console.log(1037)}
+	private wx4_functionX_54682(){console.log(5754)}
     
     //比较天数差异   (前大后小)
     public static datediff(startTime: Date,endTime: Date): number {
@@ -121,7 +121,7 @@ class DateUtil_wx4 {
 
         return (startTime.getTime() - endTime.getTime()) / (24 * 3600000);
     }
-	private wx4_functionX_45981(){console.log(8887)}
+	private wx4_functionX_54683(){console.log(9886)}
     
     //判断两个时间错相差的周数 (注意这个 周1到周7为同一周)  0点
     public static getWeekDec(time1: number,time2: number): number {
@@ -147,14 +147,14 @@ class DateUtil_wx4 {
 
         return (d2.getTime() - d1.getTime()) / 24 / 3600 / 1000 / 7;
     }
-	private wx4_functionX_45982(){console.log(9140)}
+	private wx4_functionX_54684(){console.log(9000)}
     
     /**
     * 获取北京时间xx点的时间戳
     * @param h
     * @returns {number}
     */
-	private wx4_functionX_45983(){console.log(4803)}
+	private wx4_functionX_54685(){console.log(8927)}
     public static getNextDateTimeByHours(h: number): number {
         var now = TimeManager_wx4.getInstance().now();
         var date = new Date(now * 1000);
@@ -167,14 +167,14 @@ class DateUtil_wx4 {
         date.setSeconds(0);
         return Math.floor(date.getTime() / 1000);
     }
-	private wx4_functionX_45984(){console.log(8190)}
+	private wx4_functionX_54686(){console.log(7353)}
     
     /**
     * 获取某个时间的时间对象
     * @param h
     * @returns {number}
     */
-	private wx4_functionX_45985(){console.log(3205)}
+	private wx4_functionX_54687(){console.log(3162)}
     public static getNextChineseDateByHours(h: number,date: Date): Date {
         date = date || TimeManager_wx4.getInstance().chineseDate();
         if(date.getHours() >= h)
@@ -184,7 +184,7 @@ class DateUtil_wx4 {
         date.setSeconds(0);
         return date;
     }
-	private wx4_functionX_45986(){console.log(3014)}
+	private wx4_functionX_54688(){console.log(2511)}
 
     public static getStringBySeconds(m: number,isSimple?: boolean,type?: number,addNumber?: number): string {
         if(m < 0)
@@ -247,7 +247,7 @@ class DateUtil_wx4 {
         }
         return t;
     }
-	private wx4_functionX_45987(){console.log(6216)}
+	private wx4_functionX_54689(){console.log(1824)}
 
     public static getMonthWeek(a: number): number {
         /*
@@ -262,7 +262,7 @@ class DateUtil_wx4 {
             (d + 6 - w) / 7
             );
     }
-	private wx4_functionX_45988(){console.log(9275)}
+	private wx4_functionX_54690(){console.log(5985)}
 
     public static getStringByDate(date: Date,type: number): string {
         if(type == 1) {
@@ -277,7 +277,7 @@ class DateUtil_wx4 {
         var s: string = "0" + date.getSeconds();
         return h.substr(h.length - 2,2) + ":" + m.substr(m.length - 2,2) + ":" + s.substr(s.length - 2,2);
     }
-	private wx4_functionX_45989(){console.log(9955)}
+	private wx4_functionX_54691(){console.log(2517)}
 
     public static StringToDate(s: string): Date {
         if(s == null || s == "") return new Date();
@@ -294,7 +294,7 @@ class DateUtil_wx4 {
         var da = new Date(<number> Darr[0],Darr[1] - 1,Darr[2],Tarr[0],Tarr[1],Tarr[2]);
         return da;
     }
-	private wx4_functionX_45990(){console.log(3802)}
+	private wx4_functionX_54692(){console.log(6777)}
     
     //str: "2015-07-15 0:0:0"
     public static getTimestampByChineseDate(str: string): number {
@@ -303,7 +303,7 @@ class DateUtil_wx4 {
         date.setMinutes(date.getMinutes() - diffMinus);
         return Math.floor(date.getTime() / 1000);
     }
-	private wx4_functionX_45991(){console.log(1952)}
+	private wx4_functionX_54693(){console.log(7613)}
     
     //格式化日期 例: DateUtils.formatDate('yyyy-MM-dd hh:mm', new Date());
     public static formatDate(format,date): string {

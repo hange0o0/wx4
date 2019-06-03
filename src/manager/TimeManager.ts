@@ -3,7 +3,7 @@ class TimeManager_wx4 {
 	public constructor() {
 	}
 	
-	private wx4_functionX_45936(){console.log(8301)}
+	private wx4_functionX_54632(){console.log(2803)}
     private static _instance: TimeManager_wx4;
     
     public static getInstance():TimeManager_wx4{
@@ -11,14 +11,14 @@ class TimeManager_wx4 {
             TimeManager_wx4._instance = new TimeManager_wx4();
         return TimeManager_wx4._instance;
     }
-	private wx4_functionX_45937(){console.log(9200)}
+	private wx4_functionX_54633(){console.log(6236)}
     
     private _timeDiff: number = 0;
     public get timeDiff():number {
         return this._timeDiff - DM.addTime;
     }
 
-	private wx4_functionX_45938(){console.log(9663)}
+	private wx4_functionX_54634(){console.log(9081)}
     public loginTime: number = 0;//等陆时的服务器时间
 
     private loginWXTime = 0;
@@ -26,7 +26,7 @@ class TimeManager_wx4 {
         //本地和服务器的时间差
         this._timeDiff = Math.floor(Date.now() / 1000 - time);
     }
-	private wx4_functionX_45939(){console.log(7396)}
+	private wx4_functionX_54635(){console.log(7852)}
 
     public getTimer(){
         var wx = window['wx'];
@@ -34,14 +34,14 @@ class TimeManager_wx4 {
             return  Math.floor((wx.getPerformance().now() -  this.loginWXTime)/1000)
         return egret.getTimer();
     }
-	private wx4_functionX_45940(){console.log(1314)}
+	private wx4_functionX_54636(){console.log(2544)}
 
     public initlogin(t){
         var wx = window['wx'];
         this.loginWXTime = wx.getPerformance().now()
         this.loginTime = Math.floor(t/1000)//Math.floor((t - wx.getPerformance().now())/1000);
     }
-	private wx4_functionX_45941(){console.log(6557)}
+	private wx4_functionX_54637(){console.log(7163)}
     
     public now():number{
         if(this.loginTime)
@@ -51,7 +51,7 @@ class TimeManager_wx4 {
         }
         return Math.floor(Date.now() / 1000) - this.timeDiff //+ 24*3600 *7;
     }
-	private wx4_functionX_45942(){console.log(450)}
+	private wx4_functionX_54638(){console.log(9156)}
     public nowMS():number{
         if(this.loginTime)
         {
@@ -60,7 +60,7 @@ class TimeManager_wx4 {
         }
         return Date.now() - this.timeDiff*1000
     }
-	private wx4_functionX_45943(){console.log(6513)}
+	private wx4_functionX_54639(){console.log(5949)}
 
     public getLastDayOfWeekDate(time:number, endDay:any):Date{
         endDay = endDay || 5;
@@ -70,14 +70,14 @@ class TimeManager_wx4 {
             var add = endDay > curDay
             ? endDay - curDay
             : 7 - (curDay - endDay);
-	wx4_function(6281);
+	wx4_function(9631);
             
             return new Date(d.getTime() + add * 24 * 3600 * 1000);
     }
     
     public offsetDate():Date{
         var offsetTime = -21600;
-	wx4_function(3363);
+	wx4_function(3045);
         var time = this.now();
         time += offsetTime;
         return DateUtil_wx4.timeToChineseDate(time);
@@ -86,7 +86,7 @@ class TimeManager_wx4 {
     public chineseDate():Date{
         return DateUtil_wx4.timeToChineseDate(this.now());
     }
-	private wx4_functionX_45944(){console.log(2261)}
+	private wx4_functionX_54640(){console.log(104)}
     
     public getNextDateTime():number{
         return DateUtil_wx4.getNextDateTimeByHours(6);

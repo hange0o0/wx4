@@ -3,14 +3,14 @@ class ArrayUtil_wx4 {
 	}
 		
     /**
-	private wx4_functionX_45965(){console.log(5094)}
+	private wx4_functionX_54667(){console.log(6993)}
     * 数组排序（只支持数值大小比较）
     * 例子：sortByField(ff, ["score","level","exp"], [1,1,1]);
     * @param data 源数组
     * @param fields 字段名
     * @param type 字段排序规则[0,0,0....] 0表示从小到大,其他任何值都是从大到小
     */
-	private wx4_functionX_45966(){console.log(1134)}
+	private wx4_functionX_54668(){console.log(6607)}
     public static sortByField(data:Array<any>, fields:Array<any>, type:Array<any>):Array<any>
     {
         if(data && fields && type && fields.length == type.length)
@@ -49,7 +49,7 @@ class ArrayUtil_wx4 {
         }
         return data;
     }
-	private wx4_functionX_45967(){console.log(1007)}
+	private wx4_functionX_54669(){console.log(179)}
     
     public static randomOne(arr:Array<any>,splice = false):any{
         var index = Math.floor(arr.length * Math.random())
@@ -58,7 +58,7 @@ class ArrayUtil_wx4 {
             arr.splice(index,1);
         return data;
     }
-	private wx4_functionX_45968(){console.log(4709)}
+	private wx4_functionX_54670(){console.log(3258)}
 
     public static removeItem(arr:Array<any>,item):boolean{
         var index = arr.indexOf(item);
@@ -67,7 +67,7 @@ class ArrayUtil_wx4 {
         arr.splice(index,1);
         return true;
     }
-	private wx4_functionX_45969(){console.log(3004)}
+	private wx4_functionX_54671(){console.log(2076)}
 
     public static random(arr,deep = 1){
         while(deep--)
@@ -80,7 +80,7 @@ class ArrayUtil_wx4 {
         }
 
     }
-	private wx4_functionX_45970(){console.log(1374)}
+	private wx4_functionX_54672(){console.log(5292)}
     
     public static disposeList(itemList: Array<any>):void{
         if(itemList) {
@@ -93,7 +93,7 @@ class ArrayUtil_wx4 {
         }
         itemList = [];
     }
-	private wx4_functionX_45971(){console.log(8073)}
+	private wx4_functionX_54673(){console.log(8796)}
 
     public static indexOfByKey(arr:Array<any>, key:string | number, value:any):number{
         if(arr) {
@@ -107,7 +107,7 @@ class ArrayUtil_wx4 {
         }
         return -1;
     }
-	private wx4_functionX_45972(){console.log(2354)}
+	private wx4_functionX_54674(){console.log(2480)}
 
     public static indexOf(arr,value,key?){
         for(var i=0;i<arr.length;i++)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="LoadingUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*">
-	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xffffff"/>
+	<e:Image source="white_bg_png" left="0" right="0" top="0" bottom="0"/>
 
 		<e:Label text="《健康游戏忠告》" size="24" bottom="80" horizontalCenter="0" textColor="0x828282"/>
 		<e:Label text="抵制不良游戏，拒绝盗版游戏。注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。合理安排时间，享受健康生活。" size="20" lineSpacing="6" textAlign="center" horizontalCenter="0" bottom="20" textColor="0x828282"/>

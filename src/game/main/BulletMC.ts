@@ -40,6 +40,7 @@ class BulletMC extends game.BaseItem{
         super.childrenCreated();
         this.anchorOffsetX = 50
         this.anchorOffsetY = 50
+        this.touchChildren = this.touchEnabled = false
 
         this.mc.scaleX = -1
     }
@@ -89,7 +90,7 @@ class BulletMC extends game.BaseItem{
         return rota
     }
     public move(){
-        var b = this.x && this.y
+        //var b = this.x && this.y
 
         if(this.isDie)
             return;
@@ -128,8 +129,8 @@ class BulletMC extends game.BaseItem{
             this.y += this.speed*Math.sin(this.data.rota/180*Math.PI)
         }
 
-        if(b && !this.x && !this.y)
-            console.log(999)
+        //if(b && !this.x && !this.y)
+        //    console.log(999)
     }
     
     private getTypeVO(type){
@@ -139,7 +140,8 @@ class BulletMC extends game.BaseItem{
     public testHit(monsterArr,ballArr){
         if(this.isDie)
             return;
-        for(var i=0;i<ballArr.length;i++)
+        var len = ballArr.length
+        for(var i=0;i<len;i++)
         {
              var ball = ballArr[i];
             if(ball.y < this.y)
@@ -152,7 +154,8 @@ class BulletMC extends game.BaseItem{
             this.playDie();
                 return;
         }
-        for(var i=0;i<monsterArr.length;i++)
+        len = monsterArr.length;
+        for(var i=0;i<len;i++)
         {
             var item = monsterArr[i];
             if(item.isDie)
@@ -163,7 +166,7 @@ class BulletMC extends game.BaseItem{
                 continue;
             if(item.y < this.y)
                 continue;
-            var mvo = item.getVO();
+            var mvo = item.vo;
             if(item.y > this.y + mvo.height)
                 continue;
             if(Math.abs(item.x -this.x)>mvo.width/2)
@@ -181,11 +184,11 @@ class BulletMC extends game.BaseItem{
                         AniManager_wx3.getInstance().playOnItem(112,item);
                         SoundManager.getInstance().playEffect('boom')
                     }
-                    else if(this.getTypeVO(4)) //杀敌吸血
+                    if(this.getTypeVO(4)) //杀敌吸血
                     {
                         PKCode_wx4.getInstance().addHp(this.getTypeVO(4).getLevelValue(1))
                     }
-                    else if(this.getTypeVO(5)) //杀敌攻击成长
+                    if(this.getTypeVO(5)) //杀敌攻击成长
                     {
                         var addAtk = this.getTypeVO(5).getLevelValue(1);
                         PKCode_wx4.getInstance().addAtk(this.data.id,addAtk)
@@ -198,14 +201,14 @@ class BulletMC extends game.BaseItem{
                     {
                         item.setSlow(this.getTypeVO(7).getLevelValue(1),this.getTypeVO(7).getLevelValue(2,null,false))
                     }
-                    else if(this.getTypeVO(8)) //'有$1%的机率使敌人陷入眩晕状态，持续#2秒';
+                    if(this.getTypeVO(8)) //'有$1%的机率使敌人陷入眩晕状态，持续#2秒';
                     {
                         if(Math.random() < this.getTypeVO(8).getLevelValue(1)/100)
                         {
                             item.setYun(this.getTypeVO(8).getLevelValue(2,null,false))
                         }
                     }
-                    else if(this.getTypeVO(12)) //'使被命中的敌人退后@1距离';
+                    if(this.getTypeVO(12)) //'使被命中的敌人退后@1距离';
                     {
                         item.x += this.getTypeVO(12).getLevelValue(1)
                     }
@@ -224,7 +227,7 @@ class BulletMC extends game.BaseItem{
                         bullet.data.stop14 = true
                     }
                 }
-                else if(this.getTypeVO(15)) // '命中敌人后回复城墙@1点血量';
+                if(this.getTypeVO(15)) // '命中敌人后回复城墙@1点血量';
                 {
                     PKCode_wx4.getInstance().addHp(this.getTypeVO(15).getLevelValue(1))
                 }
@@ -238,7 +241,6 @@ class BulletMC extends game.BaseItem{
                 this.playDie();
                 return;
             }
-
         }
     }
 
@@ -248,7 +250,7 @@ class BulletMC extends game.BaseItem{
             y:this.y - 50 + Math.random()*20,
             x:this.x - 30 - Math.random()*30,
             rotation:this.rotation + 360 + 360*Math.random(),
-            alpha:0,
+            //alpha:0,
         },300).call(()=>{
             this.isDie = 2;
         })

@@ -157,8 +157,8 @@ class ArrowMC_wx3 extends egret.DisplayObjectContainer{
             return false;
         var rate = (t - this.beginTime)/(this.endTime - this.beginTime);
         var dis = Math.abs(this.toMC.x - this.fromMC.x);
-        var fromY = this.fromMC.y - this.fromMC.getVO().height/2
-        var toY = this.toMC.y - this.toMC.getVO().height/2
+        var fromY = this.fromMC.y - this.fromMC.vo.height/2
+        var toY = this.toMC.y - this.toMC.vo.height/2
 
         if(rate<=0.5)
         {
@@ -249,11 +249,11 @@ class BulletMC_wx3 extends egret.DisplayObjectContainer{
         if(t > this.endTime)
             return false;
         var rate = (t - this.beginTime)/(this.endTime - this.beginTime);
-        var toY = this.toMC.y - this.toMC.getVO().height/2
+        var toY = this.toMC.y - this.toMC.vo.height/2
         if(this.fromMC)
         {
-            var fromY = this.fromMC.y - this.fromMC.getVO().height/2 + this.fromMC.getVO().atky
-            var addX = (this.fromMC.getVO().atkx * (this.toMC.x > this.fromMC.x?1:-1));
+            var fromY = this.fromMC.y - this.fromMC.vo.height/2 + this.fromMC.vo.atky
+            var addX = (this.fromMC.vo.atkx * (this.toMC.x > this.fromMC.x?1:-1));
             this.x = this.fromMC.x + (this.toMC.x - this.fromMC.x - addX)*rate + addX
             this.y =  fromY + (toY - fromY)*rate
             this.rotation = this.getRota(
@@ -344,9 +344,9 @@ class BulletMCLine_wx3 extends egret.DisplayObjectContainer{
         if(t > this.endTime)
             return false;
         var rate = (t - this.beginTime)/(this.endTime - this.beginTime);
-        var fromY = this.fromMC.y - this.fromMC.getVO().height/2 + this.fromMC.getVO().atky
+        var fromY = this.fromMC.y - this.fromMC.vo.height/2 + this.fromMC.vo.atky
         var toY = this.toMC.y
-        var addX = (this.fromMC.getVO().atkx * (this.toMC.x > this.fromMC.x?1:-1));
+        var addX = (this.fromMC.vo.atkx * (this.toMC.x > this.fromMC.x?1:-1));
         this.x = this.fromMC.x + (this.toMC.x - this.fromMC.x - addX)*rate + addX
         this.y =  fromY// + (toY - fromY)*rate
         this.fun && this.fun();
@@ -401,9 +401,9 @@ class BulletAniMC_wx3 extends egret.DisplayObjectContainer{
         if(t > this.endTime)
             return false;
         var rate = egret.Ease.sineIn((t - this.beginTime)/(this.endTime - this.beginTime));
-        var fromY = this.fromMC.y - this.fromMC.getVO().height/2 + this.fromMC.getVO().atky
-        var toY = this.toMC.y - this.toMC.getVO().height/2 + this.targetOffsetY
-        var addX = (this.fromMC.getVO().atkx * (this.toMC.x > this.fromMC.x?1:-1));
+        var fromY = this.fromMC.y - this.fromMC.vo.height/2 + this.fromMC.vo.atky
+        var toY = this.toMC.y - this.toMC.vo.height/2 + this.targetOffsetY
+        var addX = (this.fromMC.vo.atkx * (this.toMC.x > this.fromMC.x?1:-1));
         this.x = this.fromMC.x + (this.toMC.x - this.fromMC.x - addX)*rate + addX
         this.y =  fromY + (toY - fromY)*rate
         this.rotation = this.getRota(
@@ -466,9 +466,9 @@ class BulletAniMC2_wx3 extends egret.DisplayObjectContainer{
         if(t > this.endTime)
             return false;
         var rate = (t - this.beginTime)/(this.endTime - this.beginTime);
-        var fromY = this.fromMC.y - this.fromMC.getVO().height/2 + this.fromMC.getVO().atky
-        var toY = this.toMC.y - this.toMC.getVO().height/2 + this.targetOffsetY
-        var addX = (this.fromMC.getVO().atkx * (this.toMC.x > this.fromMC.x?1:-1));
+        var fromY = this.fromMC.y - this.fromMC.vo.height/2 + this.fromMC.vo.atky
+        var toY = this.toMC.y - this.toMC.vo.height/2 + this.targetOffsetY
+        var addX = (this.fromMC.vo.atkx * (this.toMC.x > this.fromMC.x?1:-1));
         this.x = this.fromMC.x + (this.toMC.x - this.fromMC.x - addX)*rate + addX
         this.y =  fromY + (toY - fromY)*rate
         return true;

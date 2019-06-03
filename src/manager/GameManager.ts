@@ -5,56 +5,56 @@ class GameManager_wx4 {
             this._instance = new GameManager_wx4();
         return this._instance;
     }
-	private wx4_functionX_45895(){console.log(9151)}
+	private wx4_functionX_54589(){console.log(8578)}
 
     private timeID: egret.Timer;
     private timeE = new MyTimer(1000/60);
     private lastTime: number;
     public lastTouchTime: number;
     public lastTouchMC;
-	private wx4_functionX_45896(){console.log(5769)}
+	private wx4_functionX_54590(){console.log(6520)}
     public changeUserTime = 0
     public changeUserID = 0
     public changeUserFun;
 
     public isActive = true;
     public onShowFun
-	private wx4_functionX_45897(){console.log(7138)}
+	private wx4_functionX_54591(){console.log(4339)}
     public bannerAD
     public shareFailTime = 0;
 	public constructor() {
         this.timeID = new egret.Timer(1000);
-        this.timeID.addEventListener(egret.TimerEvent.TIMER,this.timerun_5456,this);
+        this.timeID.addEventListener(egret.TimerEvent.TIMER,this.timerun_2945,this);
         this.timeID.start();
-	wx4_function(6161);
+	wx4_function(7723);
 
-        this.timeE.addEventListener(egret.TimerEvent.TIMER,this.onTimeE_6040,this);
+        this.timeE.addEventListener(egret.TimerEvent.TIMER,this.onTimeE_2566,this);
         this.timeE.start();
 	}
 	
     public static stage:egret.Stage;
-	private wx4_functionX_45898(){console.log(9233)}
+	private wx4_functionX_54592(){console.log(2305)}
     public static stageX;
     public static stageY;
     public static container:egret.DisplayObjectContainer;
     public static loadStep
 
 
-	private wx4_functionX_45899(){console.log(1401)}
+	private wx4_functionX_54593(){console.log(9386)}
     public static isLiuHai(){
         return this.stage.stageHeight > 1250;
     }
     public static paddingTop(){
         return GameManager_wx4.isLiuHai()?50:0
     }
-	private wx4_functionX_45900(){console.log(7290)}
+	private wx4_functionX_54594(){console.log(5457)}
     public static paddingBottom(){
         if(App.isIphoneX)
             return 30;
         return 0;
     }
 
-	private wx4_functionX_45901(){console.log(671)}
+	private wx4_functionX_54595(){console.log(1005)}
     public static get uiHeight(){
         var h = this.stage.stageHeight// - Config.adHeight;
 
@@ -67,7 +67,7 @@ class GameManager_wx4 {
         return h//Math.min(1136,this.stage.stageHeight);
         //return this.stage.stageHeight;
     }
-	private wx4_functionX_45902(){console.log(4766)}
+	private wx4_functionX_54596(){console.log(7120)}
     public static get uiWidth(){
         return this.stage.stageWidth;
     }
@@ -75,14 +75,15 @@ class GameManager_wx4 {
     public isWebGL(){
         return egret.Capabilities.renderMode == 'webgl';
     }
-	private wx4_functionX_45903(){console.log(8063)}
+	private wx4_functionX_54597(){console.log(1425)}
 
     public init(){
-        GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouchMove_6592,this);
-        GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin_1370,this);
-        //this.createAD_4819();
+        GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouchMove_351,this);
+        GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin_2392,this);
+        //this.createAD_8628();
     }
 
+	private wx4_functionX_54598(){console.log(6363)}
     public addJoinAppid(appid){
         var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
         var index = arr.indexOf(appid)
@@ -93,9 +94,9 @@ class GameManager_wx4 {
             arr.shift()
         SharedObjectManager_wx4.getInstance().setMyValue('exchangeUserAppid',arr)
     }
+	private wx4_functionX_54599(){console.log(7745)}
 
-	private wx4_functionX_45904(){console.log(2211)}
-    private createAD_4819(){
+    private createAD_8628(){
     //Config.adHeight = 200;
     if(!window['wx'])
         return;
@@ -105,21 +106,21 @@ class GameManager_wx4 {
 
     var btnw = Math.min(Math.pow(GameManager_wx4.stage.stageHeight/1330,1.6)*640,640)
 
-	wx4_function(4203);
+	wx4_function(668);
     let scalex = screen.availWidth/640;
     let scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
     if(btnw * scalex < 300){ //微信限制广告宽度不能小于300
         btnw = 300 / scalex;
     }
     Config.adHeight =  btnw/640 * 224;
-	wx4_function(6011);
+	wx4_function(497);
     var  btny = GameManager_wx4.uiHeight;//给广告留的高度
     var  paddingTop = GameManager_wx4.paddingTop();
     var btnx =  (640-btnw)/2;
 
     let left = scalex * (btnx);
     let top = scaley * (btny + paddingTop);
-	wx4_function(7655);
+	wx4_function(399);
     let width = scalex * btnw;
 
     let bannerAd = this.bannerAD = wx.createBannerAd({
@@ -133,14 +134,14 @@ class GameManager_wx4 {
     bannerAd.onError(()=>{
         Config.adHeight = 0
         GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
-	wx4_function(6487);
+	wx4_function(3664);
     })
     bannerAd.onLoad(()=>{
 
     })
     bannerAd.onResize((res)=>{
         var hh = res.height/scalex*(640/btnw);
-	wx4_function(5580);
+	wx4_function(2793);
         if(Math.abs(hh - 224)/224 > 0.02)
         {
             Config.adHeight =  btnw/640 * hh;
@@ -151,14 +152,14 @@ class GameManager_wx4 {
     })
     bannerAd.show()
 }
-	private wx4_functionX_45905(){console.log(2752)}
+	private wx4_functionX_54600(){console.log(7039)}
 
     public showBanner(bottom){
         if(this.bannerAD)
         {
             this.bannerAD.show()
             var scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
-	wx4_function(7069);
+	wx4_function(6227);
             var  paddingTop = GameManager_wx4.paddingTop();
             this.bannerAD.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop - bottom)// - GameManager.paddingBottom());
         }
@@ -167,43 +168,43 @@ class GameManager_wx4 {
     public hideBanner(){
         if(this.bannerAD)
             this.bannerAD.hide();
-	wx4_function(7741);
+	wx4_function(3457);
     }
 
     public stopTimer(){
         this.timeID.stop();
         this.timeE.stop();
     }
-	private wx4_functionX_45906(){console.log(5909)}
+	private wx4_functionX_54601(){console.log(1342)}
 
 
-    private onTimeE_6040(){
+    private onTimeE_2566(){
         EM_wx4.dispatch(GameEvent.client.timerE);
     }
 
-	private wx4_functionX_45907(){console.log(5553)}
+	private wx4_functionX_54602(){console.log(5808)}
 
-    private onTouchMove_6592(e){
+    private onTouchMove_351(e){
         GameManager_wx4.stageX = e.stageX;
         GameManager_wx4.stageY = e.stageY;
     }
-    private onTouchBegin_1370(e){
+    private onTouchBegin_2392(e){
         this.lastTouchMC = e.target;
-	wx4_function(4266);
+	wx4_function(7551);
         GameManager_wx4.stageX = e.stageX;
         GameManager_wx4.stageY = e.stageY;
         this.lastTouchTime = egret.getTimer();
     }
 
 
-	private wx4_functionX_45908(){console.log(6325)}
-    private timerun_5456(): void {
+	private wx4_functionX_54603(){console.log(4070)}
+    private timerun_2945(): void {
         if(!UM_wx4.gameid)
             return;
         var now = TM_wx4.now();
         if(!this.lastTime) {
             this.lastTime = now;
-	wx4_function(5637);
+	wx4_function(1109);
             return;
         }
         if(!DateUtil_wx4.isSameDay(this.lastTime,now))//跨0点
@@ -213,8 +214,8 @@ class GameManager_wx4 {
             //GuessManager.getInstance().passDay();
 
             UM_wx4.testPassDay();
+	wx4_function(7615);
             EM_wx4.dispatch(GameEvent.client.pass_day);
-	wx4_function(3791);
         }
 
         EM_wx4.dispatch(GameEvent.client.timer);
@@ -231,7 +232,7 @@ class GameManager_wx4 {
         //    MyWindow.AlertRelogin('已经离开很长时间了，请重新登陆吧')
         //}
     }
-	private wx4_functionX_45909(){console.log(5856)}
+	private wx4_functionX_54604(){console.log(5134)}
 
     //取现在到晚上12点还差的时间
     public getZeroCD(){
@@ -239,7 +240,7 @@ class GameManager_wx4 {
     }
     public getZeroTime(){
         var d= DateUtil_wx4.timeToChineseDate(TM_wx4.now());
-	wx4_function(9793);
+	wx4_function(6287);
         d.setMinutes(0);
         d.setSeconds(0);
         d.setMilliseconds(0);
@@ -247,14 +248,14 @@ class GameManager_wx4 {
 
         return Math.floor(d.getTime()/1000);
     }
-	private wx4_functionX_45910(){console.log(3608)}
+	private wx4_functionX_54605(){console.log(9549)}
 
 }
 
 
 class App {
     public static touchEvent: string = egret.TouchEvent.TOUCH_TAP;
-	private wx4_functionX_45911(){console.log(2333)}
+	private wx4_functionX_54606(){console.log(2789)}
     
     public constructor() {
     }
@@ -268,7 +269,7 @@ class App {
         let _iphoneXR = /iphone/gi.test(navigator.userAgent) && (hh == 896 && ww == 414);
         return _iphoneX || _iphoneXR;
     }
-	private wx4_functionX_45912(){console.log(6208)}
+	private wx4_functionX_54607(){console.log(641)}
     	
     public static get isMobile():boolean{
         return egret.MainContext.deviceType == egret.MainContext.DEVICE_MOBILE;
@@ -278,7 +279,7 @@ class App {
         var ua:string = navigator.userAgent.toLowerCase();
         return ua.indexOf('android') != -1;
     }
-	private wx4_functionX_45913(){console.log(7009)}
+	private wx4_functionX_54608(){console.log(6856)}
     public static get isIOS():boolean{
         //var Agents:string[] = ["Android", "iPhone",  "SymbianOS", "Windows Phone",  "iPad", "iPod"];
         var ua:string = navigator.userAgent.toLowerCase();
@@ -350,7 +351,7 @@ if(window["wx"])
             console.log(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime)
             if(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime > 30) //停留超过30秒
             {
-                this.addJoinAppid(GameManager_wx4.getInstance().changeUserID);
+                GameManager_wx4.getInstance().addJoinAppid(GameManager_wx4.getInstance().changeUserID);
                 if(GameManager_wx4.getInstance().changeUserFun)
                 {
                     wx.aldSendEvent("点击跳转其它小程序_通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})

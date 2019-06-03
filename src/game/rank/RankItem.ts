@@ -21,7 +21,7 @@ class RankItem extends game.BaseItem{
 
         this.indexText.textColor = this.data.index < 4 ? 0xffffff : 0xcccccc;
         this.indexText.text = this.data.index;
-        this.nickText.text = this.data.nick
+        this.nickText.text = StringUtil.getStringByLength(this.data.nick,8)
         this.headMC.source = this.data.head
         this.valueText.text = this.data.type == 'level'?'第 ' +this.data.value + ' 关':DateUtil_wx4.getStringBySecond(this.data.value).substr(-5)
     }

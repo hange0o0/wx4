@@ -3,7 +3,7 @@ class Main extends eui.UILayer {
     /**
      * 加载进度界面
      * loading process interface
-	private wx4_functionX_45736(){console.log(2922)}
+	private wx4_functionX_54434(){console.log(2329)}
      */
     private loadingView: MainLoadingUI;
     protected createChildren(): void {
@@ -12,14 +12,14 @@ class Main extends eui.UILayer {
 
         //inject the custom material parser
         //注入自定义的素材解析器
-	wx4_function(5605);
+	wx4_function(1395);
         var assetAdapter = new AssetAdapter();
         this.stage.registerImplementation("eui.IAssetAdapter",assetAdapter);
         this.stage.registerImplementation("eui.IThemeAdapter",new ThemeAdapter());
         //this.stage.setContentSize(640,1136);
 
-        //this.stage.addEventListener(egret.Event.RESIZE,this.setScaleMode_495,this);
-        this.setScaleMode_495();
+        //this.stage.addEventListener(egret.Event.RESIZE,this.setScaleMode_6441,this);
+        this.setScaleMode_6441();
         //Config loading process interface
         //设置加载进度界面
         this.loadingView = MainLoadingUI.getInstance();
@@ -27,29 +27,29 @@ class Main extends eui.UILayer {
         //{
         //    this.loadingView.show(this);
         //}
-	wx4_function(6349);
+	wx4_function(926);
 
 
 
         // initialize the Resource loading library
         //初始化Resource资源加载库
-        RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete_1666, this);
+        RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete_4780, this);
         RES.loadConfig("resource/default.res.json", "resource/");
 
-	wx4_function(6166);
+	wx4_function(3569);
 
 
         UM_wx4 = UserManager_wx4.getInstance();
         TM_wx4 = TimeManager_wx4.getInstance();
         EM_wx4 = EventManager_wx4.getInstance();
         CM_wx4 = CacheManager_wx4.getInstance();
-	wx4_function(4173);
+	wx4_function(2670);
         DM = DebugManager.getInstance();
         Config.initURLRequest();
         console.log('_1a')
     }
 
-    private setScaleMode_495(){
+    private setScaleMode_6441(){
         //if(this.stage.stageWidth/this.stage.stageHeight < 640/1136)
         //{
         //    this.stage.setContentSize(640,1136)
@@ -63,136 +63,136 @@ class Main extends eui.UILayer {
         //else
         //    this.stage.scaleMode = egret.StageScaleMode.FIXED_WIDTH;
     }
-	private wx4_functionX_45737(){console.log(8865)}
+	private wx4_functionX_54435(){console.log(8550)}
 
 
     /**
      * 配置文件加载完成,开始预加载皮肤主题资源和preload资源组。
      * Loading of configuration file is complete, start to pre-load the theme configuration file and the preload resource group
      */
-	private wx4_functionX_45738(){console.log(9941)}
-    private onConfigComplete_1666(event:RES.ResourceEvent):void {
+	private wx4_functionX_54436(){console.log(3245)}
+    private onConfigComplete_4780(event:RES.ResourceEvent):void {
         console.log('_1b')
-        RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete_1666, this);
+        RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete_4780, this);
         // load skin theme configuration file, you can manually modify the file. And replace the default skin.
         //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
         var theme = new eui.Theme("resource/default.thm.json", this.stage);
-        theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete_9494, this);
+        theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete_32, this);
 
-	wx4_function(5124);
-
-
+	wx4_function(9609);
 
 
-        RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete_62, this);
-        RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError_9842, this);
-	wx4_function(3907);
-        RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress_9715, this);
-        RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError_5192, this);
+
+
+        RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete_2054, this);
+        RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError_6704, this);
+	wx4_function(2179);
+        RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress_8587, this);
+        RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError_993, this);
         RES.loadGroup("preload_png");
     }
     private isThemeLoadEnd: boolean = false;
     /**
-	private wx4_functionX_45739(){console.log(9710)}
+	private wx4_functionX_54437(){console.log(1761)}
      * 主题文件加载完成,开始预加载
      * Loading of theme configuration file is complete, start to pre-load the
      */
-    private onThemeLoadComplete_9494(): void {
+    private onThemeLoadComplete_32(): void {
         this.isThemeLoadEnd = true;
         console.log('_1c')
-        this.createScene_4595();
-	wx4_function(1413);
+        this.createScene_2228();
+	wx4_function(4149);
     }
     private isResourceLoadEnd: boolean = false;
     /**
      * preload资源组加载完成
      * preload resource group is loaded
      */
-	private wx4_functionX_45740(){console.log(4916)}
-    private onResourceLoadComplete_62(event:RES.ResourceEvent):void {
+	private wx4_functionX_54438(){console.log(1215)}
+    private onResourceLoadComplete_2054(event:RES.ResourceEvent):void {
         console.log('_1d')
         if (event.groupName == "preload_png") {
 
             this.isResourceLoadEnd = true;
 
-	wx4_function(5632);
+	wx4_function(7755);
 
 
-            this.removeLoadEvent_5461();
-            this.createScene_4595();
+            this.removeLoadEvent_7945();
+            this.createScene_2228();
         }
         //else if (event.groupName == "preload_png") {
         //    RES.loadGroup("preload_jpg");//预加载第一阶段
         //}
         //else if (event.groupName == "preload_png") {
-        //    this.removeLoadEvent_5461();
-        //    this.createScene_4595();
+        //    this.removeLoadEvent_7945();
+        //    this.createScene_2228();
         //    RES.loadGroup("preload_jpg");
         //    RES.loadGroup("preload_png32")
         //
         //}
     }
-	private wx4_functionX_45741(){console.log(6036)}
+	private wx4_functionX_54439(){console.log(5947)}
 
-    private removeLoadEvent_5461(){
+    private removeLoadEvent_7945(){
         this.loadingView.setFinish();
-        RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete_62, this);
-        RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError_9842, this);
-        RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress_9715, this);
-	wx4_function(1973);
-        RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError_5192, this);
+        RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete_2054, this);
+        RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError_6704, this);
+        RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress_8587, this);
+	wx4_function(4522);
+        RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError_993, this);
     }
-    private createScene_4595(){
+    private createScene_2228(){
         if(this.isThemeLoadEnd && this.isResourceLoadEnd){
             this.startCreateScene();
         }
     }
-	private wx4_functionX_45742(){console.log(5041)}
+	private wx4_functionX_54440(){console.log(9134)}
     /**
      * 资源组加载出错
      *  The resource group loading failed
      */
-    private onItemLoadError_5192(event:RES.ResourceEvent):void {
+    private onItemLoadError_993(event:RES.ResourceEvent):void {
         console.warn("Url:" + event.resItem.url + " has failed to load");
-	wx4_function(5337);
+	wx4_function(1631);
     }
     /**
      * 资源组加载出错
      * Resource group loading failed
      */
-    private onResourceLoadError_9842(event:RES.ResourceEvent):void {
+    private onResourceLoadError_6704(event:RES.ResourceEvent):void {
         //TODO
-	wx4_function(8863);
+	wx4_function(7461);
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
         //ignore loading failed projects
-        this.onResourceLoadComplete_62(event);
+        this.onResourceLoadComplete_2054(event);
     }
     /**
      * preload资源组加载进度
      * loading process of preload resource
-	private wx4_functionX_45743(){console.log(8304)}
+	private wx4_functionX_54441(){console.log(6990)}
      */
-    private onResourceProgress_9715(event:RES.ResourceEvent):void {
+    private onResourceProgress_8587(event:RES.ResourceEvent):void {
         if (event.groupName == "game") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
     }
-	private wx4_functionX_45744(){console.log(9676)}
+	private wx4_functionX_54442(){console.log(4902)}
     /**
      * 创建场景界面
      * Create scene interface
      */
     protected startCreateScene(): void {
         CM_wx4.initData(RES.getRes("data_txt"),'monster');
-	wx4_function(1194);
+	wx4_function(8362);
         CM_wx4.initData(RES.getRes("gun_txt"),'gun');
         CM_wx4.initFinish()
         GameManager_wx4.stage = this.stage;
         GameManager_wx4.container = this;
         if(App.isIOS){
             GameManager_wx4.stage.frameRate = 60;
-	wx4_function(2030);
+	wx4_function(2376);
         }
         GameManager_wx4.getInstance().init();
         console.log('_11')
@@ -207,7 +207,7 @@ class Main extends eui.UILayer {
         //    return;
         //}
         //console.log('_12')
-	wx4_function(8889);
+	wx4_function(7881);
         LoadingUI.getInstance().show();
 
     }

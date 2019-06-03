@@ -13,7 +13,7 @@ class MyWindow {
         panel.show(msg, fun, btnLabel);
         return panel;
     }
-	private wx4_functionX_45831(){console.log(1860)}
+	private wx4_functionX_54527(){console.log(5350)}
     public static AlertRelogin(msg) {
 
         if (_get['debug'] == 100) {
@@ -27,7 +27,7 @@ class MyWindow {
         });
         GameManager_wx4.getInstance().stopTimer();
     }
-	private wx4_functionX_45832(){console.log(2480)}
+	private wx4_functionX_54528(){console.log(8335)}
 
 //fun(type){type:1确定，2：取消，3右上角关闭}
     public static Confirm(msg, fun?, btnWord = ['取消', '确定'], sp?) {
@@ -35,14 +35,14 @@ class MyWindow {
         panel.show(msg, fun, btnWord, sp)
         return panel
     }
-	private wx4_functionX_45833(){console.log(6458)}
+	private wx4_functionX_54529(){console.log(7787)}
 
     public static ShowTips(msg, cd = 0) {
         if(!cd)
             cd = Math.max(1000,msg.length * 150)
         TipsUI.getInstance().show(msg, cd);
     }
-	private wx4_functionX_45834(){console.log(6124)}
+	private wx4_functionX_54530(){console.log(3068)}
 
     //public static addBtnTips(mc, str, addStageRemove?) {
     //    var timer;

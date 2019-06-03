@@ -65,6 +65,8 @@ class PKingUI extends game.BaseUI_wx4 {
     public childrenCreated() {
         super.childrenCreated();
 
+        this.con.touchChildren = this.con.touchEnabled = false;
+
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin,this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove,this);
         this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchEnd,this);
@@ -164,25 +166,30 @@ class PKingUI extends game.BaseUI_wx4 {
             return
         //SoundManager.getInstance().playEffect('shoot')
         //var vo = GunVO.getObject(item.data)
+        var PC = PKCode_wx4.getInstance()
         var num = 1;
         var vos = GunManager.getInstance().getGunVOs(item.data);
         var vo1 = vos[1]
         var vo9 = vos[9]
-        if(vo1 && !PKCode_wx4.getInstance().isInBuff(101))//散射
-            num = vo1.getLevelValue(1);
-
         var double = 1;
-        if(vo9 && !PKCode_wx4.getInstance().isInBuff(101))//有$1%的机率造成@2倍伤害';
+        if(!PC.isInBuff(101))
         {
-            if(Math.random() < vo9.getLevelValue(1)/100)
+            if(vo1)//散射
+                num = vo1.getLevelValue(1);
+
+            if(vo9)//有$1%的机率造成@2倍伤害';
             {
-                double = vo9.getLevelValue(2,null,false)
-                if(item)
+                if(Math.random() < vo9.getLevelValue(1)/100)
                 {
-                    this.playItemText(item, '爆击x ' +MyTool.toFixed(double,2))
+                    double = vo9.getLevelValue(2,null,false)
+                    if(item)
+                    {
+                        this.playItemText(item, '爆击x ' +MyTool.toFixed(double,2))
+                    }
                 }
             }
         }
+
 
         var rota = Math.min(20,120/num);
         var total = (num - 1)*rota;
@@ -210,11 +217,11 @@ class PKingUI extends game.BaseUI_wx4 {
         return mc
     }
 
-    public removeBullet(mc:BulletMC){
-        var index = this.bulletArr.indexOf(mc);
-        this.bulletArr.splice(index,1);
-        BulletMC.freeItem(mc);
-    }
+    //public removeBullet(mc:BulletMC){
+    //    var index = this.bulletArr.indexOf(mc);
+    //    this.bulletArr.splice(index,1);
+    //    BulletMC.freeItem(mc);
+    //}
 
     public playItemText(item:GunItem,value,color=0xFF0000){
         var txt = this.createTxt();
@@ -226,7 +233,7 @@ class PKingUI extends game.BaseUI_wx4 {
         this.addChild(txt)
 
         var tw = egret.Tween.get(txt);
-        tw.to({y:txt.y - 50,alpha:0.5},800).call(function(){
+        tw.to({y:txt.y - 50},800).call(function(){
             this.freeTxt(txt);
         },this)
     }
@@ -241,8 +248,10 @@ class PKingUI extends game.BaseUI_wx4 {
             item.width = 160;
             item.textAlign="center"
             item.anchorOffsetX = 80;
+            item.strokeColor = 0x000000
+            item.cacheAsBitmap = true;
         }
-        item.strokeColor = 0x000000
+
         item.alpha = 1;
         return item;
     }
@@ -445,7 +454,8 @@ class PKingUI extends game.BaseUI_wx4 {
             {
                 var liveNum = 0
                 var monsterList = PD.monsterList;
-                for(var i=0;i<monsterList.length;i++)
+                var mlen = monsterList.length
+                for(var i=0;i<mlen;i++)
                 {
                     var enemy = monsterList[i];
                     if(enemy.isDie)
@@ -501,20 +511,37 @@ class PKingUI extends game.BaseUI_wx4 {
     private onE(){
         if(this.begining || this.isFinish)
         {
-            for(var i=0;i<this.gunArr.length;i++)
+            var len = this.gunArr.length
+            for(var i=0;i<len;i++)
             {
                 this.gunArr[i].move2();
             }
         }
+        var PD = PKCode_wx4.getInstance();
+        var len = PD.monsterList.length
+        for(var i=0;i<len;i++)
+        {
+            PD.monsterList[i].onE();
+        }
+        var len = PD.wallArr.length
+        for(var i=0;i<len;i++)
+        {
+            PD.wallArr[i].onE();
+        }
+
+
         if(this.stoping)
             return;
 
-        var PD = PKCode_wx4.getInstance();
+
         PD.onStep();
-        for(var i=0;i<this.stateArr.length;i++)
+        var len = this.stateArr.length
+        for(var i=0;i<len;i++)
         {
             this.stateArr[i].onE();
         }
+
+
 
         //var cd = PD.getWudiCD();
         //if(cd)
@@ -530,25 +557,30 @@ class PKingUI extends game.BaseUI_wx4 {
         if(this.isFinish)
             return;
 
-        for(var i=0;i<this.bulletArr.length;i++)
+        var maxY = GameManager_wx4.uiHeight + 50;
+        var len = this.bulletArr.length
+        for(var i=0;i<len;i++)
         {
             var bullet = this.bulletArr[i];
             bullet.move();
             bullet.testHit(PD.monsterList,this.ballArr)
-            if(bullet.isDie == 2 || (bullet.x > 700 && !bullet.isAuto))
+            if(bullet.isDie == 2 || (!bullet.isAuto && (bullet.x > 700 || bullet.y < -50 || bullet.y > maxY )))
             {
                 this.bulletArr.splice(i,1);
                 BulletMC.freeItem(bullet);
                 i--;
+                len --;
                 continue;
             }
         }
-        for(var i=0;i<this.gunArr.length;i++)
+        var len = this.gunArr.length
+        for(var i=0;i<len;i++)
         {
             this.gunArr[i].move();
         }
 
-        for(var i=0;i<this.ballArr.length;i++)
+        var len = this.ballArr.length
+        for(var i=0;i<len;i++)
         {
             this.con.addChild(this.ballArr[i]);
         }

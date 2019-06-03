@@ -4,21 +4,21 @@ class GunVO {
     public static getObject(id): GunVO{ //id有可能带\n or \r
         return CM_wx4.table[this.dataKey][Math.floor(id)];
     }
-	private wx4_functionX_45837(){console.log(4051)}
+	private wx4_functionX_54531(){console.log(374)}
     public static get data(){
         return CM_wx4.table[this.dataKey]
     }
 
 
     public id: number;
-	private wx4_functionX_45838(){console.log(4325)}
+	private wx4_functionX_54532(){console.log(8011)}
     public type: number;
     public name: string;
     public atk: number;
     public atkrate: number;
     public open: number;
     public speed: number;
-	private wx4_functionX_45839(){console.log(9485)}
+	private wx4_functionX_54533(){console.log(4923)}
     public v1: number;
     public v2: number;
     public add1: number;
@@ -27,7 +27,7 @@ class GunVO {
     public constructor() {
 
     }
-	private wx4_functionX_45840(){console.log(4886)}
+	private wx4_functionX_54534(){console.log(4083)}
 
     public reInit(){
          this.speed/=1000
@@ -36,7 +36,7 @@ class GunVO {
         this.add1 = this.add1 || 0
         this.add2 = this.add2 || 0
     }
-	private wx4_functionX_45841(){console.log(6352)}
+	private wx4_functionX_54535(){console.log(188)}
 
     public getThumb(){
         return 'thum_'+this.id+'_png'
@@ -45,80 +45,84 @@ class GunVO {
     public getUrl(){
         return 'knife_'+this.id+'_png'
     }
-	private wx4_functionX_45842(){console.log(1043)}
+	private wx4_functionX_54536(){console.log(9850)}
 
     public getLevel(){
         return GunManager.getInstance().getGunLevel(this.id);
     }
 
-    public getDes(lv?,stopUp?){
+    public getDes(lv?,stopUp?,makeGun?){
 
         var str = ''
         switch(this.type)
         {
             case 1://散射
                 str =  '每次可同时射出 #1 把飞刀';
-	wx4_function(4357);
+	wx4_function(5564);
                 break;
             case 2://穿透
                 str =  '飞刀不会被阻挡，对飞行路径上的所有敌人造成伤害';
                 break;
             case 3://杀敌爆炸
                 str =  '消灭敌人后爆炸，对 #1 范围内的敌人造成 #2 点伤害';
-	wx4_function(3245);
+	wx4_function(6233);
                 break;
             case 4://杀敌吸血
                 str =  '每消灭一个敌人会回复城墙 #1 点血量';
                 break;
             case 5://杀敌攻击成长
                 str =  '每消灭一个敌人会提升自身 #1 点攻击力';
-	wx4_function(7988);
+	wx4_function(7334);
                 break;
             case 6://全体加攻
                 str =  '增加所有出战飞刀 #1% 攻击力';
                 break;
             case 7://减速
                 str =  '使中刀敌人减慢 #1% 速度，持续 $2 秒';
-	wx4_function(684);
+	wx4_function(2563);
                 break;
             case 8://晕 机率
                 str =  '有 #1% 的机率使敌人陷入眩晕状态，持续 $2 秒';
                 break;
             case 9://机率 暴击
                 str =  '有 #1% 的机率造成 $2 倍伤害';
-	wx4_function(2816);
+	wx4_function(7226);
                 break;
             case 10://增加金币收益
                 str =  '战斗结束后多获得 #1% 的金币';
                 break;
             case 11://增加城墙血量
                 str =  '战斗开始时增加 #1 点城墙血量';
-	wx4_function(9511);
+	wx4_function(1772);
                 break;
             case 12://推后
                 str =  '使被命中的敌人退后 #1 距离';
                 break;
             case 13://追踪
                 str =  '飞刀会追踪敌人直至命中';
-	wx4_function(1626);
+	wx4_function(7734);
                 break;
             case 14://命中后分裂
                 str =  '命中敌人后会分裂出 #1 把飞刀';
                 break;
             case 15://命中吸血
                 str =  '命中敌人后回复城墙 #1 点血量';
-	wx4_function(5876);
+	wx4_function(6358);
                 break;
         }
         if(!str)
             return '无特殊技能';
         lv = lv || this.getLevel()
-        return str.replace('#1',this.changeValue_9990(1,lv,stopUp)).
-            replace('#2',this.changeValue_9990(2,lv,stopUp)).
-            replace('$1',this.changeValue_9990(1,lv,stopUp,false)).
-            replace('$2',this.changeValue_9990(2,lv,stopUp,false))
+        if(!makeGun && lv >= 8)
+            stopUp = true;
+	wx4_function(7455);
+
+        return str.replace('#1',this.changeValue_606(1,lv,stopUp)).
+            replace('#2',this.changeValue_606(2,lv,stopUp)).
+            replace('$1',this.changeValue_606(1,lv,stopUp,false)).
+            replace('$2',this.changeValue_606(2,lv,stopUp,false))
     }
-	private wx4_functionX_45843(){console.log(4261)}
+	private wx4_functionX_54537(){console.log(1655)}
 
     public getTitle(){
         switch(this.type)
@@ -156,15 +160,15 @@ class GunVO {
         }
         return '';
     }
-	private wx4_functionX_45844(){console.log(8215)}
+	private wx4_functionX_54538(){console.log(6129)}
 
-    private fillColor_3859(str,color?){
+    private fillColor_2522(str,color?){
         return MyTool.createHtml(str,color || 0xFFFF00)
     }
 
     public getLevelValue(index,lv?,needInt=true){
         lv = lv || this.getLevel();
-	wx4_function(6118);
+	wx4_function(9665);
         if(index == 1)
         {
             var orgin = this.v1
@@ -179,18 +183,18 @@ class GunVO {
             return Math.floor(orgin + add*(lv-1))
         return orgin + add*(lv-1)
     }
-	private wx4_functionX_45845(){console.log(7225)}
+	private wx4_functionX_54539(){console.log(3893)}
 
-    private changeValue_9990(index,lv,stopUp?,needInt=true){
+    private changeValue_606(index,lv,stopUp?,needInt=true){
         var needShowAdd = true
         if(lv == 0)
         {
             lv = 1;
-	wx4_function(3731);
+	wx4_function(1861);
             needShowAdd = false
         }
-        if(lv >= 8)
-            needShowAdd = false
+        //if(lv >= 8)
+        //    needShowAdd = false
         if(index == 1 && this.add1 == 0)
             needShowAdd = false
         if(index == 2 && this.add2 == 0)
@@ -198,14 +202,13 @@ class GunVO {
         if(stopUp)
             needShowAdd = false
 
-	wx4_function(495);
-        var str = this.fillColor_3859(MyTool.toFixed(this.getLevelValue(index,lv,needInt),1));
+	wx4_function(8679);
+        var str = this.fillColor_2522(MyTool.toFixed(this.getLevelValue(index,lv,needInt),1));
         if(needShowAdd)
-            str += this.fillColor_3859('(' + MyTool.toFixed(this.getLevelValue(index,lv+1,needInt),1) + ')',0x00FF00);
+            str += this.fillColor_2522('(' + MyTool.toFixed(this.getLevelValue(index,lv+1,needInt),1) + ')',0x00FF00);
         return str;
     }
 
-	private wx4_functionX_45846(){console.log(9970)}
     //public getBGRound(lv?){
     //    lv = lv || this.getLevel() || 1
     //    return 'role_'+lv+'_png'

@@ -31,7 +31,7 @@
 class AssetAdapter implements eui.IAssetAdapter {
     /**
      * @language zh_CN
-	private wx4_functionX_45735(){console.log(8708)}
+	private wx4_functionX_54433(){console.log(9900)}
      * 解析素材
      * @param source 待解析的新素材标识符
      * @param compFunc 解析完成回调函数，示例：callBack(content:any,source:string):void;
@@ -40,7 +40,7 @@ class AssetAdapter implements eui.IAssetAdapter {
     public getAsset(source: string, compFunc:Function, thisObject: any): void {
         function onGetRes(data: any): void {
             compFunc.call(thisObject, data, source);
-	wx4_function(8798);
+	wx4_function(9246);
         }
         if (RES.hasRes(source)) {
             let data = RES.getRes(source);
@@ -49,7 +49,7 @@ class AssetAdapter implements eui.IAssetAdapter {
             }
             else {
                 RES.getResAsync(source, onGetRes, this);
-	wx4_function(2653);
+	wx4_function(5610);
             }
         }
         else {

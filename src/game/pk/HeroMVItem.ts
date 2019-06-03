@@ -17,6 +17,7 @@ class HeroMVItem extends game.BaseItem {
     public runing
     public speed
     public childrenCreated() {
+        this.touchChildren = this.touchEnabled = false;
         this.addChild(this.mc);
         this.mc.x = 356*1.5
         this.mc.y = 0

@@ -60,7 +60,7 @@ class AtkMVCtrl_wx3 {
         var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(43).mvid))
         mc.needRota = false
-        mc.targetOffsetY = target.getVO().height/2
+        mc.targetOffsetY = target.vo.height/2
         mc.mc.scaleX = mc.mc.scaleY = 0.6          //@ani scale
     }
 
@@ -69,7 +69,7 @@ class AtkMVCtrl_wx3 {
         var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(44).mvid))
         mc.needRota = false
-        mc.targetOffsetY = target.getVO().height/2
+        mc.targetOffsetY = target.vo.height/2
         mc.mc.scaleX = mc.mc.scaleY = 0.6          //@ani scale
     }
 
@@ -78,7 +78,7 @@ class AtkMVCtrl_wx3 {
         var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(45).mvid))
         mc.needRota = false
-        mc.targetOffsetY = target.getVO().height/2
+        mc.targetOffsetY = target.vo.height/2
         mc.mc.scaleX = mc.mc.scaleY = 0.6          //@ani scale
     }
 
@@ -87,7 +87,7 @@ class AtkMVCtrl_wx3 {
         var targetItem = PKCode_wx4.getInstance().getItemByID(target.id);
         var mc:BulletAniMC_wx3 = <BulletAniMC_wx3>(PKBulletManager_wx3.getInstance().createBulletAni(userItem,targetItem,actionTime,endTime,MonsterVO.getObject(46).mvid))
         mc.needRota = false
-        mc.targetOffsetY = target.getVO().height/2
+        mc.targetOffsetY = target.vo.height/2
         mc.mc.scaleX = mc.mc.scaleY = 0.6          //@ani scale
     }
 
@@ -166,7 +166,7 @@ class AtkMVCtrl_wx3 {
         var mc:BulletAniMC2_wx3 = <BulletAniMC2_wx3>(PKBulletManager_wx3.getInstance().createBulletAni2(userItem,targetItem,actionTime,endTime))
         mc.mc.anchorOffsetX = 560/4/2
         mc.mc.anchorOffsetY = 90
-        mc.targetOffsetY = target.getVO().height/2
+        mc.targetOffsetY = target.vo.height/2
         if(userItem.x > targetItem.x)
             mc.mc.scaleX = 1
         else
@@ -181,7 +181,7 @@ class AtkMVCtrl_wx3 {
         var mc:BulletAniMC2_wx3 = <BulletAniMC2_wx3>(PKBulletManager_wx3.getInstance().createBulletAni2(userItem,targetItem,actionTime,endTime))
         mc.mc.anchorOffsetX = 560/4/2
         mc.mc.anchorOffsetY = 90
-        mc.targetOffsetY = target.getVO().height/2
+        mc.targetOffsetY = target.vo.height/2
         if(userItem.x > targetItem.x)
             mc.mc.scaleX = 1
         else

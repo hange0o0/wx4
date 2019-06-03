@@ -19,7 +19,7 @@ class GameEvent {
         timer:'timer',
         timerE:'timerE'
     };
-	private wx4_functionX_45799(){console.log(1910)}
+	private wx4_functionX_54463(){console.log(1357)}
 
     //public static sys = {
     //    login:'login',

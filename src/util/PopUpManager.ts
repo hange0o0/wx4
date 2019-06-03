@@ -4,7 +4,7 @@
  *
  */
 class PopUpManager {
-	private wx4_functionX_46039(){console.log(4225)}
+	private wx4_functionX_54737(){console.log(3248)}
     public static shape:eui.Rect;
 	public constructor() {
 	}
@@ -25,7 +25,7 @@ class PopUpManager {
         var tw:egret.Tween = egret.Tween.get(newWindow);
         tw.to({x:0},300)
     }
-	private wx4_functionX_46040(){console.log(7418)}
+	private wx4_functionX_54738(){console.log(4731)}
 
     public static removeShape(){
         MyTool.removeMC(this.shape);
@@ -104,7 +104,7 @@ class PopUpManager {
 
         }
     }
-	private wx4_functionX_46041(){console.log(6372)}
+	private wx4_functionX_54739(){console.log(6911)}
 
     public static setMiddle(display){
         var ww = GameManager_wx4.container.width;
@@ -114,7 +114,7 @@ class PopUpManager {
         display.x = x
         display.y = y
     }
-	private wx4_functionX_46042(){console.log(6918)}
+	private wx4_functionX_54740(){console.log(5080)}
 
     private static onTap(){
          var ui:game.BaseUI_wx4 = <game.BaseUI_wx4>this.shape.parent.getChildAt(this.shape.parent.numChildren-1);
@@ -123,7 +123,7 @@ class PopUpManager {
             ui.hide();
         }
     }
-	private wx4_functionX_46043(){console.log(9339)}
+	private wx4_functionX_54741(){console.log(2950)}
 
     public static removePopUp(display: egret.DisplayObject) {
         if(display.parent) {
@@ -134,7 +134,7 @@ class PopUpManager {
             this.testVisible();
         }
     }
-	private wx4_functionX_46044(){console.log(23)}
+	private wx4_functionX_54742(){console.log(3211)}
 
     public static testShape(strong?){
         if(this.shape.parent || strong)
@@ -154,7 +154,7 @@ class PopUpManager {
 
         }
     }
-	private wx4_functionX_46045(){console.log(2390)}
+	private wx4_functionX_54743(){console.log(9896)}
 
     public static testVisible(){
         var setVisible = false;
@@ -190,7 +190,7 @@ class PopUpManager {
             }
         }
     }
-	private wx4_functionX_46046(){console.log(1922)}
+	private wx4_functionX_54744(){console.log(7018)}
 
     public static showToMain(){
         while(true)
@@ -210,7 +210,7 @@ class PopUpManager {
             }
         }
     }
-	private wx4_functionX_46047(){console.log(1316)}
+	private wx4_functionX_54745(){console.log(9670)}
 
 
     public static hideAll(){
