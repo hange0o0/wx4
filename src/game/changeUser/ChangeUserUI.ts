@@ -26,6 +26,7 @@ class ChangeUserUI extends game.BaseItem {
             isSelf:true,
             "appid": "wxd5d9d807682d46bb",
             "logo": "logo_wx1_png",
+            "desc": "右手油门，左手刹车，做一个平民车神",
             name:'前方有测速监控'
         })
         this.adList.push({
