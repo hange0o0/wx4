@@ -164,7 +164,8 @@ class RankUI extends game.BaseWindow_wx4{
                 myRank = i+1;
         }
         this.list.dataProvider = new eui.ArrayCollection(arr)
-
+        this.scroller.stopAnimation();
+        this.scroller.viewport.scrollV = 0;
         if(UM_wx4.nick)
         {
             if(myRank)

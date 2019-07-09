@@ -9,8 +9,8 @@ class GameUI extends game.BaseUI_wx4 {
 
 
     private bg: eui.Image;
-    private gunCon: eui.Group;
     private bulletGroup: eui.Group;
+    private gunCon: eui.Group;
     private endLessBtn: eui.Button;
     private startBtn: eui.Button;
     private coinText: eui.Label;
@@ -21,13 +21,19 @@ class GameUI extends game.BaseUI_wx4 {
     private buildLockMC: eui.Image;
     private friendBtn: eui.Group;
     private desText: eui.Label;
+    private addForceBtn: eui.Group;
+    private addForceText: eui.Label;
     private blackBG: eui.Image;
 
 
 
 
 
+
     private dragTarget = new MainGunItem()
+
+    private adType
+    private adValue
 
 
     public endLessLevel = 5;
@@ -72,6 +78,21 @@ class GameUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.friendBtn,()=>{
             BuffUI.getInstance().show();
         })
+        this.addBtnEvent(this.addForceBtn,()=>{
+            if(TM_wx4.now() < UM_wx4.addForceEnd)
+            {
+                return;
+            }
+
+            var str = this.adType == 'cd'?"在《别碰小广告》游戏中坚持"+this.adValue+"秒，即可获得20%战力加成":"在《别碰小广告》游戏中获得"+this.adValue+"分，即可获得20%战力加成"
+            MyWindow.Alert(str,()=>{
+                MyADManager.getInstance().openWX5({
+                    key:this.adType,
+                    value:this.adValue,
+                    callBack:'addForce',
+                })
+            },'开始挑战')
+        })
         this.addBtnEvent(this.buildBtn,()=>{
             if(UM_wx4.level <= 100)
             {
@@ -112,6 +133,14 @@ class GameUI extends game.BaseUI_wx4 {
         this.gunCon.addEventListener('start_drag',this.onDragStart,this);
         this.gunCon.addEventListener('end_drag',this.onDragEnd,this);
         this.gunCon.addEventListener('move_drag',this.onDragMove,this);
+    }
+
+    public resetAD(){
+        this.adType = Math.random()>0.5?'cd':'score'
+        var level =Math.floor((0.5 + Math.random()*0.5)*Math.min(UM_wx4.adLevel,10))
+        this.adValue = 30 + level*5;
+        if(this.adType == 'score')
+            this.adValue *= 30;
     }
 
     private onDragStart(e){
@@ -199,6 +228,7 @@ class GameUI extends game.BaseUI_wx4 {
         this.renewCoin();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renew)
 
         if(UM_wx4.pastDayCoin.coin)
@@ -207,6 +237,7 @@ class GameUI extends game.BaseUI_wx4 {
         }
         this.showTips();
 
+        this.resetAD();
     }
 
     private showTips(){
@@ -215,6 +246,10 @@ class GameUI extends game.BaseUI_wx4 {
         //this.tipsTimer = setTimeout(()=>{
         //    this.desText.text = ''
         //},5000)
+    }
+
+    private onTimer(){
+        this.renewForceText();
     }
 
     private onE(){
@@ -239,23 +274,40 @@ class GameUI extends game.BaseUI_wx4 {
         if(this.bg.y > 0)
             this.bg.y -= 200;
 
-        if(egret.getTimer() - this.lastShoot > 500)
+        //if(egret.getTimer() - this.lastShoot > 500)
+        //{
+        //    this.lastShoot = egret.getTimer();
+        //    var mc = BulletMC.createItem();
+        //    this.bulletGroup.addChild(mc);
+        //    mc.x = 10 + Math.random()*620
+        //    mc.y = GameManager_wx4.uiHeight + 50;
+        //    mc.data = {
+        //        scale:1,
+        //        id:ArrayUtil_wx4.randomOne(GunManager.getInstance().getMyGunList()),
+        //    };
+        //    egret.Tween.get(mc).to({y:-100},(GameManager_wx4.uiHeight+150)*1).call(()=>{
+        //        BulletMC.freeItem(mc);
+        //    })
+        //    mc.rotation = 0
+        //    egret.Tween.get(mc,{loop:true}).to({rotation:360},300)
+        //
+        //
+        //
+        //
+        //}
+    }
+
+    private renewForceText(){
+        var cd =  UM_wx4.addForceEnd - TM_wx4.now();
+        if(cd<0)
         {
-            this.lastShoot = egret.getTimer();
-            var mc = BulletMC.createItem();
-            this.bulletGroup.addChild(mc);
-            mc.x = 10 + Math.random()*620
-            mc.y = GameManager_wx4.uiHeight + 50;
-            mc.data = {
-                scale:1,
-                id:ArrayUtil_wx4.randomOne(GunManager.getInstance().getMyGunList()),
-            };
-            egret.Tween.get(mc).to({y:-100},(GameManager_wx4.uiHeight+150)*1).call(()=>{
-                BulletMC.freeItem(mc);
-            })
-            mc.rotation = 0
-            egret.Tween.get(mc,{loop:true}).to({rotation:360},300)
+            this.addForceText.text = '挑战游戏，获得20%战力加成'
         }
+        else
+        {
+            this.addForceText.text = '战力+20%     剩余时间：' + DateUtil_wx4.getStringBySecond(cd).substr(-5)
+        }
+
     }
 
     public onVisibleChange(){
@@ -314,6 +366,8 @@ class GameUI extends game.BaseUI_wx4 {
 
         this.startBtn.visible = true
         this.endLessBtn.visible = true
+        this.addForceBtn.visible = true;
+        this.renewForceText();
         if(UM_wx4.level > this.endLessLevel)
             this.endLessBtn.icon = ''
     }
@@ -342,6 +396,7 @@ class GameUI extends game.BaseUI_wx4 {
     public startMV(){
         this.startBtn.visible = false
         this.endLessBtn.visible = false
+        this.addForceBtn.visible = false;
         this.desText.text = ''
         clearTimeout(this.tipsTimer);
         var num =  Math.min(UM_wx4.gunPosNum + 1,GunManager.getInstance().maxGunNum);

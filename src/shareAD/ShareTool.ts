@@ -118,18 +118,20 @@ class ShareTool {
 
     private static videoAD
     private static adSuccFun;
-    public static openGDTV(success?){
+    private static adCloseFun;
+    public static openGDTV(success?,closeFun?){
         if(DM.jumpPK ) {
             success && success('debugJump');
             return
         }
 
         //监时用进入好友代替
-        ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success)
-        return;
+        //ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success)
+        //return;
 
 
         this.adSuccFun = success;
+        this.adCloseFun = closeFun;
         //if(MobileQU.isWXGame){ //视频广告，需要基础库版本号 >= 2.0.4
         if(!window["wx"].createRewardedVideoAd){
             MyWindow.Alert('暂不支持视频广告')
@@ -143,11 +145,14 @@ class ShareTool {
         }
         let close = (res) => {
             if(!res || res.isEnded){ //部分版本（比如：2.0.9，不能提前关闭广告）播放完成回调res为undefined，故没有res当做成功
-                success && success('video');
+                this.adSuccFun && this.adSuccFun('video');
+                //console.log(success);
             }
+
+            this.adCloseFun && this.adCloseFun();
             window["wx"].isPlayAD = false
         };
-        let adid = 'adunit-927ee662776f3dcc';//ADUI.getADID(adindex)// || ConfigQU.appData.wx_adtvCode;//'adunit-b0ef44339fa585f0';
+        let adid = Config.wx_video;//ADUI.getADID(adindex)// || ConfigQU.appData.wx_adtvCode;//'adunit-b0ef44339fa585f0';
         if(!this.videoAD)
         {
             this.videoAD = window["wx"].createRewardedVideoAd({ adUnitId: adid });
@@ -155,7 +160,7 @@ class ShareTool {
             this.videoAD.onError(errorFun);
         }
         this.videoAD.load().then(() =>this.videoAD.show()).catch(err => {
-            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success)
+            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success,closeFun)
             //MyWindow.ShowTips('没有可观看的广告，请稍后再尝试')
             window["wx"].isPlayAD = false
         })

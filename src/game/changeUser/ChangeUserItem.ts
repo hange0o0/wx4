@@ -25,65 +25,66 @@ class ChangeUserItem extends game.BaseItem{
 
 
     private onClick(){
-        var wx = window['wx'];
-        if(!wx)
-        {
-            if(this.data.fun)
-            {
-                this.data.fun()
-                ChangeJumpUI.getInstance().hide();
-            }
-            return;
-        }
-        var appid = this.data.appid
-        var fun = this.data.fun;
-
-        if(this.data.isSelf)
-        {
-            wx.navigateToMiniProgram({
-                appId:appid,
-                success(res) {
-                    GameManager_wx4.getInstance().addJoinAppid(appid);
-                    wx.aldSendEvent("点击跳转其它小程序_通过_点击我的游戏")
-                    ChangeJumpUI.getInstance().hide();
-                    fun && fun('changeUser');
-                }
-            })
-            return;
-        }
-
-
-        if(this.data.isXiaoHu)
-        {
-            window['xhtad'].xhtAdsClick(this.data.adName)
-            if(!UM_wx4.gameid)
-                return;
-            wx.aldSendEvent("点击跳转其它小程序_xh")
-            GameManager_wx4.getInstance().changeUserTime = TM_wx4.now();
-            GameManager_wx4.getInstance().changeUserID = appid;
-            GameManager_wx4.getInstance().changeUserFun = fun;
-            return;
-        }
-
-
-        wx.previewImage({
-            urls: [this.data.img],
-            success: function () {
-                if(!UM_wx4.gameid)
-                    return;
-                wx.aldSendEvent("点击跳转其它小程序")
-                GameManager_wx4.getInstance().changeUserTime = TM_wx4.now();
-                GameManager_wx4.getInstance().changeUserID = appid;
-                GameManager_wx4.getInstance().changeUserFun = fun;
-                //var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
-                //if(arr.indexOf(appid) == -1)
-                //{
-                //    GameManager.getInstance().changeUserTime = TM.now();
-                //    GameManager.getInstance().changeUserID = appid;
-                //    console.log(GameManager.getInstance().changeUserTime,GameManager.getInstance().changeUserID)
-                //}
-            }
-        })
+        MyADManager.getInstance().showAD(this.data)
+        //var wx = window['wx'];
+        //if(!wx)
+        //{
+        //    if(this.data.fun)
+        //    {
+        //        this.data.fun()
+        //        ChangeJumpUI.getInstance().hide();
+        //    }
+        //    return;
+        //}
+        //var appid = this.data.appid
+        //var fun = this.data.fun;
+        //
+        //if(this.data.isSelf)
+        //{
+        //    wx.navigateToMiniProgram({
+        //        appId:appid,
+        //        success(res) {
+        //            GameManager_wx4.getInstance().addJoinAppid(appid);
+        //            wx.aldSendEvent("点击跳转其它小程序_通过_点击我的游戏")
+        //            ChangeJumpUI.getInstance().hide();
+        //            fun && fun('changeUser');
+        //        }
+        //    })
+        //    return;
+        //}
+        //
+        //
+        //if(this.data.isXiaoHu)
+        //{
+        //    window['xhtad'].xhtAdsClick(this.data.adName)
+        //    if(!UM_wx4.gameid)
+        //        return;
+        //    wx.aldSendEvent("点击跳转其它小程序_xh")
+        //    GameManager_wx4.getInstance().changeUserTime = TM_wx4.now();
+        //    GameManager_wx4.getInstance().changeUserID = appid;
+        //    GameManager_wx4.getInstance().changeUserFun = fun;
+        //    return;
+        //}
+        //
+        //
+        //wx.previewImage({
+        //    urls: [this.data.img],
+        //    success: function () {
+        //        if(!UM_wx4.gameid)
+        //            return;
+        //        wx.aldSendEvent("点击跳转其它小程序")
+        //        GameManager_wx4.getInstance().changeUserTime = TM_wx4.now();
+        //        GameManager_wx4.getInstance().changeUserID = appid;
+        //        GameManager_wx4.getInstance().changeUserFun = fun;
+        //        //var arr = SharedObjectManager.getInstance().getMyValue('exchangeUserAppid')|| [];
+        //        //if(arr.indexOf(appid) == -1)
+        //        //{
+        //        //    GameManager.getInstance().changeUserTime = TM.now();
+        //        //    GameManager.getInstance().changeUserID = appid;
+        //        //    console.log(GameManager.getInstance().changeUserTime,GameManager.getInstance().changeUserID)
+        //        //}
+        //    }
+        //})
     }
 
     public dataChanged():void {

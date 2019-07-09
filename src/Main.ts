@@ -208,6 +208,11 @@ class Main extends eui.UILayer {
         //}
         //console.log('_12')
 	wx4_function(7881);
+        MyADManager.getInstance().getAD()
+        MyADManager.getInstance().createAD()
+        window['wx'] && MyADManager.getInstance().initExtra(window['wx'].getLaunchOptionsSync())
+
+
         LoadingUI.getInstance().show();
 
     }

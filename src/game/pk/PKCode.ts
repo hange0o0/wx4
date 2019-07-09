@@ -141,6 +141,8 @@ class PKCode_wx4 {
                 }
             }
         }
+        if(UM_wx4.addForceEnd > TM_wx4.now())
+            addAtk += 20;
         if(addAtk)
         {
             for(var s in this.atkList)

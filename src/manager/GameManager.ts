@@ -13,14 +13,14 @@ class GameManager_wx4 {
     public lastTouchTime: number;
     public lastTouchMC;
 	private wx4_functionX_54590(){console.log(6520)}
-    public changeUserTime = 0
-    public changeUserID = 0
-    public changeUserFun;
+    //public changeUserTime = 0
+    //public changeUserID = 0
+    //public changeUserFun;
 
     public isActive = true;
     public onShowFun
 	private wx4_functionX_54591(){console.log(4339)}
-    public bannerAD
+    //public bannerAD
     public shareFailTime = 0;
 	public constructor() {
         this.timeID = new egret.Timer(1000);
@@ -83,93 +83,93 @@ class GameManager_wx4 {
         //this.createAD_8628();
     }
 
-	private wx4_functionX_54598(){console.log(6363)}
-    public addJoinAppid(appid){
-        var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
-        var index = arr.indexOf(appid)
-        if(index != -1)
-            arr.splice(index,1);
-        arr.push(appid)
-        while(arr.length > 30)
-            arr.shift()
-        SharedObjectManager_wx4.getInstance().setMyValue('exchangeUserAppid',arr)
-    }
-	private wx4_functionX_54599(){console.log(7745)}
+	//private wx4_functionX_54598(){console.log(6363)}
+    //public addJoinAppid(appid){
+     //   var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
+     //   var index = arr.indexOf(appid)
+     //   if(index != -1)
+     //       arr.splice(index,1);
+     //   arr.push(appid)
+     //   while(arr.length > 30)
+     //       arr.shift()
+     //   SharedObjectManager_wx4.getInstance().setMyValue('exchangeUserAppid',arr)
+    //}
+	//private wx4_functionX_54599(){console.log(7745)}
 
-    private createAD_8628(){
-    //Config.adHeight = 200;
-    if(!window['wx'])
-        return;
-    if(GameManager_wx4.stage.stageHeight < 1080)
-        return;
-
-
-    var btnw = Math.min(Math.pow(GameManager_wx4.stage.stageHeight/1330,1.6)*640,640)
-
-	wx4_function(668);
-    let scalex = screen.availWidth/640;
-    let scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
-    if(btnw * scalex < 300){ //微信限制广告宽度不能小于300
-        btnw = 300 / scalex;
-    }
-    Config.adHeight =  btnw/640 * 224;
-	wx4_function(497);
-    var  btny = GameManager_wx4.uiHeight;//给广告留的高度
-    var  paddingTop = GameManager_wx4.paddingTop();
-    var btnx =  (640-btnw)/2;
-
-    let left = scalex * (btnx);
-    let top = scaley * (btny + paddingTop);
-	wx4_function(399);
-    let width = scalex * btnw;
-
-    let bannerAd = this.bannerAD = wx.createBannerAd({
-        adUnitId: 'adunit-d406f443acb5f7d2',
-        style: {
-            left: left,
-            top: top,
-            width: width
-        }
-    })
-    bannerAd.onError(()=>{
-        Config.adHeight = 0
-        GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
-	wx4_function(3664);
-    })
-    bannerAd.onLoad(()=>{
-
-    })
-    bannerAd.onResize((res)=>{
-        var hh = res.height/scalex*(640/btnw);
-	wx4_function(2793);
-        if(Math.abs(hh - 224)/224 > 0.02)
-        {
-            Config.adHeight =  btnw/640 * hh;
-            GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
-            bannerAd.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop);
-        }
-        //console.log(res,scalex,scaley,GameManager.stage.stageHeight)
-    })
-    bannerAd.show()
-}
-	private wx4_functionX_54600(){console.log(7039)}
-
-    public showBanner(bottom){
-        if(this.bannerAD)
-        {
-            this.bannerAD.show()
-            var scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
-	wx4_function(6227);
-            var  paddingTop = GameManager_wx4.paddingTop();
-            this.bannerAD.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop - bottom)// - GameManager.paddingBottom());
-        }
-    }
-
-    public hideBanner(){
-        if(this.bannerAD)
-            this.bannerAD.hide();
-	wx4_function(3457);
-    }
+//    private createAD_8628(){
+//    //Config.adHeight = 200;
+//    if(!window['wx'])
+//        return;
+//    if(GameManager_wx4.stage.stageHeight < 1080)
+//        return;
+//
+//
+//    var btnw = Math.min(Math.pow(GameManager_wx4.stage.stageHeight/1330,1.6)*640,640)
+//
+//	wx4_function(668);
+//    let scalex = screen.availWidth/640;
+//    let scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
+//    if(btnw * scalex < 300){ //微信限制广告宽度不能小于300
+//        btnw = 300 / scalex;
+//    }
+//    Config.adHeight =  btnw/640 * 224;
+//	wx4_function(497);
+//    var  btny = GameManager_wx4.uiHeight;//给广告留的高度
+//    var  paddingTop = GameManager_wx4.paddingTop();
+//    var btnx =  (640-btnw)/2;
+//
+//    let left = scalex * (btnx);
+//    let top = scaley * (btny + paddingTop);
+//	wx4_function(399);
+//    let width = scalex * btnw;
+//
+//    let bannerAd = this.bannerAD = wx.createBannerAd({
+//        adUnitId: 'adunit-d406f443acb5f7d2',
+//        style: {
+//            left: left,
+//            top: top,
+//            width: width
+//        }
+//    })
+//    bannerAd.onError(()=>{
+//        Config.adHeight = 0
+//        GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
+//	wx4_function(3664);
+//    })
+//    bannerAd.onLoad(()=>{
+//
+//    })
+//    bannerAd.onResize((res)=>{
+//        var hh = res.height/scalex*(640/btnw);
+//	wx4_function(2793);
+//        if(Math.abs(hh - 224)/224 > 0.02)
+//        {
+//            Config.adHeight =  btnw/640 * hh;
+//            GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
+//            bannerAd.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop);
+//        }
+//        //console.log(res,scalex,scaley,GameManager.stage.stageHeight)
+//    })
+//    bannerAd.show()
+//}
+//	private wx4_functionX_54600(){console.log(7039)}
+//
+//    public showBanner(bottom){
+//        if(this.bannerAD)
+//        {
+//            this.bannerAD.show()
+//            var scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
+//	wx4_function(6227);
+//            var  paddingTop = GameManager_wx4.paddingTop();
+//            this.bannerAD.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop - bottom)// - GameManager.paddingBottom());
+//        }
+//    }
+//
+//    public hideBanner(){
+//        if(this.bannerAD)
+//            this.bannerAD.hide();
+//	wx4_function(3457);
+//    }
 
     public stopTimer(){
         this.timeID.stop();
@@ -344,28 +344,29 @@ if(window["wx"])
         GameManager_wx4.getInstance().isActive = true;
         //GameUI.getInstance().cleanTouch();
         console.log('show')
+        MyADManager.getInstance().onShow(res);
 
 
-        if(GameManager_wx4.getInstance().changeUserTime)
-        {
-            console.log(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime)
-            if(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime > 30) //停留超过30秒
-            {
-                GameManager_wx4.getInstance().addJoinAppid(GameManager_wx4.getInstance().changeUserID);
-                if(GameManager_wx4.getInstance().changeUserFun)
-                {
-                    wx.aldSendEvent("点击跳转其它小程序_通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})
-                    GameManager_wx4.getInstance().changeUserFun('changeUser')
-                    ChangeJumpUI.getInstance().hide();
-                }
-            }
-            else
-            {
-                wx.aldSendEvent("点击跳转其它小程序_不通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})
-            }
-        }
-        GameManager_wx4.getInstance().changeUserTime = 0;
-        GameManager_wx4.getInstance().changeUserFun = null;
+        //if(GameManager_wx4.getInstance().changeUserTime)
+        //{
+        //    console.log(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime)
+        //    if(TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime > 30) //停留超过30秒
+        //    {
+        //        GameManager_wx4.getInstance().addJoinAppid(GameManager_wx4.getInstance().changeUserID);
+        //        if(GameManager_wx4.getInstance().changeUserFun)
+        //        {
+        //            wx.aldSendEvent("点击跳转其它小程序_通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})
+        //            GameManager_wx4.getInstance().changeUserFun('changeUser')
+        //            ChangeJumpUI.getInstance().hide();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        wx.aldSendEvent("点击跳转其它小程序_不通过",{'time' : TM_wx4.now() - GameManager_wx4.getInstance().changeUserTime})
+        //    }
+        //}
+        //GameManager_wx4.getInstance().changeUserTime = 0;
+        //GameManager_wx4.getInstance().changeUserFun = null;
     });
     //wx.exitMiniProgram(function(res){
     //    if(!GameManager.stage)

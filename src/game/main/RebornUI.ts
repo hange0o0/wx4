@@ -15,6 +15,7 @@ class RebornUI extends game.BaseWindow_wx4{
 
     private shape = new egret.Shape()
     private step = 0;
+    private isStoping = false;
 
     public constructor() {
         super();
@@ -30,12 +31,12 @@ class RebornUI extends game.BaseWindow_wx4{
         })
 
         this.addBtnEvent(this.rebornBtn,()=>{
+            this.isStoping = true;
             ShareTool.openGDTV((type)=>{
                 this.hide();
                 PKingUI.getInstance().reborn();
                 PlayManager.getInstance().sendGameReborn(type)
-            })
-
+            },()=>{this.isStoping = false})
         })
 
         this.rebornGroup.addChildAt(this.shape,1);
@@ -44,6 +45,7 @@ class RebornUI extends game.BaseWindow_wx4{
     }
 
     public onShow(){
+        this.isStoping = false;
         this.step = 60*10;
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
@@ -55,6 +57,8 @@ class RebornUI extends game.BaseWindow_wx4{
         if(!GameManager_wx4.getInstance().isActive)
             return;
         if(ChangeJumpUI.getInstance().stage)
+            return;
+        if(this.isStoping)
             return;
         if(this.step <= 0)
         {

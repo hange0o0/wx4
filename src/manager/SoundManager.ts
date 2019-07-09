@@ -29,9 +29,11 @@ class SoundManager {
 	private wx4_functionX_54617(){console.log(2634)}
     private currentChannel:egret.SoundChannel;
     private currentKey:string;
+    private wxChannel;
     private bgKey:string;
     private lastBGKey:string;
     private isLoad:boolean = false;
+
 
 	private wx4_functionX_54618(){console.log(41)}
     private bgTimer;
@@ -164,6 +166,15 @@ class SoundManager {
     public stopBgSound() {
         this.lastBGKey = this.bgKey;
         this.bgKey = null;
+        if(window['wx'])
+        {
+            if(this.wxChannel) {
+                this.wxChannel.destroy()
+                this.wxChannel = null
+            }
+            this.currentKey = null;
+            return;
+        }
         try {
             // if(this.tween){
             //     this.tween.pause();
@@ -191,6 +202,14 @@ class SoundManager {
         if (!this.soundPlaying) return;
         if (this.lastSoundTime[v] && egret.getTimer() - this.lastSoundTime[v] < 200)
             return;
+
+        if(window['wx'])
+        {
+            const innerAudioContext = window['wx'].createInnerAudioContext()
+            innerAudioContext.autoplay = true
+            innerAudioContext.src = "resource/sound/" + v +".mp3";
+            return;
+        }
         this.lastSoundTime[v] = egret.getTimer();
         //console.log('call:',v)
         var url = "resource/sound/" + v + ".mp3"
@@ -225,16 +244,29 @@ class SoundManager {
         if (this.bgKey == key) return;
 
 	wx4_function(7511);
-        this.bgKey = key;
+
 
         var url = "resource/sound/" + key + ".mp3"
         if (this.currentKey == url) return;
-        this.currentKey = url;
+
 
         if (this.currentLoader) {
             this.onLoadError_7808({target: this.currentLoader})
         }
         this.stopBgSound()
+        this.bgKey = key;
+        this.currentKey = url;
+
+        if(window['wx'])
+        {
+            const innerAudioContext = this.wxChannel = window['wx'].createInnerAudioContext()
+            innerAudioContext.autoplay = true
+            innerAudioContext.src =url;
+            innerAudioContext.loop =true;
+            return;
+        }
+
+
         try {
 
 	wx4_function(372);

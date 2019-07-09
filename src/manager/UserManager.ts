@@ -44,6 +44,10 @@ class UserManager_wx4 {
     public coinTimes = 0;
     public helpUser = null;
 
+    public addForceEnd = 0
+    public adLevel
+    public isDelete = false
+
 
     public shareUser = [];//buff玩家的数据   openid:{head,nick,time}
 	private wx4_functionX_54647(){console.log(6974)}
@@ -96,6 +100,8 @@ class UserManager_wx4 {
         this.gunPosNum = _get['pos'] || data.gunPosNum || 3;
 	wx4_function(6588);
         this.pastDayCoin = data.pastDayCoin
+        this.adLevel = data.adLevel || 0
+        this.addForceEnd = data.addForceEnd || 0
 
         this.testPassDay()
 
@@ -338,6 +344,8 @@ class UserManager_wx4 {
             makeList:UM_wx4.makeList,
             gunPosNum:UM_wx4.gunPosNum,
             pastDayCoin:UM_wx4.pastDayCoin,
+            adLevel:UM_wx4.adLevel,
+            addForceEnd:UM_wx4.addForceEnd,
             //guideFinish:UM.guideFinish,
             saveTime:TM_wx4.now(),
         };

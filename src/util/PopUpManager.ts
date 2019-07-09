@@ -159,6 +159,7 @@ class PopUpManager {
     public static testVisible(){
         var setVisible = false;
         var testAD = false
+        MyADManager.getInstance().hideBanner();
         for(var i=GameManager_wx4.container.numChildren-1 ;i>=0;i--)
         {
             var ui = GameManager_wx4.container.getChildAt(i);
@@ -169,11 +170,7 @@ class PopUpManager {
                     testAD = true;
                     if(ui.isShowAD)
                     {
-                        GameManager_wx4.getInstance().showBanner(ui.adBottom);
-                    }
-                    else
-                    {
-                        GameManager_wx4.getInstance().hideBanner();
+                        MyADManager.getInstance().showBanner(ui.adBottom);
                     }
                 }
                 var lastVisible = ui.visible;

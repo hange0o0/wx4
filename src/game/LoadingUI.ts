@@ -114,7 +114,7 @@ class LoadingUI extends game.BaseUI_wx4 {
     private initData(){
         if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)
         {
-            this.changeUser.dataChanged()
+            this.changeUser.renew()
             this.loadText.text = '点击屏幕进入游戏';
             this.needShowStartBtn = false;
             this.infoBtn.visible = true;
@@ -129,7 +129,7 @@ class LoadingUI extends game.BaseUI_wx4 {
 
     public onShow(){
         var self = this;
-        ChangeUserUI.getAD();
+        //ChangeUserUI.getAD();
         self.loadText.text = '正在加载素材，请耐心等候..'
         this.renewInfo();
         UM_wx4.getUserInfo(()=>{
@@ -144,7 +144,7 @@ class LoadingUI extends game.BaseUI_wx4 {
                 success(res) {
                     self.callShow();
                     setTimeout(()=>{
-                        self.changeUser.dataChanged()
+                        self.changeUser.renew()
                     },5000)
                 },
                 fail(res) {

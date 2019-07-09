@@ -40,7 +40,7 @@ class BallMC extends game.BaseItem{
 
     public dataChanged():void {
         this.barGroup.visible = false;
-        this.maxHp = this.hp = Math.min(50,10 + Math.floor(UM_wx4.level/5));
+        this.maxHp = this.hp = Math.min(50,5 + Math.floor(UM_wx4.level/5));
         this.mc.source = 'buff_'+(this.data%1000)+'_png'
     }
 

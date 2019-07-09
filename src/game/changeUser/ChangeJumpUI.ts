@@ -10,6 +10,7 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
     private destText: eui.Label;
 
     public fun;
+    public closeFun;
     public str;
     public constructor() {
         super();
@@ -22,12 +23,13 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
         this.setTitle('体验更多小程序')
     }
 
-    public show(str?,fun?){
+    public show(str?,fun?,closeFun?){
         this.fun = fun;
         this.str = str;
-        ChangeUserUI.getAD(()=>{
+        this.closeFun = closeFun;
+        //ChangeUserUI.getAD(()=>{
             super.show()
-        })
+        //})
 
     }
 
@@ -42,10 +44,11 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
 
     public renew(){
         this.setHtml(this.destText, this.str);
-        this.list.dataProvider = new eui.ArrayCollection(ChangeUserUI.getListByNum(9,this.fun))
+        this.list.dataProvider = new eui.ArrayCollection(MyADManager.getInstance().getListByNum(9,this.fun))
     }
 
     public hide(){
         super.hide();
+        this.closeFun && this.closeFun();
     }
 }

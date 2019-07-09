@@ -16,7 +16,7 @@ class PKStateItem extends game.BaseItem{
             this.pool.push(item);
     }
 
-    public static leftBuff = [101,102,103,108,109,1104,1105,1107,1110]
+    public static leftBuff = [101,102,103,108,109,1104,1105,1106,1107,1110]
     public static buffcd = {
         1111:5*60,
         1102:20*60,
