@@ -21,7 +21,7 @@ class PKStateItem extends game.BaseItem{
         1111:5*60,
         1102:20*60,
         1103:20*60,
-        1104:20*60,
+        1104:5*60,
         1105:20*60,
         1106:20*60,
         1107:20*60,
@@ -103,7 +103,7 @@ class PKStateItem extends game.BaseItem{
                 str = '降低怪物20%的速度';
                 break
             case 1104:
-                str = '增加飞刀20%的攻击速度';
+                str = '增加飞刀100%的攻击速度';
                 break
             case 1105:
                 str = '增加飞刀20%的攻击力';

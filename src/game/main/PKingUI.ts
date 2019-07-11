@@ -594,7 +594,10 @@ class PKingUI extends game.BaseUI_wx4 {
                 var ball = BallMC.createItem();
                 this.ballArr.push(ball);
                 this.con.addChild(ball);
-                ball.data = ArrayUtil_wx4.randomOne([1102,1103,1104,1105,1106,1107,1108,1109,1110,1111])
+                if(UM_wx4.level <= 5 && Math.random() > 0.5)
+                    ball.data = 1104;
+                else
+                    ball.data = ArrayUtil_wx4.randomOne([1102,1103,1104,1105,1106,1107,1108,1109,1110,1111])
                 ball.x = 640
                 ball.y = Math.random()*GameManager_wx4.uiHeight*0.25 + 160;
                 ball.move();

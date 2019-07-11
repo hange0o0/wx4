@@ -132,9 +132,9 @@ class GunManager extends egret.EventDispatcher {
         if(gunid < 100)
         {
             var vo = GunVO.getObject(gunid);
-            return Math.floor(Math.pow(level+2.3,1.8 + (vo.open/100))*(vo.open*0.75+3)*5/10)*10
+            return Math.floor(Math.pow(level+2.3,1.8 + (vo.open/100))*(vo.open*0.8+3)*5/10)*10
         }
-        return Math.floor(Math.pow(level+2.7565,3.2)*(100*0.75+3)*5/10)*10
+        return Math.floor(Math.pow(level+2.7565,3.2)*(100*0.8+3)*5/10)*10
     }
 
     //解锁位置花费

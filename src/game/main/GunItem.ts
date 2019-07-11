@@ -109,7 +109,7 @@ class GunItem extends game.BaseItem{
         if(PC.isInBuff(103))
             speedAdd += 0.2
         if(PC.isInBuff(1104))
-            speedAdd -= 0.2
+            speedAdd -= 0.8
 
         maxStep = Math.floor(maxStep*(1+speedAdd))
         this.mcGroup.rotation += 30 - maxStep/5
