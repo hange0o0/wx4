@@ -227,7 +227,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.bar.width = 0;
         this.barGroup.visible = false;
         this.vo.playDieSound();
-
+        if(this.data.mid != 99)
+            PlayManager.getInstance().showDropCoin(this)
     }
 
     public atk(){

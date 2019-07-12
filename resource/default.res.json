@@ -1374,6 +1374,51 @@
 			"name":"white_bg_png",
 			"type":"image",
 			"url":"game_assets/white_bg.png"
+		},
+		{
+			"name":"coin_mv0_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv0.png"
+		},
+		{
+			"name":"coin_mv1_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv1.png"
+		},
+		{
+			"name":"coin_mv2_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv2.png"
+		},
+		{
+			"name":"coin_mv3_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv3.png"
+		},
+		{
+			"name":"coin_mv4_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv4.png"
+		},
+		{
+			"name":"coin_mv5_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv5.png"
+		},
+		{
+			"name":"coin_mv6_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv6.png"
+		},
+		{
+			"name":"coin_mv7_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv7.png"
+		},
+		{
+			"name":"coin_mv8_png",
+			"type":"image",
+			"url":"game_assets2/coin_mv/coin_mv8.png"
 		}
 	]
 }

@@ -202,7 +202,9 @@ class SoundManager {
         if (!this.soundPlaying) return;
         if (this.lastSoundTime[v] && egret.getTimer() - this.lastSoundTime[v] < 200)
             return;
-
+        if (v == 'die' && this.lastSoundTime[v] && egret.getTimer() - this.lastSoundTime[v] < 2000)
+            return;
+        this.lastSoundTime[v] = egret.getTimer();
         if(window['wx'])
         {
             const innerAudioContext = window['wx'].createInnerAudioContext()
@@ -210,7 +212,7 @@ class SoundManager {
             innerAudioContext.src = "resource/sound/" + v +".mp3";
             return;
         }
-        this.lastSoundTime[v] = egret.getTimer();
+
         //console.log('call:',v)
         var url = "resource/sound/" + v + ".mp3"
         var loader:egret.URLLoader = new egret.URLLoader();

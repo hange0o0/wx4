@@ -156,6 +156,65 @@ class PlayManager extends egret.EventDispatcher {
     }
 
 
+    public coinMVList = []
 
+    private getCoinMV(){
+        var oo = this.coinMVList.pop();
+        if(!oo)
+        {
+            var coinMC = new eui.Image();
+            coinMC.anchorOffsetX = 21/2
+            coinMC.anchorOffsetY = 23/2
+
+            var imgs = [];
+            for(var i=1;i<=8;i++)
+            {
+                imgs.push('coin_mv'+i+'_png')
+            }
+            var mv = new SimpleMovieClip(coinMC,imgs)
+            oo =  {
+                mc:coinMC,
+                mv:mv,
+            }
+        }
+        return oo
+    }
+    private freeCoinMV(oo){
+        this.coinMVList.push(oo);
+    }
+
+    public showDropCoin(mc){
+        this.showOneDropCoin(mc,-10 - Math.random()*10,-10 + 20*Math.random())
+        this.showOneDropCoin(mc,10 + Math.random()*10,-10 + 20*Math.random())
+        this.showOneDropCoin(mc,-20 + Math.random()*40,-10 + 20*Math.random())
+    }
+
+    public showOneDropCoin(mc,decX = 0,decY = 0){
+        var oo = this.getCoinMV();
+        var mv = oo.mv;
+        var coinMC = oo.mc;
+
+        var index = mc.parent.getChildIndex(mc);
+        mc.parent.addChildAt(coinMC,index+1);
+        coinMC.x = mc.x + decX;
+        coinMC.y = mc.y + decY
+
+
+        mv.gotoAndPay()
+        egret.Tween.get(coinMC).to({y:coinMC.y - 50},200).to({y:coinMC.y},200).call(()=>{
+            mv.stop();
+            coinMC.rotation = Math.random()*360
+            coinMC.source ='coin_mv0_png'
+        }).wait(50).call(()=>{
+            coinMC.source ='coin_mv0_png'
+        }).wait(500).call(()=>{
+            mv.gotoAndPay()
+            coinMC.parent.addChild(coinMC)
+        }).to({y:300 + Math.random()*(GameManager_wx4.uiHeight - 600),x:-20},500).call(()=>{
+            mv.stop()
+            MyTool.removeMC(coinMC);
+            this.freeCoinMV(oo)
+        })
+    }
 
 }

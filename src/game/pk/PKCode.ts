@@ -191,7 +191,7 @@ class PKCode_wx4 {
             var height = Math.min(300 + level*5,960)
             var startY = this.getStartY(height);
             var hpRate = 1 + (level - 1)*0.1;
-            var bossHpRate = Math.pow(1.122,level/2.5);
+            var bossHpRate = Math.pow(1.15,level/2);
 
             this.autoList = list.split(',');
             for(var i=0;i<this.autoList.length;i++)
@@ -276,7 +276,7 @@ class PKCode_wx4 {
             if(needAddBoss && nowCost/maxCost > 0.75)
             {
                 nowCost += 10;//固定10费
-                var bossHpRate =  Math.pow(1.122,this.endLessStep/3);
+                var bossHpRate =  Math.pow(1.15,this.endLessStep/3);
                 needAddBoss = false;
                 var bossNum = Math.ceil(this.endLessStep/50)
                 if(bossNum == 1)
