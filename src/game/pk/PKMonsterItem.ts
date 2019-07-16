@@ -104,7 +104,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public setSlow(speedDec,cd){
-        var step = Math.ceil(cd*1000*(60/1000))
+        var step = Math.ceil(cd*1000*(30/1000))
         this.slowStep = Math.max(this.slowStep,step)
         this.speedDec = Math.max(this.speedDec,speedDec)
         this.onSpeedChange();
@@ -123,7 +123,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
 
     public setYun(cd){
-        var step = Math.ceil(cd*1000*(60/1000))
+        var step = Math.ceil(cd*1000*(30/1000))
         if(!this.yunStep)//表现晕
         {
             this.addChild(this.stateMV)
@@ -188,7 +188,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
         this.hp = this.data.hp
         this.maxHp = this.hp
-        this.speed = this.vo.speed
+        this.speed = this.vo.speed*1.8
 
 
         this.barGroup.visible = false;

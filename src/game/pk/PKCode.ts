@@ -227,7 +227,7 @@ class PKCode_wx4 {
 
     private createEndLess(){
         var maxCost = 30 + this.endLessStep * 5
-        var stepCost = maxCost/(5)/60; //每一帧增加的花费
+        var stepCost = maxCost/(5)/30; //每一帧增加的花费
         var nowCost = 0;
         var step = this.actionStep;
         var monsterCost = -10;
@@ -311,6 +311,7 @@ class PKCode_wx4 {
         PKMonsterAction_wx3.getInstance().actionAtk();//攻击落实
         PKBulletManager_wx3.getInstance().actionAll();//攻击落实
         this.actionFinish();
+        PlayManager.getInstance().onE();
     }
 
     //自动出战上怪
@@ -393,7 +394,7 @@ class PKCode_wx4 {
     }
 
     private getStepByTime(t){
-        return Math.round(t*60/1000)
+        return Math.round(t*30/1000)
     }
 
     //怪出手
@@ -512,7 +513,7 @@ class PKCode_wx4 {
     public actionFinish(){
         //BUFF效果
         var mlen = this.monsterList.length
-        if(this.actionStep%60 == 0)
+        if(this.actionStep%30 == 0)
         {
             var buff107 =  this.isInBuff(107)
             var buff1111 =  this.isInBuff(1111)

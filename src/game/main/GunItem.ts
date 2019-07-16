@@ -98,7 +98,7 @@ class GunItem extends game.BaseItem{
             this.roundMC2.visible = false
         }
 
-        this.maxStep = Math.floor(GunManager.getInstance().getGunSpeed(this.data)*60) - 10;
+        this.maxStep = Math.floor(GunManager.getInstance().getGunSpeed(this.data)*30) - 5;
     }
 
     public move(){
@@ -112,23 +112,22 @@ class GunItem extends game.BaseItem{
             speedAdd -= 0.8
 
         maxStep = Math.floor(maxStep*(1+speedAdd))
-        this.mcGroup.rotation += 30 - maxStep/5
+        this.mcGroup.rotation += 60 - maxStep/5
         if(this.step >= maxStep)
         {
-            this.step = -10;  //-10
+            this.step = -5;  //-10
             this.shootMC.visible = false
             PKingUI.getInstance().shoot(this);
         }
         if(this.step >=0 )
         {
             this.shootMC.visible = true
-
             this.shootMC.horizontalCenter = -80*(this.step)/maxStep + 20
         }
     }
 
     public move2(){
-        this.mcGroup.rotation += 8
+        this.mcGroup.rotation += 16
         this.shootMC.visible = false;
     }
 

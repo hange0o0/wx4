@@ -9,7 +9,9 @@ class SimpleMovieClip extends egret.EventDispatcher{
     private playTimes:number;
     private loopIndex:number = 0;
 
-    private timeID: egret.Timer;
+    //private timeID: egret.Timer;
+
+    public isPlaying = false
 
     //快速建立动画对象，number从1开始
     public static create(key:string, png:string, number:number,
@@ -31,15 +33,15 @@ class SimpleMovieClip extends egret.EventDispatcher{
         this.sleepFrame = sleepFrame || 0;
         this.currSleep = 0;
 
-        this.timeID = new egret.Timer(millisecond || 42,0);//24帧每秒
-        this.timeID.addEventListener(egret.TimerEvent.TIMER,this.updateTime_4747,this);
+        //this.timeID = new egret.Timer(millisecond || 42,0);//24帧每秒
+        //this.timeID.addEventListener(egret.TimerEvent.TIMER,this.updateTime_4747,this);
         return this;
     }
 
-    public setTimer(v){
-        if(this.timeID.delay != v)
-            this.timeID.delay = v;
-    }
+    //public setTimer(v){
+    //    if(this.timeID.delay != v)
+    //        this.timeID.delay = v;
+    //}
 
     public play(){
         if(this.list.length == 1){
@@ -48,12 +50,12 @@ class SimpleMovieClip extends egret.EventDispatcher{
             return;
         }
         this.currSleep = 0;
-        this.timeID.start();
+        this.isPlaying = true;
         return this;
     }
 
     public stop(){
-        this.timeID.stop();
+        this.isPlaying = false;
     }
 
     //playTimes 播放次数，-1表示循环
@@ -77,7 +79,7 @@ class SimpleMovieClip extends egret.EventDispatcher{
     public gotoAndStop(value:number=0){
         this.current = value;
         this.icon.source = this.list[this.current];
-        this.timeID.stop();
+        this.isPlaying = false;
     }
 
     public setList(data:Array<string>){
@@ -85,7 +87,9 @@ class SimpleMovieClip extends egret.EventDispatcher{
         this.max = data.length;
     }
 
-    private updateTime_4747(){
+    private onE(){
+        if(!this.isPlaying)
+            return;
         if(this.sleepFrame != 0 && this.currSleep > 0){
             if(++this.currSleep == this.sleepFrame){
                 this.currSleep = 0;

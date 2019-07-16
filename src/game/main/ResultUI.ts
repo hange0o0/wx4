@@ -77,8 +77,8 @@ class ResultUI extends game.BaseUI_wx4{
             this.titleText.textColor = 0xFFFFFF
             this.failGroup.visible = false
             coin = (Math.abs(PD.enemyHp)/200)
-            var cd = Math.floor(PD.actionStep/60)  + PD.endLessPassStep*5
-            var cd2 = Math.floor(PD.actionStep/60*100)%100
+            var cd = Math.floor(PD.actionStep/30)  + PD.endLessPassStep*5
+            var cd2 = Math.floor(PD.actionStep/30*100)%100
 
             if(cd > UM_wx4.endLess)
             {

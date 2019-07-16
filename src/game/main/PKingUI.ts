@@ -276,7 +276,7 @@ class PKingUI extends game.BaseUI_wx4 {
 
     public onShow(){
         SoundManager.getInstance().playSound('bg2')
-        this.lastBallStep = 60*10;
+        this.lastBallStep = 30*10;
         this.touchID1 = null;
         this.touchID2 = null;
         this.isDie = false
@@ -541,30 +541,17 @@ class PKingUI extends game.BaseUI_wx4 {
             this.stateArr[i].onE();
         }
 
-
-
-        //var cd = PD.getWudiCD();
-        //if(cd)
-        //{
-        //    this.tipsGroup.visible = true
-        //    this.tipsText.text = '无敌时间\n' + (cd/1000).toFixed(2)  + '秒';
-        //}
-        //else
-        //{
-        //    this.tipsGroup.visible = false
-        //}
-
         if(this.isFinish)
             return;
 
-        var maxY = GameManager_wx4.uiHeight + 50;
+
         var len = this.bulletArr.length
         for(var i=0;i<len;i++)
         {
             var bullet = this.bulletArr[i];
             bullet.move();
             bullet.testHit(PD.monsterList,this.ballArr)
-            if(bullet.isDie == 2 || (!bullet.isAuto && (bullet.x > 700 || bullet.y < -50 || bullet.y > maxY )))
+            if(bullet.isDie == 2)
             {
                 this.bulletArr.splice(i,1);
                 BulletMC.freeItem(bullet);
@@ -586,7 +573,7 @@ class PKingUI extends game.BaseUI_wx4 {
         }
 
         this.lastBallStep ++;
-        if(this.lastBallStep >= 60*15)
+        if(this.lastBallStep >= 30*15)
         {
             this.lastBallStep = 0;
             if(PlayManager.getInstance().isEndLess || PD.autoList.length >= 10)
@@ -605,7 +592,8 @@ class PKingUI extends game.BaseUI_wx4 {
         }
 
 
-        this.testGameOver();
+        if(this.lastBallStep%15 == 0)
+            this.testGameOver();
     }
 
     public removeBall(ball){

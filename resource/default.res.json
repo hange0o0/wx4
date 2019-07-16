@@ -1419,6 +1419,11 @@
 			"name":"coin_mv8_png",
 			"type":"image",
 			"url":"game_assets2/coin_mv/coin_mv8.png"
+		},
+		{
+			"name":"feed_back_btn_png",
+			"type":"image",
+			"url":"game_assets/feed_back_btn.png"
 		}
 	]
 }

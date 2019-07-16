@@ -46,7 +46,7 @@ class RebornUI extends game.BaseWindow_wx4{
 
     public onShow(){
         this.isStoping = false;
-        this.step = 60*10;
+        this.step = 30*10;
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
     }
@@ -67,9 +67,9 @@ class RebornUI extends game.BaseWindow_wx4{
             return;
         }
         this.step --;
-        var cd = Math.ceil(this.step/60);
+        var cd = Math.ceil(this.step/30);
         this.cdText.text = cd + '';
-        MyTool.getSector(128,-90,-this.step/600*360,0xFFFFFF,0.3,this.shape)
+        MyTool.getSector(128,-90,-this.step/300*360,0xFFFFFF,0.3,this.shape)
     }
 
 

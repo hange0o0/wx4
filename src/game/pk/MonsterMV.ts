@@ -8,7 +8,7 @@ class MonsterMV extends eui.Group {
     private atkMV:MonsterAtkMV;
 
 
-    public frameTotal = 40//播放完一轮需要的帧数
+    public frameTotal = 20//40播放完一轮需要的帧数
 
     public state = 2;
     private index = 0;

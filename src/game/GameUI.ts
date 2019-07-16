@@ -24,6 +24,11 @@ class GameUI extends game.BaseUI_wx4 {
     private addForceBtn: eui.Group;
     private addForceText: eui.Label;
     private blackBG: eui.Image;
+    private feedBackBtn: eui.Image;
+    private ad1: eui.Image;
+    private ad2: eui.Image;
+
+
 
 
 
@@ -50,6 +55,15 @@ class GameUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.startBtn,()=>{
             PlayManager.getInstance().isEndLess = false
             this.startMV();
+        })
+        this.addBtnEvent(this.feedBackBtn,()=>{
+           FeedBackUI.getInstance().show();
+        })
+        this.addBtnEvent(this.ad1,()=>{
+           MyADManager.getInstance().showAD(this.ad1['adData'])
+        })
+        this.addBtnEvent(this.ad2,()=>{
+           MyADManager.getInstance().showAD(this.ad2['adData'])
         })
         this.addBtnEvent(this.endLessBtn,()=>{
             if(UM_wx4.level <= this.endLessLevel)
@@ -246,6 +260,16 @@ class GameUI extends game.BaseUI_wx4 {
         //this.tipsTimer = setTimeout(()=>{
         //    this.desText.text = ''
         //},5000)
+
+        var adArr = MyADManager.getInstance().getListByNum(6);
+
+        var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        this.ad1['adData'] = ad;
+        this.ad1.source = ad.logo
+
+        var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        this.ad2['adData'] = ad;
+        this.ad2.source = ad.logo
     }
 
     private onTimer(){

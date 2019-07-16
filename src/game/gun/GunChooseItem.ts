@@ -8,6 +8,8 @@ class GunChooseItem extends game.BaseItem{
     private usingGroup: eui.Group;
     private usingText: eui.Label;
     private skillText: eui.Label;
+    private btn: eui.Button;
+
 
 
 
@@ -30,6 +32,22 @@ class GunChooseItem extends game.BaseItem{
             GunInfoUI.getInstance().show(this.data)
         })
 
+        this.addBtnEvent(this.btn,(e)=>{
+            e.stopImmediatePropagation();
+            if(!this.data)
+            {
+                GunListUI.getInstance().show(GunManager.getInstance().getUnlockGun());
+                return;
+            }
+
+            var pos = GunManager.getInstance().getPosByGun(this.data)
+            if(pos == GunChooseUI.getInstance().index)
+                GunManager.getInstance().removeGun(this.data)
+            else
+                GunManager.getInstance().addGun(this.data,GunChooseUI.getInstance().index)
+            GunChooseUI.getInstance().hide();
+        })
+
         MyTool.addLongTouch(this,()=>{
             if(!this.data)
             {
@@ -40,9 +58,12 @@ class GunChooseItem extends game.BaseItem{
     }
 
     public dataChanged():void {
+
         if(!this.data)
         {
             this.currentState = 's2'
+            this.btn.label = '解锁'
+            this.btn.skinName = 'Btn2Skin'
             return;
         }
         var GM = GunManager.getInstance();
@@ -61,6 +82,25 @@ class GunChooseItem extends game.BaseItem{
         {
             this.usingGroup.visible = false;
         }
+
+        this.btn.skinName = 'Btn1Skin'
+        if(pos == GunChooseUI.getInstance().index)
+        {
+            this.btn.label = '卸下'
+            this.btn.skinName = 'Btn2Skin'
+        }
+        else if(pos && GunManager.getInstance().getGunByPos(GunChooseUI.getInstance().index))
+        {
+            this.btn.label = '交换'
+        }
+        else
+        {
+            this.btn.label = '装备'
+        }
+
+
+
+
 
         var lv = GM.getGunLevel(this.data)
         var vos = GM.getVOs(this.data);

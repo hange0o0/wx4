@@ -82,7 +82,7 @@ class MyADManager {
             var temp = {
                 isSelf:true,
                 "appid": "wxd5d9d807682d46bb",
-                "logo": "icon_coin_png",
+                "logo": "item_empty_png",
                 img:'icon_coin_png',
                 "desc": "右手油门，左手刹车，做一个平民车神！",
                 name:'前方有测速监控'

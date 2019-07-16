@@ -78,6 +78,8 @@ class BulletMC extends game.BaseItem{
             this.addRota = addRota > 0?-5:5;
         }
         //console.log(this.data.rota)
+
+        this.speed *= 2;//帧频降了
     }
 
     
@@ -127,6 +129,8 @@ class BulletMC extends game.BaseItem{
         {
             this.x += this.speed*Math.cos(this.data.rota/180*Math.PI)
             this.y += this.speed*Math.sin(this.data.rota/180*Math.PI)
+            if(this.x > 700 || this.y < -50 || this.y >  GameManager_wx4.uiHeight + 50)
+                this.isDie = 2;
         }
 
         //if(b && !this.x && !this.y)

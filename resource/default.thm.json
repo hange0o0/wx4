@@ -41,6 +41,7 @@
 		"resource/skin/game/LoadingUISkin.exml",
 		"resource/skin/game/main/BallMCSkin.exml",
 		"resource/skin/game/main/BulletItemSkin.exml",
+		"resource/skin/game/main/FeedBackUISkin.exml",
 		"resource/skin/game/main/MainGunItemSkin.exml",
 		"resource/skin/game/main/MonsterItemSkin.exml",
 		"resource/skin/game/main/PKingUISkin.exml",

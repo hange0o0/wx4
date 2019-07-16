@@ -22,7 +22,7 @@ class PlayManager extends egret.EventDispatcher {
         this.randomSeed = level*1234567890;
 
         var maxCost = 50 + level*Math.pow(1.012,level)*50;  //每一关增加的花费
-        var stepCost = maxCost/Math.min(120,20 + level)/60;//每一关增加的时间
+        var stepCost = maxCost/Math.min(120,20 + level)/30;//每一关增加的时间
         var nowCost = 0;
         var step = 0;
         var monsterCost = -10;
@@ -157,7 +157,7 @@ class PlayManager extends egret.EventDispatcher {
 
 
     public coinMVList = []
-
+    public coinMVing = []
     private getCoinMV(){
         var oo = this.coinMVList.pop();
         if(!oo)
@@ -177,10 +177,15 @@ class PlayManager extends egret.EventDispatcher {
                 mv:mv,
             }
         }
+        this.coinMVing.push(oo)
         return oo
     }
+
     private freeCoinMV(oo){
         this.coinMVList.push(oo);
+        var index = this.coinMVing.indexOf(oo);
+        if(index != -1)
+            this.coinMVing.splice(index,1)
     }
 
     public showDropCoin(mc){
@@ -215,6 +220,14 @@ class PlayManager extends egret.EventDispatcher {
             MyTool.removeMC(coinMC);
             this.freeCoinMV(oo)
         })
+    }
+
+    public onE(){
+        var len = this.coinMVing.length
+        for(var i=0;i<len;i++)
+        {
+            this.coinMVing[i].mv.onE();
+        }
     }
 
 }

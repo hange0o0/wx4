@@ -8,7 +8,7 @@ class GameManager_wx4 {
 	private wx4_functionX_54589(){console.log(8578)}
 
     private timeID: egret.Timer;
-    private timeE = new MyTimer(1000/60);
+    private timeE = new MyTimer(1000/30);
     private lastTime: number;
     public lastTouchTime: number;
     public lastTouchMC;
@@ -295,6 +295,13 @@ function sendClientError(str){
     Net.getInstance().send(url,{str:str});
 }
 //window.onerror=handleErr;
+function sendFeedBack(str){
+    try{
+        str =  UM_wx4.gameid + "--" + str
+    }catch(e){}
+    var url =  'https://www.hangegame.com/error_wx4/log_feedback.php'
+    Net.getInstance().send(url,{str:str});
+}
 
 
 if(window["wx"])
