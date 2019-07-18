@@ -29,7 +29,9 @@ class GunInfoUI extends game.BaseWindow_wx4{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.cancelBtn,this.hide)
+        this.addBtnEvent(this.cancelBtn,()=>{
+            GunListUI.getInstance().show(this.gunid)
+        })
         this.addBtnEvent(this.okBtn,()=>{
             var pos = GunManager.getInstance().getPosByGun(this.gunid)
             if(pos == GunChooseUI.getInstance().index)
@@ -60,6 +62,7 @@ class GunInfoUI extends game.BaseWindow_wx4{
         this.setTitle('更换'+GunChooseUI.getInstance().index+'号位武器')
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renew)
     }
 
     private onE(){

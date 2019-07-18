@@ -261,15 +261,33 @@ class GameUI extends game.BaseUI_wx4 {
         //    this.desText.text = ''
         //},5000)
 
-        var adArr = MyADManager.getInstance().getListByNum(6);
+        var adArr = MyADManager.getInstance().getListByNum(10);
 
         var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        this.ad1['adData'] = ad;
-        this.ad1.source = ad.logo
+        if(ad)
+        {
+            this.ad1['adData'] = ad;
+            this.ad1.source = ad.logo
+            this.ad1.visible = true;
+        }
+        else
+        {
+            this.ad1.visible = false;
+        }
+
 
         var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        this.ad2['adData'] = ad;
-        this.ad2.source = ad.logo
+        if(ad)
+        {
+            this.ad2['adData'] = ad;
+            this.ad2.source = ad.logo
+            this.ad2.visible = true;
+        }
+        else
+        {
+            this.ad2.visible = false;
+        }
+
     }
 
     private onTimer(){
