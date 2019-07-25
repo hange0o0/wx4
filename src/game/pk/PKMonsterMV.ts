@@ -66,6 +66,7 @@ class PKMonsterMV_wx3 extends eui.Group {
              this.currentMV = this.heroMV;
              this.addChild(this.heroMV)
              this.heroMV.load(id)
+             //this.heroMV.load(101)
          }
          else {
              if (!this.monsterMV) {

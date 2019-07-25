@@ -168,8 +168,8 @@ class PKCode_wx4 {
         for(var i=0;i<len;i++)
         {
             var wall = PKMonsterItem_wx3.createItem();
-            wall.data = {mid:99};
             PKingUI.getInstance().getCon().addChild(wall);
+            wall.data = {mid:99};
             wall.y =i*wallDec+80
             wall.x =150
             this.wallArr.push(wall);

@@ -45,7 +45,7 @@
 			<e:HorizontalLayout gap="30" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="320" size="22" lineSpacing="10" textAlign="center"/>
+	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="320" size="22" lineSpacing="10" textAlign="center" cacheAsBitmap="true"/>
 	<e:Group id="addForceBtn" height="30" bottom="400" horizontalCenter="0">
 		<e:Label id="addForceText" text="Label" size="24" lineSpacing="10" textAlign="center" textColor="0xf9e5a2" borderColor="0xf9e5a2" y="0" horizontalCenter="0"/>
 		<e:Rect width="100%" height="2" x="0" bottom="0" fillColor="0xf9e5a2"/>

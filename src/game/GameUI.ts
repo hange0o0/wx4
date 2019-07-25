@@ -237,6 +237,7 @@ class GameUI extends game.BaseUI_wx4 {
         this.bg.y = 0;
         GameTool.getInstance().preLoadMV();
         RES.loadGroup('hero');
+        RES.loadGroup('monster');
         this.renewSound();
         this.renew();
         this.renewCoin();
@@ -439,6 +440,8 @@ class GameUI extends game.BaseUI_wx4 {
         this.startBtn.visible = false
         this.endLessBtn.visible = false
         this.addForceBtn.visible = false;
+        this.ad1.visible = false;
+        this.ad2.visible = false;
         this.desText.text = ''
         clearTimeout(this.tipsTimer);
         var num =  Math.min(UM_wx4.gunPosNum + 1,GunManager.getInstance().maxGunNum);

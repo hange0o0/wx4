@@ -12,7 +12,7 @@ class HeroMVItem extends game.BaseItem {
     private scale = 1//1.2;
 
 
-    public state = 2
+    public state = 'stand'
     public heroid;
     public runing
     public speed
@@ -38,7 +38,7 @@ class HeroMVItem extends game.BaseItem {
     public load(heroid): void {
         this.mc.visible = true;
         this.mc.alpha = 1;
-        this.state = 2
+        this.state = 'stand'
         this.heroid = heroid
         this.footShadow.scaleX = this.footShadow.scaleY = 0.75
         if(heroid >= 108 && heroid <= 112)
