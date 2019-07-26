@@ -54,6 +54,7 @@ class BuffUI extends game.BaseWindow_wx4 {
 
         ShareTool.share('加入我们，让我们一起割草无双',Config.getShare(0),{type:1,from:UM_wx4.gameid},()=>{
             MyWindow.ShowTips('等待好友加入')
+            MyWindow.ShowTips('好友加入后，数据有一定延迟，请耐心等候')
         },true)
     }
 

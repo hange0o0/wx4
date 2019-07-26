@@ -91,6 +91,7 @@ class MyADManager {
             this.adList.push(temp)
             this.adList.push(temp)
             this.adList.push(temp)
+            this.adList.push(temp)
 
 
             fun && fun();

@@ -126,12 +126,19 @@ class ChangeUserUI extends game.BaseItem {
     //}
 
     private timer
+    private lastNum = 0
     public renew(){
         if(!this.stage)
             return
         var list = MyADManager.getInstance().getListByNum(10)
         if(list.length < 10)
         {
+            if(this.lastNum != list.length)
+            {
+                this.dataProvider.source = list;
+                this.dataProvider.refresh();
+                this.lastNum = list.length
+            }
             clearTimeout(this.timer)
             this.timer = setTimeout(()=>{
                 this.renew();

@@ -40,6 +40,10 @@ class LoadingUI extends game.BaseUI_wx4 {
         if(!wx)
         {
             this.haveGetUser = true;
+
+            //this.haveGetUser = false;
+            //this.needShowStartBtn = true;
+
             this.initData();
             return;
         }

@@ -113,11 +113,12 @@ class UserManager_wx4 {
 
         if(this.isFirst)
         {
+            console.log('isFirst',this.isFirst)
             var wx = window['wx'];
-	wx4_function(2340);
             if(wx)
             {
                 var query = wx.getLaunchOptionsSync().query;
+                console.log(query)
                 if(query.type == '1')
                 {
                     this.helpUser = query.from
@@ -270,6 +271,7 @@ class UserManager_wx4 {
 
 	private wx4_functionX_54652(){console.log(8769)}
     private testAddInvite_191(){
+        console.log('testAddInvite',this.helpUser && this.haveGetUser)
         if(this.helpUser && this.haveGetUser)
         {
             var wx = window['wx'];

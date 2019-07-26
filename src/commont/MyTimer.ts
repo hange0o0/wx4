@@ -27,8 +27,9 @@ class MyTimer extends egret.EventDispatcher {
 	wx4_function(8810);
             return;
         }
-        while(num --)
+        while(num>0)
         {
+            num--;
             this.dispatchEventWith(egret.TimerEvent.TIMER)
             this.lastTime += this.cd;
 	wx4_function(4138);
