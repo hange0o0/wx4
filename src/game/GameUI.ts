@@ -26,7 +26,9 @@ class GameUI extends game.BaseUI_wx4 {
     private blackBG: eui.Image;
     private feedBackBtn: eui.Image;
     private ad1: eui.Image;
-    private ad2: eui.Image;
+    private onLineCoinBtn: eui.Group;
+    private addCoinMC: eui.Image;
+    private addCoinText: eui.Label;
 
 
 
@@ -34,6 +36,8 @@ class GameUI extends game.BaseUI_wx4 {
 
 
 
+
+    private shape = new egret.Shape()
 
     private dragTarget = new MainGunItem()
 
@@ -62,8 +66,8 @@ class GameUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.ad1,()=>{
            MyADManager.getInstance().showAD(this.ad1['adData'])
         })
-        this.addBtnEvent(this.ad2,()=>{
-           MyADManager.getInstance().showAD(this.ad2['adData'])
+        this.addBtnEvent(this.onLineCoinBtn,()=>{
+             UM_wx4.collectCDCoin()
         })
         this.addBtnEvent(this.endLessBtn,()=>{
             if(UM_wx4.level <= this.endLessLevel)
@@ -147,6 +151,10 @@ class GameUI extends game.BaseUI_wx4 {
         this.gunCon.addEventListener('start_drag',this.onDragStart,this);
         this.gunCon.addEventListener('end_drag',this.onDragEnd,this);
         this.gunCon.addEventListener('move_drag',this.onDragMove,this);
+
+        this.onLineCoinBtn.addChildAt(this.shape,1);
+        this.shape.x = 90/2
+        this.shape.y = 90/2
     }
 
     public resetAD(){
@@ -253,6 +261,7 @@ class GameUI extends game.BaseUI_wx4 {
         this.showTips();
 
         this.resetAD();
+        this.renewCoinCD();
     }
 
     private showTips(){
@@ -277,22 +286,41 @@ class GameUI extends game.BaseUI_wx4 {
         }
 
 
-        var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        if(ad)
-        {
-            this.ad2['adData'] = ad;
-            this.ad2.source = ad.logo
-            this.ad2.visible = true;
-        }
-        else
-        {
-            this.ad2.visible = false;
-        }
+        this.onLineCoinBtn.visible = true;
+        //var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        //if(ad)
+        //{
+        //    this.ad2['adData'] = ad;
+        //    this.ad2.source = ad.logo
+        //    this.ad2.visible = true;
+        //}
+        //else
+        //{
+        //    this.ad2.visible = false;
+        //}
 
     }
 
     private onTimer(){
         this.renewForceText();
+    }
+
+    private renewCoinCD(){
+        if(UM_wx4.cdCoinTime < UM_wx4.cdCoinGetTime + 8*3600)
+        {
+            var cd = (TM_wx4.nowMS() - UM_wx4.cdCoinTime*1000);
+            if(cd > 100000)
+            {
+                cd -= 100000;
+                UM_wx4.resetCDCoin();
+            }
+            MyTool.getSector(44,-90,cd/10000*360,0xFCD766,1,this.shape)
+        }
+        else
+        {
+            MyTool.getSector(44,-90,360,0xA9F966,1,this.shape)
+        }
+        this.addCoinText.text = NumberUtil_wx4.addNumSeparator(UM_wx4.cdCoin,2);
     }
 
     private onE(){
@@ -312,6 +340,7 @@ class GameUI extends game.BaseUI_wx4 {
         //    var item = this.gunArr[i];
         //    item.rotation = -this.gunCon.rotation
         //}
+        this.renewCoinCD();
 
         this.bg.y += 1;
         if(this.bg.y > 0)
@@ -441,7 +470,7 @@ class GameUI extends game.BaseUI_wx4 {
         this.endLessBtn.visible = false
         this.addForceBtn.visible = false;
         this.ad1.visible = false;
-        this.ad2.visible = false;
+        this.onLineCoinBtn.visible = false;
         this.desText.text = ''
         clearTimeout(this.tipsTimer);
         var num =  Math.min(UM_wx4.gunPosNum + 1,GunManager.getInstance().maxGunNum);

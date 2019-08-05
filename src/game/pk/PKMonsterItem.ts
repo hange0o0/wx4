@@ -58,6 +58,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
 
     public stateMV =  new MonsterAtkMV();
+    public iceMC:eui.Image
     public monsterMV:PKMonsterMV_wx3 = new PKMonsterMV_wx3();
 
     public constructor() {
@@ -76,6 +77,12 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.monsterMV.y = 300;
         this.anchorOffsetX = 50;
         this.anchorOffsetY = 300;
+
+        this.iceMC =  new eui.Image('effect_ice_png');
+        this.iceMC.anchorOffsetX = 102
+        this.iceMC.anchorOffsetY = 161
+        this.iceMC.x = 50;
+        this.iceMC.y = 300;
 
 
         this.stateMV.x =  50 -  154/4
@@ -108,7 +115,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.slowStep = Math.max(this.slowStep,step)
         this.speedDec = Math.max(this.speedDec,speedDec)
         this.onSpeedChange();
-        this.monsterMV.alpha = 0.6;
+        this.addChild(this.iceMC);
+        this.iceMC.scaleX = this.iceMC.scaleY = this.vo.height/140
     }
 
     public onSpeedChange(){
@@ -153,7 +161,8 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             {
                 this.speedDec = 0;
                 this.monsterMV.speed = 0;
-                this.monsterMV.alpha = 1;
+                //this.monsterMV.alpha = 1;
+                MyTool.removeMC(this.iceMC)
                 this.onSpeedChange();
             }
         }
@@ -175,6 +184,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.monsterMV.load(this.mid)
         this.monsterMV.stand();
         this.monsterMV.alpha = 1;
+        MyTool.removeMC(this.iceMC)
         if(this.data.mid == 99)
         {
             this.monsterMV.scaleX = -1

@@ -190,7 +190,7 @@ class PKCode_wx4 {
             var list = PlayManager.getInstance().getLevelMonster(level)
             var height = Math.min(300 + level*5,960)
             var startY = this.getStartY(height);
-            var hpRate = 1 + (level - 1)*0.1;
+            var hpRate = 1 + (level - 1)*0.11;
             var bossHpRate = Math.pow(1.15,level/2);
 
             this.autoList = list.split(',');
@@ -250,7 +250,7 @@ class PKCode_wx4 {
 
         var minRate = Math.random()*0.8;//出现小怪的机率
         var minRateAdd = 0.2 + Math.random()*0.3;//出现小怪的机率
-        var hpRate = 1 + (this.endLessStep - 1)*0.1;
+        var hpRate = 1 + (this.endLessStep - 1)*0.12;
         var height = Math.min(300 + this.endLessStep*5,960)
         var startY = this.getStartY(height);
         var needAddBoss = this.endLessStep%5 == 0

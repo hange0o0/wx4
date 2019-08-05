@@ -1443,6 +1443,16 @@
 			"name":"960_json",
 			"type":"json",
 			"url":"game_assets2/monster/960.json"
+		},
+		{
+			"name":"effect_ice_png",
+			"type":"image",
+			"url":"game_assets2/ani/effect_ice.png"
+		},
+		{
+			"name":"common_coin_png",
+			"type":"image",
+			"url":"game_assets/common_coin.png"
 		}
 	]
 }

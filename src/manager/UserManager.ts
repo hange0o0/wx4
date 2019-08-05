@@ -44,6 +44,10 @@ class UserManager_wx4 {
     public coinTimes = 0;
     public helpUser = null;
 
+    public cdCoin = 0;
+    public cdCoinTime = 0;
+    public cdCoinGetTime = 0;
+
     public addForceEnd = 0
     public adLevel
     public isDelete = false
@@ -91,6 +95,11 @@ class UserManager_wx4 {
         this.endLess = data.endLess || 0;
         this.level = data.level || 1;
         this.coinTimes = data.coinTimes || 0;
+
+        this.cdCoin = data.cdCoin || 0;
+        this.cdCoinTime = data.cdCoinTime || 0;
+        this.cdCoinGetTime = data.cdCoinGetTime || 0
+
 	wx4_function(4749);
         this.gunLevel = data.gunLevel || {};
         this.nextMakeTime = data.nextMakeTime || 0;
@@ -327,6 +336,9 @@ class UserManager_wx4 {
              pastDayCoin:{coin:0,t:TM_wx4.now()},
              saveTime:0,
              shareUser:[],
+             cdCoin:0,
+             cdCoinTime:TM_wx4.now(),
+             cdCoinGetTime:TM_wx4.now(),
          };
 	wx4_function(7109);
     }
@@ -348,10 +360,15 @@ class UserManager_wx4 {
             pastDayCoin:UM_wx4.pastDayCoin,
             adLevel:UM_wx4.adLevel,
             addForceEnd:UM_wx4.addForceEnd,
+
+            cdCoin:UM_wx4.cdCoin,
+            cdCoinTime:UM_wx4.cdCoinTime,
+            cdCoinGetTime:UM_wx4.cdCoinGetTime,
             //guideFinish:UM.guideFinish,
             saveTime:TM_wx4.now(),
         };
 	wx4_function(5252);
+
     }
 
 
@@ -432,5 +449,42 @@ class UserManager_wx4 {
         return true
     }
 	private wx4_functionX_54659(){console.log(650)}
+
+
+    public resetCDCoin(){
+        if(this.cdCoinTime < this.cdCoinGetTime + 8*3600)
+        {
+             var num = Math.floor((Math.min(TM_wx4.now(),this.cdCoinGetTime + 8*3600) - this.cdCoinTime)/10)
+            if(num > 0)
+            {
+                this.cdCoinTime += num*10;
+                this.cdCoin += num * Math.ceil(this.level/2)
+            }
+        }
+    }
+
+    public collectCDCoin(){
+        if(!this.cdCoin)
+        {
+            MyWindow.ShowTips('暂无可领取金币')
+            return;
+        }
+        var coin = this.cdCoin;
+        var add = BuffManager.getInstance().getCoinAdd();
+        if(add)
+        {
+            coin = Math.ceil(coin * (1+add/100));
+        }
+        UM_wx4.addCoin(coin);
+        this.cdCoinGetTime = TM_wx4.now();
+        this.cdCoinTime = TM_wx4.now();
+        this.cdCoin = 0;
+
+        MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(coin,2),0xFFFF00),2000)
+        MyWindow.ShowTips('好友加成：'+MyTool.createHtml('+' + add + '%',0x00FF00),2000)
+        SoundManager.getInstance().playEffect('coin')
+    }
+
+
 
 }

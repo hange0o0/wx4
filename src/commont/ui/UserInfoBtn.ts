@@ -42,10 +42,8 @@ class UserInfoBtn {
 	private wx4_functionX_54770(){console.log(6613)}
     private initBtn_5365(btnw, btnh, btnx, btny, imgUrl){
 
-        console.log(1111)
         if(!window['wx'])
             return;
-        console.log(222222)
         //if(RELEASE){
             //这里存在界面坐标、尺寸换算关系 width="180" height="60" bottom="40" x="230"
             // let btnw = 244, btnh = 71, btnx = 98, btny = 381;
