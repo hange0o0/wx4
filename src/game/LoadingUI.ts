@@ -110,6 +110,7 @@ class LoadingUI extends game.BaseUI_wx4 {
                 else
                 {
                     this.needShowStartBtn = true;
+                    this.initData()
                 }
             }
         })

@@ -17,6 +17,7 @@ class UserManager_wx4 {
     public get needUpUser(){return this._needUpUser}
     public set needUpUser(v){this._needUpUser = v;v && egret.callLater(this.localSave_7136,this)}
 
+    public collectCD = 20;
 
 	private wx4_functionX_54643(){console.log(6875)}
     public nick
@@ -454,10 +455,10 @@ class UserManager_wx4 {
     public resetCDCoin(){
         if(this.cdCoinTime < this.cdCoinGetTime + 8*3600)
         {
-             var num = Math.floor((Math.min(TM_wx4.now(),this.cdCoinGetTime + 8*3600) - this.cdCoinTime)/10)
+             var num = Math.floor((Math.min(TM_wx4.now(),this.cdCoinGetTime + 8*3600) - this.cdCoinTime)/this.collectCD)
             if(num > 0)
             {
-                this.cdCoinTime += num*10;
+                this.cdCoinTime += num*this.collectCD;
                 this.cdCoin += num * Math.ceil(this.level/2)
             }
         }

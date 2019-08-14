@@ -236,6 +236,7 @@ class MyADManager {
     ////////////////////////////////banner///////////////////
     public bannerAD
     public bannerBG
+    public insertAD
     public createAD(){
         //Config.adHeight = 200;
         if(!window['wx'])
@@ -290,8 +291,26 @@ class MyADManager {
         })
         bannerAd.show()
         bannerAd.hide();
+
+
+        if (wx.createInterstitialAd && Config.wx_insert){
+            this.insertAD = wx.createInterstitialAd({
+                adUnitId: Config.wx_insert
+            })
+        }
     }
     private wx4_functionX_54600(){console.log(7039)}
+
+
+    //显示插屏广告
+    public showInsert(){
+        if(!this.insertAD)
+            return;
+
+        this.insertAD.show().catch((err) => {
+            console.error(err)
+        })
+    }
 
     public showBanner(bottom){
         if(this.bannerAD)

@@ -309,16 +309,20 @@ class GameUI extends game.BaseUI_wx4 {
         if(UM_wx4.cdCoinTime < UM_wx4.cdCoinGetTime + 8*3600)
         {
             var cd = (TM_wx4.nowMS() - UM_wx4.cdCoinTime*1000);
-            if(cd > 100000)
+            if(cd >= UM_wx4.collectCD*1000)
             {
-                cd -= 100000;
+                cd -=  UM_wx4.collectCD*1000;
                 UM_wx4.resetCDCoin();
+
+                egret.Tween.get(this.addCoinText).to({bottom:-10},100).to({bottom:-20},100)
             }
-            MyTool.getSector(44,-90,cd/10000*360,0xFCD766,1,this.shape)
+            MyTool.getSector(44,-90,cd/( UM_wx4.collectCD*1000)*360,0xFCD766,1,this.shape)
+            this.addCoinMC.rotation = 0
         }
         else
         {
             MyTool.getSector(44,-90,360,0xA9F966,1,this.shape)
+            this.addCoinMC.rotation += 3
         }
         this.addCoinText.text = NumberUtil_wx4.addNumSeparator(UM_wx4.cdCoin,2);
     }

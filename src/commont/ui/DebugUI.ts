@@ -101,6 +101,10 @@ class DebugUI extends game.BaseUI_wx4 {
             DM.jumpPK = ! DM.jumpPK
             MyWindow.ShowTips('跳过分享:' + DM.jumpPK)
         })
+
+        this.addB_8927('插屏广告',()=>{
+            MyADManager.getInstance().showInsert()
+        })
     }
 	private wx4_functionX_54768(){console.log(8957)}
 

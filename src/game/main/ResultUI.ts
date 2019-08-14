@@ -96,7 +96,11 @@ class ResultUI extends game.BaseUI_wx4{
         }
         else if(rate == 0)
         {
-             this.titleText.text = '大胜！'
+            if(UM_wx4.level % 5 == 0)
+                MyADManager.getInstance().showInsert()
+
+
+            this.titleText.text = '大胜！'
             this.titleText.textColor = 0xFFFF00
             this.failGroup.visible = false
             coin*=3;

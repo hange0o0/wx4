@@ -214,7 +214,8 @@ class PlayManager extends egret.EventDispatcher {
             coinMC.source ='coin_mv0_png'
         }).wait(500).call(()=>{
             mv.gotoAndPay()
-            coinMC.parent.addChild(coinMC)
+            if(coinMC.parent)
+                coinMC.parent.addChild(coinMC)
         }).to({y:300 + Math.random()*(GameManager_wx4.uiHeight - 600),x:-20},500).call(()=>{
             mv.stop()
             MyTool.removeMC(coinMC);
