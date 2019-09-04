@@ -316,21 +316,21 @@ class PKCode_wx4 {
 
     //自动出战上怪
     public autoAction(){
-        var b = false
+        var addMonster = []
         if(PlayManager.getInstance().isEndLess && this.autoList.length == 0)
         {
             this.createEndLess();
         }
          while(this.autoList[0] && this.autoList[0].step <= this.actionStep)
          {
-             b = true;
              var oo = this.autoList.shift();
              var monster = PKMonsterItem_wx3.createItem();
              PKingUI.getInstance().addMonster(monster)
              monster.data = oo;
              monster.y = oo.y
              monster.x = 680
-             this.monsterList.push(monster);
+             //this.monsterList.push(monster);
+             addMonster.push(monster)
 
              //设攻击目标
              var nearWall:any = null;
@@ -358,14 +358,36 @@ class PKCode_wx4 {
              }
          }
 
-        if(b)
+        while(addMonster.length)
         {
-            ArrayUtil_wx4.sortByField(this.monsterList,['y'],[0]);
-            var mlen = this.monsterList.length
-            for(var i=0;i<mlen;i++)
+            var newItem = addMonster.pop();
+            for(var i=0;i<this.monsterList.length;i++)
             {
-                MyTool.upMC(this.monsterList[i]);
+                 var item = this.monsterList[i];
+                if(!item.parent)
+                    continue;
+                if(item.y>newItem.y)
+                {
+                    this.monsterList.splice(i,0,newItem)
+                    var index = item.parent.getChildIndex(item);
+                    item.parent.addChildAt(newItem,index);
+                    newItem = null;
+                    break;
+                }
             }
+            if(newItem)
+            {
+                this.monsterList.push(newItem)
+                PKingUI.getInstance().addMonster(newItem)
+            }
+
+
+            //ArrayUtil_wx4.sortByField(this.monsterList,['y'],[0]);
+            //var mlen = this.monsterList.length
+            //for(var i=0;i<mlen;i++)
+            //{
+            //    MyTool.upMC(this.monsterList[i]);
+            //}
         }
 
     }

@@ -276,6 +276,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
 
         if(-v > this.hp)
             v = -this.hp;
+
+        if(this.hp + v > this.maxHp)//防止补过头
+            v = this.maxHp - this.hp;
+
         this.hp += v;
         //if(v < 0)
 

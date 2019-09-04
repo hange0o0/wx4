@@ -78,7 +78,7 @@ class PlayManager extends egret.EventDispatcher {
                     var hh = (100/bossNum);
                     for(var i=0;i<bossNum;i++)
                     {
-                        var bossid =  Math.ceil(Math.random()*10)
+                        var bossid =  Math.ceil(this.random()*10)
                         if(!bossObj[bossid])
                         {
                             list.push((100 + bossid)+'|' + step + '|' +Math.floor(this.random()*hh +hh*i))

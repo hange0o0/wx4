@@ -90,6 +90,7 @@ class MakeGunUI extends game.BaseWindow_wx4{
 
     public onShow(){
         this.renew();
+        this.onTimer();
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
         this.addPanelOpenEvent(GameEvent.client.GUN_UNLOCK,this.renewGun)
