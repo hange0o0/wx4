@@ -12,12 +12,14 @@ class ResultUI extends game.BaseUI_wx4{
     private coinText: eui.Label;
     private coinAddText: eui.Label;
     private failGroup: eui.Group;
-    private failTipsGroup: eui.Group;
-    private barMC: eui.Rect;
+    private barMC: eui.Image;
     private rateText: eui.Label;
     private titleText: eui.Label;
     private timeText: eui.Label;
+    private failTipsGroup: eui.Group;
     private failText: eui.Label;
+    private jumpBtn: eui.Group;
+
 
 
 
@@ -36,6 +38,12 @@ class ResultUI extends game.BaseUI_wx4{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.addBtnEvent(this.jumpBtn,()=>{
+            var wx = window['wx']
+            wx.navigateToMiniProgram({
+                appId: 'wxfd2a9596bb791751',//别点小广告
+            })
+        })
         this.addBtnEvent(this.awardBtn,()=>{
             MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.addCoin,2),0xFFFF00),1000)
             this.close();
