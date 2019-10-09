@@ -46,7 +46,9 @@ class Main extends eui.UILayer {
 	wx4_function(2670);
         DM = DebugManager.getInstance();
         Config.initURLRequest();
+        Config.init();
         console.log('_1a')
+
     }
 
     private setScaleMode_6441(){

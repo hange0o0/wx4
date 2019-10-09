@@ -142,7 +142,7 @@ class LoadingUI extends game.BaseUI_wx4 {
             this.initData();
         });
         var wx =  window["wx"];
-        if(wx)
+        if(Config.isWX)
         {
             const loadTask = wx.loadSubpackage({
                 name: 'assets2', // name 可以填 name 或者 root
@@ -161,9 +161,30 @@ class LoadingUI extends game.BaseUI_wx4 {
             })
             return;
         }
+        if(_get['resource2'])
+        {
+            this.loadResource2();
+            return;
+        }
         this.callShow();
     }
 
+    private loadResource2(){
+        RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+        RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+        RES.loadGroup("game_assests2");
+    }
+
+    private onResourceLoadComplete(){
+        RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+        RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+        this.callShow();
+    }
+    private onResourceProgress(event:RES.ResourceEvent):void {
+        if (event.groupName == "game_assests2") {
+            this.loadText.text = '正在加载素材..' + Math.floor(event.itemsLoaded/event.itemsTotal*100) + '%'
+        }
+    }
     private callShow(){
         this.loadText.text = '正在请求用户数据'
         if(this.needShowStartBtn)

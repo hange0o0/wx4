@@ -10,7 +10,7 @@ class Net extends egret.EventDispatcher{
         super();
     }
 
-    public send(url,msg){
+    public send(url,msg,fun?){
         var loader = new egret.URLLoader();
 	wx4_function(7017);
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
@@ -29,6 +29,15 @@ class Net extends egret.EventDispatcher{
 	wx4_function(6046);
         }
         loader.load(request);
+        if(fun)
+        {
+           this.addLoading_7570();
+            loader.once(egret.Event.COMPLETE,(e)=>{
+                var data = JSON.parse(loader.data);
+                fun(data);
+                this.removeLoading_2296();
+            },this)
+        }
     }
 
 
@@ -44,5 +53,16 @@ class Net extends egret.EventDispatcher{
 	private wx4_functionX_54526(){console.log(5047)}
     private removeLoading_2296(){
         MsgingUI.getInstance().hide();
+    }
+
+    public getServerData(fun){
+        var url =  Config.serverPath + 'getGameData.php'
+        this.send(url,{gameid:UM_wx4.gameid,gameid2:UM_wx4.gameid2},fun);
+    }
+    public saveServerData(isNewUser?){
+        var url =  Config.serverPath + 'saveGameData.php'
+        if(isNewUser)
+            var url =  Config.serverPath + 'newGameData.php'
+        this.send(url,{gameid:UM_wx4.gameid,gameid2:UM_wx4.gameid2,data:Base64.encode(JSON.stringify(UM_wx4.getUpdataData()))});
     }
 }

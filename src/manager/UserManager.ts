@@ -31,6 +31,7 @@ class UserManager_wx4 {
     public shareFail;
 
     public gameid: string;
+    public gameid2: string;//匿名的openid，如果是匿名，gameid与gameid2相同
     public dbid: string;
 
 	private wx4_functionX_54645(){console.log(5518)}
@@ -182,16 +183,59 @@ class UserManager_wx4 {
         EM_wx4.dispatch(GameEvent.client.COIN_CHANGE)
     }
 
+    public getUserInfoZJ(fun){
+        var tt = window['wx'];
+        tt.login({
+            success (res) {
+                console.log(res);
+                var url =  Config.serverPath + 'getInfo.php'
+                Net.getInstance().send(url,res,fun);
+            },
+            fail (res) {
+                console.log(`login调用失败`);
+            }
+        });
+    }
+
     public getUserInfo(fun){
+        if(Config.isZJ)
+        {
+            this.getUserInfoZJ((data)=>{
+                this.gameid = data.data.openid || data.data.anonymous_openid
+                this.gameid2 = data.data.anonymous_openid
+                this.isTest = data.version == this.testVersion;
+                TimeManager_wx4.getInstance().initlogin(data.time)
+
+                Net.getInstance().getServerData((data)=>{
+                    console.log(data);
+                    if(data.data)
+                    {
+                        var tempdata = JSON.parse(Base64.decode(data.data.gamedata))
+                        this.fill(tempdata);
+                    }
+                    else
+                    {
+                        var initData:any = this.orginUserData_5537();
+                        this.fill(initData);
+                        Net.getInstance().saveServerData(true);
+                    }
+
+                    fun && fun();
+                });
+                //this.gameid = _get['openid'];
+                //this.isFirst = !SharedObjectManager_wx4.getInstance().getMyValue('localSave')
+                //this.fill(this.orginUserData_5537());
+
+            })
+            return;
+        }
         var wx = window['wx'];
-	wx4_function(1645);
         if(!wx)
         {
             setTimeout(()=>{
                 this.gameid = _get['openid'];
                 this.isFirst = !SharedObjectManager_wx4.getInstance().getMyValue('localSave')
                 this.fill(this.orginUserData_5537());
-	wx4_function(3936);
                 fun && fun();
             },1000)
             return;
@@ -205,7 +249,6 @@ class UserManager_wx4 {
                         {
                             MyWindow.Alert('请求用户数据失败，请重新启动',()=>{
                                 wx.exitMiniProgram({});
-	wx4_function(4980);
                             })
                             return;
                         }
@@ -344,7 +387,7 @@ class UserManager_wx4 {
 	wx4_function(7109);
     }
 
-    private getUpdataData_3942(){
+    public getUpdataData(){
         return {
             loginTime:UM_wx4.loginTime,
             coin:UM_wx4.coin,
@@ -380,7 +423,7 @@ class UserManager_wx4 {
 	wx4_function(1378);
         if(wx)
         {
-            var updateData:any = this.getUpdataData_3942();;
+            var updateData:any = this.getUpdataData();;
             WXDB.updata('user',updateData)
         }
         this.needUpUser = false;
@@ -390,7 +433,7 @@ class UserManager_wx4 {
     }
 
     private localSave_7136(){
-        SharedObjectManager_wx4.getInstance().setMyValue('localSave',this.getUpdataData_3942())
+        SharedObjectManager_wx4.getInstance().setMyValue('localSave',this.getUpdataData())
     }
 	private wx4_functionX_54655(){console.log(6589)}
 

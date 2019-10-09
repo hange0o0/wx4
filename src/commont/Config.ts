@@ -8,6 +8,10 @@ class Config {
 	public constructor() {
 	}
 
+    public static isZJ: boolean = false;
+    public static isWX: boolean = false;
+
+
     public static isDebug: boolean = true;
     public static userHost: string = 'hangegame.com';
     public static host: string = 'hangegame.com';
@@ -61,7 +65,22 @@ class Config {
     public static equalValue = 1000;
 
 
+    public static serverPath = 'https://www.hangegame.com/wx4_server/'
     public static init(){
+        this.isZJ = window['iszj']
+        this.isWX = window['wx']
+        if(this.isZJ)
+        {
+            this.isWX = false;
+
+            this.wx_ad = '';
+            this.wx_video = '';
+            this.wx_insert = '';
+            this.myAppID = 'tt14f862458bd2e750';
+        }
+
+
+
 
     }
 	private wx4_functionX_54459(){console.log(8008)}

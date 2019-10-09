@@ -72,6 +72,12 @@ class MyADManager {
             return;
         }
 
+        if(Config.isZJ)
+        {
+            fun && fun();
+            return;
+        }
+
         var self = this;
         //var splitList = ['wxd5d9d807682d46bb',"wxf9c8e218c23e2eb7","wxe066524f2972cb1a","wx2f66e2c8de744d53"]
         this.adList = []
