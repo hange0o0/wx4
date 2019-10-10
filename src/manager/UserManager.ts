@@ -75,6 +75,7 @@ class UserManager_wx4 {
 
 
     public haveGetUser = false
+    public loginSuccess = true
     public fill(data:any):void{
         var localData = SharedObjectManager_wx4.getInstance().getMyValue('localSave')
         if(localData && localData.saveTime && localData.saveTime - data.saveTime > 10) //本地的数据更新
@@ -92,7 +93,7 @@ class UserManager_wx4 {
         this.loginTime = data.loginTime || TM_wx4.now();
 	wx4_function(2223);
         this.coin = data.coin || 0;
-        this.shareUser = data.shareUser;
+        this.shareUser = data.shareUser || [];
         this.helpUser = data.helpUser;
         this.endLess = data.endLess || 0;
         this.level = data.level || 1;
@@ -183,10 +184,12 @@ class UserManager_wx4 {
         EM_wx4.dispatch(GameEvent.client.COIN_CHANGE)
     }
 
-    public getUserInfoZJ(fun){
+    public getUserInfoZJ(fun,force=false){
         var tt = window['wx'];
         tt.login({
-            success (res) {
+            force:force,
+            success:(res)=>{
+                this.loginSuccess = res.code
                 console.log(res);
                 var url =  Config.serverPath + 'getInfo.php'
                 Net.getInstance().send(url,res,fun);
@@ -298,7 +301,6 @@ class UserManager_wx4 {
         if(TM_wx4.now() - this.initDataTime < 5*60)
         {
             fun && fun();
-	wx4_function(3491);
             return;
         }
         this.initDataTime = TM_wx4.now();
@@ -306,16 +308,25 @@ class UserManager_wx4 {
         if(!wx)
         {
             fun && fun();
-	wx4_function(7992);
             return;
         }
+
+        if(Config.isZJ)
+        {
+            Net.getInstance().getShareData((data)=>{
+                console.log(data);
+                this.shareUser = data.data.sharedata || [];
+                fun && fun();
+            })
+            return;
+        }
+
         const db = wx.cloud.database();
         db.collection('user').where({     //取玩家数据
             _openid: this.gameid,
         }).get({
             success: (res)=>{
                 var data = res.data[0];
-	wx4_function(4242);
                 this.shareUser = data.shareUser;
                 fun && fun();
             }
@@ -411,8 +422,6 @@ class UserManager_wx4 {
             //guideFinish:UM.guideFinish,
             saveTime:TM_wx4.now(),
         };
-	wx4_function(5252);
-
     }
 
 
@@ -420,14 +429,16 @@ class UserManager_wx4 {
         if(!this.needUpUser)
             return;
         var wx = window['wx'];
-	wx4_function(1378);
-        if(wx)
+        if(Config.isWX)
         {
             var updateData:any = this.getUpdataData();;
             WXDB.updata('user',updateData)
         }
+        else if(Config.isZJ)
+        {
+            Net.getInstance().saveServerData();
+        }
         this.needUpUser = false;
-	wx4_function(1838);
         this.localSave_7136();
         //this.upWXData();
     }
@@ -442,7 +453,12 @@ class UserManager_wx4 {
         var wx = window['wx'];
         if(!wx)
             return;
-        var score = JSON.stringify({"wxgame":{"score":UM_wx4.endLess,"update_time": TM_wx4.now()}})
+        var pKey = 'wxgame';
+        if(Config.isZJ)
+            pKey = 'ttgame'
+        var data = {}
+        data[pKey] = {"score":UM_wx4.endLess,"update_time": TM_wx4.now()}
+        var score = JSON.stringify(data)
         var upList = [{ key: 'endless', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
         wx.setUserCloudStorage({
             KVDataList: upList,
@@ -461,7 +477,16 @@ class UserManager_wx4 {
         var wx = window['wx'];
         if(!wx)
             return;
-        var score = JSON.stringify({"wxgame":{"score":UM_wx4.level,"update_time": TM_wx4.now()}})
+
+        var pKey = 'wxgame';
+        if(Config.isZJ)
+            pKey = 'ttgame'
+        var data = {}
+        data[pKey] = {"score":UM_wx4.level,"update_time": TM_wx4.now()}
+        var score = JSON.stringify(data)
+
+
+        //var score = JSON.stringify({"wxgame":{"score":UM_wx4.level,"update_time": TM_wx4.now()}})
         var upList = [{ key: 'endless', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
         wx.setUserCloudStorage({
             KVDataList: upList,

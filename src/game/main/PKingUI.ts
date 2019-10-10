@@ -53,7 +53,7 @@ class PKingUI extends game.BaseUI_wx4 {
     private isFinish = true
     private isDie = false
     //private showWudi = false
-    private isReborn = false
+    public isReborn = false
 
     public lastBallStep = 0
     //private lastNoMoveTime = 0;//进入怪攻击判断，保持
@@ -509,6 +509,8 @@ class PKingUI extends game.BaseUI_wx4 {
     }
 
     private onE(){
+
+
         if(this.begining || this.isFinish)
         {
             var len = this.gunArr.length
@@ -532,6 +534,7 @@ class PKingUI extends game.BaseUI_wx4 {
 
         if(this.stoping)
             return;
+
 
 
         PD.onStep();

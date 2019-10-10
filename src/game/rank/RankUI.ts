@@ -33,12 +33,22 @@ class RankUI extends game.BaseWindow_wx4{
         this.infoBtn = new UserInfoBtn(this.openBtn, (res)=>{
             this.renewInfo(res);
         }, this, Config.localResRoot + "wx_btn_info.png");
+        this.infoBtn.force = true
 
         this.scroller.viewport = this.list;
         this.list.itemRenderer = RankItem;
 
         this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
         this.tab.selectedIndex = 0;
+
+        if(Config.isZJ)//字节不显示好友
+        {
+            let ss = (<eui.ArrayCollection>this.tab.dataProvider).source;
+            ss.shift();
+            ss.shift();
+            this.tab.dataProvider = new eui.ArrayCollection(ss);
+            this.tab.selectedIndex = 0;
+        }
     }
 
     private renewInfo(res?){
@@ -68,11 +78,14 @@ class RankUI extends game.BaseWindow_wx4{
         if(!window['wx'])
             return;
         this.remove();
-        if(this.tab.selectedIndex == 2)
+        var selectindex = this.tab.selectedIndex
+        if(Config.isZJ)
+            selectindex += 2;
+        if(selectindex == 2)
         {
             this.worldRank('level',UM_wx4.level);
         }
-        else if(this.tab.selectedIndex == 3)
+        else if(selectindex == 3)
         {
             this.worldRank('endless',UM_wx4.endLess);
         }
@@ -96,7 +109,7 @@ class RankUI extends game.BaseWindow_wx4{
             return;
         }
 
-        var oo = {
+        var oo:any = {
             type:type,
             openid:UM_wx4.gameid,
             nick:UM_wx4.nick,
@@ -104,6 +117,23 @@ class RankUI extends game.BaseWindow_wx4{
             value:myValue,
         }
         console.log(oo)
+
+
+        if(Config.isZJ)
+        {
+            oo.openid2 = UM_wx4.gameid2;
+            Net.getInstance().getRankData(oo,(data)=>{
+                this.rankData[oo.type] = {
+                    list:data.result,
+                    time:TM_wx4.now()
+                }
+                this.showRank(type);
+            })
+            return;
+        }
+
+
+
         MsgingUI.getInstance().show()
         wx.cloud.callFunction({      //取玩家openID,
             name: 'getRank',
@@ -137,6 +167,10 @@ class RankUI extends game.BaseWindow_wx4{
         for(var i=0;i<arr.length;i++) //更新自己成绩
         {
             arr[i].type = type;
+            if(!arr[i].openid)
+            {
+                arr[i].openid = arr[i].gameid
+            }
             if(arr[i].openid == UM_wx4.gameid && UM_wx4.nick)
             {
                 arr[i].value = myScore;
@@ -175,12 +209,10 @@ class RankUI extends game.BaseWindow_wx4{
         }
         else
         {
-            this.desText.text = '点击授权后可在排行榜中显示你的名次';
+            this.desText.text = '点此授权后可在排行榜中显示你的名次';
             this.infoBtn.visible = true;
         }
     }
-
-
 
     private poseData(){
         if(this.tab.selectedIndex == 0)

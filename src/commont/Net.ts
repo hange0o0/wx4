@@ -59,10 +59,19 @@ class Net extends egret.EventDispatcher{
         var url =  Config.serverPath + 'getGameData.php'
         this.send(url,{gameid:UM_wx4.gameid,gameid2:UM_wx4.gameid2},fun);
     }
+    public getShareData(fun){
+        var url =  Config.serverPath + 'getShareData.php'
+        this.send(url,{gameid:UM_wx4.gameid,gameid2:UM_wx4.gameid2},fun);
+    }
     public saveServerData(isNewUser?){
         var url =  Config.serverPath + 'saveGameData.php'
         if(isNewUser)
             var url =  Config.serverPath + 'newGameData.php'
         this.send(url,{gameid:UM_wx4.gameid,gameid2:UM_wx4.gameid2,data:Base64.encode(JSON.stringify(UM_wx4.getUpdataData()))});
+    }
+
+    public getRankData(obj,fun){
+        var url =  Config.serverPath + 'getRankData.php'
+        this.send(url,obj,fun);
     }
 }

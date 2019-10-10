@@ -48,9 +48,12 @@ class BuffUI extends game.BaseWindow_wx4 {
     }
 
     public share(){
+
         var wx =  window["wx"];
-        if(wx)
+        if(Config.isWX)
+        {
             wx.aldSendEvent("点击邀请好友")
+        }
 
         ShareTool.share('加入我们，让我们一起割草无双',Config.getShare(0),{type:1,from:UM_wx4.gameid},()=>{
             MyWindow.ShowTips('等待好友加入')

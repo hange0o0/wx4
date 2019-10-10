@@ -28,11 +28,18 @@ class LoadingUI extends game.BaseUI_wx4 {
     public childrenCreated() {
         super.childrenCreated();
 
+        this.startBtn.visible = false;
+        if(Config.isZJ)
+        {
+            this.startBtn.bottom = 0;
+            this.startBtn.top = 0;
+            console.log(this.startBtn.height)
+        }
         this.infoBtn = new UserInfoBtn(this.startBtn, (res)=>{
             this.renewInfo(res);
         }, this, Config.localResRoot + "wx_btn_info.png");
         this.infoBtn.visible = false;
-        this.startBtn.visible = false;
+
     }
 
     private renewInfo(res?){
@@ -47,6 +54,7 @@ class LoadingUI extends game.BaseUI_wx4 {
             this.initData();
             return;
         }
+
         if(res)
         {
             if(!res.userInfo)
@@ -66,20 +74,19 @@ class LoadingUI extends game.BaseUI_wx4 {
                                 this.haveGetUser = true;
                                 this.initData();
                             }
+                            else if(Config.isZJ)
+                            {
+                                if(!UM_wx4.loginSuccess)
+                                {
+                                    UM_wx4.getUserInfoZJ(()=>{
+                                        this.openSetting();
+                                    },true)
+                                    return;
+                                }
+                                this.openSetting();
+                            }
                         }
                     })
-                    //MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
-                    //    if(b==1)
-                    //    {
-                    //        this.infoBtn.visible = false;
-                    //        this.haveGetUser = true;
-                    //        this.initData();
-                    //    }
-                    //    else
-                    //    {
-                    //        this.infoBtn.visible = true;
-                    //    }
-                    //},['重新授权','进入游戏']);
                     return;
                 }
                 this.infoBtn.visible = false;
@@ -114,7 +121,24 @@ class LoadingUI extends game.BaseUI_wx4 {
                 }
             }
         })
+
     }
+
+    private openSetting(){
+        window['wx'].openSetting ({
+            success: (res)=>{
+                if(res.authSetting['scope.userInfo'])//答应了
+                {
+                    window['wx'].getUserInfo({
+                        success: (res) =>{
+                            this.renewInfo(res);
+                        }
+                    })
+                }
+            }
+        })
+    }
+
 
     private initData(){
         if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)

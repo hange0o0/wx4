@@ -73,8 +73,8 @@ class Config {
         {
             this.isWX = false;
 
-            this.wx_ad = '';
-            this.wx_video = '';
+            this.wx_ad = '33kcbm3nk8ag2idrl2';
+            this.wx_video = '3l4aa0m5imel9kala3';
             this.wx_insert = '';
             this.myAppID = 'tt14f862458bd2e750';
         }

@@ -315,6 +315,7 @@ if(window["wx"])
     window["sendClientError"] = sendClientError
     window["GameManager_wx4"] = GameManager_wx4
     window["BasePanel"] = BasePanel
+    window["Net"] = Net.getInstance();
 
 
     var wx =  window["wx"];

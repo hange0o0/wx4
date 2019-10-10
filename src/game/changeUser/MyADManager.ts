@@ -252,6 +252,8 @@ class MyADManager {
         if(GameManager_wx4.stage.stageHeight < 1080)
             return;
         var wx = window['wx']
+        if(!wx.createBannerAd)
+            return;
 
 
         var btnw = Math.min(Math.pow(GameManager_wx4.stage.stageHeight/1330,1.6)*640,640)

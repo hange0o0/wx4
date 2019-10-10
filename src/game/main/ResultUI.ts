@@ -25,6 +25,9 @@ class ResultUI extends game.BaseUI_wx4{
 
 
 
+    public zjVideo = false
+    public zjVideoTimes = 0;
+
     public addCoin = 0;
     public rate = 3;
     public constructor() {
@@ -50,6 +53,16 @@ class ResultUI extends game.BaseUI_wx4{
             SoundManager.getInstance().playEffect('coin')
         })
         this.addBtnEvent(this.shareBtn,()=>{
+
+            if(this.zjVideo)
+            {
+                ZijieScreenBtn.e.awardPublish(this.addCoin*(this.rate-1),()=>{
+                    this.zjVideoTimes ++;
+                    this.close();
+                    SoundManager.getInstance().playEffect('coin')
+                })
+                return;
+            }
             ShareTool.openGDTV(()=>{
                 UM_wx4.addCoin(this.addCoin*(this.rate-1));
                 MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.addCoin*this.rate,2),0xFFFF00),1000)
@@ -66,11 +79,13 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public onShow(){
+        ZijieScreenBtn.e && ZijieScreenBtn.e.stop();
         this.renew();
     }
 
 
     public renew(){
+        this.zjVideo = false;
         var PD = PKCode_wx4.getInstance();
         var rate = PD.enemyHp / PD.enemyHpMax;
         var coin = (PD.enemyHpMax - PD.enemyHp)/300*Math.pow(0.994,UM_wx4.level)
@@ -119,6 +134,11 @@ class ResultUI extends game.BaseUI_wx4{
             SoundManager.getInstance().playEffect('win')
             PlayManager.getInstance().sendUseGun()
             PlayManager.getInstance().sendGameEnd(true)
+
+            if(ZijieScreenBtn.e && this.zjVideoTimes < 3 && !PKingUI.getInstance().isReborn)
+            {
+                this.zjVideo = true;
+            }
         }
         else
         {
@@ -160,6 +180,12 @@ class ResultUI extends game.BaseUI_wx4{
             this.rate = Math.max(3,Math.ceil(1000/this.addCoin))
         this.rate = Math.min(30,this.rate);
         this.shareBtn.label = this.rate + '倍领取'
+
+
+        if(this.zjVideo)
+            this.shareBtn.icon = 'zj_video_icon_png'
+        else
+            this.shareBtn.icon = 'video_icon_png'
 
         //this.bg.source = UM.getBG();
     }

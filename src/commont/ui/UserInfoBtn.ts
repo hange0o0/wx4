@@ -8,42 +8,78 @@ class UserInfoBtn {
     private okBtn;
     private isNew:string;
 
+    public force = false;
+
     public constructor(btn, fun:Function, parent:game.BaseUI_wx4, url:string) {
-        //if(DEBUG){
-        //    if(!(parent instanceof game.BaseUI)){
-        //        console.error("不支持！");
-        //        return;
-        //    }
-        //    if(btn.parent != parent){
-        //        console.error("btn 不是在 parent的根下，不支持！");
-        //        return;
-        //    }
-        //}
+
         this.sourceBtn = btn;
-	wx4_function(4657);
         this.parent = parent;
         this.callFun = fun;
 
-        //if(!window["wx"] || !window["wx"].createUserInfoButton){
-        //    ObjectUtilQU.addClickEvent(btn, ()=>{
-        //        WXGameUserInfoQueen.getInstance().checkUserInfo(()=>{
-        //            this.callFun();
-        //        })
-        //    }, this);
-        //}
-        //else{
-        //    MyToolQU.removeGUI(btn);
-        //    // this.okBtn = this.initBtn_5365(btn.width, btn.height, btn.x, btn.y, url)
-            this.isNew = url;
-        //}
-        //WXAddCode.execute();
+        this.isNew = url;
+
     }
 
 	private wx4_functionX_54770(){console.log(6613)}
     private initBtn_5365(btnw, btnh, btnx, btny, imgUrl){
-
         if(!window['wx'])
             return;
+
+
+        if(Config.isZJ)
+        {
+            this.okBtn = new eui.Image(imgUrl);
+            this.okBtn.width = btnw
+            this.okBtn.height = btnh
+            this.okBtn.x = btnx
+            this.okBtn.y = btny
+            this.parent.addChild(this.okBtn)
+            this.okBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,() => {
+                console.log('1111111111')
+                window['wx'].authorize({
+                    scope: "scope.userInfo",
+                    success: (res)=>{
+                        if(res.data['scope.userInfo'] == 'ok')
+                        {
+                            console.log(res)
+                            window['wx'].getUserInfo({
+                                success: (res) =>{
+                                    this.callFun && this.callFun(res)
+                                    //console.log(res)
+                                },
+                                fail:(res)=>{
+                                    console.log(`getUserInfo调用失败`);
+                                }
+                            })
+                        }
+                        else
+                        {
+                            this.callFun && this.callFun(res)
+                        }
+                    },
+                    fail:(res)=>{
+                        if(this.force)
+                        {
+                            console.log(UM_wx4.loginSuccess,UM_wx4.gameid,UM_wx4.gameid2)
+                            if(!UM_wx4.loginSuccess)
+                            {
+                                UM_wx4.getUserInfoZJ(()=>{
+                                    this.openSetting();
+                                },true)
+                                return;
+                            }
+                            this.openSetting();
+                            return;
+                        }
+                        this.callFun && this.callFun(res)
+                        console.log(`authorize调用失败!`,res);
+                    }
+                })
+            },this)
+            return;
+        }
+
+
         //if(RELEASE){
             //这里存在界面坐标、尺寸换算关系 width="180" height="60" bottom="40" x="230"
             // let btnw = 244, btnh = 71, btnx = 98, btny = 381;
@@ -57,6 +93,7 @@ class UserInfoBtn {
             let width = scalex * btnw;
             let height = scalex * btnh;
 	wx4_function(412);
+
             var button = window["wx"].createUserInfoButton({
                 type: 'image',
                 image: '' + imgUrl,
@@ -74,12 +111,30 @@ class UserInfoBtn {
                 }
             })
             let self = this;
-	wx4_function(5536);
+            wx4_function(5536);
             button.onTap((res) => {
                 this.callFun && this.callFun(res)
             })
+
+
+
             return button;
         //}
+    }
+
+    private openSetting(){
+        window['wx'].openSetting ({
+            success: (res)=>{
+                if(res.authSetting['scope.userInfo'])//答应了
+                {
+                    window['wx'].getUserInfo({
+                        success: (res) =>{
+                            this.callFun && this.callFun(res)
+                        }
+                    })
+                }
+            }
+        })
     }
 
 	private wx4_functionX_54771(){console.log(9492)}
@@ -88,18 +143,29 @@ class UserInfoBtn {
         if(v && this.isNew && !this.okBtn){
             let btn = this.sourceBtn;
             // console.log(btn.width, btn.height, btn.x, btn.y, btn.right, btn.bottom, this.parent.width, this.parent.height);
-            if(!isNaN(btn.right))
-                btn.x = this.parent.width - btn.right - btn.width;
-            if(!isNaN(btn.horizontalCenter))
-                btn.x = (this.parent.width - btn.width)/2;
-            if(!isNaN(btn.bottom)){
-                btn.y = this.parent.height - btn.bottom - btn.height;
-                // console.log("111111111");
+            if(Config.isWX)
+            {
+                if(!isNaN(btn.right))
+                    btn.x = this.parent.width - btn.right - btn.width;
+                if(!isNaN(btn.horizontalCenter))
+                    btn.x = (this.parent.width - btn.width)/2;
+                if(!isNaN(btn.bottom)){
+                    btn.y = this.parent.height - btn.bottom - btn.height;
+                    // console.log("111111111");
+                }
             }
+
             this.okBtn = this.initBtn_5365(btn.width, btn.height, btn.x, btn.y, this.isNew);
         }
         //console.log(this.okBtn)
         if(!this.okBtn) return;
+
+        if(Config.isZJ)
+        {
+            this.okBtn.visible = v;
+            console.log('okbtn visible:',v)
+            return;
+        }
 
 
         if(v){
@@ -111,20 +177,17 @@ class UserInfoBtn {
             this.hide();
         }
     }
-	private wx4_functionX_54772(){console.log(281)}
 
     private checkWindow_1023(e:egret.Event){
         if(e.data == this.parent) return;
 
         this.parent.hide();
     }
-	private wx4_functionX_54773(){console.log(9824)}
 
     public hide(){
         if(this.okBtn){
             this.okBtn.hide();
         }
         this.sourceBtn.visible = true;
-	wx4_function(148);
     }
 }

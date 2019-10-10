@@ -23,6 +23,8 @@ class PKCode_wx4 {
     public atkList = {}
     public buffList = {}
 
+    public videoStartStep = 0;
+
     public isWDing(){
         return this.isInBuff(1110)
     }
@@ -111,7 +113,10 @@ class PKCode_wx4 {
 
 
     public initData(){
-
+        if(ZijieScreenBtn.e)
+        {
+            ZijieScreenBtn.e.init();
+        }
         this.buffList = {};
         this.atkList = {};
         var addAtk = 0;
@@ -212,6 +217,15 @@ class PKCode_wx4 {
                 this.enemyHp += hp;
             }
             this.enemyHpMax = this.enemyHp;
+
+            if(PlayManager.getInstance().bossStep)
+            {
+                this.videoStartStep = PlayManager.getInstance().bossStep
+            }
+            else
+            {
+                this.videoStartStep = Math.max(0,PlayManager.getInstance().maxStep - 30*20)
+            }
         }
 
     }
@@ -304,6 +318,11 @@ class PKCode_wx4 {
 
     //每一步执行
     public onStep(){
+        if(ZijieScreenBtn.e && this.actionStep == this.videoStartStep && !PlayManager.getInstance().isEndLess)
+        {
+             ZijieScreenBtn.e.start();
+        }
+
         this.actionStep ++;
         this.autoAction();
         this.monsterAction();

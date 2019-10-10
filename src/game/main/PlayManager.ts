@@ -18,7 +18,10 @@ class PlayManager extends egret.EventDispatcher {
         return rd;
     }
 
+    public bossStep = 0
+    public maxStep = 0
     public getLevelMonster(level){
+        this.bossStep = 0;
         this.randomSeed = level*1234567890;
 
         var maxCost = 50 + level*Math.pow(1.012,level)*50;  //每一关增加的花费
@@ -69,6 +72,7 @@ class PlayManager extends egret.EventDispatcher {
             {
                 needAddBoss = false;
                 nowCost += 10;//固定10费
+                this.bossStep = step;
                 var bossNum = Math.ceil(level/50)
                 if(bossNum == 1)
                     list.push((100 + Math.ceil(level/5))+'|' + step + '|' +50)
@@ -90,6 +94,7 @@ class PlayManager extends egret.EventDispatcher {
                 }
             }
         }
+        this.maxStep = step;
         return list.join(',')
     }
 
@@ -97,6 +102,8 @@ class PlayManager extends egret.EventDispatcher {
     public sendKey
     public sendKeyName
     public sendGameStart(key){
+        if(Config.isZJ)
+            return;
         var wx = window['wx']
         if(!wx)
             return;
@@ -110,6 +117,8 @@ class PlayManager extends egret.EventDispatcher {
     }
 
     public sendGameReborn(type){
+        if(Config.isZJ)
+            return;
         var wx = window['wx']
         if(!wx)
             return;
@@ -125,6 +134,8 @@ class PlayManager extends egret.EventDispatcher {
     }
 
     public sendGameEnd(isSuccess,info?){
+        if(Config.isZJ)
+            return;
         var wx = window['wx']
         if(!wx)
             return;
@@ -141,6 +152,8 @@ class PlayManager extends egret.EventDispatcher {
 
 
     public sendUseGun(){
+        if(Config.isZJ)
+            return;
         var wx = window['wx']
         if(!wx)
             return;

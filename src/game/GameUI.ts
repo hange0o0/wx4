@@ -155,6 +155,12 @@ class GameUI extends game.BaseUI_wx4 {
         this.onLineCoinBtn.addChildAt(this.shape,1);
         this.shape.x = 90/2
         this.shape.y = 90/2
+
+        if(Config.isZJ)
+        {
+            new ZijieScreenBtn();
+        }
+
     }
 
     public resetAD(){
@@ -442,7 +448,7 @@ class GameUI extends game.BaseUI_wx4 {
 
         this.startBtn.visible = true
         this.endLessBtn.visible = true
-        this.addForceBtn.visible = true;
+        this.addForceBtn.visible = Config.isWX;
         this.renewForceText();
         if(UM_wx4.level > this.endLessLevel)
             this.endLessBtn.icon = ''

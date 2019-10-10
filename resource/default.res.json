@@ -1457,6 +1457,11 @@
 			"name":"common_coin_png",
 			"type":"image",
 			"url":"game_assets/common_coin.png"
+		},
+		{
+			"name":"zj_video_icon_png",
+			"type":"image",
+			"url":"game_assets/zj_video_icon.png"
 		}
 	]
 }
