@@ -74,4 +74,9 @@ class Net extends egret.EventDispatcher{
         var url =  Config.serverPath + 'getRankData.php'
         this.send(url,obj,fun);
     }
+
+    public onShareIn(obj,fun){
+        var url =  Config.serverPath + 'onShareIn.php'
+        this.send(url,obj,fun);
+    }
 }

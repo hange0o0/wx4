@@ -48,7 +48,7 @@ class NotEnoughCoinUI extends game.BaseWindow_wx4 {
     }
 
     public show(){
-        if(UM_wx4.coinTimes >= 10)
+        if(UM_wx4.coinTimes >= 10 || Config.isNoVideo())
         {
             MyWindow.ShowTips('金币不足！')
             return

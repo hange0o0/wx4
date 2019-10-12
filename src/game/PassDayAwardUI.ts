@@ -31,6 +31,9 @@ class PassDayAwardUI extends game.BaseWindow_wx4 {
         this.setTitle('每日奖励')
         this.addBtnEvent(this.okBtn,this.onGet)
         this.addBtnEvent(this.shareBtn,this.onShare)
+
+        if(Config.isNoVideo())
+            MyTool.removeMC(this.shareBtn);
     }
 
     public hide(){

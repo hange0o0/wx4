@@ -102,7 +102,7 @@ class PlayManager extends egret.EventDispatcher {
     public sendKey
     public sendKeyName
     public sendGameStart(key){
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
             return;
         var wx = window['wx']
         if(!wx)
@@ -117,7 +117,7 @@ class PlayManager extends egret.EventDispatcher {
     }
 
     public sendGameReborn(type){
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
             return;
         var wx = window['wx']
         if(!wx)
@@ -134,7 +134,7 @@ class PlayManager extends egret.EventDispatcher {
     }
 
     public sendGameEnd(isSuccess,info?){
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
             return;
         var wx = window['wx']
         if(!wx)
@@ -152,7 +152,7 @@ class PlayManager extends egret.EventDispatcher {
 
 
     public sendUseGun(){
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
             return;
         var wx = window['wx']
         if(!wx)

@@ -103,7 +103,7 @@ class LoadingUI extends game.BaseUI_wx4 {
         wx.getSetting({
             success: (res) =>{
                 console.log(res.authSetting)
-                if(res.authSetting["scope.userInfo"])//已授权
+                if(res.authSetting && res.authSetting["scope.userInfo"])//已授权
                 {
                     this.haveGetUser = true;
                     this.initData()
@@ -127,7 +127,7 @@ class LoadingUI extends game.BaseUI_wx4 {
     private openSetting(){
         window['wx'].openSetting ({
             success: (res)=>{
-                if(res.authSetting['scope.userInfo'])//答应了
+                if(res.authSetting && res.authSetting['scope.userInfo'])//答应了
                 {
                     window['wx'].getUserInfo({
                         success: (res) =>{
@@ -166,20 +166,23 @@ class LoadingUI extends game.BaseUI_wx4 {
             this.initData();
         });
         var wx =  window["wx"];
-        if(Config.isWX)
+        if(Config.isWX || Config.isQQ)
         {
+
             const loadTask = wx.loadSubpackage({
                 name: 'assets2', // name 可以填 name 或者 root
                 success(res) {
+                    console.log(res)
                     self.callShow();
                     setTimeout(()=>{
                         self.changeUser.renew()
                     },5000)
                 },
                 fail(res) {
+                    console.log(res)
                 }
             })
-
+            console.log(loadTask);
             loadTask.onProgressUpdate(res => {
                 self.loadText.text = '正在加载素材..' + res.progress + '%'
             })

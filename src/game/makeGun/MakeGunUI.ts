@@ -57,6 +57,11 @@ class MakeGunUI extends game.BaseWindow_wx4{
 
         this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
         this.tab.selectedIndex = 0;
+
+        if(Config.isNoVideo())
+        {
+            MyTool.removeMC(this.videoBtn)
+        }
     }
 
     public draw(){

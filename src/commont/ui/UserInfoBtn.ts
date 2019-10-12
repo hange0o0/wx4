@@ -39,7 +39,7 @@ class UserInfoBtn {
                 window['wx'].authorize({
                     scope: "scope.userInfo",
                     success: (res)=>{
-                        if(res.data['scope.userInfo'] == 'ok')
+                        if((res.data && res.data['scope.userInfo'] == 'ok') || res['scope.userInfo'] == 'ok')
                         {
                             console.log(res)
                             window['wx'].getUserInfo({
@@ -125,7 +125,7 @@ class UserInfoBtn {
     private openSetting(){
         window['wx'].openSetting ({
             success: (res)=>{
-                if(res.authSetting['scope.userInfo'])//答应了
+                if(res.authSetting && res.authSetting['scope.userInfo'])//答应了
                 {
                     window['wx'].getUserInfo({
                         success: (res) =>{

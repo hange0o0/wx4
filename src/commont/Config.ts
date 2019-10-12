@@ -9,6 +9,7 @@ class Config {
 	}
 
     public static isZJ: boolean = false;
+    public static isQQ: boolean = false;
     public static isWX: boolean = false;
 
 
@@ -68,6 +69,7 @@ class Config {
     public static serverPath = 'https://www.hangegame.com/wx4_server/'
     public static init(){
         this.isZJ = window['iszj']
+        this.isQQ = window['isQQ']
         this.isWX = window['wx']
         if(this.isZJ)
         {
@@ -77,11 +79,24 @@ class Config {
             this.wx_video = '3l4aa0m5imel9kala3';
             this.wx_insert = '';
             this.myAppID = 'tt14f862458bd2e750';
+            this.serverPath = 'https://www.hangegame.com/wx4_server/zj/'
         }
 
+        if(this.isQQ)
+        {
+            this.isWX = false;
+            this.wx_ad = '';
+            this.wx_video = '';
+            this.wx_insert = '';
+            this.myAppID = '1109869435';
 
+            this.serverPath = 'https://www.hangegame.com/wx4_server/qq/'
+        }
+    }
 
-
+    //是否没有广告
+    public static isNoVideo(){
+        return this.isQQ && !this.wx_video
     }
 	private wx4_functionX_54459(){console.log(8008)}
 

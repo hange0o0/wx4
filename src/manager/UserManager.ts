@@ -26,8 +26,7 @@ class UserManager_wx4 {
 
 
     public isTest;
-	private wx4_functionX_54644(){console.log(2285)}
-    public testVersion = 1//与服务器相同则为测试版本
+    public testVersion = 20191009//与服务器相同则为测试版本
     public shareFail;
 
     public gameid: string;
@@ -201,7 +200,7 @@ class UserManager_wx4 {
     }
 
     public getUserInfo(fun){
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
         {
             this.getUserInfoZJ((data)=>{
                 this.gameid = data.data.openid || data.data.anonymous_openid
@@ -214,6 +213,12 @@ class UserManager_wx4 {
                     if(data.data)
                     {
                         var tempdata = JSON.parse(Base64.decode(data.data.gamedata))
+                        if(data.data.sharedata)
+                        {
+                            var  shareData = JSON.parse(data.data.sharedata)
+                            tempdata.shareUser = shareData;
+                        }
+
                         this.fill(tempdata);
                     }
                     else
@@ -311,11 +316,15 @@ class UserManager_wx4 {
             return;
         }
 
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
         {
             Net.getInstance().getShareData((data)=>{
                 console.log(data);
-                this.shareUser = data.data.sharedata || [];
+                if(data.data.sharedata)
+                {
+                    var  shareData = JSON.parse(data.data.sharedata)
+                    this.shareUser = shareData;
+                }
                 fun && fun();
             })
             return;
@@ -338,16 +347,28 @@ class UserManager_wx4 {
         console.log('testAddInvite',this.helpUser && this.haveGetUser)
         if(this.helpUser && this.haveGetUser)
         {
+            var data = {
+                other:this.helpUser,
+                nick:UM_wx4.nick,
+                head:UM_wx4.head,
+            };
+
+            if(Config.isZJ || Config.isQQ)
+            {
+                Net.getInstance().onShareIn(data,()=>{
+                    this.helpUser = null;
+                    this.needUpUser = true;
+                })
+                return;
+            }
+
+
             var wx = window['wx'];
             if(!wx)
                 return;
             wx.cloud.callFunction({      //取玩家openID,
                 name: 'onShareIn',
-                data:{
-                    other:this.helpUser,
-                    nick:UM_wx4.nick,
-                    head:UM_wx4.head,
-                },
+                data:data,
                 complete: (res) => {
                     console.log(res)
                     this.helpUser = null;
@@ -434,7 +455,7 @@ class UserManager_wx4 {
             var updateData:any = this.getUpdataData();;
             WXDB.updata('user',updateData)
         }
-        else if(Config.isZJ)
+        else if(Config.isZJ || Config.isQQ)
         {
             Net.getInstance().saveServerData();
         }
@@ -456,6 +477,8 @@ class UserManager_wx4 {
         var pKey = 'wxgame';
         if(Config.isZJ)
             pKey = 'ttgame'
+        if(Config.isQQ)
+            pKey = 'qqgame'
         var data = {}
         data[pKey] = {"score":UM_wx4.endLess,"update_time": TM_wx4.now()}
         var score = JSON.stringify(data)
@@ -481,6 +504,8 @@ class UserManager_wx4 {
         var pKey = 'wxgame';
         if(Config.isZJ)
             pKey = 'ttgame'
+        if(Config.isQQ)
+            pKey = 'qqgame'
         var data = {}
         data[pKey] = {"score":UM_wx4.level,"update_time": TM_wx4.now()}
         var score = JSON.stringify(data)

@@ -41,6 +41,7 @@ class ResultUI extends game.BaseUI_wx4{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.jumpBtn.visible = Config.isWX
         this.addBtnEvent(this.jumpBtn,()=>{
             var wx = window['wx']
             wx.navigateToMiniProgram({
@@ -71,6 +72,11 @@ class ResultUI extends game.BaseUI_wx4{
             })
 
         })
+
+        if(Config.isNoVideo())
+        {
+            MyTool.removeMC(this.shareBtn)
+        }
     }
 
     public close(){

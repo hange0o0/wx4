@@ -119,7 +119,7 @@ class RankUI extends game.BaseWindow_wx4{
         console.log(oo)
 
 
-        if(Config.isZJ)
+        if(Config.isZJ || Config.isQQ)
         {
             oo.openid2 = UM_wx4.gameid2;
             Net.getInstance().getRankData(oo,(data)=>{

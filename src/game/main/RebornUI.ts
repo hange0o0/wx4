@@ -44,6 +44,15 @@ class RebornUI extends game.BaseWindow_wx4{
         this.shape.y = 130
     }
 
+    public show(){
+        if(Config.isNoVideo())
+        {
+            ResultUI.getInstance().show();
+            return;
+        }
+        super.show();
+    }
+
     public onShow(){
         this.isStoping = false;
         this.step = 30*10;

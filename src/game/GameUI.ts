@@ -247,6 +247,7 @@ class GameUI extends game.BaseUI_wx4 {
         SoundManager.getInstance().playSound('bg')
 
 
+        this.feedBackBtn.visible = !UM_wx4.isTest
         this.bg.height = GameManager_wx4.uiHeight + 250;
         this.bg.y = 0;
         GameTool.getInstance().preLoadMV();
