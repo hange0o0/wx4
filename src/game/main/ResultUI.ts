@@ -19,6 +19,8 @@ class ResultUI extends game.BaseUI_wx4{
     private failTipsGroup: eui.Group;
     private failText: eui.Label;
     private jumpBtn: eui.Group;
+    private cb: eui.CheckBox;
+
 
 
 
@@ -77,6 +79,13 @@ class ResultUI extends game.BaseUI_wx4{
         {
             MyTool.removeMC(this.shareBtn)
         }
+
+        this.cb.visible = Config.isZJ
+        this.cb.selected = !Config.canZJVideo
+
+        this.cb.addEventListener(egret.Event.CHANGE,()=>{
+            Config.canZJVideo = !this.cb.selected
+        },this)
     }
 
     public close(){
@@ -141,7 +150,7 @@ class ResultUI extends game.BaseUI_wx4{
             PlayManager.getInstance().sendUseGun()
             PlayManager.getInstance().sendGameEnd(true)
 
-            if(ZijieScreenBtn.e && this.zjVideoTimes < 3 && !PKingUI.getInstance().isReborn)
+            if(ZijieScreenBtn.e && this.zjVideoTimes < 3 && !PKingUI.getInstance().isReborn && Config.canZJVideo)
             {
                 this.zjVideo = true;
             }

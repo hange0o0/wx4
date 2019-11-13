@@ -64,6 +64,7 @@ class Config {
     public static platformGameidAdd = '';
 	private wx4_functionX_54458(){console.log(8032)}
     public static equalValue = 1000;
+    public static canZJVideo = true
 
 
     public static serverPath = 'https://www.hangegame.com/wx4_server/'

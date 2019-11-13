@@ -12,6 +12,8 @@ class LoadingUI extends game.BaseUI_wx4 {
     private changeUser: ChangeUserUI;
     private startBtn: eui.Image;
     private loadText: eui.Label;
+    private titleMC: eui.Image;
+
 
 
     private infoBtn:UserInfoBtn
@@ -29,6 +31,7 @@ class LoadingUI extends game.BaseUI_wx4 {
         super.childrenCreated();
 
         this.startBtn.visible = false;
+        this.titleMC.visible = Config.isZJ
         if(Config.isZJ)
         {
             this.startBtn.bottom = 0;

@@ -24,6 +24,12 @@
 		<e:HorizontalLayout verticalAlign="middle" gap="10"/>
 		</e:layout>
 	</e:Group>
-	<e:Button id="inviteBtn" label="邀请好友" skinName="Btn1Skin" width="200" y="800" horizontalCenter="0"/>
+	<e:Group id="btnGroup" horizontalCenter="0" bottom="20">
+		<e:Button id="inviteBtn" label="邀请好友" skinName="Btn1Skin" width="200" y="0" x="0"/>
+		<e:Button id="inviteBtn2" label="机器人好友" width="200" y="0" skinName="Btn2Skin" icon="video_icon_png" x="0"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
 
 </e:Skin>

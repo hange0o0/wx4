@@ -102,14 +102,33 @@ class GameUI extends game.BaseUI_wx4 {
                 return;
             }
 
-            var str = this.adType == 'cd'?"在《别碰小广告》游戏中坚持"+this.adValue+"秒，即可获得20%战力加成":"在《别碰小广告》游戏中获得"+this.adValue+"分，即可获得20%战力加成"
-            MyWindow.Alert(str,()=>{
-                MyADManager.getInstance().openWX5({
-                    key:this.adType,
-                    value:this.adValue,
-                    callBack:'addForce',
-                })
-            },'开始挑战')
+            if(Config.isWX)
+            {
+                var str = this.adType == 'cd'?"在《别碰小广告》游戏中坚持"+this.adValue+"秒，即可获得20%战力加成":"在《别碰小广告》游戏中获得"+this.adValue+"分，即可获得20%战力加成"
+                MyWindow.Alert(str,()=>{
+                    MyADManager.getInstance().openWX5({
+                        key:this.adType,
+                        value:this.adValue,
+                        callBack:'addForce',
+                    })
+                },'开始挑战')
+            }
+            else
+            {
+                var str = '观看广告后，即可获得20%战力加成'
+                MyWindow.Confirm(str,(b)=>{
+                    if(b == 1)
+                    {
+                        ShareTool.openGDTV(()=>{
+                            UM_wx4.addForceEnd = TM_wx4.now()+60*15;
+                            UM_wx4.needUpUser = true;
+                        })
+                    }
+
+                },['放弃加成', '观看广告'])
+            }
+
+
         })
         this.addBtnEvent(this.buildBtn,()=>{
             if(UM_wx4.level <= 100)
@@ -384,7 +403,10 @@ class GameUI extends game.BaseUI_wx4 {
         var cd =  UM_wx4.addForceEnd - TM_wx4.now();
         if(cd<0)
         {
-            this.addForceText.text = '挑战游戏，获得20%战力加成'
+            if(Config.isWX)
+                this.addForceText.text = '挑战游戏，获得20%战力加成'
+            else
+                this.addForceText.text = '观看广告，获得20%战力加成'
         }
         else
         {
@@ -449,7 +471,7 @@ class GameUI extends game.BaseUI_wx4 {
 
         this.startBtn.visible = true
         this.endLessBtn.visible = true
-        this.addForceBtn.visible = Config.isWX;
+        //this.addForceBtn.visible = Config.isWX;
         this.renewForceText();
         if(UM_wx4.level > this.endLessLevel)
             this.endLessBtn.icon = ''

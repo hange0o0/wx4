@@ -44,6 +44,7 @@ class UserManager_wx4 {
     public endLess = 0;
     public coinTimes = 0;
     public helpUser = null;
+    public adFriendNum = 0;
 
     public cdCoin = 0;
     public cdCoinTime = 0;
@@ -101,6 +102,7 @@ class UserManager_wx4 {
         this.cdCoin = data.cdCoin || 0;
         this.cdCoinTime = data.cdCoinTime || 0;
         this.cdCoinGetTime = data.cdCoinGetTime || 0
+        this.adFriendNum = data.adFriendNum || 0
 
 	wx4_function(4749);
         this.gunLevel = data.gunLevel || {};
@@ -436,6 +438,7 @@ class UserManager_wx4 {
             pastDayCoin:UM_wx4.pastDayCoin,
             adLevel:UM_wx4.adLevel,
             addForceEnd:UM_wx4.addForceEnd,
+            adFriendNum:UM_wx4.adFriendNum,
 
             cdCoin:UM_wx4.cdCoin,
             cdCoinTime:UM_wx4.cdCoinTime,
@@ -512,7 +515,7 @@ class UserManager_wx4 {
 
 
         //var score = JSON.stringify({"wxgame":{"score":UM_wx4.level,"update_time": TM_wx4.now()}})
-        var upList = [{ key: 'endless', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
+        var upList = [{ key: 'level', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
         wx.setUserCloudStorage({
             KVDataList: upList,
             success: res => {

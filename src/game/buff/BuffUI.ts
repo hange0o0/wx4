@@ -11,7 +11,10 @@ class BuffUI extends game.BaseWindow_wx4 {
     private desText: eui.Label;
     private atkText: eui.Label;
     private workText: eui.Label;
+    private btnGroup: eui.Group;
     private inviteBtn: eui.Button;
+    private inviteBtn2: eui.Button;
+
 
 
     private dataProvider:eui.ArrayCollection
@@ -35,12 +38,22 @@ class BuffUI extends game.BaseWindow_wx4 {
         this.list.dataProvider = this.dataProvider = new eui.ArrayCollection(arr);
 
         this.addBtnEvent(this.inviteBtn,this.share)
+        this.addBtnEvent(this.inviteBtn2,()=>{
+            ShareTool.openGDTV(()=>{
+                UM_wx4.adFriendNum ++;
+                UM_wx4.needUpUser = true;
+                this.renew();
+            })
+        })
 
 
         MyTool.addLongTouch(this.desText,()=>{
             DebugUI.getInstance().debugTimer = egret.getTimer();
             MyWindow.ShowTips('Tips:要邀请未加入过的好友才有效哦~')
         },this)
+
+        if(Config.isWX)
+            MyTool.removeMC(this.inviteBtn2)
     }
 
     public onClose(){
@@ -82,6 +95,7 @@ class BuffUI extends game.BaseWindow_wx4 {
         this.dataProvider.refresh();
         this.atkText.text = '生命 +'+BM.getHpAdd()+''
         this.workText.text = '金币 +'+BM.getCoinAdd()+'%'
+        this.btnGroup.visible = num < 20;
     }
 
 }

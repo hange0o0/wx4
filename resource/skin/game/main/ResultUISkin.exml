@@ -39,4 +39,5 @@
 		<e:Label text="点此了解城被攻破的后果" size="24" lineSpacing="10" textAlign="center" textColor="0xF9E5A2" borderColor="0xF9E5A2" y="0" horizontalCenter="0"/>
 		<e:Rect width="100%" height="2" x="0" bottom="0" fillColor="0xF9E5A2"/>
 	</e:Group>
+	<e:CheckBox id="cb" label="不再自动录屏" skinName="MyCheckBoxSkin" horizontalCenter="0" bottom="300"/>
 </e:Skin>

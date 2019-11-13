@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,guide_png",
+			"keys":"lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,guide_png,game_title_png",
 			"name":"preload_png"
 		},
 		{
@@ -1462,6 +1462,111 @@
 			"name":"zj_video_icon_png",
 			"type":"image",
 			"url":"game_assets/zj_video_icon.png"
+		},
+		{
+			"name":"game_title_png",
+			"type":"image",
+			"url":"game_assets/game_title.png"
+		},
+		{
+			"name":"ad_head1_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head1.jpg"
+		},
+		{
+			"name":"ad_head2_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head2.jpg"
+		},
+		{
+			"name":"ad_head3_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head3.jpg"
+		},
+		{
+			"name":"ad_head4_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head4.jpg"
+		},
+		{
+			"name":"ad_head5_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head5.jpg"
+		},
+		{
+			"name":"ad_head6_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head6.jpg"
+		},
+		{
+			"name":"ad_head7_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head7.jpg"
+		},
+		{
+			"name":"ad_head8_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head8.jpg"
+		},
+		{
+			"name":"ad_head9_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head9.jpg"
+		},
+		{
+			"name":"ad_head10_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head10.jpg"
+		},
+		{
+			"name":"ad_head11_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head11.jpg"
+		},
+		{
+			"name":"ad_head12_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head12.jpg"
+		},
+		{
+			"name":"ad_head13_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head13.jpg"
+		},
+		{
+			"name":"ad_head14_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head14.jpg"
+		},
+		{
+			"name":"ad_head15_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head15.jpg"
+		},
+		{
+			"name":"ad_head16_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head16.jpg"
+		},
+		{
+			"name":"ad_head17_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head17.jpg"
+		},
+		{
+			"name":"ad_head18_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head18.jpg"
+		},
+		{
+			"name":"ad_head19_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head19.jpg"
+		},
+		{
+			"name":"ad_head20_jpg",
+			"type":"image",
+			"url":"game_assets2/head/ad_head20.jpg"
 		}
 	]
 }
