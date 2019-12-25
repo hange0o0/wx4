@@ -173,7 +173,7 @@ class PKCode_wx4 {
         for(var i=0;i<len;i++)
         {
             var wall = PKMonsterItem_wx3.createItem();
-            PKingUI.getInstance().getCon().addChild(wall);
+            PKingUI.getInstance().addMonster(wall);
             wall.data = {mid:99};
             wall.y =i*wallDec+80
             wall.x =150
@@ -336,6 +336,7 @@ class PKCode_wx4 {
     //自动出战上怪
     public autoAction(){
         var addMonster = []
+        var b = false;
         if(PlayManager.getInstance().isEndLess && this.autoList.length == 0)
         {
             this.createEndLess();
@@ -348,8 +349,9 @@ class PKCode_wx4 {
              monster.data = oo;
              monster.y = oo.y
              monster.x = 680
-             //this.monsterList.push(monster);
-             addMonster.push(monster)
+             this.monsterList.push(monster);
+             b = true;
+             //addMonster.push(monster)
 
              //设攻击目标
              var nearWall:any = null;
@@ -376,38 +378,40 @@ class PKCode_wx4 {
                  EventManager_wx4.getInstance().dispatch(GameEvent.client.ADD_BOSS,oo.mid)
              }
          }
+        if(b)
+            PKingUI.getInstance().sortY();
 
-        while(addMonster.length)
-        {
-            var newItem = addMonster.pop();
-            for(var i=0;i<this.monsterList.length;i++)
-            {
-                 var item = this.monsterList[i];
-                if(!item.parent)
-                    continue;
-                if(item.y>newItem.y)
-                {
-                    this.monsterList.splice(i,0,newItem)
-                    var index = item.parent.getChildIndex(item);
-                    item.parent.addChildAt(newItem,index);
-                    newItem = null;
-                    break;
-                }
-            }
-            if(newItem)
-            {
-                this.monsterList.push(newItem)
-                PKingUI.getInstance().addMonster(newItem)
-            }
-
-
-            //ArrayUtil_wx4.sortByField(this.monsterList,['y'],[0]);
-            //var mlen = this.monsterList.length
-            //for(var i=0;i<mlen;i++)
-            //{
-            //    MyTool.upMC(this.monsterList[i]);
-            //}
-        }
+        //while(addMonster.length)
+        //{
+        //    var newItem = addMonster.pop();
+        //    for(var i=0;i<this.monsterList.length;i++)
+        //    {
+        //         var item = this.monsterList[i];
+        //        if(!item.parent)
+        //            continue;
+        //        if(item.y>newItem.y)
+        //        {
+        //            this.monsterList.splice(i,0,newItem)
+        //            var index = item.parent.getChildIndex(item);
+        //            item.parent.addChildAt(newItem,index);
+        //            newItem = null;
+        //            break;
+        //        }
+        //    }
+        //    if(newItem)
+        //    {
+        //        this.monsterList.push(newItem)
+        //        PKingUI.getInstance().addMonster(newItem)
+        //    }
+        //
+        //
+        //    //ArrayUtil_wx4.sortByField(this.monsterList,['y'],[0]);
+        //    //var mlen = this.monsterList.length
+        //    //for(var i=0;i<mlen;i++)
+        //    //{
+        //    //    MyTool.upMC(this.monsterList[i]);
+        //    //}
+        //}
 
     }
 

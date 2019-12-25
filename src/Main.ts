@@ -1,4 +1,4 @@
-var UM_wx4:UserManager_wx4,TM_wx4:TimeManager_wx4,EM_wx4:EventManager_wx4 ,CM_wx4:CacheManager_wx4,DM:DebugManager
+var UM_wx4:UserManager_wx4,TM_wx4:TimeManager,EM_wx4:EventManager_wx4 ,CM_wx4:CacheManager_wx4,DM:DebugManager
 class Main extends eui.UILayer {
     /**
      * 加载进度界面
@@ -40,7 +40,7 @@ class Main extends eui.UILayer {
 
 
         UM_wx4 = UserManager_wx4.getInstance();
-        TM_wx4 = TimeManager_wx4.getInstance();
+        TM_wx4 = TimeManager.getInstance();
         EM_wx4 = EventManager_wx4.getInstance();
         CM_wx4 = CacheManager_wx4.getInstance();
 	wx4_function(2670);
@@ -212,6 +212,7 @@ class Main extends eui.UILayer {
 	wx4_function(7881);
         MyADManager.getInstance().getAD()
         MyADManager.getInstance().createAD()
+        ADIconManager.getInstance().init()
         window['wx'] && MyADManager.getInstance().initExtra(window['wx'].getLaunchOptionsSync())
 
 

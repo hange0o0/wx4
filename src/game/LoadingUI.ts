@@ -159,8 +159,14 @@ class LoadingUI extends game.BaseUI_wx4 {
         GameUI.getInstance().show();
     }
 
+    public hide(){
+        ADIconManager.getInstance().hideAll()
+        super.hide();
+    }
+
     public onShow(){
         var self = this;
+
         //ChangeUserUI.getAD();
         self.loadText.text = '正在加载素材，请耐心等候..'
         this.renewInfo();
@@ -177,6 +183,7 @@ class LoadingUI extends game.BaseUI_wx4 {
                 success(res) {
                     console.log(res)
                     self.callShow();
+                    ADIconManager.getInstance().showIcon('loading')
                     setTimeout(()=>{
                         self.changeUser.renew()
                     },5000)

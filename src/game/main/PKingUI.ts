@@ -9,14 +9,23 @@ class PKingUI extends game.BaseUI_wx4 {
 
     private bg1: eui.Image;
     private bg2: eui.Image;
+    private bottomCon: eui.Group;
+    private monsterGroup2: eui.Group;
+    private gunGroup2: eui.Group;
+    private roleCon: eui.Group;
+    private monsterGroup0: eui.Group;
+    private gunGroup0: eui.Group;
     private con: eui.Group;
     private monsterGroup: eui.Group;
     private gunGroup: eui.Group;
+    private topCon: eui.Group;
+    private monsterGroup1: eui.Group;
+    private gunGroup1: eui.Group;
     private barGroup: eui.Group;
     private bar: eui.Image;
     private hpText: eui.Label;
     private rateCon: eui.Group;
-    private rateBar: eui.Rect;
+    private rateBar: eui.Image;
     private rateMC: eui.Group;
     private rateText: eui.Label;
     private bossGroup: eui.Group;
@@ -24,6 +33,8 @@ class PKingUI extends game.BaseUI_wx4 {
     private buffGroup2: eui.Group;
     private guideMC: eui.Image;
     private blackBG: eui.Image;
+
+
     //private tipsGroup: eui.Group;
     //private tipsText: eui.Label;
 
@@ -66,6 +77,9 @@ class PKingUI extends game.BaseUI_wx4 {
         super.childrenCreated();
 
         this.con.touchChildren = this.con.touchEnabled = false;
+        this.roleCon.touchChildren = this.roleCon.touchEnabled = false;
+        this.topCon.touchChildren = this.topCon.touchEnabled = false;
+        this.bottomCon.touchChildren = this.bottomCon.touchEnabled = false;
 
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin,this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove,this);
@@ -569,11 +583,11 @@ class PKingUI extends game.BaseUI_wx4 {
             this.gunArr[i].move();
         }
 
-        var len = this.ballArr.length
-        for(var i=0;i<len;i++)
-        {
-            this.con.addChild(this.ballArr[i]);
-        }
+        //var len = this.ballArr.length
+        //for(var i=0;i<len;i++)
+        //{
+        //    this.con.addChild(this.ballArr[i]);
+        //}
 
         this.lastBallStep ++;
         if(this.lastBallStep >= 30*15)
@@ -583,7 +597,7 @@ class PKingUI extends game.BaseUI_wx4 {
             {
                 var ball = BallMC.createItem();
                 this.ballArr.push(ball);
-                this.con.addChild(ball);
+                this.topCon.addChild(ball);
                 if(UM_wx4.level <= 5 && Math.random() > 0.5)
                     ball.data = 1104;
                 else
@@ -648,7 +662,36 @@ class PKingUI extends game.BaseUI_wx4 {
     }
 
     public addMonster(item){
+        this.roleCon.addChild(item);
+    }
+    public addToBottom(item){
+        this.bottomCon.addChild(item);
+    }
+    public addToCon(item){
         this.con.addChild(item);
+    }
+
+    public sortY(){
+        var num = this.roleCon.numChildren;
+        for(var i=1;i<num;i++)
+        {
+            var lastItem = this.roleCon.getChildAt(i-1)
+            var currentItem = this.roleCon.getChildAt(i)
+            if(currentItem.y < lastItem.y)//深度不对，调整
+            {
+                var index = 0;
+                for(var j = i - 2;j>=0;j--)
+                {
+                    var lastItem = this.roleCon.getChildAt(j)
+                    if(currentItem.y > lastItem.y)
+                    {
+                        index = j+1;
+                        break;
+                    }
+                }
+                this.roleCon.setChildIndex(currentItem,index)
+            }
+        }
     }
 
 

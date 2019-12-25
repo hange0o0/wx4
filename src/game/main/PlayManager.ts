@@ -212,8 +212,7 @@ class PlayManager extends egret.EventDispatcher {
         var mv = oo.mv;
         var coinMC = oo.mc;
 
-        var index = mc.parent.getChildIndex(mc);
-        mc.parent.addChildAt(coinMC,index+1);
+        PKingUI.getInstance().addToBottom(coinMC);
         coinMC.x = mc.x + decX;
         coinMC.y = mc.y + decY
 
@@ -227,8 +226,7 @@ class PlayManager extends egret.EventDispatcher {
             coinMC.source ='coin_mv0_png'
         }).wait(500).call(()=>{
             mv.gotoAndPay()
-            if(coinMC.parent)
-                coinMC.parent.addChild(coinMC)
+            PKingUI.getInstance().addToCon(coinMC);
         }).to({y:300 + Math.random()*(GameManager_wx4.uiHeight - 600),x:-20},500).call(()=>{
             mv.stop()
             MyTool.removeMC(coinMC);

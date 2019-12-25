@@ -312,7 +312,7 @@ class MyADManager {
             //if(Math.abs(hh - 224)/224 > 0.02)
             //{
             Config.adHeight =  btnw/640 * hh;
-            //console.log(res,btnw,Config.adHeight )
+            console.log(res,btnw,Config.adHeight )
             GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
             //bannerAd.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop);
 
@@ -339,7 +339,6 @@ class MyADManager {
             })
         }
     }
-    private wx4_functionX_54600(){console.log(7039)}
 
 
     //显示插屏广告

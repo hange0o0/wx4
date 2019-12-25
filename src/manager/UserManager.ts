@@ -208,7 +208,7 @@ class UserManager_wx4 {
                 this.gameid = data.data.openid || data.data.anonymous_openid
                 this.gameid2 = data.data.anonymous_openid
                 this.isTest = data.version == this.testVersion;
-                TimeManager_wx4.getInstance().initlogin(data.time)
+                TimeManager.getInstance().initlogin(data.time)
 
                 Net.getInstance().getServerData((data)=>{
                     console.log(data);
@@ -267,7 +267,7 @@ class UserManager_wx4 {
                         this.isTest = res.result.testVersion == this.testVersion;
                         this.shareFail = res.result.shareFail;
                         //console.log(11)
-                        TimeManager_wx4.getInstance().initlogin(res.result.time)
+                        TimeManager.getInstance().initlogin(Math.round(res.result.time/1000))
                         //console.log(res.result.time)
                         this.loginUser(fun)
                     },

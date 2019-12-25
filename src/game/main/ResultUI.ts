@@ -96,6 +96,7 @@ class ResultUI extends game.BaseUI_wx4{
     public onShow(){
         ZijieScreenBtn.e && ZijieScreenBtn.e.stop();
         this.renew();
+        ADIconManager.getInstance().showIcon('result')
     }
 
 
@@ -206,6 +207,7 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public hide(){
+        ADIconManager.getInstance().hideAll()
         super.hide();
     }
 }

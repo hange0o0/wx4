@@ -105,6 +105,9 @@ class DebugUI extends game.BaseUI_wx4 {
         this.addB_8927('插屏广告',()=>{
             MyADManager.getInstance().showInsert()
         })
+        this.addB_8927('图标',()=>{
+            ADIconManager.getInstance().showIcon('loading')
+        })
     }
 	private wx4_functionX_54768(){console.log(8957)}
 
